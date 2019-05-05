@@ -1,6 +1,8 @@
 # ProjectPuzztoryNext
 
+
 # Puzztory
+# LET'S WORK ON SERVER
 
 **2019/05/04**
 
