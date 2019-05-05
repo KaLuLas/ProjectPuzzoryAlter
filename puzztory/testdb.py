@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from PuzzModel.models import Fragmenttable
 
+
 def testdb(request):
     # response = ""
     list = Fragmenttable.objects.all()

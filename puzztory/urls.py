@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from . import view, user, puzzdb, testdb
+from . import view, user, testdb
 
 urlpatterns = [
     path('', view.homepage),
@@ -23,6 +23,6 @@ urlpatterns = [
     re_path(r'^userregister$', user.register),
     re_path(r'^login.html$', view.login_page),
     re_path(r'^register.html$', view.register_page),
-    re_path(r'^testdb$',testdb.testdb),#edit 
+    re_path(r'^testdb$', testdb.testdb),  # edit
     path('admin/', admin.site.urls),
 ]
