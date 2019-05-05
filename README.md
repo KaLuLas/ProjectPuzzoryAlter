@@ -1,8 +1,6 @@
 # ProjectPuzztoryNext
 
 
-# Puzztory
-
 **2019/05/04**
 
 - [x] 主界面UI粗略版本完成 【 KAL
