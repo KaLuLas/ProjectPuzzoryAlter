@@ -57,5 +57,5 @@ def Login(request):
         else:
             login(request, user)
             # return render(request, "index.html")
-            return HttpResponseRedirect("index")
+            return HttpResponseRedirect("/")
     return render(request, "login.html", login_dict)
