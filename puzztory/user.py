@@ -61,5 +61,7 @@ def Login(request):
 
 
 def Logout(request):
+    # End session
     logout(request)
+    # return to homepage
     return HttpResponseRedirect("/")
