@@ -30,7 +30,7 @@ def register(request):
         user = User.objects.create_user(
             username=user_email, password=pwd)
         if user is None:
-            register_dict['emailExistedAlert'] = "邮箱地址已被注册(其实是用户名已存在)"
+            register_dict['emailExistedAlert'] = "邮箱地址已被注册"
             return render(request, 'register.html', register_dict)
         else:
             user.save()

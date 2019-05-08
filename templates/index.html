@@ -98,6 +98,11 @@
             </div>
 
             <div class="col-sm-10" style="background-color: rgb(248, 248, 248)">
+                {% if user.is_authenticated %}
+                <p> welcome, {{ user.username }} </p>
+                {% else %}
+                <p>Please login first.</p>
+                {% endif %}
                 <div class="list-group story-list" style="margin-top:20px">
                     <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
@@ -126,11 +131,6 @@
                             varius blandit.</p>
                         <small class="text-muted">easter eggs.</small>
                     </a>
-                    {% if user.is_authenticated %}
-                    <p>You have successfully login. </p>
-                    {% else %}
-                    <p>Please login to see this page.</p>
-                    {% endif %}
                 </div>
             </div>
         </div>
