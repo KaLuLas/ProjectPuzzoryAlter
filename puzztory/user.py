@@ -4,7 +4,7 @@ from PuzzModel.models import Usertable
 # from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import login, authenticate
 
 
 def register(request):
@@ -40,7 +40,7 @@ def register(request):
     return render(request, 'login.html', login_dict)
 
 
-def login(request):
+def Login(request):
     login_dict = {
         'emailNotExistedAlert': "",
         'passwordIncorrect': "",

@@ -19,7 +19,7 @@ from . import view, user, testdb
 
 urlpatterns = [
     path('', view.homepage),
-    re_path(r'^userlogin$', user.login),
+    re_path(r'^userlogin$', user.Login),
     re_path(r'^userregister$', user.register),
     re_path(r'^login.html$', view.login_page),
     re_path(r'^register.html$', view.register_page),
