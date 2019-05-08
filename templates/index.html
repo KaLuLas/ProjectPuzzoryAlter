@@ -38,8 +38,8 @@
             font-size: 20px;
         }
 
-        .story-list > .list-group-item {
-            margin-bottom: 10px;   
+        .story-list>.list-group-item {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -48,7 +48,8 @@
     <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
         <div class="navbar-collapse collapse justify-content-between">
             <a class="navbar-brand" href="./index.html">
-                <img title="PuzzTory首页" alt="Logo" src="http://118.25.48.198/static/images/PuzzWithTitle.png" style="height: 50px">
+                <img title="PuzzTory首页" alt="Logo" src="http://118.25.48.198/static/images/PuzzWithTitle.png"
+                    style="height: 50px">
             </a>
             <ul class="navbar-nav">
                 <form class="form-inline" action="search#TODO">
@@ -100,7 +101,7 @@
                 <div class="list-group story-list" style="margin-top:20px">
                     <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">[标题] Puzztory.cn施工中</h5> 
+                            <h5 class="mb-1">[标题] Puzztory.cn施工中</h5>
                             <small>[创建时间]</small>
                         </div>
                         <p class="mb-1">[概述] The time complexity of lines 1 and 2 are just constant. Then, for each
@@ -125,6 +126,11 @@
                             varius blandit.</p>
                         <small class="text-muted">easter eggs.</small>
                     </a>
+                    {% if user.is_authenticated %}
+                    <p>You have successfully login. </p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
