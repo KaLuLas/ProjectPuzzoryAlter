@@ -76,7 +76,7 @@
 
             if(legal){
                 var form = document.getElementById('userWindow');
-                form.action = "userregister";
+                form.action = "{% url 'userregister' %}";
                 form.submit();
             }
         }
@@ -162,7 +162,7 @@
                         </br>
 
                         <div class="wrapper">
-                            <a type="button" href="./login.html" class="btn btn-primary btn-md">回到登录     <i class="fa fa-reply"></i></a>
+                            <a type="button" href="{% url 'login_page' %}" class="btn btn-primary btn-md">回到登录     <i class="fa fa-reply"></i></a>
                             <span class="group-btn"><a href="#" class="btn btn-primary btn-md" onclick="userRegister()">注册  <i class="fa fa-sign-in"></i></a>
                         </span>
                         </div>

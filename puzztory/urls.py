@@ -18,11 +18,15 @@ from django.urls import path, re_path
 from . import view, user, testdb
 
 urlpatterns = [
-    path('', view.homepage),
-    re_path(r'^userlogin$', user.Login),
-    re_path(r'^userregister$', user.register),
-    re_path(r'^login.html$', view.login_page),
-    re_path(r'^register.html$', view.register_page),
+    path('', view.homepage, name="index"),
+    path('userlogin', user.Login, name="login"),
+    path('userregister', user.register, name="register"),
+    path('login', view.login_page, name="login_page"),
+    path('register', view.register_page, name="register_page"),
+    # re_path(r'^userlogin$', user.Login),
+    # re_path(r'^userregister$', user.register),
+    # re_path(r'^login.html$', view.login_page),
+    # re_path(r'^register.html$', view.register_page),
     re_path(r'^testdb$', testdb.testdb),  # edit
     path('admin/', admin.site.urls),
 ]
