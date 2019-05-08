@@ -4,7 +4,7 @@ from PuzzModel.models import Usertable
 # from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 
@@ -59,3 +59,7 @@ def Login(request):
             # return render(request, "index.html")
             return HttpResponseRedirect("index")
     return render(request, "login.html", login_dict)
+
+
+def Logout(request):
+    logout(request)

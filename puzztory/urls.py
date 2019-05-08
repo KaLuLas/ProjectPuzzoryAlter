@@ -23,6 +23,7 @@ urlpatterns = [
     path('userregister', user.register, name="register"),
     path('login', view.login_page, name="login_page"),
     path('register', view.register_page, name="register_page"),
+    path('logout', user.Logout, name="logout"),
     # re_path(r'^userlogin$', user.Login),
     # re_path(r'^userregister$', user.register),
     # re_path(r'^login.html$', view.login_page),
