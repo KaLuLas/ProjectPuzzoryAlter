@@ -168,6 +168,7 @@ class Storytable(models.Model):
     wordslimit = models.CharField(db_column='wordsLimit', max_length=1, blank=True, null=True)  # Field name made lowercase.
     finished = models.CharField(max_length=1, blank=True, null=True)
     modified = models.CharField(max_length=1, blank=True, null=True)
+    ineditable = models.CharField(max_length=1, blank=True, null=True)
     createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
     beginning = models.IntegerField()
     storyid = models.AutoField(db_column='storyID', primary_key=True)  # Field name made lowercase.
