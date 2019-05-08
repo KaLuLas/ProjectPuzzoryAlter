@@ -24,7 +24,7 @@ urlpatterns = [
     path('login', view.login_page, name="login_page"),
     path('register', view.register_page, name="register_page"),
     path('logout', user.Logout, name="logout"),
-    path('<str: user_name>', user.userpage, name="user_page"),
+    path('<user_name>', user.userpage, name="user_page"),
     # re_path(r'^userlogin$', user.Login),
     # re_path(r'^userregister$', user.register),
     # re_path(r'^login.html$', view.login_page),
