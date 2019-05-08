@@ -82,7 +82,8 @@ class Commenttable(models.Model):
     username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
     useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
     createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
-    likescount = models.IntegerField(db_column='likesCount', blank=True, null=True)  # Field name made lowercase.
+    likescount = models.IntegerField(db_column='likesCount', blank=True,
+            null=True, default=0)  # Field name made lowercase.
 
     class Meta:
        # managed = False
@@ -138,8 +139,10 @@ class Fragmenttable(models.Model):
     useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
     content = models.TextField()
     createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
-    commentscount = models.IntegerField(db_column='commentsCount', blank=True, null=True)  # Field name made lowercase.
-    likescount = models.IntegerField(db_column='likesCount', blank=True, null=True)  # Field name made lowercase.
+    commentscount = models.IntegerField(db_column='commentsCount', blank=True,
+            null=True, default=0)  # Field name made lowercase.
+    likescount = models.IntegerField(db_column='likesCount', blank=True,
+            null=True, default=0)  # Field name made lowercase.
     storyid = models.IntegerField(db_column='storyID')  # Field name made lowercase.
     branchid = models.IntegerField(db_column='branchID')  # Field name made lowercase.
     branchleft = models.IntegerField(db_column='branchLeft', blank=True, null=True)  # Field name made lowercase.
@@ -155,9 +158,12 @@ class Storytable(models.Model):
     username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
     useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
     title = models.CharField(max_length=50)
-    likescount = models.IntegerField(db_column='likesCount', blank=True, null=True)  # Field name made lowercase.
-    fragmentcapacity = models.IntegerField(db_column='fragmentCapacity', blank=True, null=True)  # Field name made lowercase.
-    fragmentscount = models.IntegerField(db_column='fragmentsCount', blank=True, null=True)  # Field name made lowercase.
+    likescount = models.IntegerField(db_column='likesCount', blank=True,
+            null=True, default=0)  # Field name made lowercase.
+    fragmentcapacity = models.IntegerField(db_column='fragmentCapacity',
+            blank=True, null=True, default=50)  # Field name made lowercase.
+    fragmentscount = models.IntegerField(db_column='fragmentsCount',
+            blank=True, null=True, default=0)  # Field name made lowercase.
     branch = models.CharField(max_length=1, blank=True, null=True)
     wordslimit = models.CharField(db_column='wordsLimit', max_length=1, blank=True, null=True)  # Field name made lowercase.
     finished = models.CharField(max_length=1, blank=True, null=True)
@@ -174,9 +180,8 @@ class Storytable(models.Model):
 class Usertable(models.Model):
     useremail = models.CharField(db_column='userEmail', primary_key=True, max_length=50)  # Field name made lowercase.
     username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
-    password = models.CharField(max_length=256, blank=True, null=True)
-    level = models.IntegerField(blank=True, null=True)
-    experience = models.IntegerField(blank=True, null=True)
+    level = models.IntegerField(blank=True, null=True, default=1)
+    experience = models.IntegerField(blank=True, null=True, default=0)
 
     class Meta:
        # managed = False
