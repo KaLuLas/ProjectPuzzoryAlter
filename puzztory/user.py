@@ -5,7 +5,7 @@ from PuzzModel.models import Usertable
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 
 
@@ -65,3 +65,7 @@ def Logout(request):
     logout(request)
     # return to homepage
     return HttpResponseRedirect("/")
+
+
+def userpage(request, user_name):
+    return HttpResponse("Sorry no userpage for you " + user_name + " yet")

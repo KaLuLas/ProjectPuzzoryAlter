@@ -70,7 +70,7 @@
                             class="fas fa-user"></i></a>
                 </li>
                 {% else}
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' %}"><i title="个人主页"
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.username %}"><i title="个人主页"
                     class="fas fa-user"></i></a>
                 </li>
                 {% endif %}
