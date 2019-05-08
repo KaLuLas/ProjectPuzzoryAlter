@@ -55,6 +55,7 @@ def login(request):
             login_dict['passwordIncorrect'] = "密码错误"
             return render(request, "login.html", login_dict)
         else:
+            login(request, user)
             return render(request, "index.html")
         # user_query = Usertable.objects.filter(useremail=user_email)
         # # user not existed error
