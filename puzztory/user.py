@@ -56,10 +56,10 @@ def Login(request):
             return render(request, "login.html", login_dict)
         else:
             login(request, user)
-            # return render(request, "index.html")
             return HttpResponseRedirect("/")
     return render(request, "login.html", login_dict)
 
 
 def Logout(request):
     logout(request)
+    return HttpResponseRedirect("/")

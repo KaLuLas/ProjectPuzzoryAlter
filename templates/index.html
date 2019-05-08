@@ -27,10 +27,6 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <script>
-        
-    </script>
-
     <style type="text/css">
         .construct-notice {
             font-size: 50px;
@@ -72,12 +68,32 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#"><i title="切换账户" class="fas fa-sign-in-alt"
-                            onclick="showCheckWindow()"></i></a>
+                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
+                            title="退出登录" class="fas fa-sign-in-alt" ></i></a>
                 </li>
             </ul>
         </div>
     </nav>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">通知 ('/_ ') </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    确定要退出吗？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">退出</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid" style="margin-top: 80px">
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
