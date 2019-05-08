@@ -41,15 +41,15 @@
         }
 
         body {
-            background-color:#fff;
+            background-color: #fff;
             -webkit-font-smoothing: antialiased;
-            font: normal 14px Roboto,arial,sans-serif;
+            font: normal 14px Roboto, arial, sans-serif;
         }
 
         h3 {
-            border:7 solid #fff;
-            border-bottom-width:1px;
-            padding-bottom:10px;
+            border: 7 solid #fff;
+            border-bottom-width: 1px;
+            padding-bottom: 10px;
             margin-bottom: 20px;
             text-align: center;
             color: darkcyan;
@@ -72,11 +72,10 @@
             padding-left: 20px;
             padding-right: 20px;
             border-radius: 15px;
-            border-color:#d2d2d2;
+            border-color: #d2d2d2;
             border-width: 5px;
-            box-shadow:0 1px 0 #cfcfcf;
+            box-shadow: 0 1px 0 #cfcfcf;
         }
-
     </style>
 
     <!--Pulling Awesome Font -->
@@ -84,30 +83,35 @@
 
     <form id="userWindow" action="" method="POST">
         {% csrf_token %}
-    <div class="container-fluid" style="margin-top: 70px">
-        <div class="row">
-            <div class="col-md-offset-4 col-md-4">
-                <div class="form-login">
-                    <h3>Puzztory ('/_ ')</h3>
-                    <input type="text" name="e" id="userName" class="form-control input-lg chat-input" value="{{ useremail }}" placeholder="邮箱" />
-                    </br>
-                    <p class="alerttext" id="emailNotExistedAlert">{{ emailNotExistedAlert }}</p>
-                    </br>
-                    <input type="password" name="p" id="password" class="form-control input-lg chat-input" placeholder="密码" />
-                    </br>
-                    <p class="alerttext" id="passwordIncorrect">{{ passwordIncorrect }}</p>
-                    </br>
+        <div class="container-fluid" style="margin-top: 70px">
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4">
+                    <div class="form-login">
+                        <a href="{% url 'index' %}" aria-hidden="true" style="text-decoration: none">
+                            <h3>Puzztory ('/_ ')</h3>
+                        </a>
+                        <input type="text" name="e" id="userName" class="form-control input-lg chat-input"
+                            value="{{ useremail }}" placeholder="邮箱" />
+                        </br>
+                        <p class="alerttext" id="emailNotExistedAlert">{{ emailNotExistedAlert }}</p>
+                        </br>
+                        <input type="password" name="p" id="password" class="form-control input-lg chat-input"
+                            placeholder="密码" />
+                        </br>
+                        <p class="alerttext" id="passwordIncorrect">{{ passwordIncorrect }}</p>
+                        </br>
 
-                    <div class="wrapper">
-                        <a href="{% url 'register_page' %}" style="color: darkcyan">没有账户？点击注册</a>
-                        <span class="group-btn"><a href="#" class="btn btn-primary btn-md" onclick="userLogin()">登录  <i class="fa fa-sign-in"></i></a>
-                        </span>
+                        <div class="wrapper">
+                            <a href="{% url 'register_page' %}" style="color: darkcyan">没有账户？点击注册</a>
+                            <span class="group-btn"><a href="#" class="btn btn-primary btn-md" onclick="userLogin()">登录
+                                    <i class="fa fa-sign-in"></i></a>
+                            </span>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
     </form>
 
 

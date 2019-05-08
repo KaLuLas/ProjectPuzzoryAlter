@@ -47,7 +47,7 @@
 <body>
     <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
         <div class="navbar-collapse collapse justify-content-between">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="{% url 'index' %}">
                 <img title="PuzzTory首页" alt="Logo" src="http://118.25.48.198/static/images/PuzzWithTitle.png"
                     style="height: 50px">
             </a>
@@ -68,6 +68,10 @@
                 {% if not user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
+                </li>
+                {% else}
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' %}"><i title="个人主页"
+                    class="fas fa-user"></i></a>
                 </li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i

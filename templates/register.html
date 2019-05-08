@@ -37,10 +37,10 @@
             var passwordCheck_alert = document.getElementById('passwordCheckAlert');
             var legal = true;
             //email can not be null
-            if(document.getElementById('email').value.length < 1){
+            if (document.getElementById('email').value.length < 1) {
                 email_alert.innerHTML = "用户邮箱不能为空";
                 legal = false;
-            }else{
+            } else {
                 email_alert.innerHTML = "";
             }
 
@@ -48,22 +48,20 @@
             if (document.getElementById('username').value.length > 20) {
                 username_alert.innerHTML = "昵称长度限制(<=20)";
                 legal = false;
-            }else if(document.getElementById('username').value.length < 1){
+            } else if (document.getElementById('username').value.length < 1) {
                 legal = false;
                 username_alert.innerHTML = "昵称不能为空";
-            }
-            else {
+            } else {
                 username_alert.innerHTML = "";
             }
             // password length check
             if (document.getElementById('password').value.length > 20) {
                 password_alert.innerHTML = "密码长度限制(<=20)";
                 legal = false;
-            }else if(document.getElementById('password').value.length < 1){
+            } else if (document.getElementById('password').value.length < 1) {
                 legal = false;
                 password_alert.innerHTML = "密码不能为空";
-            }
-            else {
+            } else {
                 password_alert.innerHTML = "";
             }
             // password double check
@@ -74,7 +72,7 @@
                 passwordCheck_alert.innerHTML = "";
             }
 
-            if(legal){
+            if (legal) {
                 var form = document.getElementById('userWindow');
                 form.action = "{% url 'register' %}";
                 form.submit();
@@ -92,15 +90,15 @@
         }
 
         body {
-            background-color:#fff;
+            background-color: #fff;
             -webkit-font-smoothing: antialiased;
-            font: normal 14px Roboto,arial,sans-serif;
+            font: normal 14px Roboto, arial, sans-serif;
         }
 
         h3 {
-            border:7 solid #fff;
-            border-bottom-width:1px;
-            padding-bottom:10px;
+            border: 7 solid #fff;
+            border-bottom-width: 1px;
+            padding-bottom: 10px;
             margin-bottom: 20px;
             text-align: center;
             color: darkcyan;
@@ -123,9 +121,9 @@
             padding-left: 20px;
             padding-right: 20px;
             border-radius: 15px;
-            border-color:#d2d2d2;
+            border-color: #d2d2d2;
             border-width: 5px;
-            box-shadow:0 1px 0 #cfcfcf;
+            box-shadow: 0 1px 0 #cfcfcf;
         }
     </style>
 
@@ -139,32 +137,40 @@
             <div class="row">
                 <div class="col-md-offset-4 col-md-4">
                     <div class="form-register">
-                        <h3>Puzztory ('/_ ')</h3>
+                        <a href="{% url 'index' %}" aria-hidden="true" style="text-decoration: none">
+                            <h3>Puzztory ('/_ ')</h3>
+                        </a>
 
-                        <input id="email" type="text" name="e" class="form-control input-lg chat-input" placeholder="邮箱" />
+                        <input id="email" type="text" name="e" class="form-control input-lg chat-input"
+                            placeholder="邮箱" />
                         </br>
                         <p id="emailExistedAlert" class="alerttext">{{ emailExistedAlert }}</p>
                         </br>
 
-                        <input id="username" type="text" name="u" class="form-control input-lg chat-input" placeholder="用户昵称" />
+                        <input id="username" type="text" name="u" class="form-control input-lg chat-input"
+                            placeholder="用户昵称" />
                         </br>
                         <p class="alerttext" id="usernameOversizedAlert"></p>
                         </br>
 
-                        <input id="password" type="password" name="p" class="form-control input-lg chat-input" placeholder="设定密码" />
+                        <input id="password" type="password" name="p" class="form-control input-lg chat-input"
+                            placeholder="设定密码" />
                         </br>
                         <p class="alerttext" id="passwordOversizedAlert"></p>
                         </br>
 
-                        <input id="passwordCheck" type="password" class="form-control input-lg chat-input" placeholder="确认密码" />
+                        <input id="passwordCheck" type="password" class="form-control input-lg chat-input"
+                            placeholder="确认密码" />
                         </br>
-                        <p class="alerttext" id="passwordCheckAlert" ></p>
+                        <p class="alerttext" id="passwordCheckAlert"></p>
                         </br>
 
                         <div class="wrapper">
-                            <a type="button" href="{% url 'login_page' %}" class="btn btn-primary btn-md">回到登录     <i class="fa fa-reply"></i></a>
-                            <span class="group-btn"><a href="#" class="btn btn-primary btn-md" onclick="userRegister()">注册  <i class="fa fa-sign-in"></i></a>
-                        </span>
+                            <a type="button" href="{% url 'login_page' %}" class="btn btn-primary btn-md">回到登录 <i
+                                    class="fa fa-reply"></i></a>
+                            <span class="group-btn"><a href="#" class="btn btn-primary btn-md"
+                                    onclick="userRegister()">注册 <i class="fa fa-sign-in"></i></a>
+                            </span>
                         </div>
 
 
@@ -175,4 +181,5 @@
     </form>
 
 </body>
+
 </html>
