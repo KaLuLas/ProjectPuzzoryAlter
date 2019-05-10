@@ -69,8 +69,8 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
                 </li>
-                {% else}
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' %}"><i title="个人主页"
+                {% else %}
+		<li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.username %}"><i title="个人主页"
                     class="fas fa-user"></i></a>
                 </li>
                 {% endif %}
