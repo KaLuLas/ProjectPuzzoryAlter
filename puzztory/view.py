@@ -3,8 +3,8 @@ from PuzzModel.models import Storytable, Usertable
 
 
 def homepage(request):
-    story_list = Storytable.objects.order_by('likescount')[:5]
-    user_list = Usertable.objects.order_by('experience')[:5]
+    story_list = Storytable.objects.order_by('-likescount')[:5]
+    user_list = Usertable.objects.order_by('-experience')[:5]
 
     index_dict = {
         'display': 'homepage',
