@@ -5,6 +5,8 @@ def homepage(request):
     index_dict = {
         'display': 'homepage'
     }
+    # TODO: database search : ranking & trending
+    # save into (key : list)
     return render(request, 'index.html', index_dict)
 
 
