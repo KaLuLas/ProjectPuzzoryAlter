@@ -146,12 +146,13 @@
                 <div class="dropdown-menu-left">
                     <h1 class="dropdown-header side-bar-title">Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
-                        {% if story_list %}
-                            
+                        {{ slen }}
+                        {% if slen != 0 %}
+                            <ul>
                             {% for story in story_list %}
                                 <li><a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a></li>
                             {% endfor %}
-                            
+                            </ul>
                         {% else %}
                             <p>No storys are available.</p>
                         {% endif %}
@@ -164,12 +165,13 @@
                     <div class="dropdown-divider"></div>
                     <h1 class="dropdown-header side-bar-title">Ranking</h1>
                     <a class="dropdown-item list-group disabled" href="#">
+                        {{ulen}}
                         {% if user_list %}
-                            
+                            <ul>
                             {% for user in user_list %}
                             <li><a href="#" class="list-group-item list-group-item-warning">{{ user.username }}</a></li>
                             {% endfor %}
-                            
+                            </ul>
                         {% else %}
                             <p>No users are available.</p>
                         {% endif %}
