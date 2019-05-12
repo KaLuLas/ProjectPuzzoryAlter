@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from PuzzModel.models import Storytable, Usertable
 
 
 def homepage(request):
@@ -7,6 +8,8 @@ def homepage(request):
         'upload_story': False,
         'system_message': False
     }
+    story_list = Storytable.objects.order_by('-likesCount')[:5]
+    user_list = Usertable.objects.order_by('-experience')[:5]
     return render(request, 'index.html', index_dict)
 
 
