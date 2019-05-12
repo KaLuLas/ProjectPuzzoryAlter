@@ -77,7 +77,7 @@
                             class="fas fa-user"></i></a>
                 </li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="user/{% url 'user_page' user.last_name %}"><i title="个人主页"
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.last_name %}"><i title="个人主页"
                             class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
@@ -196,7 +196,7 @@
                 {% if upload_story %}
                 <h5>upload_story施工中</h5>
                 {% endif %}
-                {% if upload_story %}
+                {% if system_message %}
                 <h5>system_message施工中</h5>
                 {% endif %}
             </div>
