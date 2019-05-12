@@ -9,9 +9,7 @@ def homepage(request):
     index_dict = {
         'display': 'homepage',
         'story_list': story_list,
-        'user_list': user_list,
-        'slen': len(story_list),
-        'ulen': len(user_list)
+        'user_list': user_list
     }
 
     # TODO: database search : ranking & trending
