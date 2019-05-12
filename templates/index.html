@@ -77,7 +77,7 @@
                             class="fas fa-user"></i></a>
                 </li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="user/{% url 'user_page' user.last_name %}"><i title="个人主页"
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.last_name %}"><i title="个人主页"
                             class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
@@ -162,7 +162,7 @@
                 {% else %}
                 <p>Please login first.</p>
                 {% endif %}
-                {% if homepage %}
+                {% if display == 'homepage' %}
                 <div class="list-group story-list" style="margin-top:20px">
                     <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
@@ -192,11 +192,9 @@
                         <small class="text-muted">easter eggs.</small>
                     </a>
                 </div>
-                {% endif %}
-                {% if upload_story %}
+                {% elif display == 'upload_story' %}
                 <h5>upload_story施工中</h5>
-                {% endif %}
-                {% if upload_story %}
+                {% elif display == 'system_message' %}
                 <h5>system_message施工中</h5>
                 {% endif %}
             </div>
