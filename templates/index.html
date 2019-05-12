@@ -54,13 +54,9 @@
             <ul class="navbar-nav">
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="
-                        {% if user.is_authenticated %}
-                        welcome, {{ user.last_name }}
-                        {% else %}
-                        Please login first.
-                        {% endif %}
-                        " style="width: 10cm">
+                        <input type="text" class="form-control"
+                            placeholder="{% if user.is_authenticated %}welcome, {{ user.last_name }}{% else %}Please login first.{% endif %}"
+                            style="width: 10cm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
