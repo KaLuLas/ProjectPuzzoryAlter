@@ -3,27 +3,21 @@ from django.shortcuts import render
 
 def homepage(request):
     index_dict = {
-        'homepage': True,
-        'upload_story': False,
-        'system_message': False
+        'display': 'homepage'
     }
     return render(request, 'index.html', index_dict)
 
 
 def upload_story(request):
     index_dict = {
-        'homepage': False,
-        'upload_story': True,
-        'system_message': False
+        'display': 'upload_story'
     }
     return render(request, 'index.html', index_dict)
 
 
 def system_message(request):
     index_dict = {
-        'homepage': False,
-        'upload_story': False,
-        'system_message': True
+        'display': 'system_message'
     }
     return render(request, 'index.html', index_dict)
 
