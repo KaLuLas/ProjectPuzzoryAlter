@@ -147,13 +147,13 @@
                     <h1 class="dropdown-header side-bar-title">Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if story_list %}
-                            
-                            {% for story in story_list %}
-                                <li><a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a></li>
-                            {% endfor %}
-                            
+
+                        {% for story in story_list %}
+                        <li><a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a></li>
+                        {% endfor %}
+
                         {% else %}
-                            <p>No storys are available.</p>
+                        <p>No storys are available.</p>
                         {% endif %}
                         <!-- <a href="#" class="list-group-item list-group-item-warning">story sample 1</a>
                         <a href="#" class="list-group-item list-group-item-action">story sample 2</a>
@@ -165,13 +165,13 @@
                     <h1 class="dropdown-header side-bar-title">Ranking</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
-                            
-                            {% for user in user_list %}
-                            <li><a href="#" class="list-group-item list-group-item-warning">{{ user.username }}</a></li>
-                            {% endfor %}
-                            
+
+                        {% for user in user_list %}
+                        <li><a href="#" class="list-group-item list-group-item-warning">{{ user.username }}</a></li>
+                        {% endfor %}
+
                         {% else %}
-                            <p>No users are available.</p>
+                        <p>No users are available.</p>
                         {% endif %}
                         <!-- <a href="#" class="list-group-item list-group-item-warning">KaLuLas</a>
                         <a href="#" class="list-group-item list-group-item-action">Alexxx</a>
@@ -216,7 +216,82 @@
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 {% elif display == 'upload_story' %}
                 <h5>upload_story施工中</h5>
-                
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-7 mb-3">
+                            <!-- <label for="DefaultTitle">Title</label> -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="StoryTitlePrepend">#</span>
+                                </div>
+                                <input type="text" class="form-control" id="DefaultTitle" placeholder="故事标题"
+                                    aria-describedby="StoryTitlePrepend" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-10 mb-3">
+                            <textarea type="text" class="form-control" id="storyFirstSeg" rows="10"
+                                placeholder="在此输入故事的第一节..." required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- decide frag count & words limit -->
+                    <div class="form-row mb-3">
+                        <div class="input-group col-md-2">
+                            <input type="text" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <input type="checkbox" id="fragCountSet">
+                                    <label class="form-check-label" for="fragSet">
+                                        片段个数
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group col-md-2">
+                            <input type="text" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <input type="checkbox" id="fragWordSet">
+                                    <label class="form-check-label" for="fragSet">
+                                        片段字数
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="branchCheck">
+                            <label class="form-check-label" for="branchCheck" style="margin-right: 20px">
+                                允许分支
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="closedCheck">
+                            <label class="form-check-label" for="closedCheck" style="margin-right: 20px">
+                                设置结局
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="modifiedCheck">
+                            <label class="form-check-label" for="modifiedCheck" style="margin-right: 20px">
+                                允许续写
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                            <label class="form-check-label" for="invalidCheck2">
+                                Agree to terms and conditions
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </form>
+
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
                 {% elif display == 'system_message' %}
                 <h5>system_message施工中</h5>
