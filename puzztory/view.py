@@ -3,11 +3,15 @@ from PuzzModel.models import Storytable, Usertable
 
 
 def homepage(request):
-    index_dict = {
-        'display': 'homepage'
-    }
     story_list = Storytable.objects.order_by('-likesCount')[:5]
     user_list = Usertable.objects.order_by('-experience')[:5]
+
+    index_dict = {
+        'display': 'homepage',
+        'story_list': story_list,
+        'user_list': user_list,
+    }
+
     return render(request, 'index.html', index_dict)
 
 
