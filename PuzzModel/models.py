@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.utils import timezone
 
 
 class AuthGroup(models.Model):
@@ -81,7 +82,7 @@ class Commenttable(models.Model):
     content = models.TextField()
     username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
     useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
-    createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
+    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
     likescount = models.IntegerField(db_column='likesCount', blank=True,
             null=True, default=0)  # Field name made lowercase.
 
@@ -138,7 +139,7 @@ class Fragmenttable(models.Model):
     username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
     useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
     content = models.TextField()
-    createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
+    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
     commentscount = models.IntegerField(db_column='commentsCount', blank=True,
             null=True, default=0)  # Field name made lowercase.
     likescount = models.IntegerField(db_column='likesCount', blank=True,
@@ -148,7 +149,7 @@ class Fragmenttable(models.Model):
     branchleft = models.IntegerField(db_column='branchLeft', blank=True, null=True)  # Field name made lowercase.
     branchright = models.IntegerField(db_column='branchRight', blank=True, null=True)  # Field name made lowercase.
     fragmentid = models.AutoField(db_column='fragmentID', primary_key=True)  # Field name made lowercase.
-
+    
     class Meta:
        # managed = False
         db_table = 'fragmentTable'
@@ -164,14 +165,15 @@ class Storytable(models.Model):
             blank=True, null=True, default=50)  # Field name made lowercase.
     fragmentscount = models.IntegerField(db_column='fragmentsCount',
             blank=True, null=True, default=0)  # Field name made lowercase.
-    branch = models.CharField(max_length=1, blank=True, null=True)
-    wordslimit = models.CharField(db_column='wordsLimit', max_length=1, blank=True, null=True)  # Field name made lowercase.
-    finished = models.CharField(max_length=1, blank=True, null=True)
-    modified = models.CharField(max_length=1, blank=True, null=True)
-    ineditable = models.CharField(max_length=1, blank=True, null=True)
-    createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
+    branch = models.CharField(max_length=1, blank=True, null=True, default='0')
+    wordslimit = models.CharField(db_column='wordsLimit', max_length=1, blank=True, null=True, default='0')  # Field name made lowercase.
+    finished = models.CharField(max_length=1, blank=True, null=True, default='0')
+    modified = models.CharField(max_length=1, blank=True, null=True, default='1')
+    ineditable = models.CharField(max_length=1, blank=True, null=True, default='0')
+    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
     beginning = models.IntegerField()
     storyid = models.AutoField(db_column='storyID', primary_key=True)  # Field name made lowercase.
+    fragmentwordslimit = models.IntegerField(db_column='fragmentWordsLimit', default=0)  # Field name made lowercase.
 
     class Meta:
        # managed = False

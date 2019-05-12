@@ -3,13 +3,13 @@ from PuzzModel.models import Storytable, Usertable
 
 
 def homepage(request):
-    story_list = Storytable.objects.order_by('-likesCount')[:5]
+    story_list = Storytable.objects.order_by('-likescount')[:5]
     user_list = Usertable.objects.order_by('-experience')[:5]
 
     index_dict = {
         'display': 'homepage',
         'story_list': story_list,
-        'user_list': user_list,
+        'user_list': user_list
     }
 
     # TODO: database search : ranking & trending
