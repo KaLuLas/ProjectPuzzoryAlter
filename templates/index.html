@@ -147,12 +147,18 @@
                     <h1 class="dropdown-header side-bar-title">Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {{ slen }}
-                        {% if slen != 0 %}
+                        {% if story_list %}
                             <ul>
+                                {% for story in story_list %}
+                                    <li><a href="#">{{ story.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+
+                            <!-- <ul>
                             {% for story in story_list %}
                                 <li><a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a></li>
                             {% endfor %}
-                            </ul>
+                            </ul> -->
                         {% else %}
                             <p>No storys are available.</p>
                         {% endif %}
@@ -165,7 +171,7 @@
                     <div class="dropdown-divider"></div>
                     <h1 class="dropdown-header side-bar-title">Ranking</h1>
                     <a class="dropdown-item list-group disabled" href="#">
-                        {{ulen}}
+                        {{ ulen }}
                         {% if user_list %}
                             <ul>
                             {% for user in user_list %}
