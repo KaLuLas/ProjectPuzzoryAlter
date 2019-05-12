@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'puzztory',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'qwert12345',
         'HOST': 'localhost',
         'PORT': '3306',
     }
