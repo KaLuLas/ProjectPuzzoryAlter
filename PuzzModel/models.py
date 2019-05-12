@@ -148,7 +148,7 @@ class Fragmenttable(models.Model):
     branchleft = models.IntegerField(db_column='branchLeft', blank=True, null=True)  # Field name made lowercase.
     branchright = models.IntegerField(db_column='branchRight', blank=True, null=True)  # Field name made lowercase.
     fragmentid = models.AutoField(db_column='fragmentID', primary_key=True)  # Field name made lowercase.
-
+    
     class Meta:
        # managed = False
         db_table = 'fragmentTable'
@@ -172,6 +172,7 @@ class Storytable(models.Model):
     createtime = models.DateTimeField(db_column='createTime')  # Field name made lowercase.
     beginning = models.IntegerField()
     storyid = models.AutoField(db_column='storyID', primary_key=True)  # Field name made lowercase.
+    fragmentwordslimit = models.IntegerField(db_column='fragmentWordsLimit', default=0)  # Field name made lowercase.
 
     class Meta:
        # managed = False
