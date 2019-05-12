@@ -12,6 +12,8 @@ def homepage(request):
         'user_list': user_list,
     }
 
+    # TODO: database search : ranking & trending
+    # save into (key : list)
     return render(request, 'index.html', index_dict)
 
 
