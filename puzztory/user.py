@@ -28,6 +28,7 @@ def register(request):
         except IntegrityError:
             register_dict['emailExistedAlert'] = "邮箱地址已被注册"
             return render(request, 'register.html', register_dict)
+        user.last_name = user_name
         user.save()
         login_dict['useremail'] = user_email
         user_record = Usertable(useremail=user_email, username=user_name)

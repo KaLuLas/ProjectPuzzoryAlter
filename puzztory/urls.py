@@ -24,7 +24,9 @@ urlpatterns = [
     path('login', view.login_page, name="login_page"),
     path('register', view.register_page, name="register_page"),
     path('logout', user.Logout, name="logout"),
-    path('<user_name>', user.userpage, name="user_page"),
+    path('user/<user_name>', user.userpage, name="user_page"),
+    path('upload', view.upload_story, name="upload_story"),
+    path('message', view.system_message, name="system_message"),
     re_path(r'^testdb$', testdb.testdb),  # edit
     path('admin/', admin.site.urls),
 ]
