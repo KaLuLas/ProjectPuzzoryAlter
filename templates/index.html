@@ -155,10 +155,11 @@
 
                             <ul>
                             {% for story in story_list %}
-                                {% if forloop.counter>1 %}
+                                {% if forloop.counter > 1 %}
                                 <a href="#" class="list-group-item list-group-item-action">{{ story.title }}</a>
                                 {% else %}
                                 <a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a>
+                                {% endif %}
                             {% endfor %}
                             </ul>
                         {% else %}
@@ -176,10 +177,11 @@
                         {% if user_list %}
                             <ul>
                             {% for user in user_list %}
-                            {% if forloop.counter>1 %}
+                            {% if forloop.counter > 1 %}
                             <a href="#" class="list-group-item list-group-item-action">{{ user.username }}</a>
                             {% else %}
                             <a href="#" class="list-group-item list-group-item-warning">{{ user.username }}</a>
+                            {% endif %}
                             {% endfor %}
                             </ul>
                         {% else %}
