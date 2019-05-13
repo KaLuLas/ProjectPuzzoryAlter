@@ -2,59 +2,60 @@
 
 **Usertable**
 
-| 属性名     |      | 注释     |
-| ---------- | ---- | -------- |
-| useremail  |      | 用户邮箱 |
-| username   |      | 用户昵称 |
-| password   |      | 密码     |
-| level      |      | 等级     |
-| experience |      | 经验值   |
+| 属性名     |      | 注释                    |
+| ---------- | ---- | ----------------------- |
+| useremail  |      | 用户邮箱，max_length=50 |
+| username   |      | 用户昵称，max_length=50 |
+| level      |      | 等级，default=1         |
+| experience |      | 经验值，default=0       |
 
 **Storytable**
 
-| 属性名           |      | 注释                                           |
-| ---------------- | ---- | ---------------------------------------------- |
-| storyid          |      | 故事唯一标识                                   |
-| username         |      | 创建人昵称                                     |
-| useremail        |      | 创建人邮箱                                     |
-| title            |      | 标题                                           |
-| likescount       |      | 获得的赞数                                     |
-| fragmentcapacity |      | 最多允许片段数（由作者决定                     |
-| fragmentscount   |      | 当前片段个数                                   |
-| branch           |      | 是否允许分支                                   |
-| wordslimit       |      | 是否限制片段字数                               |
-| finished         |      | 是否完结                                       |
-| modified         |      | 是否允许修改（作者和游客一起用，作者身份优先） |
-| createtime       |      | 故事创建日期                                   |
-| beginning        |      | 故事开头片段id                                 |
+| 属性名             |      | 注释                                                        |
+| ------------------ | ---- | ----------------------------------------------------------- |
+| username           |      | 创建人昵称，max_length=50                                   |
+| useremail          |      | 创建人邮箱，max_length=50                                   |
+| title              |      | 标题，max_length=50                                         |
+| likescount         |      | 获得的赞数，default=0                                       |
+| fragmentcapacity   |      | 最多允许片段数（由作者决定，default=50                      |
+| fragmentscount     |      | 当前片段个数，default=0                                     |
+| branch             |      | 是否允许分支，default='0'                                   |
+| wordslimit         |      | 是否限制片段字数，default='0'                               |
+| finished           |      | 是否完结，default='0'                                       |
+| modified           |      | 是否允许修改（作者和游客一起用，作者身份优先），default='1' |
+| ineditable         |      | 修改的锁，default='0'                                       |
+| createtime         |      | 故事创建日期                                                |
+| beginning          |      | 故事开头片段id                                              |
+| storyid            |      | 故事id                                                      |
+| fragmentwordslimit |      | 片段的具体限制字数，default=0                               |
 
 **Fragmenttable**
 
-| 属性名        |      | 注释       |
-| ------------- | ---- | ---------- |
-| username      |      | 创建人昵称 |
-| useremail     |      | 创建人邮箱 |
-| content       |      | 片段文本   |
-| createtime    |      | 创建时间   |
-| commentscount |      | 评论数     |
-| likescount    |      | 获得的赞数 |
-| storyid       |      | 故事ID     |
-| branchid      |      | 所处分支ID |
-| branchleft    |      | 左分支ID   |
-| branchright   |      | 右分支ID   |
+| 属性名        |      | 注释                      |
+| ------------- | ---- | ------------------------- |
+| username      |      | 创建人昵称，max_length=50 |
+| useremail     |      | 创建人邮箱，max_length=50 |
+| content       |      | 片段文本                  |
+| createtime    |      | 创建时间                  |
+| commentscount |      | 评论数，default=0         |
+| likescount    |      | 获得的赞数，default=0     |
+| storyid       |      | 故事ID                    |
+| branchid      |      | 所处分支ID                |
+| branchleft    |      | 左分支ID                  |
+| branchright   |      | 右分支ID                  |
 
 **Commenttable**
 
-| 属性名     |      | 注释     |
-| ---------- | ---- | -------- |
-| commentid  |      | 评论ID   |
-| storyid    |      | 故事ID   |
-| fragmentid |      | 片段ID   |
-| content    |      | 评论文本 |
-| username   |      | 用户昵称 |
-| useremail  |      | 用户邮箱 |
-| createtime |      | 创建时间 |
-| likescount |      | 点赞数   |
+| 属性名     |      | 注释                    |
+| ---------- | ---- | ----------------------- |
+| commentid  |      | 评论ID                  |
+| storyid    |      | 故事ID                  |
+| fragmentid |      | 片段ID                  |
+| content    |      | 评论文本                |
+| username   |      | 用户昵称，max_length=50 |
+| useremail  |      | 用户邮箱，max_length=50 |
+| createtime |      | 创建时间                |
+| likescount |      | 点赞数，default=0       |
 
 
 
