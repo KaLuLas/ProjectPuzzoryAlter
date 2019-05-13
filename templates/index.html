@@ -254,6 +254,7 @@
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 <form style="margin-top:20px" action="{% url 'upload_story' %}" method="POST">
+                    {% csrf_token %}
                     <div class="form-row mb-3 align-items-end">
                         <div class="col-md-7">
                             <div class="input-group">

@@ -17,13 +17,13 @@ def homepage(request):
 
 
 def upload_story_page(request):
-    # story_list = Storytable.objects.order_by('-likescount')[:5]
-    # user_list = Usertable.objects.order_by('-experience')[:5]
+    story_list = Storytable.objects.order_by('-likescount')[:5]
+    user_list = Usertable.objects.order_by('-experience')[:5]
 
     index_dict = {
         'display': 'upload_story',
-        # 'story_list': story_list,
-        # 'user_list': user_list
+        'story_list': story_list,
+        'user_list': user_list
     }
 
     return render(request, 'index.html', index_dict)
