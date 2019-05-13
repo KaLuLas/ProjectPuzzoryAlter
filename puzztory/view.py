@@ -21,7 +21,7 @@ def upload_story_page(request):
     user_list = Usertable.objects.order_by('-experience')[:5]
 
     index_dict = {
-        'display': 'homepage',
+        'display': 'upload_story',
         'story_list': story_list,
         'user_list': user_list
     }
