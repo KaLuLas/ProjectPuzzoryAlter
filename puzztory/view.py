@@ -23,6 +23,9 @@ def homepage(request):
 
 def upload_story_page(request):
     index_dict['display'] = 'upload_story'
+    index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
+    index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+
     return render(request, 'index.html', index_dict)
 
 
@@ -36,12 +39,12 @@ def upload_story(request):
         story_title = request.POST['title']
         first_frag_text = request.POST['firstPart']
         frag_record = Fragmenttable(
-            content=first_frag_text, username=User.last_name, 
-            useremail=User.username, storyid=0, branchid=0)
+            content=first_frag_text, username=request.user.last_name,
+            useremail=request.user.username, storyid=0, branchid=0)
         frag_record.save()
         story_record = Storytable(
-            username=User.last_name, useremail=User.username,
-            title=story_title, beginning=frag_record.fragmentid, 
+            username=request.user.last_name, useremail=request.user.username,
+            title=story_title, beginning=frag_record.fragmentid,
             fragmentscount=1
         )
         if request.POST.has_key('branch'):
@@ -64,6 +67,9 @@ def upload_story(request):
 
 def system_message(request):
     index_dict['display'] = 'system_message'
+    index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
+    index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+
     return render(request, 'index.html', index_dict)
 
 
