@@ -43,6 +43,11 @@
         }
     </style>
     <script type="text/javascript">
+        var ruleCount = 0;
+        var keywordCount = 0;
+        const ruleLimit = 5;
+        const keywordLimit = 5;
+
         function switchInput(id) {
             console.log(id);
             var input = document.getElementById(id);
@@ -51,6 +56,43 @@
                 input.value = "";
             }
         }
+        $(document).ready(function () {
+            // button with class removeInput will remove the input component onclick
+            $('.removeInput').on('click', function () {
+                $(this).parent().parent().remove();
+            });
+            $('#addNewRuleBTN, #addNewKeywordBTN').on('click', function () {
+                if ($(this).attr('id') == 'addNewRuleBTN' && ruleCount < ruleLimit) {
+                    $rule =
+                        '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
+                        name="Rule' + ruleCount + '" id="selfDefinedRule' + ruleCount + '" placeholder="自定义规则..."><div class="input-group-append"> \
+                        <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus" \
+                        aria-hidden="true"></i></button></div></div>';
+                    ruleCount++;
+                    $(this).before($rule);
+                } else if ($(this).attr('id') == 'addNewKeywordBTN' && keywordCount < keywordLimit) {
+                    $keyword =
+                        '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
+                        name="Keyword' + keywordCount + '" id="selfDefinedKeyword' + keywordCount + '" placeholder="新关键词...">\
+                        <div class="input-group-append"> <button class="btn btn-outline-danger removeInput" type="button">\
+                        <i class="fa fa-minus" aria-hidden="true"></i></button></div> </div>';
+                    keywordCount++;
+                    $(this).before($keyword);
+                }
+                $('.removeInput').on('click', function () {
+                    var containerName = $(this).parent().parent().parent().attr('id');
+                    if (containerName == 'selfDefinedRules') ruleCount--;
+                    else if (containerName == 'selfDefinedKeywordsContain') keywordCount--;
+                    $(this).parent().parent().remove();
+                });
+            });
+            $("#DefaultTitle").on('input property change',function(e){
+                $("#titleWordCount").html(e.target.value.length);
+            });
+            $("#storyFirstSeg").on('input property change',function(e){
+                $("#partOneWordCount").html(e.target.value.length);
+            });
+        });
     </script>
 </head>
 
@@ -75,16 +117,12 @@
                 </form>
             </ul>
             <ul class="navbar-nav">
-                <!-- TODO: rewrite needed : too ugly -->
-                <li class="nav-item"><a class="nav-link"
-                        href="{% if user.is_authenticated %}{% url 'upload_story' %}{% endif %}"
-                        {% if not user.is_authenticated %} data-toggle="modal" data-target="#loginRequest"
-                        {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
-                <li class="nav-item"><a class="nav-link"
-                        href="{% if user.is_authenticated %}{% url 'system_message' %}{% endif %}"
-                        {% if not user.is_authenticated %} data-toggle="modal" data-target="#loginRequest"
-                        {% endif %}><i title="系统通知" class="fas fa-bell"></i></a>
-                </li>
+                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %} href="{% url 'upload_story_page' %}"
+                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="发布故事"
+                            class="fas fa-plus"></i></a></li>
+                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
+                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
+                            class="fas fa-bell"></i></a></li>
                 {% if not user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
@@ -215,55 +253,63 @@
                 </div>
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 {% elif display == 'upload_story' %}
-                <!-- <h5>upload_story施工中</h5> -->
-                <form style="margin-top:20px">
-                    <div class="form-row">
-                        <div class="col-md-7 mb-3">
-                            <!-- <label for="DefaultTitle">Title</label> -->
+                <form style="margin-top:20px" action="{% url 'upload_story' %}" method="POST">
+                    <div class="form-row mb-3 align-items-end">
+                        <div class="col-md-7">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="StoryTitlePrepend">#</span>
-                                </div>
+                                <div class="input-group-prepend"><span class="input-group-text" id="StoryTitlePrepend">#</span></div>
                                 <input type="text" class="form-control" id="DefaultTitle" placeholder="故事标题"
-                                    aria-describedby="StoryTitlePrepend" required>
+                                    aria-describedby="StoryTitlePrepend" maxlength="20" name="title" required>
                             </div>
                         </div>
+                        <span id="titleWordCount">0</span><span id="titleWordLimit">/20</span>
                     </div>
-                    <div class="form-row  mb-3">
+                    <div class="form-row mb-3 align-items-end">
                         <div class="col-md-10">
                             <textarea type="text" class="form-control" id="storyFirstSeg" rows="10"
-                                placeholder="在此输入故事的第一节..." required></textarea>
+                                placeholder="在此输入故事的第一节..." maxlength="150" name="firstPart" required></textarea>
                         </div>
+                        <span id="partOneWordCount">0</span><span id="partOneWordLimit">/150</span>
                     </div>
                     <!-- self defined rules & keywords -->
+                    <small id="addNewRuleHelp" class="form-text text-muted">设置续写片段必须遵守的规则（软规则）</small>
                     <div class="form-row align-items-center" id="selfDefinedRules">
-                        <div class="col-md-7 mb-3 input-group">
+                        <!-- button removeInput will remove the whole input-group -->
+                        <!-- TEMPLATE -->
+                        <!-- <div class="col-md-7 mb-3 input-group">
                             <input type="text" class="form-control" name="Rule0" id="selfDefinedRule0">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-danger" type="button"><i class="fa fa-minus"
+                                <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus"
                                         aria-hidden="true"></i></button>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- set new rules here -->
-                        <div class="btn mb-3 btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        <div class="btn mb-2 btn-outline-primary" id="addNewRuleBTN"><i class="fa fa-plus"
+                                aria-hidden="true"></i></div>
                     </div>
-                    
+                    <small id="addNewKeywordHelp" class="form-text text-muted">设置故事片段必须包含的关键词</small>
                     <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
-                        <div class="col-md-1 input-group">
-                            <input type="text" class="form-control" name="Keyword0" id="selfDefinedKeyword0">
+                        <!-- button removeInput will remove the whole input-group -->
+                        <!-- TEMPLATE -->
+                        <!-- <div class="col-md-2 input-group">
+                            <input type="text" class="form-control" name="Keyword0" id="selfDefinedKeyword0"
+                                placeholder="新关键词...">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-danger" type="button"><i class="fa fa-minus"
+                                <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus"
                                         aria-hidden="true"></i></button>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- add new keywords here -->
-                        <div class="btn btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        <div class="btn btn-outline-primary" id="addNewKeywordBTN"><i class="fa fa-plus"
+                                aria-hidden="true"></i></div>
                     </div>
 
+
                     <!-- decide frag count & words limit -->
-                    <div class="form-row mb-3">
+                    <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
+                    <div class="form-row mb-3  align-items-center">
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" id="fragCountSetInput"
+                            <input type="text" class="form-control" disabled="disabled" name="fragNumCount" id="fragCountSetInput"
                                 onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -275,9 +321,9 @@
                             </div>
                         </div>
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" id="fragWordSetInput"
+                            <input type="text" class="form-control" disabled="disabled" name="fragWordCount" id="fragWordSetInput"
                                 onkeyup="this.value=this.value.replace(/\D/g,'')">
-                            <div class="input-group-append">
+                            <div class="input-group-append"> 
                                 <div class="input-group-text">
                                     <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
                                     <label class="form-check-label" for="fragWordSet">
@@ -287,35 +333,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="branchCheck">
-                            <label class="form-check-label" for="branchCheck" style="margin-right: 20px">
+                    
+                    <div class="form-row mb-3 align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="branchCheck" name="branch">
+                            <label class="custom-control-label" for="branchCheck" style="margin-right: 20px">
                                 允许分支
                             </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="closedCheck">
-                            <label class="form-check-label" for="closedCheck" style="margin-right: 20px">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="closedCheck" checked="checked" name="ending">
+                            <label class="custom-control-label" for="closedCheck" style="margin-right: 20px">
                                 设置结局
                             </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="modifiedCheck">
-                            <label class="form-check-label" for="modifiedCheck" style="margin-right: 20px">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="modifiedCheck" checked="checked" name="modified">
+                            <label class="custom-control-label" for="modifiedCheck" style="margin-right: 20px">
                                 允许续写
                             </label>
                         </div>
+                        <button class="btn btn-outline-primary" type="submit">提交故事</button>
                     </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                            <label class="form-check-label" for="invalidCheck2">
-                                Agree to terms and conditions
-                            </label>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" type="submit">Submit form</button>
                 </form>
 
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->

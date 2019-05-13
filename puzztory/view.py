@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from PuzzModel.models import Storytable, Usertable
+from django.http import HttpResponse
 
 
 def homepage(request):
@@ -12,16 +13,28 @@ def homepage(request):
         'user_list': user_list
     }
 
-    # TODO: database search : ranking & trending
-    # save into (key : list)
+    return render(request, 'index.html', index_dict)
+
+
+def upload_story_page(request):
+    story_list = Storytable.objects.order_by('-likescount')[:5]
+    user_list = Usertable.objects.order_by('-experience')[:5]
+
+    index_dict = {
+        'display': 'homepage',
+        'story_list': story_list,
+        'user_list': user_list
+    }
+
     return render(request, 'index.html', index_dict)
 
 
 def upload_story(request):
-    index_dict = {
-        'display': 'upload_story'
-    }
-    return render(request, 'index.html', index_dict)
+    str = ''
+    if request.method == 'POST':
+        for key, value in request.POST.items():
+            str += (key + ' : ' + value)
+    return HttpResponse(str)
 
 
 def system_message(request):
