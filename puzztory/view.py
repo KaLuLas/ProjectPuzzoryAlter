@@ -47,16 +47,16 @@ def upload_story(request):
             title=story_title, beginning=frag_record.fragmentid,
             fragmentscount=1
         )
-        if request.POST.has_key('branch'):
+        if 'branch' in request.POST:
             story_record.branch = '1'
-        if not request.POST.has_key('modified'):
+        if 'modified' not in request.POST:
             story_record.branch = '0'
-        if request.POST.has_key('ending'):
+        if 'ending' in request.POST:
             story_record.finished = '1'
-        if request.POST.has_key('fragWordCount'):
+        if 'fragWordCount' in request.POST:
             story_record.wordslimit = '1'
             story_record.fragmentwordslimit = request.POST['fragWordCount']
-        if request.POST.has_key('fragNumCount'):
+        if 'fragNumCount' in request.POST:
             story_record.fragmentcapacity = request.POST['fragNumCount']
         story_record.save()
         frag_record.storyid = story_record.storyid
