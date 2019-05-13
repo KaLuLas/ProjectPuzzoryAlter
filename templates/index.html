@@ -42,6 +42,13 @@
             margin-bottom: 10px;
         }
     </style>
+    <script type="text/javascript">
+        function switchInput(id){
+            console.log(id);
+            var input=document.getElementById(id);
+            input.disabled=!input.disabled;    
+        }
+    </script>
 </head>
 
 <body>
@@ -229,22 +236,22 @@
                     <!-- decide frag count & words limit -->
                     <div class="form-row mb-3">
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" disabled="disabled" id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" >
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet">
-                                    <label class="form-check-label" for="fragSet">
+                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')" >
+                                    <label class="form-check-label" for="fragCountSet">
                                         片段个数
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" disabled="disabled" id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragWordSet">
-                                    <label class="form-check-label" for="fragSet">
+                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
+                                    <label class="form-check-label" for="fragWordSet">
                                         片段字数
                                     </label>
                                 </div>
