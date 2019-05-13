@@ -187,7 +187,7 @@
     <div class="container-fluid" style="margin-top: 80px; margin-bottom: 80px;">
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
-                <div class="dropdown-menu-left">
+                <div class="dropdown-menu-left" style="padding-bottom: 30px;">
                     <h1 class="dropdown-header side-bar-title">Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if story_list %}
@@ -204,7 +204,7 @@
                     </a>
                     <div class="dropdown-divider"></div>
                     <h1 class="dropdown-header side-bar-title">Ranking</h1>
-                    <a class="dropdown-item list-group disabled" href="#" style="padding-bottom: 80px;">
+                    <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
