@@ -43,13 +43,13 @@
         }
     </style>
     <script type="text/javascript">
-        function switchInput(id){
+        function switchInput(id) {
             console.log(id);
-            var input=document.getElementById(id);
-            input.disabled=!input.disabled;
-            if(input.disabled){
-                input.value="";
-            }    
+            var input = document.getElementById(id);
+            input.disabled = !input.disabled;
+            if (input.disabled) {
+                input.value = "";
+            }
         }
     </script>
 </head>
@@ -146,7 +146,7 @@
     </div>
     {% endif %}
 
-    <div class="container-fluid" style="margin-top: 80px">
+    <div class="container-fluid" style="margin-top: 80px; margin-bottom: 80px;">
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left">
@@ -215,8 +215,8 @@
                 </div>
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 {% elif display == 'upload_story' %}
-                <h5>upload_story施工中</h5>
-                <form>
+                <!-- <h5>upload_story施工中</h5> -->
+                <form style="margin-top:20px">
                     <div class="form-row">
                         <div class="col-md-7 mb-3">
                             <!-- <label for="DefaultTitle">Title</label> -->
@@ -229,20 +229,45 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-md-10 mb-3">
+                    <div class="form-row  mb-3">
+                        <div class="col-md-10">
                             <textarea type="text" class="form-control" id="storyFirstSeg" rows="10"
                                 placeholder="在此输入故事的第一节..." required></textarea>
                         </div>
+                    </div>
+                    <!-- self defined rules & keywords -->
+                    <div class="form-row align-items-center" id="selfDefinedRules">
+                        <div class="col-md-7 mb-3 input-group">
+                            <input type="text" class="form-control" name="Rule0" id="selfDefinedRule0">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button"><i class="fa fa-minus"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <!-- set new rules here -->
+                        <div class="btn mb-3 btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                    
+                    <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
+                        <div class="col-md-1 input-group">
+                            <input type="text" class="form-control" name="Keyword0" id="selfDefinedKeyword0">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="button"><i class="fa fa-minus"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <!-- add new keywords here -->
+                        <div class="btn btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i></div>
                     </div>
 
                     <!-- decide frag count & words limit -->
                     <div class="form-row mb-3">
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" disabled="disabled" id="fragCountSetInput"
+                                onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')" >
+                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
                                     <label class="form-check-label" for="fragCountSet">
                                         片段个数
                                     </label>
@@ -250,7 +275,8 @@
                             </div>
                         </div>
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                            <input type="text" class="form-control" disabled="disabled" id="fragWordSetInput"
+                                onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
@@ -294,7 +320,7 @@
 
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
                 {% elif display == 'system_message' %}
-                <h5>system_message施工中</h5>
+                <h5 style="margin-top:20px">system_message施工中</h5>
                 {% endif %}
             </div>
         </div>
