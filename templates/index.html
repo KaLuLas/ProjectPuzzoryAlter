@@ -255,9 +255,9 @@
                             <!-- <div class="badge badge-light mr-1">K</div> -->
                             <!-- NOTE: how to judge whether fragmentcapacity is not blank -->
                             {% if story.wordslimit == '1' or fragmentcapacity in story %}
-                            <div class="badge badge-light mr-auto">F</div>
+                            <div class="badge badge-light">F</div>
                             {% endif %}
-                            <small class="text-muted" id="createTime">{{ story.createtime }}</small>
+                            <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
                         </div>
                         <div class="row d-flex">
                             <div class="col-10">
@@ -307,7 +307,7 @@
                             <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
                             <span class="badge badge-warning"><i class="fa fa-lock" aria-hidden="true"></i></span>
                             <span class="badge badge-warning"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
-                            <h5 class="mb-1 pl-2 pr-2"> story.title </h5>
+                            <h5 class="mb-1 pl-2 pr-2"> static template </h5>
                             <div class="badge badge-light mr-1">R</div>
                             <div class="badge badge-light mr-1">K</div>
                             <div class="badge badge-light mr-auto">F</div>
@@ -351,18 +351,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
-                            varius blandit.</p>
-                        <small class="text-muted">easter eggs.</small>
-                    </a>
                 </div>
-
-
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 <form style="margin-top:20px" action="{% url 'upload_story' %}" method="POST">
