@@ -402,10 +402,10 @@
                     <div class="form-row mb-3  align-items-center">
                         <div class="input-group col-md-2">
                             <input type="text" class="form-control" disabled="disabled" name="fragNumCount"
-                                id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                                id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')" required>
+                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
                                     <label class="form-check-label" for="fragCountSet">
                                         片段个数
                                     </label>
@@ -414,10 +414,10 @@
                         </div>
                         <div class="input-group col-md-2">
                             <input type="text" class="form-control" disabled="disabled" name="fragWordCount"
-                                id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                                id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')" required>
+                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
                                     <label class="form-check-label" for="fragWordSet">
                                         片段字数
                                     </label>
