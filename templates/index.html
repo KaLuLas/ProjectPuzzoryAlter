@@ -239,6 +239,7 @@
                     {% for story in story_full_list %}
                     {% for key,value in story.items %}
                     {{ key }}{{ value }}
+                    {% endfor %}
                     <a href="{% url 'story_page' story.storyid %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
