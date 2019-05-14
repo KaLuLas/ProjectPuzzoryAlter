@@ -237,13 +237,11 @@
                     </a> -->
                     {% if story_full_list %}
                     {% for story in story_full_list %}
-                    {% for key,value in story.items %}
-                    {{ key }}{{ value }}
-                    {% endfor %}
+                    <p>{{story}}</p>
                     <a href="{% url 'story_page' story.storyid %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
-                        <div class="d-flex align-items-center ">
+                        <div class="d-flex align-items-center mb-2">
                             {% if story.finished == '1' %}
                             <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
                             {% elif story.ineditable == '1' %}
@@ -306,7 +304,7 @@
                     <a href="#"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
-                        <div class="d-flex align-items-center ">
+                        <div class="d-flex align-items-center mb-2">
                             <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
                             <span class="badge badge-warning"><i class="fa fa-lock" aria-hidden="true"></i></span>
                             <span class="badge badge-warning"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
