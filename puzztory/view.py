@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 index_dict = {
         'display': 'homepage',
         'story_list': '',
-        'user_list': ''
+        'user_list': '',
+        'story_full_list': ''
     }
 
 
@@ -17,16 +18,20 @@ def homepage(request):
     index_dict['display'] = 'homepage'
     index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+    # TODO: FUCK add content of the first fragment into the dictionary
+    index_dict['story_full_list'] = Storytable.objects.order_by('createtime')
 
     return render(request, 'index.html', index_dict)
+
 
 def storypage(request, story_id):
     story_dict = {
         'story': Storytable.objects.get(storyid=story_id)
      }
     # story_dict['story'] = Storytable.objects.get(storyid=story_id)
-    #return HttpResponse("You're looking at story %s." % story_id)
+    # return HttpResponse("You're looking at story %s." % story_id)
     return render(request, 'story.html', story_dict)
+
 
 def upload_story_page(request):
     index_dict['display'] = 'upload_story'
