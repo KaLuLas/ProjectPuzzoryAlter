@@ -225,7 +225,7 @@
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list" style="margin-top:20px">
-                    <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
+                    <a href="{% url 'story_page' 8 %}" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">[标题] Puzztory.cn施工中</h5>
                             <small>[创建时间]</small>
@@ -362,7 +362,7 @@
                     </div>
                 </form>
 
-                
+
                 {% elif display == 'system_message' %}
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
                 <h5 style="margin-top:20px">system_message施工中</h5>

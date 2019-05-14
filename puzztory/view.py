@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from PuzzModel.models import Storytable, Usertable, Fragmenttable
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 index_dict = {
         'display': 'homepage',
@@ -20,6 +20,8 @@ def homepage(request):
 
     return render(request, 'index.html', index_dict)
 
+def storypage(request, story_id):
+    return HttpResponse("You're looking at story %s." % story_id)
 
 def upload_story_page(request):
     index_dict['display'] = 'upload_story'
