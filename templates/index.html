@@ -231,10 +231,13 @@
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
+                            <!-- if the story was already finished -->
                             {% if story.finished == '1' %}
                             <span class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></span>
+                            <!-- if the story cannot be modified -->
                             {% elif story.modified == '0' %}
                             <span class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                            <!-- if the story is being edited -->
                             {% elif story.ineditable == '1' %}
                             <span class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
                             {% endif %}
@@ -252,6 +255,7 @@
                         <div class="row d-flex">
                             <div class="col-10">
                                 <p class="mb-1" id="firstPartText">
+                                    <!-- TODO: should find a way to load the content of the first fragment into this section -->
                                     content of FRAG {{ story.beginning }}
                                 </p>
                             </div>
@@ -259,6 +263,7 @@
                                 <div class="row justify-content-end mb-2 pr-2">
                                     <button type="button" class="btn btn-light btn-sm" disabled>
                                         <i class="fa fa-comment" aria-hidden="true"></i>
+                                        <!-- TODO: should add new attribute commentsCount -->
                                         <span id="commentNum">0(TODO)</span>
                                     </button>
                                 </div>
@@ -289,36 +294,36 @@
                     {% endfor %}
                     {% else %}
                     <p>No stories available.</p>
+                    <!-- this template can be display without Django's rendering -->
                     <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                             <div class="d-flex align-items-center mb-2">
                                 <div class="badge badge-warning mr-1"><i class="fa fa-clock" aria-hidden="true"></i></div>
                                 <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                                 <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
-                                <h5 class="mb-1 pr-2"> static template </h5>
+                                <h5 class="mb-1 pr-2">STATIC TEMPLATE</h5>
                                 <div class="badge badge-light mr-1">R</div>
                                 <div class="badge badge-light mr-1">K</div>
                                 <div class="badge badge-light mr-auto">F</div>
-                                <small class="text-muted" id="createTime">2019/5/14 20:35</small>
+                                <small class="text-muted" id="createTimeStatic">2019/5/14 20:35</small>
                             </div>
                             <div class="row d-flex">
                                 <div class="col-10">
-                                    <p class="mb-1" id="firstPartText">
-                                        Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
-                                        varius blandit.
+                                    <p class="mb-1" id="firstPartTextStatic">
+                                        YOU SHOULDN'T BE WATCHING THIS.
                                     </p>
                                 </div>
                                 <div class="col-2">
                                     <div class="row justify-content-end mb-2 pr-2">
                                         <button type="button" class="btn btn-light btn-sm" disabled>
                                             <i class="fa fa-comment" aria-hidden="true"></i>
-                                            <span id="commentNum">10</span>
+                                            <span id="commentNumStatic">10</span>
                                     </button>
                                 </div>
                                 <div class="row justify-content-end mb-2 pr-2">
                                     <button type="button" class="btn btn-light btn-sm" disabled>
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                        <span id="likesNum">5</span>
+                                        <span id="likesNumStatic">5</span>
                                     </button>
                                 </div>
                             </div>
@@ -326,14 +331,14 @@
                         <div class="row align-items-end pr-2">
                             <div class="col-10">
                                 <small class="text-muted">Published by </small>
-                                <span><small class="text-muted" id="author">KaLuLas</small></span>
+                                <span><small class="text-muted" id="authorStatic">KaLuLas</small></span>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end">
                                     <button type="button" class="btn btn-info" disabled>
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                        <span id="storyFragCount">5</span>/
-                                        <span id="storyFragTotal">20</span>
+                                        <span id="storyFragCountStatic">5</span>/
+                                        <span id="storyFragTotalStatic"><i class="fa fa-infinity"></i></span>
                                     </button>
                                 </div>
                             </div>

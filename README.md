@@ -8,17 +8,22 @@
 
 ### 项目记录
 
+**2019.05.15：**
+
+- [x] 主页故事展示 【KAL
+- [x] 解决时区不正确问题 【ALEX
+- [x] 故事展示页初步 【ALEX
+
 
 
 **TODO:**
 
 - [ ] 主界面列表图标 & 故事框图片添加 【 KAL
 - [ ] 添加片段功能 【 ALEX
-- [ ] 故事展示页 【ALEX
-- [ ] 修改models 【ALEX
-- [x] 主页故事展示 【KAL
+- [ ] 故事展示页进阶 【ALEX
 - [ ] 成功提交故事通知 【KAL
-- [x] 解决时区不正确问题 【ALEX
+- [ ] 片段数和字数都要大于0【KAL
+- [ ] 要能显示“无片段数限制” 【KAL
 
 
 
@@ -83,7 +88,13 @@
 
 是否有结局和是否完结混起来了！！
 
+片段数要可以是无限啊为啥50
 
+ ALTER TABLE fragmentTable MODIFY COLUMN content VARCHAR(500) CHARACTER SET utf8 NOT NULL;
+
+ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NULL;
+
+设置了中文但是没有改models.py 不要紧？
 
 
 
