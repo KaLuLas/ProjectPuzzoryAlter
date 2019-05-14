@@ -21,7 +21,12 @@ def homepage(request):
     return render(request, 'index.html', index_dict)
 
 def storypage(request, story_id):
-    return HttpResponse("You're looking at story %s." % story_id)
+    story_dict = {
+        'story': Storytable.objects.get(storyid=story_id)
+     }
+    # story_dict['story'] = Storytable.objects.get(storyid=story_id)
+    #return HttpResponse("You're looking at story %s." % story_id)
+    return render(request, 'story.html', story_dict)
 
 def upload_story_page(request):
     index_dict['display'] = 'upload_story'
