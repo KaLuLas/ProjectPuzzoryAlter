@@ -225,28 +225,17 @@
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list" style="margin-top:20px">
-                    <!-- <a href="{% url 'story_page' 8 %}"
-                        class=" list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">[标题] Puzztory.cn施工中</h5>
-                            <small>[创建时间]</small>
-                        </div>
-                        <p class="mb-1">[概述] The time complexity of lines 1 and 2 are just constant. Then, for each
-                            child, we have a call to the same procedure </p>
-                        <small>[作者] The Incredible KaLuLas </small>
-                    </a> -->
                     {% if story_full_list %}
                     {% for story in story_full_list %}
-                    <p>{{story}}</p>
                     <a href="{% url 'story_page' story.storyid %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
                             {% if story.finished == '1' %}
-                            <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
-                            {% elif story.ineditable == '1' %}
+                            <span class="badge badge-warning"><i class="fa fa-book" aria-hidden="true"></i></span>
+                            {% elif story.modified == '0' %}
                             <span class="badge badge-warning"><i class="fa fa-lock" aria-hidden="true"></i></span>
-                            {% elif story.modified == '1' %}
+                            {% elif story.ineditable == '1' %}
                             <span class="badge badge-warning"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
                             {% endif %}
                             <h5 class="mb-1 pl-2 pr-2">{{ story.title }}</h5>
@@ -300,32 +289,30 @@
                     {% endfor %}
                     {% else %}
                     <p>No stories available.</p>
-                    {% endif %}
-                    <a href="#"
-                        class=" list-group-item list-group-item-action flex-column align-items-start">
+                    <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
-                            <span class="badge badge-warning"><i class="fa fa-lock" aria-hidden="true"></i></span>
-                            <span class="badge badge-warning"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
-                            <h5 class="mb-1 pl-2 pr-2"> static template </h5>
-                            <div class="badge badge-light mr-1">R</div>
-                            <div class="badge badge-light mr-1">K</div>
-                            <div class="badge badge-light mr-auto">F</div>
-                            <small class="text-muted" id="createTime">2019/5/14 20:35</small>
-                        </div>
-                        <div class="row d-flex">
-                            <div class="col-10">
-                                <p class="mb-1" id="firstPartText">
-                                    Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
-                                    varius blandit.
-                                </p>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge badge-warning"><i class="fa fa-clock" aria-hidden="true"></i></span>
+                                <span class="badge badge-warning"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                <span class="badge badge-warning"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
+                                <h5 class="mb-1 pl-2 pr-2"> static template </h5>
+                                <div class="badge badge-light mr-1">R</div>
+                                <div class="badge badge-light mr-1">K</div>
+                                <div class="badge badge-light mr-auto">F</div>
+                                <small class="text-muted" id="createTime">2019/5/14 20:35</small>
                             </div>
-                            <div class="col-2">
-                                <div class="row justify-content-end mb-2 pr-2">
-                                    <button type="button" class="btn btn-light btn-sm" disabled>
-                                        <i class="fa fa-comment" aria-hidden="true"></i>
-                                        <span id="commentNum">10</span>
+                            <div class="row d-flex">
+                                <div class="col-10">
+                                    <p class="mb-1" id="firstPartText">
+                                        Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
+                                        varius blandit.
+                                    </p>
+                                </div>
+                                <div class="col-2">
+                                    <div class="row justify-content-end mb-2 pr-2">
+                                        <button type="button" class="btn btn-light btn-sm" disabled>
+                                            <i class="fa fa-comment" aria-hidden="true"></i>
+                                            <span id="commentNum">10</span>
                                     </button>
                                 </div>
                                 <div class="row justify-content-end mb-2 pr-2">
@@ -352,6 +339,7 @@
                             </div>
                         </div>
                     </a>
+                    {% endif %}
                 </div>
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
@@ -417,7 +405,7 @@
                                 id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
+                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')" required>
                                     <label class="form-check-label" for="fragCountSet">
                                         片段个数
                                     </label>
@@ -429,7 +417,7 @@
                                 id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
+                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')" required>
                                     <label class="form-check-label" for="fragWordSet">
                                         片段字数
                                     </label>

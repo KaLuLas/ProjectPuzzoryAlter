@@ -19,7 +19,7 @@ def homepage(request):
     index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
     # TODO: FUCK add content of the first fragment into the dictionary
-    index_dict['story_full_list'] = Storytable.objects.order_by('createtime')
+    index_dict['story_full_list'] = Storytable.objects.order_by('-createtime')
 
     return render(request, 'index.html', index_dict)
 
