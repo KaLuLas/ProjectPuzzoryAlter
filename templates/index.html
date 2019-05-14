@@ -244,7 +244,7 @@
                             <!-- TODO: add if statement after storytable has attribute 'keywords' -->
                             <!-- <div class="badge badge-light mr-1">K</div> -->
                             <!-- NOTE: how to judge whether fragmentcapacity is not blank -->
-                            {% if story.wordslimit == '1' or fragmentcapacity in story %}
+                            {% if story.wordslimit == '1' or story.fragmentcapacity != null %}
                             <div class="badge badge-light">F</div>
                             {% endif %}
                             <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
