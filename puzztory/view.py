@@ -63,10 +63,10 @@ def upload_story(request):
             story_record.branch = '1'
         if 'modified' not in request.POST:
             story_record.modified = '0'
-        if 'ending' in request.POST:
+        # if 'ending' in request.POST:
             # TODO: need another attribute
             # story_record.finished = '1'
-            pass
+            # pass
         if 'fragWordCount' in request.POST:
             story_record.wordslimit = '1'
             story_record.fragmentwordslimit = request.POST['fragWordCount']
