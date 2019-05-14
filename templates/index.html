@@ -220,6 +220,8 @@
                 </div>
             </div>
             <div class="col-sm-10" style="background-color: rgb(248, 248, 248)">
+
+
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list" style="margin-top:20px">
@@ -251,6 +253,8 @@
                         <small class="text-muted">easter eggs.</small>
                     </a>
                 </div>
+
+
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 <form style="margin-top:20px" action="{% url 'upload_story' %}" method="POST">
@@ -357,6 +361,8 @@
                         <button class="btn btn-outline-primary" type="submit">提交故事</button>
                     </div>
                 </form>
+
+                
                 {% elif display == 'system_message' %}
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
                 <h5 style="margin-top:20px">system_message施工中</h5>
