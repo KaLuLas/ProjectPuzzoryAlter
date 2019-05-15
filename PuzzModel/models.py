@@ -143,6 +143,7 @@ class Story(models.Model):
     branch = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     lock = models.BooleanField(default=False)
+    modified = models.BooleanField(default=True)
     likescount = models.IntegerField(default=0)  
     commentscount = models.IntegerField(default=0)
     fragscount = models.IntegerField(default=1)

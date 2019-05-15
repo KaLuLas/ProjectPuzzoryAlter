@@ -107,7 +107,7 @@
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
-                            placeholder="{% if user.is_authenticated %}welcome, {{ user.last_name }}{% else %}Please login first.{% endif %}"
+                            placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
                             style="width: 10cm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
@@ -208,9 +208,9 @@
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="#" class="list-group-item list-group-item-action">{{ user.username }}</a>
+                        <a href="#" class="list-group-item list-group-item-action">{{ user.nickname }}</a>
                         {% else %}
-                        <a href="#" class="list-group-item list-group-item-warning">{{ user.username }}</a>
+                        <a href="#" class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -232,22 +232,25 @@
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
                             <!-- if the story was already finished -->
-                            {% if story.finished == '1' %}
+                            {% if story.finished == True %}
                             <span class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></span>
                             <!-- if the story cannot be modified -->
-                            {% elif story.modified == '0' %}
+                            {% elif story.lock == True %}
                             <span class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></span>
                             <!-- if the story is being edited -->
-                            {% elif story.ineditable == '1' %}
-                            <span class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></span>
+                            {% elif story.modified == False %}
+                            <span class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
+                                    aria-hidden="true"></i></span>
+                            {% elif story.modified == True %}
+                            <span class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
+                                    aria-hidden="true"></i></span>
                             {% endif %}
                             <h5 class="mb-1 pr-2">{{ story.title }}</h5>
                             <!-- TODO: add if statement after storytable has attribute 'rules' -->
                             <!-- <div class="badge badge-light mr-1">R</div> -->
                             <!-- TODO: add if statement after storytable has attribute 'keywords' -->
                             <!-- <div class="badge badge-light mr-1">K</div> -->
-                            <!-- NOTE: how to judge whether fragmentcapacity is not blank -->
-                            {% if story.wordslimit == '1' or story.fragmentcapacity != null %}
+                            {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
                             <div class="badge badge-light">F</div>
                             {% endif %}
                             <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
@@ -255,16 +258,14 @@
                         <div class="row d-flex">
                             <div class="col-10">
                                 <p class="mb-1" id="firstPartText">
-                                    <!-- TODO: should find a way to load the content of the first fragment into this section -->
-                                    content of FRAG {{ story.beginning }}
+                                    {{ story.ffcontent }}
                                 </p>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end mb-2 pr-2">
                                     <button type="button" class="btn btn-light btn-sm" disabled>
                                         <i class="fa fa-comment" aria-hidden="true"></i>
-                                        <!-- TODO: should add new attribute commentsCount -->
-                                        <span id="commentNum">0(TODO)</span>
+                                        <span id="commentNum">{{ story.commentscount }}</span>
                                     </button>
                                 </div>
                                 <div class="row justify-content-end mb-2 pr-2">
@@ -278,14 +279,18 @@
                         <div class="row align-items-end pr-2">
                             <div class="col-10">
                                 <small class="text-muted">Published by </small>
-                                <span><small class="text-muted" id="author">{{ story.username }}</small></span>
+                                <span><small class="text-muted" id="author">{{ story.nickname }}</small></span>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end">
                                     <button type="button" class="btn btn-info" disabled>
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                        <span id="storyFragCount">{{ story.fragmentscount }}</span>/
-                                        <span id="storyFragTotal">{{ story.fragmentcapacity }}</span>
+                                        <span id="storyFragCount">{{ story.fragscount }}</span>/
+                                        {% if story.fragscountlimit == -1 %}
+                                        <span id="storyFragTotalInf"><i class="fa fa-infinity"></i></span>
+                                        {% else %}
+                                        <span id="storyFragTotal">{{ story.fragscountlimit }}</span>
+                                        {% endif %}
                                     </button>
                                 </div>
                             </div>
@@ -297,27 +302,27 @@
                     <!-- this template can be display without Django's rendering -->
                     <a href="#" class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="badge badge-warning mr-1"><i class="fa fa-clock" aria-hidden="true"></i></div>
-                                <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
-                                <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
-                                <h5 class="mb-1 pr-2">STATIC TEMPLATE</h5>
-                                <div class="badge badge-light mr-1">R</div>
-                                <div class="badge badge-light mr-1">K</div>
-                                <div class="badge badge-light mr-auto">F</div>
-                                <small class="text-muted" id="createTimeStatic">2019/5/14 20:35</small>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="badge badge-warning mr-1"><i class="fa fa-clock" aria-hidden="true"></i></div>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
+                            <h5 class="mb-1 pr-2">STATIC TEMPLATE</h5>
+                            <div class="badge badge-light mr-1">R</div>
+                            <div class="badge badge-light mr-1">K</div>
+                            <div class="badge badge-light mr-auto">F</div>
+                            <small class="text-muted" id="createTimeStatic">2019/5/14 20:35</small>
+                        </div>
+                        <div class="row d-flex">
+                            <div class="col-10">
+                                <p class="mb-1" id="firstPartTextStatic">
+                                    YOU SHOULDN'T BE WATCHING THIS.
+                                </p>
                             </div>
-                            <div class="row d-flex">
-                                <div class="col-10">
-                                    <p class="mb-1" id="firstPartTextStatic">
-                                        YOU SHOULDN'T BE WATCHING THIS.
-                                    </p>
-                                </div>
-                                <div class="col-2">
-                                    <div class="row justify-content-end mb-2 pr-2">
-                                        <button type="button" class="btn btn-light btn-sm" disabled>
-                                            <i class="fa fa-comment" aria-hidden="true"></i>
-                                            <span id="commentNumStatic">10</span>
+                            <div class="col-2">
+                                <div class="row justify-content-end mb-2 pr-2">
+                                    <button type="button" class="btn btn-light btn-sm" disabled>
+                                        <i class="fa fa-comment" aria-hidden="true"></i>
+                                        <span id="commentNumStatic">10</span>
                                     </button>
                                 </div>
                                 <div class="row justify-content-end mb-2 pr-2">
@@ -406,7 +411,7 @@
                     <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
                     <div class="form-row mb-3  align-items-center">
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" name="fragNumCount"
+                            <input type="text" class="form-control" disabled="disabled" name="fragsCountLimit"
                                 id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -418,7 +423,7 @@
                             </div>
                         </div>
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" name="fragWordCount"
+                            <input type="text" class="form-control" disabled="disabled" name="fragWordsLimit"
                                 id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -439,17 +444,10 @@
                             </label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="closedCheck" checked="checked"
-                                name="ending">
-                            <label class="custom-control-label" for="closedCheck" style="margin-right: 20px">
-                                设置结局
-                            </label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" type="checkbox" id="modifiedCheck" checked="checked"
                                 name="modified">
                             <label class="custom-control-label" for="modifiedCheck" style="margin-right: 20px">
-                                允许续写
+                                允许修改
                             </label>
                         </div>
                         <button class="btn btn-outline-primary" type="submit">提交故事</button>
