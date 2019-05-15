@@ -73,18 +73,7 @@ class AuthUserUserPermissions(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
-
-
-class Commenttable(models.Model):
-    nickname = models.CharField(max_length=20)
-    email = models.CharField(max_length=150)
-    sof = models.BooleanField()
-    storyid = models.IntegerField(blank=True, null=True)
-    fragid = models.IntegerField(blank=True, null=True)
-    content = models.CharField(max_length=150)
-    createtime = models.DateTimeField(default=timezone.now)
-    likescount = models.IntegerField(default=0)  
+        unique_together = (('user', 'permission'),) 
 
 
 class DjangoAdminLog(models.Model):
@@ -167,3 +156,12 @@ class UserExtension(User):
     experience = models.IntegerField(default=0)
     avator = models.ImageField(blank=True)
 
+class Comment(models.Model):
+    nickname = models.CharField(max_length=20)
+    email = models.CharField(max_length=150)
+    sof = models.BooleanField()
+    storyid = models.IntegerField(blank=True, null=True)
+    fragid = models.IntegerField(blank=True, null=True)
+    content = models.CharField(max_length=150)
+    createtime = models.DateTimeField(default=timezone.now)
+    likescount = models.IntegerField(default=0) 
