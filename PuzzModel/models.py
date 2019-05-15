@@ -160,7 +160,7 @@ class Story(models.Model):
     head = models.IntegerField()
     headcontent = models.CharField(max_length=500)
     nickname = models.CharField(max_length=20)
-    email = models.CharField()
+    email = models.CharField(max_length=150)
     title = models.CharField(max_length=50)
     createtime = models.DateTimeField(default=timezone.now)
     branch = models.BooleanField(default=False)
