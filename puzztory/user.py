@@ -1,5 +1,5 @@
 # from django.http import HttpResponse
-from PuzzModel.models import Usertable
+# from PuzzModel.models import Usertable
 # from django.shortcuts import render_to_response
 # from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render
@@ -31,8 +31,8 @@ def register(request):
         user.last_name = user_name
         user.save()
         login_dict['useremail'] = user_email
-        user_record = Usertable(useremail=user_email, username=user_name)
-        user_record.save()
+        # user_record = Usertable(useremail=user_email, username=user_name)
+        # user_record.save()
     return render(request, 'login.html', login_dict)
 
 
@@ -46,11 +46,11 @@ def Login(request):
     if request.method == 'POST':
         user_email = request.POST['e']
         pwd = request.POST['p']
-        try:
-            Usertable.objects.get(useremail=user_email)
-        except Usertable.DoesNotExist:
-            login_dict['emailNotExistedAlert'] = "该用户不存在"
-            return render(request, "login.html", login_dict)
+        # try:
+        #     Usertable.objects.get(useremail=user_email)
+        # except Usertable.DoesNotExist:
+        #     login_dict['emailNotExistedAlert'] = "该用户不存在"
+        #     return render(request, "login.html", login_dict)
         user = authenticate(username=user_email, password=pwd)
         if user is None:
             login_dict['passwordIncorrect'] = "密码错误"
