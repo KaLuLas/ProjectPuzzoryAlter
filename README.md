@@ -78,86 +78,87 @@
 
 **NOTE：**
 
-没有第一段的内容
-
-没有评论的计数
-
-没有判断故事是否有结局
-
-片段个数和是否结局有点重复 -> 需要一个方案
-
-是否有结局和是否完结混起来了！！
-
-片段数要可以是无限啊为啥50
-
  ALTER TABLE fragmentTable MODIFY COLUMN content VARCHAR(500) CHARACTER SET utf8 NOT NULL;
 
 ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NULL;
 
-设置了中文但是没有改models.py 不要紧？
+故事展示页显示问题
+
+部分区域文本缩略问题
+
+部分区域中文需求问题
+
+
 
 
 
 ### 数据库设计（django
 
-**Usertable**
-
-| 属性名     |      | 注释                    |
-| ---------- | ---- | ----------------------- |
-| useremail  |      | 用户邮箱，max_length=50 |
-| username   |      | 用户昵称，max_length=50 |
-| level      |      | 等级，default=1         |
-| experience |      | 经验值，default=0       |
-
-**Storytable**
-
-| 属性名             |      | 注释                                                        |
-| ------------------ | ---- | ----------------------------------------------------------- |
-| username           |      | 创建人昵称，max_length=50                                   |
-| useremail          |      | 创建人邮箱，max_length=50                                   |
-| title              |      | 标题，max_length=50                                         |
-| likescount         |      | 获得的赞数，default=0                                       |
-| fragmentcapacity   |      | 最多允许片段数（由作者决定，default=50                      |
-| fragmentscount     |      | 当前片段个数，default=0                                     |
-| branch             |      | 是否允许分支，default='0'                                   |
-| wordslimit         |      | 是否限制片段字数，default='0'                               |
-| finished           |      | 是否完结，default='0'                                       |
-| modified           |      | 是否允许修改（作者和游客一起用，作者身份优先），default='1' |
-| ineditable         |      | 修改的锁，default='0'                                       |
-| createtime         |      | 故事创建日期                                                |
-| beginning          |      | 故事开头片段id                                              |
-| storyid            |      | 故事id                                                      |
-| fragmentwordslimit |      | 片段的具体限制字数，default=0                               |
-
-**Fragmenttable**
-
-| 属性名        |      | 注释                      |
-| ------------- | ---- | ------------------------- |
-| username      |      | 创建人昵称，max_length=50 |
-| useremail     |      | 创建人邮箱，max_length=50 |
-| content       |      | 片段文本                  |
-| createtime    |      | 创建时间                  |
-| commentscount |      | 评论数，default=0         |
-| likescount    |      | 获得的赞数，default=0     |
-| storyid       |      | 故事ID                    |
-| branchid      |      | 所处分支ID                |
-| branchleft    |      | 左分支ID                  |
-| branchright   |      | 右分支ID                  |
-
-**Commenttable**
-
-| 属性名     |      | 注释                    |
-| ---------- | ---- | ----------------------- |
-| commentid  |      | 评论ID                  |
-| storyid    |      | 故事ID                  |
-| fragmentid |      | 片段ID                  |
-| content    |      | 评论文本                |
-| username   |      | 用户昵称，max_length=50 |
-| useremail  |      | 用户邮箱，max_length=50 |
-| createtime |      | 创建时间                |
-| likescount |      | 点赞数，default=0       |
 
 
+**UserExtension**（User）
+
+| attribute  | type         | null | blank | default | max_length | description           |
+| ---------- | ------------ | ---- | ----- | ------- | ---------- | --------------------- |
+| id         |              |      |       |         |            | [主键]增序            |
+| password   | CharField    |      |       |         | 128        |                       |
+| username   | CharField    |      |       |         |            | [Unique]把email存进去 |
+| email      | CharField    |      |       |         |            |                       |
+| nickname   | CharField    |      | False |         | 20         | 昵称                  |
+| level      | IntegerField |      | False | 1       |            | 等级                  |
+| experience | IntegerField |      | False | 0       |            | 经验                  |
+| avator     | ImageField   |      | True  |         |            | 头像                  |
+|            |              |      |       |         |            |                       |
 
 
+**Story**
+
+| attribute       | type          | null | blank | default      | max_length | description                    |
+| --------------- | ------------- | ---- | ----- | ------------ | ---------- | ------------------------------ |
+| id              |               |      |       |              |            | [主键]增序                     |
+| ffid            | IntegerField  |      | False |              |            | 首个片段                       |
+| ffcontent       | CharField     |      | False |              | 500        | 首片内容                       |
+| email           | CharField     |      | False |              | 150        | 作者邮箱                       |
+| nickname        | CharField     |      | False |              | 20         | 作者昵称                       |
+| title           | CharField     |      | False |              | 50         | 题目                           |
+| createtime      | DateTimeField |      | False | timezone.now |            | c创建时间                      |
+| branch          | BooleanField  |      |       | False        |            | 是否存在分支                   |
+| finished        | BooleanField  |      |       | False        |            | 是否完结，true表示完结         |
+| lock            | BooleanField  |      |       | False        |            | 是否可编辑，true表示不可修改   |
+| likescount      | IntegerField  |      |       | 0            |            | 点赞数                         |
+| commentscount   | IntegerField  |      |       | 0            |            | 评论数                         |
+| fragscount      | IntegerField  |      |       | 1            |            | 片段数                         |
+| fragscountlimit | IntergerField |      |       | -1           |            | 片段数量上限，-1代表无额外限制 |
+| fragwordslimit  | IntegerField  |      |       | -1           |            | 片段字数上限，-1代表无额外限制 |
+
+
+**Fragment**
+
+| attribute     | type          | null | blank | default      | max_length | description |
+| ------------- | ------------- | ---- | ----- | ------------ | ---------- | ----------- |
+| id            |               |      |       |              |            | [主键]增序  |
+| storyid       | IntegerField  |      | False |              |            | 归属故事ID  |
+| email         | CharField     |      | False |              | 150        | 作者邮箱    |
+| nickname      | CharField     |      | False |              | 20         | 作者昵称    |
+| content       | CharField     |      | False |              | 500        | 片段内容    |
+| createtime    | DateTimeField |      | False | timezone.now |            | 创建时间    |
+| likescount    | IntegerField  |      |       | 0            |            | 点赞数      |
+| commentscount | IntegerField  |      |       | 0            |            | 评论数      |
+| branchid      | IntegerField  |      | False | 0            |            | 分支ID      |
+| branchleft    | IntegerField  | True | True  |              |            | 左分支ID    |
+| branchright   | IntegerField  | True | True  |              |            | 右分支ID    |
+
+**Comment**
+
+| attribute  | type          | null | blank | default      | max_length | description             |
+| ---------- | ------------- | ---- | ----- | ------------ | ---------- | ----------------------- |
+| id         |               |      |       |              |            | [主键]增序              |
+| email      | CharField     |      | False |              | 150        | 作者邮箱                |
+| nickname   | CharField     |      | False |              | 20         | 作者昵称                |
+| sof        | BooleanField  |      | False |              |            | True为故事，False为片段 |
+| storyid    | IntegerField  | True | True  |              |            | 归属故事ID              |
+| fragid     | IntegerField  | True | True  |              |            | 归属故事ID              |
+| content    | CharField     |      | False |              | 150        | 片段内容                |
+| createtime | DateTimeField |      | False | timezone.now |            | 创建时间                |
+| likescount | IntegerField  |      |       | 0            |            | 点赞数                  |
 
