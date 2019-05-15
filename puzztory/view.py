@@ -41,7 +41,7 @@ def upload_story(request):
     # MAY HAVE: fragNumCount: the maximum number of fragments a story can have
     if request.method == 'POST':
         story_title = request.POST['title']
-        first_frag_text = request.POST['firstPart']
+        first_frag_text = request.POST['ffcontent']
         frag_record = Fragment(
             content=first_frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=0)
@@ -54,10 +54,10 @@ def upload_story(request):
             story_record.branch = True
         if 'modified' not in request.POST:
             story_record.modified = False
-        if 'fragWordCount' in request.POST:
-            story_record.fragwordslimit = request.POST['fragWordCount']
-        if 'fragNumCount' in request.POST:
-            story_record.fragscountlimit = request.POST['fragNumCount']
+        if 'fragWordsLimit' in request.POST:
+            story_record.fragwordslimit = request.POST['fragWordsLimit']
+        if 'fragsCountLimit' in request.POST:
+            story_record.fragscountlimit = request.POST['fragsCountLimit']
         story_record.save()
         frag_record.storyid = story_record.id
         frag_record.save()
