@@ -8,22 +8,33 @@
 
 ### 项目记录
 
+**TODO:**
+
+- [ ] 主界面Trending & Ranking细化 【 KAL
+- [ ] （美化）填充边缘内容让页面不出现白边【KAL
+- [ ] 添加片段功能 【 ALEX
+- [ ] 故事展示页进阶 【ALEX
+- [ ] 成功提交故事通知 【KAL
+- [ ] 提交故事片段数和字数都要大于0【KAL
+- [ ] 文字省略显示问题【KAL
+- [ ] 换行在首页和故事展示页的显示问题【KAL
+
+
+
+**2019.05.16：**
+
+- [x] 数据库成功大改【TOGETHER
+- [x] 故事展示页排版问题【ALEX
+- [x] 故事信息能够正常在首页显示【KAL
+- [x] README中数据库设计部分补全【TOGETHER
+
+
+
 **2019.05.15：**
 
 - [x] 主页故事展示 【KAL
 - [x] 解决时区不正确问题 【ALEX
 - [x] 故事展示页初步 【ALEX
-
-
-
-**TODO:**
-
-- [ ] 主界面列表图标 & 故事框图片添加 【 KAL
-- [ ] 添加片段功能 【 ALEX
-- [ ] 故事展示页进阶 【ALEX
-- [ ] 成功提交故事通知 【KAL
-- [ ] 片段数和字数都要大于0【KAL
-- [ ] 要能显示“无片段数限制” 【KAL
 
 
 
@@ -124,7 +135,8 @@ ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NU
 | createtime      | DateTimeField |      | False | timezone.now |            | c创建时间                      |
 | branch          | BooleanField  |      |       | False        |            | 是否存在分支                   |
 | finished        | BooleanField  |      |       | False        |            | 是否完结，true表示完结         |
-| lock            | BooleanField  |      |       | False        |            | 是否可编辑，true表示不可修改   |
+| lock            | BooleanField  |      |       | False        |            | 是否可编辑，true表示正在被写   |
+| modified        | BooleanField  |      |       | True         |            | 是否可编辑，true表示允许修改   |
 | likescount      | IntegerField  |      |       | 0            |            | 点赞数                         |
 | commentscount   | IntegerField  |      |       | 0            |            | 评论数                         |
 | fragscount      | IntegerField  |      |       | 1            |            | 片段数                         |
