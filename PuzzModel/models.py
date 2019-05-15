@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class AuthGroup(models.Model):
@@ -180,11 +181,11 @@ class Storytable(models.Model):
         db_table = 'storyTable'
 
 
-class Usertable(models.Model):
-    useremail = models.CharField(db_column='userEmail', primary_key=True, max_length=50)  # Field name made lowercase.
-    username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
-    level = models.IntegerField(blank=True, null=True, default=1)
-    experience = models.IntegerField(blank=True, null=True, default=0)
+class UserExtension(User):
+    nickname = models.CharField(max_length=20)  # Field name made lowercase.
+    level = models.IntegerField(default=1)
+    experience = models.IntegerField(default=0)
+    avator = models.ImageField(blank=True)
 
     class Meta:
        # managed = False
