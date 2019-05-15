@@ -239,10 +239,10 @@
                             <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                             <!-- if the story is being edited -->
                             {% elif story.modified == False %}
-                            <div class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
+                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
                                     aria-hidden="true"></i></div>
                             {% elif story.modified == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
+                            <div class="badge badge-success mr-1"><i class="fa fa-pen-alt"
                                     aria-hidden="true"></i></div>
                             {% endif %}
                             <h5 class="mb-1 pr-2">{{ story.title }}</h5>
