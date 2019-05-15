@@ -77,19 +77,14 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Commenttable(models.Model):
-    commentid = models.AutoField(db_column='commentID', primary_key=True)  # Field name made lowercase.
-    storyid = models.IntegerField(db_column='storyID')  # Field name made lowercase.
-    fragmentid = models.IntegerField(db_column='fragmentID')  # Field name made lowercase.
-    content = models.TextField()
-    username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
-    useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
-    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
-    likescount = models.IntegerField(db_column='likesCount', blank=True,
-            null=True, default=0)  # Field name made lowercase.
-
-    class Meta:
-       # managed = False
-        db_table = 'commentTable'
+    nickname = models.CharField(max_length=20)
+    email = models.CharField(max_length=150)
+    sof = models.BooleanField()
+    storyid = models.IntegerField(blank=True, null=True)
+    fragid = models.IntegerField(blank=True, null=True)
+    content = models.CharField(max_length=150)
+    createtime = models.DateTimeField(default=timezone.now)
+    likescount = models.IntegerField(default=0)  
 
 
 class DjangoAdminLog(models.Model):
