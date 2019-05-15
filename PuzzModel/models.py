@@ -187,6 +187,6 @@ class UserExtension(User):
     experience = models.IntegerField(default=0)
     avator = models.ImageField(blank=True)
 
-    class Meta:
+    # class Meta:
        # managed = False
-        db_table = 'userTable'
+       # db_table = 'userTable'

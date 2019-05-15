@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from PuzzModel.models import Storytable, Usertable, Fragmenttable
+from PuzzModel.models import Storytable, Fragmenttable
+# from PuzzModel.models import UserExtension
+
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -17,7 +19,7 @@ def homepage(request):
 
     index_dict['display'] = 'homepage'
     index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
-    index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+    # index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
     # TODO: FUCK add content of the first fragment into the dictionary
     index_dict['story_full_list'] = Storytable.objects.order_by('-createtime')
 
@@ -36,7 +38,7 @@ def storypage(request, story_id):
 def upload_story_page(request):
     index_dict['display'] = 'upload_story'
     index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
-    index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+    #index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
 
     return render(request, 'index.html', index_dict)
 
@@ -82,7 +84,7 @@ def upload_story(request):
 def system_message(request):
     index_dict['display'] = 'system_message'
     index_dict['story_list'] = Storytable.objects.order_by('-likescount')[:5]
-    index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
+    # index_dict['user_list'] = Usertable.objects.order_by('-experience')[:5]
 
     return render(request, 'index.html', index_dict)
 
