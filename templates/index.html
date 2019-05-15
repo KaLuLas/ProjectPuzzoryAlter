@@ -227,7 +227,7 @@
                 <div class="list-group story-list" style="margin-top:20px">
                     {% if story_full_list %}
                     {% for story in story_full_list %}
-                    <a href="{% url 'story_page' story.storyid %}"
+                    <a href="{% url 'story_page' story.id %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
