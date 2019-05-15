@@ -52,10 +52,10 @@ def upload_story(request):
     if request.method == 'POST':
         story_title = request.POST['title']
         first_frag_text = request.POST['firstPart']
-        frag_record = Fragmenttable(
-            content=first_frag_text, username=request.user.last_name,
-            useremail=request.user.username, storyid=0, branchid=0)
-        frag_record.save()
+        # frag_record = Fragmenttable(
+        #     content=first_frag_text, username=request.user.last_name,
+        #     useremail=request.user.username, storyid=0, branchid=0)
+        # frag_record.save()
         # story_record = Storytable(
         #     username=request.user.last_name, useremail=request.user.username,
         #     title=story_title, beginning=frag_record.fragmentid,
@@ -74,9 +74,9 @@ def upload_story(request):
             story_record.fragmentwordslimit = request.POST['fragWordCount']
         if 'fragNumCount' in request.POST:
             story_record.fragmentcapacity = request.POST['fragNumCount']
-        story_record.save()
-        frag_record.storyid = story_record.storyid
-        frag_record.save()
+        # story_record.save()
+        # frag_record.storyid = story_record.storyid
+        # frag_record.save()
 
     return HttpResponseRedirect("/")
 

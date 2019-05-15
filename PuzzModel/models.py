@@ -136,29 +136,22 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Fragmenttable(models.Model):
-    username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
-    useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
-    content = models.TextField()
-    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
-    commentscount = models.IntegerField(db_column='commentsCount', blank=True,
-            null=True, default=0)  # Field name made lowercase.
-    likescount = models.IntegerField(db_column='likesCount', blank=True,
-            null=True, default=0)  # Field name made lowercase.
-    storyid = models.IntegerField(db_column='storyID')  # Field name made lowercase.
-    branchid = models.IntegerField(db_column='branchID')  # Field name made lowercase.
-    branchleft = models.IntegerField(db_column='branchLeft', blank=True, null=True)  # Field name made lowercase.
-    branchright = models.IntegerField(db_column='branchRight', blank=True, null=True)  # Field name made lowercase.
-    fragmentid = models.AutoField(db_column='fragmentID', primary_key=True)  # Field name made lowercase.
-    
-    class Meta:
-       # managed = False
-        db_table = 'fragmentTable'
+class Fragment(models.Model):
+    storyid = models.IntegerField()
+    nickname = models.CharField(max_length=20)
+    email = models.CharField(max_length=150)
+    content = models.CharField(max_length=500)
+    createtime = models.DateTimeField(default=timezone.now)
+    likescount = models.IntegerField(default=0)  
+    commentscount = models.IntegerField(default=0)   
+    branchid = models.IntegerField(default=0)
+    branchleft = models.IntegerField(blank=True, null=True) 
+    branchright = models.IntegerField(blank=True, null=True) 
 
 
 class Story(models.Model):
-    head = models.IntegerField()
-    headcontent = models.CharField(max_length=500)
+    ffid = models.IntegerField()
+    ffcontent = models.CharField(max_length=500)
     nickname = models.CharField(max_length=20)
     email = models.CharField(max_length=150)
     title = models.CharField(max_length=50)
@@ -171,18 +164,11 @@ class Story(models.Model):
     fragscount = models.IntegerField(default=1)
     fragscountlimit = models.IntegerField(default=-1)
     fragwordslimit = models.IntegerField(default=-1)    
-    
-    # class Meta:
-       # managed = False
-       # db_table = 'storyTable'
 
 
 class UserExtension(User):
-    nickname = models.CharField(max_length=20)  # Field name made lowercase.
+    nickname = models.CharField(max_length=20)  
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     avator = models.ImageField(blank=True)
 
-    # class Meta:
-       # managed = False
-       # db_table = 'userTable'
