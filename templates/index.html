@@ -233,17 +233,17 @@
                         <div class="d-flex align-items-center mb-2">
                             <!-- if the story was already finished -->
                             {% if story.finished == True %}
-                            <span class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></span>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></div>
                             <!-- if the story cannot be modified -->
                             {% elif story.lock == True %}
-                            <span class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                             <!-- if the story is being edited -->
                             {% elif story.modified == False %}
-                            <span class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></span>
+                            <div class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
+                                    aria-hidden="true"></i></div>
                             {% elif story.modified == True %}
-                            <span class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></span>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
+                                    aria-hidden="true"></i></div>
                             {% endif %}
                             <h5 class="mb-1 pr-2">{{ story.title }}</h5>
                             <!-- TODO: add if statement after storytable has attribute 'rules' -->

@@ -157,6 +157,7 @@ class UserExtension(User):
     experience = models.IntegerField(default=0)
     avator = models.ImageField(blank=True)
 
+
 class Comment(models.Model):
     nickname = models.CharField(max_length=20)
     email = models.CharField(max_length=150)
