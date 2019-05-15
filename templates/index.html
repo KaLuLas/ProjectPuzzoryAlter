@@ -184,7 +184,7 @@
     </div>
     {% endif %}
 
-    <div class="container-fluid" style="margin-top: 80px; margin-bottom: 80px;">
+    <div class="container-fluid" style="margin-bottom: 80px; margin-top: 80px;">
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left" style="padding-bottom: 30px;">
@@ -224,7 +224,7 @@
 
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
-                <div class="list-group story-list" style="margin-top:20px">
+                <div class="list-group story-list" style="margin:30px">
                     {% if story_full_list %}
                     {% for story in story_full_list %}
                     <a href="{% url 'story_page' story.id %}"
@@ -239,10 +239,10 @@
                             <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                             <!-- if the story is being edited -->
                             {% elif story.modified == False %}
-                            <div class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
+                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
                                     aria-hidden="true"></i></div>
                             {% elif story.modified == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
+                            <div class="badge badge-success mr-1"><i class="fa fa-pen-alt"
                                     aria-hidden="true"></i></div>
                             {% endif %}
                             <h5 class="mb-1 pr-2">{{ story.title }}</h5>
@@ -353,7 +353,7 @@
                 </div>
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
-                <form style="margin-top:20px" action="{% url 'upload_story' %}" method="POST">
+                <form style="margin:30px" action="{% url 'upload_story' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row mb-3 align-items-end">
                         <div class="col-md-7">

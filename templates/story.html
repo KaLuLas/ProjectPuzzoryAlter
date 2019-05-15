@@ -76,8 +76,8 @@
                             class="fas fa-user"></i></a>
                 </li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.userextension.nickname %}"><i title="个人主页"
-                            class="fas fa-user"></i></a>
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.userextension.nickname %}"><i
+                            title="个人主页" class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
                             title="退出登录" class="fas fa-sign-in-alt"></i></a>
@@ -132,115 +132,107 @@
     {% endif %}
 
 
-    <div class="container-fluid" style="background-color: rgb(248, 248, 248)">
-        <div class="row justify-content-md-center">
-            <div class="container" style="padding:0px; margin-top:80px; width:800px">
-                <div class="card" style="background-color:rgb(246, 255, 238); padding:20px">
+    <div class="container-fluid " style="background-color: rgb(248, 248, 248)">
+        <div class="row justify-content-center" style="padding-top:70px">
+            <div class="card" style="background-color:rgb(246, 255, 238); padding:20px; width:800px;">
 
-                    <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
-                        <div class="col-md-auto align-self-center">
-                            <!-- <i class="far fa-edit" style="font-size: 25px"></i> -->
-                            {% if story.finished == True %}
-                            <div><i class="fa fa-book" style="font-size: 25px" aria-hidden="true"></i></div>
-                            <!-- if the story cannot be modified -->
-                            {% elif story.lock == True %}
-                            <div><i class="fa fa-lock" style="font-size: 25px" aria-hidden="true"></i></div>
-                            <!-- if the story is being edited -->
-                            {% elif story.modified == False %}
-                            <div><i class="fa fa-pen-alt" style="font-size: 25px" aria-hidden="true"></i></div>
-                            {% elif story.modified == True %}
-                            <div><i class="fa fa-pen-alt" style="font-size: 25px" aria-hidden="true"></i></div>
-                            {% endif %}
-                        </div>
-
-                        <div class="col align-self-center">
-                            <h4 style="margin-bottom: 0px">{{ story.title }}</h4>
-                        </div>
-                        <div class="col-md-auto ml-auto align-self-center">
-                            <!-- <i class="fas fa-key" style="font-size: 15px"></i>
-                            <i class="fas fa-unlock-alt" style="font-size: 15px"></i>
-                            <i class="fas fa-key" style="font-size: 15px"></i> -->
-                            
-                            <!-- TODO: add if statement after storytable has attribute 'rules' -->
-                            <!-- <div class="badge badge-light mr-1">R</div> -->
-                            <!-- TODO: add if statement after storytable has attribute 'keywords' -->
-                            <!-- <div class="badge badge-light mr-1">K</div> -->
-                            {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
-                            <div class="badge badge-light">F</div>
-                            {% endif %}
-                        </div>
+                <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
+                    <div class="col-md-auto align-self-center">
+                        {% if story.finished == True %}
+                        <div><i class="fa fa-book" style="font-size: 15px" aria-hidden="true"></i></div>
+                        <!-- if the story cannot be modified -->
+                        {% elif story.lock == True %}
+                        <div><i class="fa fa-lock" style="font-size: 15px" aria-hidden="true"></i></div>
+                        <!-- if the story is being edited -->
+                        {% elif story.modified == False %}
+                        <div><i class="fa fa-pen-alt" style="font-size: 15px" aria-hidden="true"></i></div>
+                        {% elif story.modified == True %}
+                        <div><i class="fa fa-pen-alt" style="font-size: 15px" aria-hidden="true"></i></div>
+                        {% endif %}
                     </div>
-
-                    <div class="row">
-                        <p style="margin: 20px">
-                            {{ story.ffcontent }}
-                        </p>
+                    <div class="col align-self-center">
+                        <h4 style="margin-bottom: 0px">{{ story.title }}</h4>
                     </div>
+                    <div class="col-md-auto ml-auto align-self-center">
+                        <i class="fas fa-key" style="font-size: 15px"></i>
+                        <i class="fas fa-unlock-alt" style="font-size: 15px"></i>
+                        <i class="fas fa-key" style="font-size: 15px"></i>
 
-                    {% if story.fragscountlimit != -1 %}
-                    <div class="progress" style="margin-top: 20px; margin-bottom: 10px">
-                        <div class="progress-bar" role="progressbar" style="background-color:cadetblue; width: {{ story.fragscount }}/{{ story.fragscountlimit }}%"
-                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ story.fragscount }}/{{ story.fragscountlimit }}</div>
+                        <!-- TODO: add if statement after storytable has attribute 'rules' -->
+                        <!-- <div class="badge badge-light mr-1">R</div> -->
+                        <!-- TODO: add if statement after storytable has attribute 'keywords' -->
+                        <!-- <div class="badge badge-light mr-1">K</div> -->
+
+                        <!-- {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
+                        <div class="badge badge-light">F</div>
+                        {% endif %} -->
                     </div>
-                    {% endif %}
-
-                    <div class="row" style="margin-bottom: 7px">
-                        <div class="col-md-auto align-self-center">
-                            <i class="far fa-user" style="font-size: 15px"> {{ story.nickname }} </i>
-                        </div>
-                        <div class="col-md-auto align-self-center">
-                            <i class="far fa-clock" style="font-size: 15px"> {{ story.createtime }} </i>
-                        </div>
-
-                        <div class="col-md-auto ml-auto align-self-center">
-                            <i class="far fa-heart" style="font-size: 15px; margin-right:10px"> {{ story.likescount }}</i>
-                            <i class="far fa-comment" style="font-size: 15px"> {{ story.commentscount }} </i>
-                        </div>
-                    </div>
-                    <div>
-                            <span><small class="text-muted">keyword1 </small></span>
-                            <span><small class="text-muted">keyword2 </small></span>
-                    </div>
-                    
-
                 </div>
-                <!-- <div class="row">
-                    <div class="col-sm-8">col-sm-8</div>
-                    <div class="col-sm-4">col-sm-4</div>
+
+                {% if story.fragscountlimit != -1 %}
+                <div class="progress" style="margin-top: 20px; margin-bottom: 10px">
+                    <div class="progress-bar" role="progressbar"
+                        style="background-color:cadetblue; width: {{ story.fragscount }}/{{ story.fragscountlimit }}%"
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        {{ story.fragscount }}/{{ story.fragscountlimit }}</div>
                 </div>
+                {% endif %}
                 <div class="row">
-                        <div class="col-sm-8">col-sm-8</div>
-                        <div class="col-sm-4">col-sm-4</div>
-                </div> -->
-            </div>
-            <ul class="list-group" style="margin-top:20px; width:800px">
-                <div class="list-group-item"
-                    style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px">
-                    <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ story.title }}</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content.
-                                This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
+                    <p style="margin: 20px">
+                        {{ story.ffcontent }}
+                    </p>
                 </div>
-                <div class="list-group-item"
-                    style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px">
-                    <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content.
-                                This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                </div>
-            </ul>
 
+                <div class="row" style="margin-bottom: 7px">
+                    <div class="col-md-auto align-self-center">
+                        <i class="far fa-user" style="font-size: 15px"> {{ story.nickname }} </i>
+                    </div>
+                    <div class="col-md-auto align-self-center">
+                        <i class="far fa-clock" style="font-size: 15px"> {{ story.createtime }} </i>
+                    </div>
+
+                    <div class="col-md-auto ml-auto align-self-center">
+                        <i class="far fa-heart" style="font-size: 15px; margin-right:10px"> {{ story.likescount }}</i>
+                        <i class="far fa-comment" style="font-size: 15px"> {{ story.commentscount }} </i>
+                    </div>
+                </div>
+                <div>
+                    <span><small class="text-muted">keyword1 </small></span>
+                    <span><small class="text-muted">keyword2 </small></span>
+                </div>
+            </div>
         </div>
+
+    </div>
+    </div>
+    <div class="row justify-content-center" style="margin:20px;">
+        <ul class="list-group">
+            <div class="list-group-item"
+                style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
+                <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ story.title }}</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content.
+                            This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item"
+                style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
+                <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                            additional content.
+                            This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
     </div>
 </body>
 
