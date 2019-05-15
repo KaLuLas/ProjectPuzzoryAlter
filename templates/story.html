@@ -141,17 +141,15 @@
                         <div class="col-md-auto align-self-center">
                             <!-- <i class="far fa-edit" style="font-size: 25px"></i> -->
                             {% if story.finished == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></div>
+                            <div><i class="fa fa-book" style="font-size: 25px" aria-hidden="true"></i></div>
                             <!-- if the story cannot be modified -->
                             {% elif story.lock == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                            <div><i class="fa fa-lock" style="font-size: 25px" aria-hidden="true"></i></div>
                             <!-- if the story is being edited -->
                             {% elif story.modified == False %}
-                            <div class="badge badge-danger mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></div>
+                            <div><i class="fa fa-pen-alt" style="font-size: 25px" aria-hidden="true"></i></div>
                             {% elif story.modified == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></div>
+                            <div><i class="fa fa-pen-alt" style="font-size: 25px" aria-hidden="true"></i></div>
                             {% endif %}
                         </div>
 
@@ -179,10 +177,12 @@
                         </p>
                     </div>
 
+                    {% if story.fragscountlimit != -1 %}
                     <div class="progress" style="margin-top: 20px; margin-bottom: 10px">
-                        <div class="progress-bar" role="progressbar" style="background-color:cadetblue; width: 25%"
-                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25/100(TODO)</div>
+                        <div class="progress-bar" role="progressbar" style="background-color:cadetblue; width: {{ story.fragscount }}/{{ story.fragscountlimit }}%"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ story.fragscount }}/{{ story.fragscountlimit }}</div>
                     </div>
+                    {% endif %}
 
                     <div class="row" style="margin-bottom: 7px">
                         <div class="col-md-auto align-self-center">
