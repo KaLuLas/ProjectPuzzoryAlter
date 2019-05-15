@@ -156,29 +156,25 @@ class Fragmenttable(models.Model):
         db_table = 'fragmentTable'
 
 
-class Storytable(models.Model):
-    username = models.CharField(db_column='userName', max_length=50)  # Field name made lowercase.
-    useremail = models.CharField(db_column='userEmail', max_length=50)  # Field name made lowercase.
+class Story(models.Model):
+    head = models.IntegerField()
+    headcontent = models.CharField(max_length=500)
+    nickname = models.CharField(max_length=20)
+    email = models.CharField()
     title = models.CharField(max_length=50)
-    likescount = models.IntegerField(db_column='likesCount', blank=True,
-            null=True, default=0)  # Field name made lowercase.
-    fragmentcapacity = models.IntegerField(db_column='fragmentCapacity',
-            blank=True, null=True, default=50)  # Field name made lowercase.
-    fragmentscount = models.IntegerField(db_column='fragmentsCount',
-            blank=True, null=True, default=0)  # Field name made lowercase.
-    branch = models.CharField(max_length=1, blank=True, null=True, default='0')
-    wordslimit = models.CharField(db_column='wordsLimit', max_length=1, blank=True, null=True, default='0')  # Field name made lowercase.
-    finished = models.CharField(max_length=1, blank=True, null=True, default='0')
-    modified = models.CharField(max_length=1, blank=True, null=True, default='1')
-    ineditable = models.CharField(max_length=1, blank=True, null=True, default='0')
-    createtime = models.DateTimeField(db_column='createTime', default=timezone.now)  # Field name made lowercase.
-    beginning = models.IntegerField()
-    storyid = models.AutoField(db_column='storyID', primary_key=True)  # Field name made lowercase.
-    fragmentwordslimit = models.IntegerField(db_column='fragmentWordsLimit', default=0)  # Field name made lowercase.
-
-    class Meta:
+    createtime = models.DateTimeField(default=timezone.now)
+    branch = models.BooleanField(default=False)
+    finished = models.BooleanField(default=False)
+    lock = models.BooleanField(default=False)
+    likescount = models.IntegerField(default=0)  
+    commentscount = models.IntegerField(default=0)
+    fragscount = models.IntegerField(default=1)
+    fragscountlimit = models.IntegerField(default=-1)
+    fragwordslimit = models.IntegerField(default=-1)    
+    
+    # class Meta:
        # managed = False
-        db_table = 'storyTable'
+       # db_table = 'storyTable'
 
 
 class UserExtension(User):
