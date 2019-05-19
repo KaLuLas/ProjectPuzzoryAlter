@@ -39,9 +39,9 @@ def upload_frag(request, story_id):
             content=frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=story_id)
         frag_record.save()
-    story_record = Story.objects.get(id=story_id)
-    story_record.fragscount += 1
-    story_record.save()
+        story_record = Story.objects.get(id=story_id)
+        story_record.fragscount += 1
+        story_record.save()
 
     story_dict = {
         'story': Story.objects.get(id=story_id)
