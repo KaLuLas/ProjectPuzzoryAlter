@@ -285,10 +285,8 @@
         </div>
 
         <div class="row justify-content-center" style="padding-bottom:100px;">
-            <!-- <button class="btn fas fa-feather-alt" data-toggle="modal" data-target="#addfrag" data-whatever="@mdo"
-                style="text-decoration:blink"></button> -->
-            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"
-                data-whatever="@mdo"><i class="fas fa-feather-alt"> Add a fragment</i></button>
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
+                    class="fas fa-feather-alt"> Add a fragment</i></button>
 
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
                 aria-hidden="true">
@@ -300,22 +298,25 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" style="height: 300px">
-                                
+                        <div class="modal-body" style="height: 400px">
+
                             <form action="uploadfrag" method="POST">
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
-                                        style="height: 250px" maxlength="500" name="fcontent" required></textarea>
+                                        style="height: 300px" maxlength="500" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
-                                    <small class="ml-auto" id="fragWordCount">0</small><small id="fragWordLimit">/500</small>
+                                    <small class="ml-auto" id="fragWordCount">0</small><small
+                                        id="fragWordLimit">/500</small>
                                 </span>
+                                <div class="form-row justify-content-end">
+                                    <button type="button" class="btn btn-secondary" style="margin-right:5px"
+                                        data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
+                                </div>
                             </form>
-                        </div>
-                        <div class="modal-footer form-row" style="border: 0px">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-primary">提交片段</button>
+
                         </div>
                     </div>
                 </div>
