@@ -40,7 +40,7 @@ def upload_frag(request, story_id):
             email=request.user.email, storyid=story_id)
         frag_record.save()
     story_record = Story.objects.get(id=story_id)
-    story_record.fragscount = story_record.fragscount + 1
+    story_record.fragscount += 1
     story_record.save()
 
     story_dict = {
