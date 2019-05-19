@@ -42,6 +42,13 @@
             margin-bottom: 10px;
         }
     </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#newfrag").on('input property change', function (e) {
+                $("#fragWordCount").html(e.target.value.length);
+            });
+        });
+    </script>
 </head>
 
 <body>
