@@ -32,6 +32,21 @@ def upload_story_page(request):
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     return render(request, 'index.html', index_dict)
 
+def upload_frag(request, story_id):
+    if request.method == 'POST':
+        frag_text = request.POST['fcontent']
+        frag_record = Fragment(
+            content=frag_text, nickname=request.user.userextension.nickname,
+            email=request.user.email, storyid=story_id)
+        frag_record.save()
+    story_record = Story.objects.get(id=story_id)
+    story_record.fragscount = story_record.fragscount + 1
+    story_record.save()
+
+    story_dict = {
+        'story': Story.objects.get(id=story_id)
+     }
+    return render(request, 'story.html', story_dict)
 
 def upload_story(request):
     # keys in request.POST:

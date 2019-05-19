@@ -293,10 +293,10 @@
                         </div>
                         <div class="modal-body" style="height: 400px">
 
-                            <form action="uploadfrag" method="POST">
+                            <form action="{% url 'upload_frag' story.id%}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-group" style="margin-bottom: 0px">
-                                    <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
+                                    <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段内容"
                                         style="height: 300px" maxlength="500" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px">
