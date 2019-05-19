@@ -232,24 +232,26 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
-                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> {{ frag.likescount }}</i>
+                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                        {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>
                 {% endif %}
                 {% endfor %}
                 {% endif %}
-                
+
             </ul>
         </div>
 
         <div class="row justify-content-center" style="padding-bottom:200px;">
-            {% if story.lock == False and story.modified ==  True and story.finished == False and story.fragscount < story.fragscountlimit %}
+            {% if story.lock == False and story.modified ==  True and story.finished == False %}
+            {% if story.fragscount < story.fragscountlimit or story.fragscountlimit == -1 %}
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
                     class="fas fa-feather-alt"> Add a fragment</i></button>
 
@@ -269,12 +271,12 @@
                                 {% csrf_token %}
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段内容"
-                                        style="height: 300px" maxlength="500" name="fcontent" required></textarea>
+                                        style="height: 300px" maxlength="{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
                                     <small class="ml-auto" id="fragWordCount">0</small><small
-                                        id="fragWordLimit">/500</small>
+                                        id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
@@ -287,6 +289,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endif %}
         </div>
     </div>
