@@ -22,7 +22,7 @@ def homepage(request):
 def storypage(request, story_id):
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'frag_list': Fragment.objects.get(storyid=story_id).order_by('createtime')
+        'frag_list': Fragment.objects.filter(storyid=story_id).order_by('createtime')
      }
     return render(request, 'story.html', story_dict)
 
@@ -46,7 +46,7 @@ def upload_frag(request, story_id):
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'frag_list': Fragment.objects.get(storyid=story_id).order_by('createtime')
+        'frag_list': Fragment.objects.filter(storyid=story_id).order_by('createtime')
      }
     return render(request, 'story.html', story_dict)
 
