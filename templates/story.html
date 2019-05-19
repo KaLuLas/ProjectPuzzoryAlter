@@ -216,6 +216,7 @@
             <ul class="list-group">
                 {% if frag_list %}
                 {% for frag in frag_list %}
+                {% if forloop.counter > 1 %}
                 <div class="list-group-item"
                     style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
                     <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
@@ -242,6 +243,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
                 
@@ -275,7 +277,7 @@
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/500</small>
                                 </span>
-                                <div class="form-row justify-content-end">
+                                <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
                                     <button type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
