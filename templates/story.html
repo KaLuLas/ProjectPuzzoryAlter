@@ -214,66 +214,37 @@
 
         <div class="row justify-content-center" style="margin:20px;">
             <ul class="list-group">
+                {% if frag_list %}
+                {% for frag in frag_list %}
                 <div class="list-group-item"
                     style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
                     <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-puzzle-piece"></i></h5>
-                            <p class="card-text" style="white-space: pre-line">This is a wider card with supporting text
-                                below as a natural lead-in to
-                                additional content.
-                                This content is a little bit longer.
-                                lalalalal
-                                lalal
+                            <p class="card-text" style="white-space: pre-line">
+                                {{ frag.content }}
                             </p>
                             <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                 <div class="col-md-auto align-self-center">
-                                    <i class="far fa-user" style="font-size: 12px"> Alexxx </i>
+                                    <i class="far fa-user" style="font-size: 12px"> {{ frag.nickname }} </i>
                                 </div>
                                 <div class="col-md-auto align-self-center">
-                                    <i class="far fa-clock" style="font-size: 12px"> 2019/7/7</i>
+                                    <i class="far fa-clock" style="font-size: 12px"> {{ frag.createtime }}</i>
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
-                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</i>
-                                    <i class="far fa-comment" style="font-size: 12px"> 19</i>
+                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> {{ frag.likescount }}</i>
+                                    <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
 
-                            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                            
                         </div>
                     </div>
                 </div>
-                <div class="list-group-item"
-                    style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
-                    <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-puzzle-piece"></i></h5>
-                            <p class="card-text" style="white-space: pre-line">This is a wider card with supporting text
-                                below as a natural lead-in to
-                                additional content.
-                                This content is a little bit longer.
-                                lalalalal
-                                lalal
-                            </p>
-                            <div class="row" style="margin-bottom: 7px; margin-top: 20px">
-                                <div class="col-md-auto align-self-center">
-                                    <i class="far fa-user" style="font-size: 12px"> Alexxx </i>
-                                </div>
-                                <div class="col-md-auto align-self-center">
-                                    <i class="far fa-clock" style="font-size: 12px"> 2019/7/7</i>
-                                </div>
-
-                                <div class="col-md-auto ml-auto align-self-center">
-                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</i>
-                                    <i class="far fa-comment" style="font-size: 12px"> 19</i>
-                                </div>
-                            </div>
-
-                            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+                {% endif %}
+                
             </ul>
         </div>
 
