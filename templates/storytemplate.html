@@ -43,46 +43,22 @@
         }
     </style>
     <script type="text/javascript">
-        // var form = document.getElementById('uploadfrag');
-        // var text = document.getElementById('newfrag');
-        // var val = text.value;
-        // var varstr = val.trim();
-        // console.log(varstr);
-        // text.addEventListener("input", function (event) {
-        //     if (varstr.length <= 0) {
-        //         console.log("wrong")
-        //         newfrag.setCustomValidity("不能输入全是空格的片段");
-        //     } else {
-        //         newfrag.setCustomValidity("");
-        //         // form.action = "{% url 'register' %}";
-        //         // form.submit();
-        //     }
-        // });
         function uploadfrag() {
-            var form = document.getElementById('uploadfrag');
             var text = document.getElementById('newfrag');
-            var value = text.value;
-            var varstr = value.trim();
+            var varstr = text.value.trim();
 
-            var patt = /^[\s]*$/;
-            var pvalue = patt.test(value);
-            var revalue = value.replace(/^\s*|(\s*$)/g,"");
             console.log(1);
             if (varstr.length <= 0){
-                console.log("wrong")
-            }
+                console.log("wrong");
+                var info = document.getElementById('blankinput');
+                info.innerHTML = "禁止输入全为空格的片段";
 
-            // text.addEventListener("text", function(event){
-            //     if (revalue.length <= 0){
-            //         console.log("wrong")
-            //         newfrag.setCustomValidity("不能输入全是空格的片段");
-            //     }
-            //     else{
-            //         newfrag.setCustomValidity("");
-            //         form.action = "{% url 'register' %}";
-            //         form.submit();
-            //     }
-            // });
+            }
+            else{
+                var form = document.getElementById('uploadfrag');
+                form.action = "{% url 'register' %}";
+                form.submit();
+            }
 
         }
 
@@ -102,7 +78,7 @@
     <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
         <div class="navbar-collapse collapse justify-content-between">
             <a class="navbar-brand" href="{% url 'index' %}">
-                <img title="PuzzTory首页" alt="Logo" src="http://118.25.48.198/static/images/PuzzWithTitle.png"
+                <img title="PuzzTory首页" alt="Logo" src="http://www.puzztory.cn/static/images/PuzzWithTitle.png"
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
@@ -352,11 +328,12 @@
 
                             <form id="uploadfrag" action="" method="POST">
                                 <div class="form-group" style="margin-bottom: 0px">
-                                    <textarea type="text" id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
-                                        style="height: 300px" maxlength="500" name="fcontent" required></textarea>
+                                    <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
+                                        style="height: 300px" maxlength="500" name="fcontent"></textarea>
                                 </div>
-                                <span class="row text-muted" style="margin-right: 10px">
+                                <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
+                                    <small id="blankinput" style="color:brown">禁止输入全为空格的片段</small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/500</small>
                                 </span>
