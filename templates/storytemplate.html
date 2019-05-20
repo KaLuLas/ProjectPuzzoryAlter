@@ -47,6 +47,10 @@
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
             });
+            // Kal: jqeury for tooltip
+            $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+            });
         });
     </script>
 </head>
@@ -285,7 +289,9 @@
 
         <div class="row justify-content-center" style="padding-bottom:100px;">
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
-                    class="fas fa-feather-alt"> Add a fragment</i></button>
+                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top" title="cannot add fragment right now">
+                <i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
 
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
                 aria-hidden="true">

@@ -47,6 +47,10 @@
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
             });
+            // Kal: jqeury for tooltip
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
         });
     </script>
 </head>
@@ -86,7 +90,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.userextension.nickname %}"><i
                             title="个人主页" class="fas fa-user"></i></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
+                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#logoutWindow"><i
                             title="退出登录" class="fas fa-sign-in-alt"></i></a>
                 </li>
                 {% endif %}
@@ -94,7 +98,7 @@
         </div>
     </nav>
     <!-- LOGOUT WINDOW -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="logoutWindow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -250,10 +254,25 @@
         </div>
 
         <div class="row justify-content-center" style="padding-bottom:200px;">
-            {% if story.lock == False and story.modified ==  True and story.finished == False %}
-            {% if story.fragscount < story.fragscountlimit or story.fragscountlimit == -1 %}
+            {% not user.is_authenticated %}
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="modal" data-target="##loginRequest"><i
+                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% elif story.lock == True %}
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
+                title="有人正在修改这个故事"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% elif story.modified == False %}
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
+                title="作者禁止了对这个故事的修改"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% elif story.finished == True %}
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
+                title="完结撒花"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% elif story.fragscount == story.fragscountlimit %}
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
+                title="这个故事已经塞不下了"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% else %}
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
-                    class="fas fa-feather-alt"> Add a fragment</i></button>
+                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            {% endif %}
 
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
                 aria-hidden="true">
@@ -271,7 +290,9 @@
                                 {% csrf_token %}
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段内容"
-                                        style="height: 300px" maxlength="{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}" name="fcontent" required></textarea>
+                                        style="height: 300px"
+                                        maxlength="{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}"
+                                        name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
@@ -289,8 +310,6 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
-            {% endif %}
         </div>
     </div>
 
