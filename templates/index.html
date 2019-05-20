@@ -128,7 +128,7 @@
                             class="fas fa-user"></i></a>
                 </li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.userextension.nickname %}"><i title="个人主页"
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.email %}"><i title="个人主页"
                             class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
@@ -188,14 +188,14 @@
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left" style="padding-bottom: 30px;">
-                    <h1 class="dropdown-header side-bar-title">Trending</h1>
+                    <h1 class="dropdown-header side-bar-title"><i class="fa fa-fire" aria-hidden="true"></i> Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if story_list %}
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-action">{{ story.title }}</a>
+                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-action">{{ story.title }} {{story.likescount}}</a>
                         {% else %}
-                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-warning">{{ story.title }}</a>
+                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-warning">{{ story.title }} {{story.likescount}}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -203,14 +203,14 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title">Ranking</h1>
+                    <h1 class="dropdown-header side-bar-title"><i class="fa fa-trophy" aria-hidden="true"></i> Ranking</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-action">{{ user.nickname }}</a>
+                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-action">{{ user.nickname }} {{user.experience}}</a>
                         {% else %}
-                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
+                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-warning">{{ user.nickname }} {{user.experience}}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -283,11 +283,11 @@
                                 <div class="row justify-content-end">
                                     <button type="button" class="btn btn-info" disabled>
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                        <span id="storyFragCount">{{ story.fragscount }}</span>/
+                                        <span id="storyFragCount">{{ story.fragscount }}</span>
                                         {% if story.fragscountlimit == -1 %}
-                                        <span id="storyFragTotalInf"><i class="fa fa-infinity"></i></span>
+                                        <span id="storyFragTotalInf">/ INF</span>
                                         {% else %}
-                                        <span id="storyFragTotal">{{ story.fragscountlimit }}</span>
+                                        <span id="storyFragTotal">/ {{ story.fragscountlimit }}</span>
                                         {% endif %}
                                     </button>
                                 </div>
@@ -340,8 +340,8 @@
                                 <div class="row justify-content-end">
                                     <button type="button" class="btn btn-info" disabled>
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                        <span id="storyFragCountStatic">5</span>/
-                                        <span id="storyFragTotalStatic"><i class="fa fa-infinity"></i></span>
+                                        <span id="storyFragCountStatic">5</span>
+                                        <span id="storyFragTotalStatic">/ INF</span>
                                     </button>
                                 </div>
                             </div>
