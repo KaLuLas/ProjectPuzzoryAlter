@@ -15,8 +15,6 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />
 
     <!-- JAVASCRIPT -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
@@ -28,8 +26,6 @@
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
     <style type="text/css">
         .construct-notice {
             font-size: 50px;
@@ -94,58 +90,6 @@
             });
             $("#storyFirstSeg").on('input property change', function (e) {
                 $("#partOneWordCount").html(e.target.value.length);
-            });
-            $("#uploadStoryForm").bootstrapValidator({
-                message: 'This value is not valid',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    title: {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入一个标题'
-                            }
-                        }
-                    },
-                    ffcontent: {
-                        validators: {
-                            notEmpty: {
-                                message: '请填写故事首个片段的内容'
-                            }
-                        }
-                    },
-                    fragWordsLimit: {
-                        validators: {
-                            notEmpty: {
-                                message: '请限定片段字数上限'
-                            },
-                            digits: {
-                                message: '必须为合法数字'
-                            },
-                            greaterThan: {
-                                value: 0,
-                                message: '片段字数限制需大于0'
-                            }
-                        }
-                    },
-                    fragsCountLimit: {
-                        validators: {
-                            notEmpty: {
-                                message: '请限定片段个数上限'
-                            },
-                            digits: {
-                                message: '必须为合法数字'
-                            },
-                            greaterThan: {
-                                value: 0,
-                                message: '片段个数限制需大于0'
-                            }
-                        }
-                    }
-                },
             });
         });
     </script>
@@ -418,7 +362,7 @@
                                 <div class="input-group-prepend"><span class="input-group-text"
                                         id="StoryTitlePrepend">#</span></div>
                                 <input type="text" class="form-control" id="DefaultTitle" placeholder="故事标题"
-                                    aria-describedby="StoryTitlePrepend" maxlength="30" name="title">
+                                    aria-describedby="StoryTitlePrepend" maxlength="30" name="title" required>
                             </div>
                         </div>
                         <span id="titleWordCount">0</span><span id="titleWordLimit">/30</span>
@@ -426,7 +370,7 @@
                     <div class="form-row mb-3 align-items-end">
                         <div class="col-md-10">
                             <textarea type="text" class="form-control" id="storyFirstSeg" rows="10"
-                                placeholder="在此输入故事的第一节..." maxlength="500" name="ffcontent"></textarea>
+                                placeholder="在此输入故事的第一节..." maxlength="500" name="ffcontent" required></textarea>
                         </div>
                         <span id="partOneWordCount">0</span><span id="partOneWordLimit">/500</span>
                     </div>
@@ -468,8 +412,8 @@
                     <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
                     <div class="form-row mb-3  align-items-center">
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" name="fragsCountLimit"
-                                id="fragCountSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                            <input type="number" class="form-control" disabled="disabled" name="fragsCountLimit"
+                                id="fragCountSetInput" required min="1">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
@@ -480,8 +424,8 @@
                             </div>
                         </div>
                         <div class="input-group col-md-2">
-                            <input type="text" class="form-control" disabled="disabled" name="fragWordsLimit"
-                                id="fragWordSetInput" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                            <input type="number" class="form-control" disabled="disabled" name="fragWordsLimit"
+                                id="fragWordSetInput" required min="10">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
