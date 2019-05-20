@@ -316,7 +316,7 @@
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                         <span id="storyFragCount">{{ story.fragscount }}</span>
                                         {% if story.fragscountlimit == -1 %}
-                                        <span id="storyFragTotalInf">/ INF</span>
+                                        <span id="storyFragTotalInf">/ <i class="fa fa-infinity"></i></span>
                                         {% else %}
                                         <span id="storyFragTotal">/ {{ story.fragscountlimit }}</span>
                                         {% endif %}
@@ -372,7 +372,7 @@
                                     <button type="button" class="btn btn-info" disabled>
                                         <i class="fa fa-hourglass-half" aria-hidden="true"></i>
                                         <span id="storyFragCountStatic">5</span>
-                                        <span id="storyFragTotalStatic">/ INF</span>
+                                        <span id="storyFragTotalStatic">/ <i class="fa fa-infinity"></i></span>
                                     </button>
                                 </div>
                             </div>
