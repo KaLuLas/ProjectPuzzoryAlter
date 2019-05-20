@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Puzztory</title>
-    <link rel="shortcut icon" href="http://118.25.48.198/static/images/favicon-mainpage.ico" />
-    <link rel="bookmark" href="http://118.25.48.198/static/images/favicon-mainpage.ico" />
+    <link rel="shortcut icon" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+    <link rel="bookmark" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
 
     <!-- CSS -->
     <!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
@@ -43,13 +43,56 @@
         }
     </style>
     <script type="text/javascript">
+        // var form = document.getElementById('uploadfrag');
+        // var text = document.getElementById('newfrag');
+        // var val = text.value;
+        // var varstr = val.trim();
+        // console.log(varstr);
+        // text.addEventListener("input", function (event) {
+        //     if (varstr.length <= 0) {
+        //         console.log("wrong")
+        //         newfrag.setCustomValidity("不能输入全是空格的片段");
+        //     } else {
+        //         newfrag.setCustomValidity("");
+        //         // form.action = "{% url 'register' %}";
+        //         // form.submit();
+        //     }
+        // });
+        function uploadfrag() {
+            var form = document.getElementById('uploadfrag');
+            var text = document.getElementById('newfrag');
+            var value = text.value;
+            var varstr = value.trim();
+
+            var patt = /^[\s]*$/;
+            var pvalue = patt.test(value);
+            var revalue = value.replace(/^\s*|(\s*$)/g,"");
+            console.log(1);
+            if (varstr.length <= 0){
+                console.log("wrong")
+            }
+
+            // text.addEventListener("text", function(event){
+            //     if (revalue.length <= 0){
+            //         console.log("wrong")
+            //         newfrag.setCustomValidity("不能输入全是空格的片段");
+            //     }
+            //     else{
+            //         newfrag.setCustomValidity("");
+            //         form.action = "{% url 'register' %}";
+            //         form.submit();
+            //     }
+            // });
+
+        }
+
         $(document).ready(function () {
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
             });
             // Kal: jqeury for tooltip
             $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+                $('[data-toggle="tooltip"]').tooltip()
             });
         });
     </script>
@@ -185,7 +228,8 @@
                 </div>
 
                 <div class="row">
-                    <p style="margin: 15px; white-space: pre-line">axoewcb wox ac [ahief achio 23xhico aq23c0[ qaxh]]uab2ecbay9bxpea9bcreabx
+                    <p style="margin: 15px; white-space: pre-line">axoewcb wox ac [ahief achio 23xhico aq23c0[
+                        qaxh]]uab2ecbay9bxpea9bcreabx
 
                         cbawueacxby739cbay8w9x y8a9xc ya89x fqya89 xu ahu
                         abcheubpcrya7932c py4a793c y4a92 cy849axp y8ra9 cy9p
@@ -290,7 +334,8 @@
         <div class="row justify-content-center" style="padding-bottom:100px;">
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
                     class="fas fa-feather-alt"> 添加一个新片段 </i></button>
-            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top" title="cannot add fragment right now">
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
+                title="cannot add fragment right now">
                 <i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
 
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
@@ -305,9 +350,9 @@
                         </div>
                         <div class="modal-body" style="height: 400px">
 
-                            <form action="uploadfrag" method="POST">
+                            <form id="uploadfrag" action="" method="POST">
                                 <div class="form-group" style="margin-bottom: 0px">
-                                    <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
+                                    <textarea type="text" id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
                                         style="height: 300px" maxlength="500" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px">
@@ -318,7 +363,8 @@
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
-                                    <button type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
+                                    <button onclick="uploadfrag()" class="btn btn-primary"
+                                        style="margin-right:5px">提交片段</button>
                                 </div>
                             </form>
 
