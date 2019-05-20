@@ -54,10 +54,10 @@ def upload_frag(request, story_id):
 
 def upload_story(request):
     # keys in request.POST:
-    # MUST HAVE: title, firstPart
-    # MAY HAVE: branch, modified, ending -> 'on' if checkbox was checked
-    # MAY HAVE: fragWordCount: the maximum number of words a fragment can have in current story
-    # MAY HAVE: fragNumCount: the maximum number of fragments a story can have
+    # MUST HAVE: title, ffcontent
+    # MAY HAVE: branch, modified -> 'on' if checkbox was checked
+    # MAY HAVE: fragWordsLimit: the maximum number of words a fragment can have in current story
+    # MAY HAVE: fragsCountLimit: the maximum number of fragments a story can have
     if request.method == 'POST':
         story_title = request.POST['title']
         first_frag_text = request.POST['ffcontent']
