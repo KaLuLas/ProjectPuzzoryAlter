@@ -266,7 +266,7 @@
             {% elif story.finished == True %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="完结撒花"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
-            {% elif story.fragscount >= story.fragscountlimit %}
+            {% elif story.fragscount == story.fragscountlimit %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="这个故事已经塞不下了"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% else %}
