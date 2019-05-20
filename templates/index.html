@@ -91,6 +91,10 @@
             $("#storyFirstSeg").on('input property change', function (e) {
                 $("#partOneWordCount").html(e.target.value.length);
             });
+            // avoid pure space input
+            $("#uploadStorySubmit").on('click', function (e){
+                $("#storyFirstSeg").val($("#storyFirstSeg").val().trim());
+            });
         });
     </script>
 </head>
@@ -451,7 +455,7 @@
                                 允许修改
                             </label>
                         </div>
-                        <button class="btn btn-outline-primary" type="submit" name="submit">提交故事</button>
+                        <button class="btn btn-outline-primary" type="submit" name="submit" id="uploadStorySubmit">提交故事</button>
                     </div>
                 </form>
 
