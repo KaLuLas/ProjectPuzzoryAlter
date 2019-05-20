@@ -193,9 +193,9 @@
                         {% if story_list %}
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="#" class="list-group-item list-group-item-action">{{ story.title }}</a>
+                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-action">{{ story.title }}</a>
                         {% else %}
-                        <a href="#" class="list-group-item list-group-item-warning">{{ story.title }}</a>
+                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-warning">{{ story.title }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -208,9 +208,9 @@
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="#" class="list-group-item list-group-item-action">{{ user.nickname }}</a>
+                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-action">{{ user.nickname }}</a>
                         {% else %}
-                        <a href="#" class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
+                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
