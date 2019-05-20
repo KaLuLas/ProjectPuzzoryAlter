@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Puzztory</title>
-    <link rel="shortcut icon" href="static/images/favicon-mainpage.ico" />
-    <link rel="bookmark" href="static/images/favicon-mainpage.ico" />
+    <link rel="shortcut icon" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+    <link rel="bookmark" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
 
     <!-- CSS -->
     <!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
@@ -15,6 +15,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 
     <!-- JAVASCRIPT -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
@@ -26,7 +27,7 @@
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
     <style type="text/css">
         .construct-notice {
@@ -93,34 +94,58 @@
             $("#storyFirstSeg").on('input property change', function (e) {
                 $("#partOneWordCount").html(e.target.value.length);
             });
-            $("#uploadStoryForm").validate({
-                rules:{
-                    title: "required",
-                    ffcontent: "required",
-                    fragWordsLimit: {
-                        required: true,
-                        digits: true,
-                        min: 1
-                    },
-                    fragsCountLimit: {
-                        required: true,
-                        digits: true,
-                        min: 1
-                    }
+            $("#uploadStoryForm").bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
-                message:{
-                    title: "请输入一个标题",
-                    ffcontent: "请填写故事首个片段的内容",
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入一个标题'
+                            }
+                        }
+                    },
+                    ffcontent: {
+                        validators: {
+                            notEmpty: {
+                                message: '请填写故事首个片段的内容'
+                            }
+                        }
+                    },
                     fragWordsLimit: {
-                        digits: "必须为合法数字",
-                        min: "字数限制必须大于1"
+                        validators: {
+                            notEmpty: {
+                                message: '请限定片段字数上限'
+                            },
+                            digits: {
+                                message: '必须为合法数字'
+                            },
+                            greaterThan: {
+                                value: 0,
+                                message: '片段字数限制需大于0'
+                            }
+                        }
                     },
                     fragsCountLimit: {
-                        digits: "必须为合法数字",
-                        min: "字数限制必须大于1"
+                        validators: {
+                            notEmpty: {
+                                message: '请限定片段个数上限'
+                            },
+                            digits: {
+                                message: '必须为合法数字'
+                            },
+                            greaterThan: {
+                                value: 0,
+                                message: '片段个数限制需大于0'
+                            }
+                        }
                     }
                 }
-            })
+            });
         });
     </script>
 </head>
@@ -129,7 +154,7 @@
     <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
         <div class="navbar-collapse collapse justify-content-between">
             <a class="navbar-brand" href="{% url 'index' %}">
-                <img title="PuzzTory首页" alt="Logo" src="static/images/PuzzWithTitle.png"
+                <img title="PuzzTory首页" alt="Logo" src="http://www.puzztory.cn/static/images/PuzzWithTitle.png"
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
@@ -217,14 +242,17 @@
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left" style="padding-bottom: 30px;">
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire" aria-hidden="true"></i> Trending</h1>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
+                            aria-hidden="true"></i> Trending</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if story_list %}
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-action">{{ story.title }} {{story.likescount}}</a>
+                        <a href="{% url 'story_page' story.id %}"
+                            class="list-group-item list-group-item-action">{{ story.title }} {{story.likescount}}</a>
                         {% else %}
-                        <a href="{% url 'story_page' story.id %}" class="list-group-item list-group-item-warning">{{ story.title }} {{story.likescount}}</a>
+                        <a href="{% url 'story_page' story.id %}"
+                            class="list-group-item list-group-item-warning">{{ story.title }} {{story.likescount}}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -232,14 +260,17 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-trophy" aria-hidden="true"></i> Ranking</h1>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-trophy"
+                            aria-hidden="true"></i> Ranking</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-action">{{ user.nickname }} {{user.experience}}</a>
+                        <a href="{% url 'user_page' user.email %}"
+                            class="list-group-item list-group-item-action">{{ user.nickname }} {{user.experience}}</a>
                         {% else %}
-                        <a href="{% url 'user_page' user.email %}" class="list-group-item list-group-item-warning">{{ user.nickname }} {{user.experience}}</a>
+                        <a href="{% url 'user_page' user.email %}"
+                            class="list-group-item list-group-item-warning">{{ user.nickname }} {{user.experience}}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -266,11 +297,9 @@
                             <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                             <!-- if the story is being edited -->
                             {% elif story.modified == False %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></div>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
                             {% elif story.modified == True %}
-                            <div class="badge badge-success mr-1"><i class="fa fa-pen-alt"
-                                    aria-hidden="true"></i></div>
+                            <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
                             {% endif %}
                             <h5 class="mb-1 pr-2">{{ story.title }}</h5>
                             <!-- TODO: add if statement after storytable has attribute 'rules' -->
@@ -477,7 +506,7 @@
                                 允许修改
                             </label>
                         </div>
-                        <button class="btn btn-outline-primary" type="submit">提交故事</button>
+                        <button class="btn btn-outline-primary" type="submit" name="submit">提交故事</button>
                     </div>
                 </form>
 
