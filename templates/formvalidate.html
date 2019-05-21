@@ -43,22 +43,25 @@
         }
     </style>
     <script type="text/javascript">
-        function validateForm(){
-            var text = document.getElementById('newfrag');
-            var varstr = text.value.trim();
+        // function validateForm(){
+        //     var text = document.getElementById('newfrag');
+        //     var varstr = text.value.trim();
             
-            if (varstr.length <= 0){
-                //alert("禁止输入全为空格的片段");
-                var info = document.getElementById('blankinput');
-                info.innerHTML = "禁止输入全为空格的片段";
-                return false;
-            }               
-        }
+        //     if (varstr.length <= 0){
+        //         //alert("禁止输入全为空格的片段");
+        //         var info = document.getElementById('blankinput');
+        //         info.innerHTML = "禁止输入全为空格的片段";
+        //         return false;
+        //     }               
+        // }
 
         $(document).ready(function () {
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
             });
+            
             // Kal: jqeury for tooltip
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
@@ -319,14 +322,15 @@
                         </div>
                         <div class="modal-body" style="height: 400px">
 
-                            <form id="uploadfrag" action="" onsubmit="return validateForm()" method="POST">
+                            <form id="uploadfrag" action="" method="POST">
+                                    <!-- onsubmit="return validateForm()" -->
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
                                         style="height: 300px" maxlength="500" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
-                                    <small id="blankinput" style="color:brown"></small>
+                                    <!-- <small id="blankinput" style="color:brown"></small> -->
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/500</small>
                                 </span>
