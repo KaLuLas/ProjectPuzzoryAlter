@@ -239,10 +239,10 @@
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-action">{{ user.nickname }}<span class="badge badge-light">{{user.experience}}</span></a>
+                            class="list-group-item list-group-item-action">{{ user.nickname }}</a>
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-warning">{{ user.nickname }}<span class="badge badge-light">{{user.experience}}</a>
+                            class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
