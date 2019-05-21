@@ -24,7 +24,7 @@ def homepage(request):
     page_obj = paginator.get_page(page)
     index_dict['paginator'] = paginator
     index_dict['page_obj'] = page_obj
-    index_dict['is_paginated'] = True
+    index_dict['is_paginated'] = paginator.num_pages() > 1
     return render(request, 'index.html', index_dict)
 
 
