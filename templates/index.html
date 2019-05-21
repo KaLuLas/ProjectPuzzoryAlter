@@ -220,10 +220,11 @@
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-action">{{ story.title }} {{story.likescount}}</a>
+                            class="list-group-item list-group-item-action">{{ story.title }}<span class="badge badge-light">{{story.likescount}}</span></a>
+                            
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-warning">{{ story.title }} {{story.likescount}}</a>
+                            class="list-group-item list-group-item-warning">{{ story.title }}<span class="badge badge-light">{{story.likescount}}</span></a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -238,10 +239,10 @@
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-action">{{ user.nickname }} {{user.experience}}</a>
+                            class="list-group-item list-group-item-action">{{ user.nickname }}<span class="badge badge-light">{{user.experience}}</span></a>
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-warning">{{ user.nickname }} {{user.experience}}</a>
+                            class="list-group-item list-group-item-warning">{{ user.nickname }}<span class="badge badge-light">{{user.experience}}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -388,11 +389,11 @@
                     <ul class="pagination justify-content-center">
                         {% if page_obj.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                                <a class="page-link" tabindex="-1">Previous</a>
+                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
                         </li>
                         {% endif %}
 
@@ -406,11 +407,11 @@
 
                         {% if page_obj.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                                <a class="page-link" tabindex="-1">Next</a>
+                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                         </li>
                         {% endif %}
                     </ul>
