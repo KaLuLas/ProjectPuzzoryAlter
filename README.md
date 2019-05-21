@@ -10,12 +10,8 @@
 
 **TODO:**
 
-- [ ] 欲提交片段时检查用户登录状态【KAL
-- [ ] 新增片段按钮的条件限制disabled【KAL
 - [ ] 添加空格检测，不允许全是空格的片段和标题【ALEX
-- [ ] 主界面Trending & Ranking细化 【KAL
 - [ ] 主界面翻页设计 【KAL
-- [ ] 提交故事片段数和字数都要大于0【KAL
 - [ ] 文字省略显示问题【KAL
 
 
@@ -58,6 +54,15 @@
   
 
 
+
+**2019.05.20：**
+
+- [x] 欲提交片段时检查用户登录状态【KAL
+- [x] 新增片段按钮的条件限制disabled【KAL
+- [x] 首页Trending & Ranking跳转 【KAL
+- [x] 主界面Trending & Ranking细化 【KAL
+- [x] 提交故事片段数和字数都要大于0【KAL
+- [x] 去除空格偷懒做法【KAL
 
 
 

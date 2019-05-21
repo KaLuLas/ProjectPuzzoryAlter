@@ -40,34 +40,32 @@
         .story-list>.list-group-item {
             margin-bottom: 10px;
         }
+        /* 边栏文本显示省略 */
+        .dropdown-menu-left .list-group-item {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .homepage .title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .homepage .ffcontent{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
     </style>
     <script type="text/javascript">
         var ruleCount = 0;
         var keywordCount = 0;
         const ruleLimit = 5;
         const keywordLimit = 5;
-
-        // TODO: 纯jquery或者非jquery 现在清空使用jquery
-        window.onload = function(){
-            var title = document.getElementById("title");
-            var ffcontent = document.getElementById("ffcontent");
-            title.addEventListener("input", function (event) {
-                // console.log(title.value.length)
-                if (title.value.trim().length == 0) {
-                    title.setCustomValidity("纯空格标题禁止");
-                } else {
-                    title.setCustomValidity("");
-                }
-            });
-            ffcontent.addEventListener("input", function (event) {
-                // console.log(ffcontent.value.length)
-                if (ffcontent.value.trim().length == 0) {
-                    ffcontent.setCustomValidity("纯空格内容禁止");
-                } else {
-                    ffcontent.setCustomValidity("");
-                }
-            });
-        }
 
         function switchInput(id) {
             // console.log(id);
@@ -110,14 +108,13 @@
             });
             $("#title").on('input property change', function (e) {
                 $("#titleWordCount").html(e.target.value.length);
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止":"");
             });
             $("#ffcontent").on('input property change', function (e) {
                 $("#partOneWordCount").html(e.target.value.length);
-            });
-            // avoid pure space input
-            $("#uploadStorySubmit").on('click', function (e) {
-                $("#title").val($("#title").val().trim());
-                $("#ffcontent").val($("#ffcontent").val().trim());
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止":"");
             });
         });
     </script>
@@ -255,7 +252,7 @@
             <div class="col-sm-10" style="background-color: rgb(248, 248, 248)">
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
-                <div class="list-group story-list" style="margin:30px">
+                <div class="list-group story-list homepage" style="margin:30px">
                     {% if story_full_list %}
                     {% for story in story_full_list %}
                     <a href="{% url 'story_page' story.id %}"
@@ -274,7 +271,7 @@
                             {% elif story.modified == True %}
                             <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
                             {% endif %}
-                            <h5 class="mb-1 pr-2">{{ story.title }}</h5>
+                            <h5 class="mb-1 pr-2 title" >{{ story.title }}</h5>
                             <!-- TODO: add if statement after storytable has attribute 'rules' -->
                             <!-- <div class="badge badge-light mr-1">R</div> -->
                             <!-- TODO: add if statement after storytable has attribute 'keywords' -->
@@ -286,7 +283,7 @@
                         </div>
                         <div class="row d-flex">
                             <div class="col-10">
-                                <p class="mb-1" id="firstPartText" style="white-space: pre-line">
+                                <p class="mb-1 ffcontent" style="white-space: pre-line">
                                     {{ story.ffcontent }}
                                 </p>
                             </div>
@@ -335,7 +332,7 @@
                             <div class="badge badge-warning mr-1"><i class="fa fa-clock" aria-hidden="true"></i></div>
                             <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
                             <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
-                            <h5 class="mb-1 pr-2">STATIC TEMPLATE</h5>
+                            <h5 class="mb-1 pr-2 title">STATIC TEMPLATE</h5>
                             <div class="badge badge-light mr-1">R</div>
                             <div class="badge badge-light mr-1">K</div>
                             <div class="badge badge-light mr-auto">F</div>
@@ -343,7 +340,12 @@
                         </div>
                         <div class="row d-flex">
                             <div class="col-10">
-                                <p class="mb-1" id="firstPartTextStatic">
+                                <p class="mb-1 ffcontent">
+                                    YOU SHOULDN'T BE WATCHING THIS.
+                                    YOU SHOULDN'T BE WATCHING THIS.
+                                    YOU SHOULDN'T BE WATCHING THIS.
+                                    YOU SHOULDN'T BE WATCHING THIS.
+                                    YOU SHOULDN'T BE WATCHING THIS.
                                     YOU SHOULDN'T BE WATCHING THIS.
                                 </p>
                             </div>
@@ -406,14 +408,6 @@
                     <small id="addNewRuleHelp" class="form-text text-muted">设置续写片段必须遵守的规则（软规则）</small>
                     <div class="form-row align-items-center" id="selfDefinedRules">
                         <!-- button removeInput will remove the whole input-group -->
-                        <!-- TEMPLATE -->
-                        <!-- <div class="col-md-7 mb-3 input-group">
-                            <input type="text" class="form-control" name="Rule0" id="selfDefinedRule0">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus"
-                                        aria-hidden="true"></i></button>
-                            </div>
-                        </div> -->
                         <!-- set new rules here -->
                         <div class="btn mb-2 btn-outline-primary" id="addNewRuleBTN"><i class="fa fa-plus"
                                 aria-hidden="true"></i></div>
@@ -421,15 +415,6 @@
                     <small id="addNewKeywordHelp" class="form-text text-muted">设置故事片段必须包含的关键词</small>
                     <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
                         <!-- button removeInput will remove the whole input-group -->
-                        <!-- TEMPLATE -->
-                        <!-- <div class="col-md-2 input-group">
-                            <input type="text" class="form-control" name="Keyword0" id="selfDefinedKeyword0"
-                                placeholder="新关键词...">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus"
-                                        aria-hidden="true"></i></button>
-                            </div>
-                        </div> -->
                         <!-- add new keywords here -->
                         <div class="btn btn-outline-primary" id="addNewKeywordBTN"><i class="fa fa-plus"
                                 aria-hidden="true"></i></div>
