@@ -40,6 +40,7 @@
         .story-list>.list-group-item {
             margin-bottom: 10px;
         }
+
         /* 边栏文本显示省略 */
         .dropdown-menu-left .list-group-item {
             overflow: hidden;
@@ -47,18 +48,18 @@
             white-space: nowrap;
         }
 
-        .homepage .title{
+        .homepage .title {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .homepage .ffcontent{
+        .homepage .ffcontent {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 7;
         }
     </style>
     <script type="text/javascript">
@@ -109,12 +110,12 @@
             $("#title").on('input property change', function (e) {
                 $("#titleWordCount").html(e.target.value.length);
                 var text = this.value.trim();
-                this.setCustomValidity(text.length == 0 ? "纯空格禁止":"");
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
             });
             $("#ffcontent").on('input property change', function (e) {
                 $("#partOneWordCount").html(e.target.value.length);
                 var text = this.value.trim();
-                this.setCustomValidity(text.length == 0 ? "纯空格禁止":"");
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
             });
         });
     </script>
@@ -253,8 +254,8 @@
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list homepage" style="margin:30px">
-                    {% if story_full_list %}
-                    {% for story in story_full_list %}
+                    {% if page_obj %}
+                    {% for story in page_obj %}
                     <a href="{% url 'story_page' story.id %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
@@ -271,7 +272,7 @@
                             {% elif story.modified == True %}
                             <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
                             {% endif %}
-                            <h5 class="mb-1 pr-2 title" >{{ story.title }}</h5>
+                            <h5 class="mb-1 pr-2 title">{{ story.title }}</h5>
                             <!-- TODO: add if statement after storytable has attribute 'rules' -->
                             <!-- <div class="badge badge-light mr-1">R</div> -->
                             <!-- TODO: add if statement after storytable has attribute 'keywords' -->
@@ -382,6 +383,39 @@
                     </a>
                     {% endif %}
                 </div>
+                {% if is_paginated %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                                <a class="page-link" tabindex="-1">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                                <a class="page-link" tabindex="-1">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 <form id="uploadStoryForm" style="margin:30px" action="{% url 'upload_story' %}" method="POST">

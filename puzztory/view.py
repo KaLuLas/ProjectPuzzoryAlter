@@ -2,6 +2,7 @@ from django.shortcuts import render
 from PuzzModel.models import Story, Fragment, UserExtension
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.paginator import Paginator
 
 index_dict = {
         'display': 'homepage',
@@ -16,6 +17,14 @@ def homepage(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     index_dict['story_full_list'] = Story.objects.order_by('-createtime')
+    # for Pagination
+    story_full_list = Story.objects.order_by('-createtime')
+    paginator = Paginator(story_full_list, 10)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    index_dict['paginator'] = paginator
+    index_dict['page_obj'] = page_obj
+    index_dict['is_paginated'] = True
     return render(request, 'index.html', index_dict)
 
 
