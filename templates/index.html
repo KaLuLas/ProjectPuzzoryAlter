@@ -214,17 +214,17 @@
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left" style="margin-bottom: 30px; margin-top: 30px;">
                     <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
-                            aria-hidden="true"></i> Trending</h1>
+                            aria-hidden="true"></i> 点赞飙升</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if story_list %}
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-action">{{ story.title }}<span class="badge badge-light">{{story.likescount}}</span></a>
+                            class="list-group-item list-group-item-action">{{ story.title }}</a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-warning">{{ story.title }}<span class="badge badge-light">{{story.likescount}}</span></a>
+                            class="list-group-item list-group-item-warning">{{ story.title }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -232,8 +232,8 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-trophy"
-                            aria-hidden="true"></i> Ranking</h1>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i class="fa fa-trophy"
+                            aria-hidden="true"></i> 用户排行</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
                         {% for user in user_list %}

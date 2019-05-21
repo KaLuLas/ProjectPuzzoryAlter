@@ -53,6 +53,9 @@ def upload_frag(request, story_id):
         story_record = Story.objects.get(id=story_id)
         story_record.fragscount += 1
         story_record.save()
+        current_user = User.get(id=request.user.id)
+        current_user.userextension.experience += 2
+        current_user.save()
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
@@ -89,6 +92,9 @@ def upload_story(request):
         story_record.save()
         frag_record.storyid = story_record.id
         frag_record.save()
+        current_user = User.get(id=request.user.id)
+        current_user.userextension.experience += 10
+        current_user.save()
 
     return HttpResponseRedirect("/")
 
