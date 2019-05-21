@@ -20,7 +20,10 @@ def homepage(request):
     # for Pagination
     story_full_list = Story.objects.order_by('-createtime')
     paginator = Paginator(story_full_list, 10)
-    page = request.GET.get('page')
+    if request.method == 'GET':
+        page = request.GET.get('page')
+    else:
+        page = 1
     page_obj = paginator.get_page(page)
     index_dict['paginator'] = paginator
     index_dict['page_obj'] = page_obj
