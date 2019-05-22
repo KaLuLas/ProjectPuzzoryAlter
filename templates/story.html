@@ -66,20 +66,18 @@
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
                             $('#lfcontent').html(data['lfcontent']);
-                        }
-                        // send release lock message
-                        else {
-                            $('#newFragBtn').attr('data-target', '#lockmessage');
-                        }
-                    },
-                    complete: function () {
-                        $.ajax({
+                            $.ajax({
                             url: "/releaselock",
                             data: {'story_id': {{story.id}}},
                             complete: function () {
                                 alert("release function");
                             }
-                        });
+                            });
+                        }
+                        // send release lock message
+                        else {
+                            $('#newFragBtn').attr('data-target', '#lockmessage');
+                        }
                     }
                 });
             });
