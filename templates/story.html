@@ -295,7 +295,7 @@
             <ul class="list-group">
                 {% if frag_list %}
                 {% for frag in frag_list %}
-                {% if forloop.counter > 1 %}
+                {% if frag.id != story.ffid %}
                 <div class="list-group-item"
                     style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
                     <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
