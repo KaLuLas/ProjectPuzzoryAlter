@@ -57,7 +57,7 @@
             });
 
             $("#newFragBtn").click(function () {
-                $.get("/lock/", {
+                $.get("/lock", {
                     'story_id': {{ story.id }},
                 }, function (ret) {
                     alert(ret);

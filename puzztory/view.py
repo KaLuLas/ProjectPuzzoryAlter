@@ -142,5 +142,5 @@ def register_page(request):
 
 def lock(request):
     request_id = request.GET.get('story_id')
-    story = Story.objects.get(story_id=request_id)
+    story = Story.objects.get(id=request_id)
     return JsonResponse(story.lock)
