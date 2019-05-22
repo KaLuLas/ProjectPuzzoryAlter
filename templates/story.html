@@ -56,6 +56,13 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
+            $("#newFragSubmitBtn").click(function(){
+                $.ajax({
+                    url: "/releaselock",
+                    data: {'story_id': {{story.id}}},
+                    dataType: "JSON"
+                })
+            });
             $("#newFragBtn").click(function () {
                 // send lock message
                 $.ajax({
@@ -352,7 +359,7 @@
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
-                                    <button type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
+                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
                                 </div>
                             </form>
 
