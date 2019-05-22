@@ -74,9 +74,11 @@
                     success: function (data) {
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html('OK:'+data['lfcontent']);
+                            $('#lfcontent').html('现在的尾巴:'+data['lfcontent']);
                             // send release lock message
-                            var i = 300;
+                            var i = data['submitcountdown'];
+                            $('#submitcountdown').html(i);
+                            $('#submittimelimit').html(i);
                             var t = setInterval(function(){ 
                                 if(i == 0){
                                     clearInterval(t);
