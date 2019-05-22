@@ -12,7 +12,7 @@ index_dict = {
     }
 
 # seconds
-edit_time = 20
+submit_countdown = 300
 
 
 def homepage(request):
@@ -152,6 +152,7 @@ def lock(request):
         story.lock = True
         story.save()
         ret_dict['lock'] = False
+        ret_dict['submitcountdown'] = submit_countdown
         last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
         ret_dict['lfcontent'] = last_fragment.content
     else:
@@ -166,7 +167,7 @@ def release_lock(request):
         'message': "it's not locked"
     }
     if story.lock:
-        time.sleep(edit_time)
+        time.sleep(submit_countdown)
         story.lock = False
         story.save()
         # ret_dict['message'] = "lock release"
