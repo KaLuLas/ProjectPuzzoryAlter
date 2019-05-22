@@ -151,12 +151,12 @@ def lock(request):
     if not story.lock:
         story.lock = True
         story.save()
-        ret_dict['lock'] = True
+        ret_dict['lock'] = False
         last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
         ret_dict['lfcontent'] = last_fragment.content
     else:
-        ret_dict['lock'] = False
-    return JsonResponse(data=ret_dict, safe=False)
+        ret_dict['lock'] = True
+    return JsonResponse(data=ret_dict)
 
 
 def release_lock(request):

@@ -57,32 +57,30 @@
             });
 
             $("#newFragBtn").click(function () {
-                // $.get("/lock", {
-                //     'story_id': {{ story.id }},
-                // }, function (ret) {
-                //     alert(ret);
-                //     $('#newfrag').val(ret);
-                // })
-
                 // send lock message
                 $.ajax({
                     url: "/lock",
-                    data: {'story_id': {{story.id}}},
+                    // data: {'story_id': {{story.id}}},
                     dataType: "JSON",
-                    success: function(){
-                        if(lock){
-                            alert(lfcontent)
-                            $('#lfcontent').val(lfcontent);
-                            $('#submitcountdown').val(114514);
-                            // send release lock message
-                            $.ajax({
-                                url: "/releaselock",
-                                data: {'story_id': {{story.id}}},
-                                complete: function(){
-                                    alert("release function");
-                                }
-                            });
+                    success: function () {
+                        if (!lock) {
+                            $('#newFragBtn').attr('data-target', '#addfrag');
+                            $('#lfcontent').html(lfcontent);
+                            $('#submitcountdown').html(114514);
                         }
+                        // send release lock message
+                        else {
+                            $('#newFragBtn').attr('data-target', '#lockmessage');
+                        }
+                    },
+                    complete: function () {
+                        $.ajax({
+                            url: "/releaselock",
+                            // data: {'story_id': {{story.id}}},
+                            complete: function () {
+                                alert("release function");
+                            }
+                        });
                     }
                 });
             });
@@ -332,7 +330,7 @@
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
                                     <small id="submitcountdown" style="color:brown">100</small><small
-                                    id="submittimelimit" style="color:brown">/300</small>
+                                        id="submittimelimit" style="color:brown">/300</small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
