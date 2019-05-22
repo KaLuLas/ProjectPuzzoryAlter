@@ -60,25 +60,27 @@
                 // send lock message
                 $.ajax({
                     url: "/lock",
-                    data: {'story_id': {{story.id}}},
+                    // data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data) {
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
                             $('#lfcontent').html(data['lfcontent']);
-                            $.ajax({
-                            url: "/releaselock",
-                            data: {'story_id': {{story.id}}},
-                            dataType: "JSON",
-                            complete: function (data) {
-                                alert(data['message']);
-                            }
-                            });
                         }
                         // send release lock message
                         else {
                             $('#newFragBtn').attr('data-target', '#lockmessage');
                         }
+                    },
+                    complete: function(){
+                        $.ajax({
+                            url: "/releaselock",
+                            // data: {'story_id': {{story.id}}},
+                            dataType: "JSON",
+                            complete: function (data) {
+                                alert(data['message']);
+                            }
+                            });
                     }
                 });
             });
