@@ -3,12 +3,16 @@ from PuzzModel.models import Story, Fragment, UserExtension
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
+import time
 
 index_dict = {
         'display': 'homepage',
         'story_list': '',
         'user_list': ''
     }
+
+# seconds
+edit_time = 200
 
 
 def homepage(request):
@@ -143,4 +147,23 @@ def register_page(request):
 def lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
-    return JsonResponse(data=story.lock, safe=False)
+    ret_dict = {}
+    if not story.lock:
+        story.lock = True
+        story.save()
+        ret_dict['lock'] = True
+        last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
+        ret_dict['lfcontent'] = last_fragment.content
+    else:
+        ret_dict['lock'] = False
+    return JsonResponse(data=ret_dict, safe=False)
+
+
+def release_lock(request):
+    request_id = request.GET.get('story_id')
+    story = Story.objects.get(id=request_id)
+    time.sleep(edit_time)
+    if story.lock:
+        story.lock = False
+    # return anything?
+    return

@@ -57,12 +57,34 @@
             });
 
             $("#newFragBtn").click(function () {
-                $.get("/lock", {
-                    'story_id': {{ story.id }},
-                }, function (ret) {
-                    alert(ret);
-                    $('#newfrag').val(ret);
-                })
+                // $.get("/lock", {
+                //     'story_id': {{ story.id }},
+                // }, function (ret) {
+                //     alert(ret);
+                //     $('#newfrag').val(ret);
+                // })
+
+                // send lock message
+                $.ajax({
+                    url: "/lock",
+                    data: {'story_id': {{story.id}}},
+                    dataType: "JSON",
+                    success: function(){
+                        if(lock){
+                            alert(lfcontent)
+                            $('#lfcontent').val(lfcontent);
+                            $('#submitcountdown').val(114514);
+                            // send release lock message
+                            $.ajax({
+                                url: "/releaselock",
+                                data: {'story_id': {{story.id}}},
+                                complete: function(){
+                                    alert("release function");
+                                }
+                            });
+                        }
+                    }
+                });
             });
         });
     </script>
