@@ -20,9 +20,9 @@ def homepage(request):
     # for Pagination
     story_full_list = Story.objects.order_by('-createtime')
     paginator = Paginator(story_full_list, 10)
-    if request.method == 'GET':
-        page = request.GET.get('page')
-    else:
+    # if request.method == 'GET':
+    page = request.GET.get('page')
+    if page == None:
         page = 1
     page_obj = paginator.get_page(page)
     index_dict['paginator'] = paginator
@@ -34,10 +34,11 @@ def homepage(request):
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list,7)
-    if request.method == 'GET':
-        page = request.GET.get('page')
-    else:
+    # if request.method == 'GET':
+    page = request.GET.get('page')
+    if page == None:
         page = 1
+    
     page_obj = paginator.page(page)
     if(paginator.num_pages > 1):
         is_paginated = True
