@@ -10,7 +10,6 @@ ProjectPuzztoryNext
 
 **TODO:**
 
-- [ ] 片段锁的处理 【TOGETHER/ALEX
 - [ ] 作者的故事上锁功能【TOGETHER？
 - [ ] 故事作者的完结设置功能（不同用户的完结申请结果不同or一般人的故事页没有完结请求按钮【ALEX
 - [ ] 普通用户的申请完结功能涉及到通知作者（系统通知【ALEX
@@ -55,7 +54,8 @@ ProjectPuzztoryNext
 
 - [x] 当用户为故事作者时可以对modified=False的文章进行修改 【ALEX
 - [x] 片段个数超过7时故事开始分页 【ALEX
-- [ ] 故事页分页功能 【ALEX
+- [x] 故事页分页功能 【ALEX
+- [x] 片段锁的处理 【TOGETHER
 
 
 
