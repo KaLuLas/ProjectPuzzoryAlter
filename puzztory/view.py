@@ -76,6 +76,8 @@ def upload_frag(request, story_id):
         frag_record.save()
         story_record = Story.objects.get(id=story_id)
         story_record.fragscount += 1
+        # unlock the story once the fragment is submitted
+        story_record.lock = False
         story_record.save()
         current_user = UserExtension.objects.get(id=request.user.id)
         current_user.experience += 2
@@ -168,8 +170,7 @@ def release_lock(request):
     }
     
     if story.lock:
-        if(request.GET.get('sleep')):
-            time.sleep(submit_countdown)
+        time.sleep(submit_countdown)
         story.lock = False
         story.save()
         

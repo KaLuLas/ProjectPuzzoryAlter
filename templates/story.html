@@ -56,14 +56,6 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            $("#newFragSubmitBtn").click(function(){
-                $.ajax({
-                    url: "/releaselock",
-                    data: {'story_id': {{story.id}},'sleep': false},
-                    dataType: "JSON"
-                });
-                alert("sleep");
-            });
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
@@ -90,7 +82,7 @@
                             }, 1000);
                             $.ajax({
                                 url: "/releaselock",
-                                data: {'story_id': {{story.id}},'sleep': true},
+                                data: {'story_id': {{story.id}}},
                                 dataType: "JSON"
                             });
                         }
