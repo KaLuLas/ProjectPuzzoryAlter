@@ -12,7 +12,7 @@ index_dict = {
     }
 
 # seconds
-edit_time = 20
+edit_time = 10
 
 
 def homepage(request):
@@ -163,8 +163,13 @@ def release_lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
     time.sleep(edit_time)
+    ret_dict = {
+        'message': "it's not locked"
+    }
     if story.lock:
         story.lock = False
         story.save()
+        ret_dict['message'] = "lock release"
     # return anything?
-    return
+    return JsonResponse(data=ret_dict)
+
