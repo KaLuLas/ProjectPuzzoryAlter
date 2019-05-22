@@ -17,6 +17,8 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -53,10 +55,13 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
-            
-            $("#newFragBtn").click(function(){
-                $.get("/lock",{'story_id': {{ story.id }}}, function(ret){
-                    $('#newfrag').val(ret)
+
+            $("#newFragBtn").click(function () {
+                $.get("/lock", {
+                    'story_id': {{story.id}}
+                }, function (ret) {
+                    alert(ret);
+                    $('#newfrag').val(ret);
                 })
             });
         });
@@ -260,7 +265,7 @@
 
             </ul>
         </div>
-        
+
         <!-- <div class="row justify-content-center" style="margin:20px;">
             <ul class="list-group">
                 
@@ -294,7 +299,7 @@
 
             </ul>
         </div>-->
-        
+
 
         <div class="row justify-content-center" style="padding-bottom:90px;">
             {% if not user.is_authenticated %}
@@ -313,8 +318,8 @@
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="这个故事已经塞不下了"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% else %}
-            <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
-                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal"
+                data-target="#addfrag"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
 
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
@@ -357,42 +362,42 @@
 
         {% if is_paginated %}
         <div class="row justify-content-center" style="padding-bottom:30px;">
-            <nav aria-label="Page navigation example" >
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i
-                            class="fa fa-angle-left" aria-hidden="true"></i></a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                </li>
-                {% endif %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i
+                                class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
 
-                {% for i in paginator.page_range %}
-                {% if page_obj.number == i %}
-                <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                {% else %}
-                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
-                {% endif %}
-                {% endfor %}
+                    {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                    {% endif %}
+                    {% endfor %}
 
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"
-                            aria-hidden="true"></i></a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
 
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
 
 </body>
