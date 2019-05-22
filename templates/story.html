@@ -220,8 +220,8 @@
         {% if is_paginated %}
         <div class="row justify-content-center" style="margin:20px;">
             <ul class="list-group">
-                {% if page_obj %}
-                {% for frag in page_obj %}
+                {% if page_obj.object_list %}
+                {% for frag in page_obj.object_list %}
                 {% if frag.id != story.ffid %}
                 <div class="list-group-item"
                     style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">

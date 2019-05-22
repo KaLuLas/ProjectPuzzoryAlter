@@ -38,7 +38,7 @@ def storypage(request, story_id):
         page = request.GET.get('page')
     else:
         page = 1
-    page_obj = paginator.get_page(page)
+    page_obj = paginator.page(page)
     if(paginator.num_pages > 1):
         is_paginated = True
     else:
@@ -77,7 +77,7 @@ def upload_frag(request, story_id):
     frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list,7)
     page = paginator.num_pages
-    page_obj = paginator.get_page(page)
+    page_obj = paginator.page(page)
     if(page > 1):
         is_paginated = True
     else:
