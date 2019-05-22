@@ -7,8 +7,7 @@ from django.core.paginator import Paginator
 index_dict = {
         'display': 'homepage',
         'story_list': '',
-        'user_list': '',
-        'story_full_list': ''
+        'user_list': ''
     }
 
 
@@ -16,7 +15,7 @@ def homepage(request):
     index_dict['display'] = 'homepage'
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
-    index_dict['story_full_list'] = Story.objects.order_by('-createtime')
+    
     # for Pagination
     story_full_list = Story.objects.order_by('-createtime')
     paginator = Paginator(story_full_list, 10)
@@ -50,7 +49,6 @@ def storypage(request, story_id):
         is_paginated = False
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'frag_list': frag_full_list,
         'paginator': paginator,
         'page_obj': page_obj,
         'is_paginated': is_paginated
