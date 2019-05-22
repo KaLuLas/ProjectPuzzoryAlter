@@ -46,7 +46,7 @@
         // function validateForm(){
         //     var text = document.getElementById('newfrag');
         //     var varstr = text.value.trim();
-            
+
         //     if (varstr.length <= 0){
         //         //alert("禁止输入全为空格的片段");
         //         var info = document.getElementById('blankinput');
@@ -61,7 +61,7 @@
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
             });
-            
+
             // Kal: jqeury for tooltip
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
@@ -314,7 +314,7 @@
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="border:0px; padding-bottom: 0px">
                             <h5 class="modal-title" id="exampleModalLabel">你的脑洞 ('/_ ') </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -323,22 +323,25 @@
                         <div class="modal-body" style="height: 400px">
 
                             <form id="uploadfrag" action="" method="POST">
-                                    <!-- onsubmit="return validateForm()" -->
+                                <!-- onsubmit="return validateForm()" -->
+                                <p id="lfcontent">
+                                    textuwivacyceozv c8a3
+                                </p>
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段"
-                                        style="height: 300px" maxlength="500" name="fcontent" required></textarea>
+                                        style="height: 265px" maxlength="500" name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
                                     <!-- <span id="fragWordCount">0</span><span id="fragWordLimit">/500</span> -->
-                                    <!-- <small id="blankinput" style="color:brown"></small> -->
+                                    <small id="submitcountdown" style="color:brown">100</small><small
+                                        id="submittimelimit" style="color:brown">/300</small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/500</small>
                                 </span>
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
-                                    <button type="submit" class="btn btn-primary"
-                                        style="margin-right:5px">提交片段</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
                                 </div>
                             </form>
 

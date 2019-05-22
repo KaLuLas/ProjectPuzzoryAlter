@@ -326,7 +326,7 @@
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="border:0px; padding-bottom: 0px">
                             <h5 class="modal-title" id="exampleModalLabel">你的脑洞 ('/_ ') </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -336,14 +336,16 @@
 
                             <form action="{% url 'upload_frag' story.id %}" method="POST">
                                 {% csrf_token %}
+                                <p id="lfcontent"></p>
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段内容"
-                                        style="height: 300px"
+                                        style="height: 265px"
                                         maxlength="{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}"
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-
+                                    <small id="submitcountdown" style="color:brown">100</small><small
+                                    id="submittimelimit" style="color:brown">/300</small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
