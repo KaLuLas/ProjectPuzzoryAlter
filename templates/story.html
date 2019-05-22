@@ -62,11 +62,10 @@
                     url: "/lock",
                     // data: {'story_id': {{story.id}}},
                     dataType: "JSON",
-                    success: function () {
-                        if (!lock) {
+                    success: function (data) {
+                        if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html(lfcontent);
-                            $('#submitcountdown').html(114514);
+                            $('#lfcontent').html(data['lfcontent']);
                         }
                         // send release lock message
                         else {
