@@ -60,7 +60,7 @@
                 // send lock message
                 $.ajax({
                     url: "/lock",
-                    // data: {'story_id': {{story.id}}},
+                    data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data) {
                         if (!data['lock']) {
@@ -75,7 +75,7 @@
                     complete: function(){
                         $.ajax({
                             url: "/releaselock",
-                            // data: {'story_id': {{story.id}}},
+                            data: {'story_id': {{story.id}}},
                             dataType: "JSON",
                             complete: function (data) {
                                 alert(data['message']);
