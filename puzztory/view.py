@@ -162,11 +162,11 @@ def lock(request):
 def release_lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
-    time.sleep(edit_time)
     ret_dict = {
         'message': "it's not locked"
     }
     if story.lock:
+        time.sleep(edit_time)
         story.lock = False
         story.save()
         ret_dict['message'] = "lock release"

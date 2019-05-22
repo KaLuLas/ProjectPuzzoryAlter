@@ -60,6 +60,7 @@
                 // send lock message
                 $.ajax({
                     url: "/lock",
+                    async: false,
                     data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data) {
