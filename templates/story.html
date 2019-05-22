@@ -61,7 +61,8 @@
                     url: "/releaselock",
                     data: {'story_id': {{story.id}},'sleep': false},
                     dataType: "JSON"
-                })
+                });
+                alert("sleep");
             });
             $("#newFragBtn").click(function () {
                 // send lock message
