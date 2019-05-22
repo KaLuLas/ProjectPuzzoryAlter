@@ -77,21 +77,22 @@ def upload_frag(request, story_id):
 
     frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list,7)
-    page = paginator.num_pages
-    page_obj = paginator.page(page)
-    if(page > 1):
-        is_paginated = True
-    else:
-        is_paginated = False
+    # page = paginator.num_pages
+    # page_obj = paginator.page(page)
+    # if(page > 1):
+    #     is_paginated = True
+    # else:
+    #     is_paginated = False
 
-    story_dict = {
-        'story': Story.objects.get(id=story_id),
-        'frag_list':  frag_full_list,
-        'paginator': paginator,
-        'page_obj': page_obj,
-        'is_paginated': is_paginated
-     }
-    return render(request, 'story.html', story_dict)
+    # story_dict = {
+    #     'story': Story.objects.get(id=story_id),
+    #     'frag_list':  frag_full_list,
+    #     'paginator': paginator,
+    #     'page_obj': page_obj,
+    #     'is_paginated': is_paginated
+    #  }
+    # return render(request, 'story.html', story_dict)
+    return HttpResponseRedirect("/story/" + story_id + "/page?=" + paginator.num_pages)
 
 
 def upload_story(request):
