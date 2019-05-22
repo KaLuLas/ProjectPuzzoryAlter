@@ -56,6 +56,7 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
+            {% if story.modified == True and user.email != story.email %}
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
@@ -92,6 +93,22 @@
                     }
                 });
             });
+            {% elif story.modifed == False and user.email == story.email %}
+            $("#newFragBtn").click(function () {
+                // send lock message
+                $('#newFragSubmitBtn').show();
+                var i = 300;
+                $('#submitcountdown').html(i);
+                $('#submittimelimit').html(i);
+                var t = setInterval(function(){ 
+                    if(i == 0){
+                        clearInterval(t);
+                        $('#newFragSubmitBtn').hide();
+                    }
+                    i--;
+                    $('#submitcountdown').html(i);
+                }, 1000);
+            {% endif %}
         });
     </script>
 </head>
