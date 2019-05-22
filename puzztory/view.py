@@ -32,9 +32,23 @@ def homepage(request):
 
 
 def storypage(request, story_id):
+    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list,7)
+    if request.method == 'GET':
+        page = request.GET.get('page')
+    else:
+        page = 1
+    page_obj = paginator.get_page(page)
+    if(paginator.num_pages > 1):
+        is_paginated = True
+    else:
+        is_paginated = False
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'frag_list': Fragment.objects.filter(storyid=story_id).order_by('createtime')
+        'frag_list': frag_full_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+        'is_paginated': is_paginated
      }
     return render(request, 'story.html', story_dict)
 
@@ -60,9 +74,21 @@ def upload_frag(request, story_id):
         current_user.experience += 2
         current_user.save()
 
+    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list,7)
+    page = paginator.num_pages
+    page_obj = paginator.get_page(page)
+    if(page > 1):
+        is_paginated = True
+    else:
+        is_paginated = False
+
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'frag_list': Fragment.objects.filter(storyid=story_id).order_by('createtime')
+        'frag_list':  frag_full_list,
+        'paginator': paginator,
+        'page_obj': page_obj,
+        'is_paginated': is_paginated
      }
     return render(request, 'story.html', story_dict)
 

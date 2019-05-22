@@ -43,7 +43,6 @@
         }
     </style>
     <script type="text/javascript">
-        
         $(document).ready(function () {
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
@@ -218,6 +217,80 @@
             </div>
         </div>
 
+        {% if ispaginated %}
+        <div class="row justify-content-center" style="margin:20px;">
+            <ul class="list-group">
+                {% if page_obj %}
+                {% for frag in page_obj %}
+                {% if frag.id != story.ffid %}
+                <div class="list-group-item"
+                    style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
+                    <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-puzzle-piece"></i></h5>
+                            <p class="card-text" style="white-space: pre-line">{{ frag.content }}
+                            </p>
+                            <div class="row" style="margin-bottom: 7px; margin-top: 20px">
+                                <div class="col-md-auto align-self-center">
+                                    <i class="far fa-user" style="font-size: 12px"> {{ frag.nickname }} </i>
+                                </div>
+                                <div class="col-md-auto align-self-center">
+                                    <i class="far fa-clock" style="font-size: 12px"> {{ frag.createtime }}</i>
+                                </div>
+
+                                <div class="col-md-auto ml-auto align-self-center">
+                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                        {{ frag.likescount }}</i>
+                                    <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+            </ul>
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i
+                            class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </li>
+                {% endif %}
+
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right"
+                            aria-hidden="true"></i></a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% else %}
         <div class="row justify-content-center" style="margin:20px;">
             <ul class="list-group">
                 {% if frag_list %}
@@ -255,15 +328,16 @@
 
             </ul>
         </div>
+        {% endif %}
 
         <div class="row justify-content-center" style="padding-bottom:200px;">
             {% if not user.is_authenticated %}
-            <button type="button" class="btn btn-outline-info disabled" data-toggle="modal" data-target="#loginRequest"><i
-                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+            <button type="button" class="btn btn-outline-info disabled" data-toggle="modal"
+                data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% elif story.lock == True %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="有人正在修改这个故事"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
-            {% elif story.modified == False %}
+            {% elif story.modified == False and user.email != story.email %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="作者禁止了对这个故事的修改"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% elif story.finished == True %}
@@ -298,7 +372,7 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    
+
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
