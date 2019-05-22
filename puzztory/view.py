@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from PuzzModel.models import Story, Fragment, UserExtension
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 
 index_dict = {
@@ -138,3 +138,9 @@ def register_page(request):
         'emailExistedAlert': ""
     }
     return render(request, 'register.html', register_dict)
+
+
+def lock(request):
+    request_id = request.GET.get('story_id')
+    story = Story.objects.get(story_id=request_id)
+    return JsonResponse(story.lock)

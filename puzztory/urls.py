@@ -30,6 +30,7 @@ urlpatterns = [
     path('uploading', view.upload_story, name="upload_story"),
     path('story/adding/<int:story_id>', view.upload_frag, name="upload_frag"),
     path('story/<int:story_id>', view.storypage, name="story_page"),
+    path('lock', view.lock, name="lock"),
     re_path(r'^testdb$', testdb.testdb),  # edit
     path('admin/', admin.site.urls),
 ]

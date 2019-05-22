@@ -53,6 +53,12 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
+            
+            $("#newFragBtn").click(function(){
+                $.get("/lock",{'story_id': {{ story.id }}}, function(ret){
+                    $('#newfrag').val(ret)
+                })
+            });
         });
     </script>
 </head>
@@ -307,7 +313,7 @@
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="这个故事已经塞不下了"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% else %}
-            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
+            <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
                     class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
 
