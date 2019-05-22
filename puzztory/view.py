@@ -169,7 +169,6 @@ def release_lock(request):
         time.sleep(edit_time)
         story.lock = False
         story.save()
-        ret_dict['message'] = "lock release"
-    # return anything?
+        # ret_dict['message'] = "lock release"
     return JsonResponse(data=ret_dict)
 
