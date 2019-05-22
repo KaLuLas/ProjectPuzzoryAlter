@@ -143,4 +143,4 @@ def register_page(request):
 def lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
-    return JsonResponse(story.lock)
+    return JsonResponse(data=story.lock, safe=False)
