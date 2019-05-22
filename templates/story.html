@@ -86,7 +86,7 @@
                                 $('#submitcountdown').html(i);
                                 i--;
 
-                            }, 1);
+                            }, 1000);
                             $.ajax({
                                 url: "/releaselock",
                                 data: {'story_id': {{story.id}}},
