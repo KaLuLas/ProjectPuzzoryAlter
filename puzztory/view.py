@@ -12,7 +12,7 @@ index_dict = {
     }
 
 # seconds
-edit_time = 300
+edit_time = 20
 
 
 def homepage(request):

@@ -65,6 +65,7 @@
             });
             $("#newFragBtn").click(function () {
                 // send lock message
+                $('#newFragSubmitBtn').show();
                 $.ajax({
                     url: "/lock",
                     async: false,
@@ -75,8 +76,15 @@
                             $('#newFragBtn').attr('data-target', '#addfrag');
                             $('#lfcontent').html('OK:'+data['lfcontent']);
                             // send release lock message
-                            setInterval(function(){ 
-                                $('#submitcountdown').html($('#submitcountdown').html - 1);
+                            var i = 20;
+                            var t = setInterval(function(){ 
+                                if(i == 0){
+                                    clearInterval(t);
+                                    $('#newFragSubmitBtn').hide();
+                                }
+                                
+                                $('#submitcountdown').html(i);
+                                i--;
 
                             }, 1);
                             $.ajax({
