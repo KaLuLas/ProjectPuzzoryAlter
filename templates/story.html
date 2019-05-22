@@ -74,7 +74,7 @@
                     success: function (data) {
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html('现在的尾巴:'+data['lfcontent']);
+                            $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
                             // send release lock message
                             var i = data['submitcountdown'];
                             $('#submitcountdown').html(i);
@@ -84,11 +84,8 @@
                                     clearInterval(t);
                                     $('#newFragSubmitBtn').hide();
                                 }
-                                
-                                $('#submitcountdown').html(i);
-                                
                                 i--;
-
+                                $('#submitcountdown').html(i);
                             }, 1000);
                             $.ajax({
                                 url: "/releaselock",
