@@ -165,5 +165,6 @@ def release_lock(request):
     time.sleep(edit_time)
     if story.lock:
         story.lock = False
+        story.save()
     # return anything?
     return
