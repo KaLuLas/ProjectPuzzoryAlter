@@ -92,7 +92,7 @@ def upload_frag(request, story_id):
     #     'is_paginated': is_paginated
     #  }
     # return render(request, 'story.html', story_dict)
-    return HttpResponseRedirect("/story/" + story_id + "/page?=" + paginator.num_pages)
+    return HttpResponseRedirect("/story/" + str(story_id) + "/page?=" + str(paginator.num_pages))
 
 
 def upload_story(request):
