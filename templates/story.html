@@ -76,7 +76,7 @@
                             $('#newFragBtn').attr('data-target', '#addfrag');
                             $('#lfcontent').html('OK:'+data['lfcontent']);
                             // send release lock message
-                            var i = 20;
+                            var i = 300;
                             var t = setInterval(function(){ 
                                 if(i == 0){
                                     clearInterval(t);
@@ -84,7 +84,7 @@
                                 }
                                 
                                 $('#submitcountdown').html(i);
-                                console.log(i);
+                                
                                 i--;
 
                             }, 1000);
@@ -364,8 +364,8 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown">100</small><small
-                                        id="submittimelimit" style="color:brown">/300</small>
+                                    <small type="number" id="submitcountdown" style="color:brown"></small><small style="color:brown">/</small><small
+                                        id="submittimelimit" style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
