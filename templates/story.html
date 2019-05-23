@@ -83,6 +83,7 @@
                             }, 1000);
                             $.ajax({
                                 url: "/releaselock",
+                                async: false,
                                 data: {'story_id': {{story.id}}},
                                 dataType: "JSON"
                             });
