@@ -84,7 +84,10 @@
                             $.ajax({
                                 url: "/releaselock",
                                 data: {'story_id': {{story.id}}},
-                                dataType: "JSON"
+                                dataType: "JSON",
+                                success: function(){
+                                    alert("release finished");
+                                }
                             });
                         }
                         else {
