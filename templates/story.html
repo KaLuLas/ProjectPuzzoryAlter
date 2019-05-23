@@ -56,6 +56,12 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
+            // $("#likescount").on('click', function(){
+            //     $.ajax({
+            //         url: "/likescount"
+            //     });
+            // });
+
             {% if story.modified == True %}
             $("#newFragBtn").click(function () {
                 // send lock message
@@ -86,7 +92,7 @@
                                 data: {'story_id': {{story.id}}},
                                 dataType: "JSON",
                                 success: function(){
-                                    alert("release finished");
+                                    // alert("release finished");
                                 }
                             });
                         }
@@ -305,7 +311,7 @@
                                     style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                     title="敲除"></a>
                                     {% endif %}
-                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                    <i id="likescount" fragid="{{ frag.id }}" storyid="{{ story.id }}" type="number" class="far fa-heart" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
