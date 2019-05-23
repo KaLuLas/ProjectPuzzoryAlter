@@ -48,13 +48,12 @@
             var varstr = text.value.trim();
 
             console.log(1);
-            if (varstr.length <= 0){
+            if (varstr.length <= 0) {
                 console.log("wrong");
                 var info = document.getElementById('blankinput');
                 info.innerHTML = "禁止输入全为空格的片段";
 
-            }
-            else{
+            } else {
                 var form = document.getElementById('uploadfrag');
                 form.action = "{% url 'register' %}";
                 form.submit();
@@ -265,6 +264,9 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
+                                    <a href="#" class="fas fa-hammer"
+                                        style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
+                                        title="敲除"></a>
                                     <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</i>
                                     <i class="far fa-comment" style="font-size: 12px"> 19</i>
                                 </div>
@@ -295,6 +297,9 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
+                                    <a href="#" class="fas fa-hammer"
+                                        style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
+                                        title="敲除"></a>
                                     <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</i>
                                     <i class="far fa-comment" style="font-size: 12px"> 19</i>
                                 </div>
