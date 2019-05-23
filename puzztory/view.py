@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 import time
+import threading
+
 
 index_dict = {
         'display': 'homepage',
@@ -157,9 +159,26 @@ def lock(request):
         ret_dict['submitcountdown'] = submit_countdown
         last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
         ret_dict['lfcontent'] = last_fragment.content
+
+        args = [30, request_id]
+        timer = threading.Timer(1, count_down, args)
+        timer.start()
+
     else:
         ret_dict['lock'] = True
     return JsonResponse(data=ret_dict)
+
+
+def count_down(count, request_id):
+    if count > 0:
+        args = [count-1, request_id]
+        timer = threading.Timer(1, count_down, args)
+        timer.start()
+    else:
+        story = Story.objects.get(id=request_id)
+        if story.lock:
+            story.lock = False
+        story.save()
 
 
 def release_lock(request):
