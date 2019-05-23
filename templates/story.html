@@ -56,7 +56,7 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            {% if story.modified == True and user.email != story.email %}
+            {% if story.modified == True %}
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
@@ -108,6 +108,7 @@
                     i--;
                     $('#submitcountdown').html(i);
                 }, 1000);
+            });
             {% endif %}
         });
     </script>
