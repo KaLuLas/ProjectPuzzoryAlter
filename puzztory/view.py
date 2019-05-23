@@ -68,6 +68,17 @@ def upload_story_page(request):
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     return render(request, 'index.html', index_dict)
 
+def deletefrag(request, frag_id, story_id, page):
+    Fragment.objects.get(id=frag_id).delete()
+    story_record = Story.objects.get(id=story_id)
+    story_record.fragscount -= 1
+    story_record.save()
+    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list,7)
+    if paginator.num_pages < page:
+        page = paginator.num_pages
+    return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(page))
+
 
 def upload_frag(request, story_id):
     if request.method == 'POST':

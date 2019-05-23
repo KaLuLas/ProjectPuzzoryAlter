@@ -56,6 +56,12 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
+            // $("#likescount").on('click', function(){
+            //     $.ajax({
+            //         url: "/likescount"
+            //     });
+            // });
+
             {% if story.modified == True %}
             $("#newFragBtn").click(function () {
                 // send lock message
@@ -99,20 +105,10 @@
             {% else %}
             $("#newFragBtn").click(function () {
                 console.log(1);
+                $('#newfrag').attr('height', '310px');
                 $('#newFragBtn').attr('data-target', '#addfrag');
-                $('#newFragSubmitBtn').show();
-                $('#lfcontent').html('现在的尾巴: 试试');
-                let counter = 300;
-                $('#submitcountdown').html(counter);
-                $('#submittimelimit').html(counter);
-                let time = setInterval(function(){ 
-                    if(counter == 0){
-                        clearInterval(time);
-                        $('#newFragSubmitBtn').hide();
-                    }
-                    counter--;
-                    $('#submitcountdown').html(counter);
-                }, 1000);
+                $('#newFragSubmitBtn').show();               
+                $('#separate').hide();               
             });
             {% endif %}
         });
@@ -300,7 +296,12 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
-                                    <i class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                    {% if story.modified == True or user.email == story.email %}
+                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}" class="fas fa-hammer"
+                                    style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
+                                    title="敲除"></a>
+                                    {% endif %}
+                                    <i id="likescount" fragid="{{ frag.id }}" storyid="{{ story.id }}" type="number" class="far fa-heart" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
@@ -379,7 +380,7 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown"></small><small style="color:brown">/</small><small
+                                    <small type="number" id="submitcountdown" style="color:brown"></small><small id="separate" style="color:brown">/</small><small
                                         id="submittimelimit" style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
