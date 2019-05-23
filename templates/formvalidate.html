@@ -69,12 +69,13 @@
 
             $("#newFragBtn").click(function () {
                 // send lock message
+                console.log(1)
                 $('#newFragBtn').attr('data-target', '#addfrag');
                 $('#newFragSubmitBtn').show();
                 $('#lfcontent').html('现在的尾巴: 试试');
                 let counter = 300;
                 $('#submitcountdown').html(counter);
-                $('#submittimelimit').html(counter);
+                
                 let time = setInterval(function(){ 
                     if(counter == 0){
                         clearInterval(time);
