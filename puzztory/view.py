@@ -13,8 +13,8 @@ index_dict = {
     'user_list': ''
 }
 
-# seconds
-edit_time = 30
+# time allocated for user to add fragment: seconds
+edit_time = 180
 
 
 def homepage(request):
@@ -175,7 +175,7 @@ def lock(request):
         last_fragment = Fragment.objects.filter(
             storyid=request_id).order_by('-createtime')[0]
         ret_dict['lfcontent'] = last_fragment.content
-
+        # a timer thread to release lock after edit_time:seconds
         args = [edit_time, request_id]
         timer = threading.Timer(1, count_down, args)
         timer.start()
@@ -186,10 +186,13 @@ def lock(request):
 
 
 def count_down(count, request_id):
+    # if the counting is not over
     if count > 0:
         args = [count-1, request_id]
+        # start a new timer ever second
         timer = threading.Timer(1, count_down, args)
         timer.start()
+    # now the counting is over, unlock the story
     else:
         story = Story.objects.get(id=request_id)
         if story.lock:
@@ -197,15 +200,15 @@ def count_down(count, request_id):
         story.save()
 
 
-def release_lock(request):
-    request_id = request.GET.get('story_id')
-    story = Story.objects.get(id=request_id)
-    ret_dict = {
-        'message': "now story" + request_id + " is unlocked"
-    }
+# def release_lock(request):
+#     request_id = request.GET.get('story_id')
+#     story = Story.objects.get(id=request_id)
+#     ret_dict = {
+#         'message': "now story" + request_id + " is unlocked"
+#     }
 
-    time.sleep(edit_time)
-    story.lock = False
-    story.save()
+#     time.sleep(edit_time)
+#     story.lock = False
+#     story.save()
 
-    return JsonResponse(data=ret_dict)
+#     return JsonResponse(data=ret_dict)

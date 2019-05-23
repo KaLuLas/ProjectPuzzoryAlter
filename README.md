@@ -69,6 +69,7 @@ ProjectPuzztoryNext
 - [x] 敲除片段（简易版）
 - [x] 敲除片段后回到之前在浏览的那一页
 - [x] 如果敲除掉当前页唯一的片段会到前一页
+- [x] threading.timer 释放锁
 
 
 
