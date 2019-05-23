@@ -166,13 +166,12 @@ def release_lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
     ret_dict = {
-        'message': "it's not locked"
+        'message': "now story" + request_id + " is unlocked"
     }
     
-    if story.lock:
-        time.sleep(submit_countdown)
-        story.lock = False
-        story.save()
+    time.sleep(submit_countdown)
+    story.lock = False
+    story.save()
         
     return JsonResponse(data=ret_dict)
 
