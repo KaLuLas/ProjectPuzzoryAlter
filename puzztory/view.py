@@ -12,7 +12,7 @@ index_dict = {
     }
 
 # seconds
-submit_countdown = 10
+submit_countdown = 30
 
 
 def homepage(request):
