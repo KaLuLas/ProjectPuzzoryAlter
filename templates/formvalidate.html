@@ -66,6 +66,24 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
+
+            $("#newFragBtn").click(function () {
+                // send lock message
+                $('#newFragBtn').attr('data-target', '#addfrag');
+                $('#newFragSubmitBtn').show();
+                $('#lfcontent').html('现在的尾巴: 试试');
+                let counter = 300;
+                $('#submitcountdown').html(counter);
+                $('#submittimelimit').html(counter);
+                let time = setInterval(function(){ 
+                    if(counter == 0){
+                        clearInterval(time);
+                        $('#newFragSubmitBtn').hide();
+                    }
+                    counter--;
+                    $('#submitcountdown').html(counter);
+                }, 1000);
+            });
         });
     </script>
 </head>
@@ -305,7 +323,7 @@
 
         <div class="row justify-content-center" style="padding-bottom:100px;">
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addfrag"><i
-                    class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+                    class="fas fa-feather-alt" id="newFragBtn"> 添加一个新片段 </i></button>
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="cannot add fragment right now">
                 <i class="fas fa-feather-alt"> 添加一个新片段 </i></button>

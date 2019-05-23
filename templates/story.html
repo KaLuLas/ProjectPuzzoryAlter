@@ -96,6 +96,7 @@
             {% elif story.modifed == False and user.email == story.email %}
             $("#newFragBtn").click(function () {
                 // send lock message
+                $('#newFragBtn').attr('data-target', '#addfrag');
                 $('#newFragSubmitBtn').show();
                 $('#lfcontent').html('现在的尾巴: 试试');
                 let counter = 300;
