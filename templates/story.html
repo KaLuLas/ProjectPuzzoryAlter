@@ -93,9 +93,9 @@
                     }
                 });
             });
-            {% elif story.modifed == False and user.email == story.email %}
+            {% else %}
             $("#newFragBtn").click(function () {
-                console.log("send");
+                console.log(1);
                 $('#newFragBtn').attr('data-target', '#addfrag');
                 $('#newFragSubmitBtn').show();
                 $('#lfcontent').html('现在的尾巴: 试试');
