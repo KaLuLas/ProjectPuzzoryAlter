@@ -71,7 +71,10 @@ def deletefrag(request, frag_id, story_id, page):
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
-    
+    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list,7)
+    if paginator.num_pages < page:
+        page = paginator.num_pages
     return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(page))
 
 
