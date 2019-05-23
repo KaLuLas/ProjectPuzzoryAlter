@@ -97,16 +97,17 @@
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
-                var i = 300;
-                $('#submitcountdown').html(i);
-                $('#submittimelimit').html(i);
-                var t = setInterval(function(){ 
-                    if(i == 0){
-                        clearInterval(t);
+                $('#lfcontent').html('现在的尾巴: '+ {{ page_obj.object_list[-1] }});
+                let counter = 300;
+                $('#submitcountdown').html(counter);
+                $('#submittimelimit').html(counter);
+                let time = setInterval(function(){ 
+                    if(counter == 0){
+                        clearInterval(time);
                         $('#newFragSubmitBtn').hide();
                     }
-                    i--;
-                    $('#submitcountdown').html(i);
+                    counter--;
+                    $('#submitcountdown').html(counter);
                 }, 1000);
             });
             {% endif %}
