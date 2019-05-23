@@ -107,18 +107,8 @@
                 console.log(1);
                 $('#newFragBtn').attr('data-target', '#addfrag');
                 $('#newFragSubmitBtn').show();
-                $('#newfrag').attr('height', '300px');
-                let counter = 300;
-                $('#submitcountdown').html(counter);
-                $('#submittimelimit').html(counter);
-                let time = setInterval(function(){ 
-                    if(counter == 0){
-                        clearInterval(time);
-                        $('#newFragSubmitBtn').hide();
-                    }
-                    counter--;
-                    $('#submitcountdown').html(counter);
-                }, 1000);
+                $('#newfrag').attr('height', '310px');
+                $('#separate').hide();               
             });
             {% endif %}
         });
@@ -390,7 +380,7 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown"></small><small style="color:brown">/</small><small
+                                    <small type="number" id="submitcountdown" style="color:brown"></small><small id="separate" style="color:brown">/</small><small
                                         id="submittimelimit" style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
