@@ -8,20 +8,20 @@ import threading
 
 
 index_dict = {
-        'display': 'homepage',
-        'story_list': '',
-        'user_list': ''
-    }
+    'display': 'homepage',
+    'story_list': '',
+    'user_list': ''
+}
 
 # seconds
-submit_countdown = 30
+edit_time = 30
 
 
 def homepage(request):
     index_dict['display'] = 'homepage'
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
-    
+
     # for Pagination
     story_full_list = Story.objects.order_by('-createtime')
     paginator = Paginator(story_full_list, 10)
@@ -41,13 +41,14 @@ def homepage(request):
 
 
 def storypage(request, story_id):
-    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
-    paginator = Paginator(frag_full_list,7)
+    frag_full_list = Fragment.objects.filter(
+        storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list, 7)
     # if request.method == 'GET':
     page = request.GET.get('page')
     if page == None:
         page = 1
-    
+
     page_obj = paginator.page(page)
     if(paginator.num_pages > 1):
         is_paginated = True
@@ -58,7 +59,7 @@ def storypage(request, story_id):
         'paginator': paginator,
         'page_obj': page_obj,
         'is_paginated': is_paginated
-     }
+    }
     return render(request, 'story.html', story_dict)
 
 
@@ -68,13 +69,15 @@ def upload_story_page(request):
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     return render(request, 'index.html', index_dict)
 
+
 def deletefrag(request, frag_id, story_id, page):
     Fragment.objects.get(id=frag_id).delete()
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
-    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
-    paginator = Paginator(frag_full_list,7)
+    frag_full_list = Fragment.objects.filter(
+        storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list, 7)
     if paginator.num_pages < page:
         page = paginator.num_pages
     return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(page))
@@ -96,8 +99,9 @@ def upload_frag(request, story_id):
         current_user.experience += 2
         current_user.save()
 
-    frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')
-    paginator = Paginator(frag_full_list,7)
+    frag_full_list = Fragment.objects.filter(
+        storyid=story_id).order_by('createtime')
+    paginator = Paginator(frag_full_list, 7)
     return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(paginator.num_pages))
 
 
@@ -167,11 +171,12 @@ def lock(request):
         story.lock = True
         story.save()
         ret_dict['lock'] = False
-        ret_dict['submitcountdown'] = submit_countdown
-        last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
+        ret_dict['submitcountdown'] = edit_time
+        last_fragment = Fragment.objects.filter(
+            storyid=request_id).order_by('-createtime')[0]
         ret_dict['lfcontent'] = last_fragment.content
 
-        args = [30, request_id]
+        args = [edit_time, request_id]
         timer = threading.Timer(1, count_down, args)
         timer.start()
 
@@ -198,10 +203,9 @@ def release_lock(request):
     ret_dict = {
         'message': "now story" + request_id + " is unlocked"
     }
-    
-    time.sleep(submit_countdown)
+
+    time.sleep(edit_time)
     story.lock = False
     story.save()
-        
-    return JsonResponse(data=ret_dict)
 
+    return JsonResponse(data=ret_dict)
