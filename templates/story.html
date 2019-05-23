@@ -97,7 +97,7 @@
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
-                $('#lfcontent').html('现在的尾巴: '+ {{ page_obj.object_list[-1] }});
+                $('#lfcontent').html('现在的尾巴: 试试');
                 let counter = 300;
                 $('#submitcountdown').html(counter);
                 $('#submittimelimit').html(counter);
@@ -211,9 +211,9 @@
                     <div class="col-md-auto align-self-center" style="padding-left: 5px">
                         {% if story.finished == True %}
                         <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
-                        <!-- if the story cannot be modified -->
+                        <!-- if the story can be modified -->
                         {% elif story.modified == False %}
-                        <i class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="cannot be modified"></i>
+                        <i class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
                         <!-- if the story is being edited -->
                         {% elif story.lock == True %}
                         <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
