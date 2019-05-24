@@ -140,6 +140,7 @@ class Story(models.Model):
     email = models.CharField(max_length=150)
     title = models.CharField(max_length=50)
     createtime = models.DateTimeField(default=timezone.now)
+    updatetime = models.DateTimeField(default=timezone.now)
     branch = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     lock = models.BooleanField(default=False)
@@ -148,7 +149,9 @@ class Story(models.Model):
     commentscount = models.IntegerField(default=0)
     fragscount = models.IntegerField(default=1)
     fragscountlimit = models.IntegerField(default=-1)
-    fragwordslimit = models.IntegerField(default=-1)    
+    fragwordslimit = models.IntegerField(default=-1) 
+    editor = models.CharField(max_length=150)
+    remains = models.IntegerField(default=0)
 
 
 class UserExtension(User):
