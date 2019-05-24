@@ -137,7 +137,7 @@ class Story(models.Model):
     ffid = models.IntegerField()
     ffcontent = models.CharField(max_length=500)
     nickname = models.CharField(max_length=20)
-    editor = models.CharField(max_length=150, blank=True, null=True)
+    editor = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
     title = models.CharField(max_length=50)
     createtime = models.DateTimeField(default=timezone.now)
