@@ -170,3 +170,16 @@ class Comment(models.Model):
     content = models.CharField(max_length=150)
     createtime = models.DateTimeField(default=timezone.now)
     likescount = models.IntegerField(default=0) 
+
+
+class Announcement(models.Model):
+    optype = models.CharField(max_length=20) #addfrag/storylike/commentlike/storycomment/fragcomment/cocomment
+    targetid = models.IntegerField()
+    fromuser = models.CharField(max_length=150)
+    fromnickname = models.CharField(max_length=20)
+    touser = models.CharField(max_length=150)
+    createtime = models.DateTimeField(default=timezone.now)
+    content = models.CharField(max_length=150, blank=True, null=True)
+    read = models.BooleanField(default=False)
+
+
