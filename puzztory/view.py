@@ -217,7 +217,7 @@ def lock(request):
         last_fragment = Fragment.objects.filter(
             storyid=request_id).order_by('-createtime')[0]
         if len(last_fragment.content) > 20:
-            lfcontent_text = last_fragment.content[-20:]
+            lfcontent_text = '...' + last_fragment.content[-20:]
         else:
             lfcontent_text = last_fragment.content
         ret_dict['lfcontent'] = lfcontent_text
