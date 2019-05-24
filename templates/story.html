@@ -320,7 +320,7 @@
             {% if not user.is_authenticated %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="modal"
                 data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
-            {% elif story.lock == True %}
+            {% elif story.lock == True and story.editor != user.email %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="有人正在修改这个故事"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% elif story.modified == False and user.email != story.email %}
