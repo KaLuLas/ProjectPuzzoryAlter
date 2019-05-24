@@ -98,7 +98,8 @@ def upload_frag(request, story_id):
         story_record.lock = False
         story_record.editor = request.user.email
         story_record.remains = 0
-        story_record.updatetime = timezone.now
+        # story_record.updatetime = timezone.now
+        story_record.updatetime = frag_record.createtime
         story_record.save()
         current_user = UserExtension.objects.get(id=request.user.id)
         current_user.experience += 2
