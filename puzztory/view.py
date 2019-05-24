@@ -96,7 +96,6 @@ def upload_frag(request, story_id):
         # unlock the story once the fragment is submitted
         # meanwhile refresh attribute editor, remains, updatetime
         story_record.lock = False
-        story_record.editor = request.user.email
         story_record.remains = 0
         # story_record.updatetime = timezone.now
         story_record.updatetime = frag_record.createtime
@@ -192,6 +191,7 @@ def lock(request):
     if not story.lock:
         story.lock = True
         # get ready for countdown
+        story.editor = request.user.email
         story.remains = edit_time
         story.save()
         ret_dict['lock'] = False

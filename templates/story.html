@@ -103,7 +103,8 @@
                     data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data) {
-                        $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);                        
+                        $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
+                        $('#separate').hide();                        
                     }
                 });               
             });
