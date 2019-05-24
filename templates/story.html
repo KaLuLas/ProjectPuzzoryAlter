@@ -88,11 +88,13 @@
                             var remains = data['submitcountdown'];
                             timer[remains] = setInterval(function(){ 
                                 if(remains == 0){
-                                    clearInterval(t);
+                                    clearInterval(timer[remains]);
                                     $('#newFragSubmitBtn').hide();
                                 }
-                                remains--;
-                                $('#submitcountdown').html(remains);
+                                else{
+                                    remains--;
+                                    $('#submitcountdown').html(remains);
+                                }                                
                             }, 1000);
                         }
                         else {
