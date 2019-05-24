@@ -187,6 +187,11 @@ def lock(request):
     story = Story.objects.get(id=request_id)
     ret_dict = {}
     ret_dict['submittimelimit'] = edit_time
+    
+    # if another user request arrives when it's locked
+    if story.lock or not story.modified:
+        ret_dict['lock'] = True
+
     # if story is not locked and user request to edit this story
     if not story.lock:
         story.lock = True
@@ -221,9 +226,7 @@ def lock(request):
         else:
             lfcontent_text = last_fragment.content
         ret_dict['lfcontent'] = lfcontent_text
-    # if another user request arrives when it's locked
-    else:
-        ret_dict['lock'] = True
+    
     return JsonResponse(data=ret_dict)
 
 
