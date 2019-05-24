@@ -4,42 +4,15 @@ ProjectPuzztoryNext
 
 ('/_ ')玩故事接龙的（摸了。
 
+把大量的TODO都放在了project记录里面
+
+上锁功能的测试备忘记录放在了Issues里面
+
 
 
 ### 项目记录
 
 **TODO:**
-
-- [ ] 作者的故事上锁功能【TOGETHER？
-- [ ] 故事作者的完结设置功能（不同用户的完结申请结果不同or一般人的故事页没有完结请求按钮【ALEX
-- [ ] 普通用户的申请完结功能涉及到通知作者（系统通知【ALEX
-- [ ] 针对完结申请和系统通知，修改**数据库**【TOGETHER
-- [ ] 成功提交故事通知 【KAL
-- [ ] 片段跳转自动滚到底端 【ALEX
-- [ ] 片段敲除进阶 【ALEX
-
-
-
-- [ ] 针对规则修改**数据库**【TOGETHER
-- [ ] 针对关键词修改**数据库**【TOGETHER
-- [ ] 手动修改数据库 【ALEX
-- [ ] 针对规则修改UI 【KAL
-- [ ] 针对关键词修改UI 【ALEX
-- [ ] 添加片段时添加关键词限制检测 【ALEX
-
-
-
-- [ ] 针对用户行为修改**数据库** 【TOGETHER
-- [ ] 手动修改数据库 【ALEX
-- [ ] 故事点赞，片段点赞功能 【ALEX
-- [ ] 故事评论，片段评论功能【KAL
-- [ ] 故事评论显示，片段评论显示【KAL
-- [ ] **与点赞和评论同时**用户等级和经验值变更（涉及到几乎每种用户行为【TOGETHER
-- [ ] 用户的经验与等级数据库自动设置 【KAL
-- [ ] （进阶）用户头像（数据库，用户页） 【TOGETHER
-- [ ] 用户页
-
-
 
 - [ ] 分支添加
 - [ ] 分支显示（天啊感觉这是一个超大工程，需要细分出好多要考虑和讨论的
@@ -235,8 +208,11 @@ ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NU
 | ffcontent       | CharField     |      | False |              | 500        | 首片内容                       |
 | email           | CharField     |      | False |              | 150        | 作者邮箱                       |
 | nickname        | CharField     |      | False |              | 20         | 作者昵称                       |
+| **editor**      | CharField     |      | False |              | 150        | 修改者邮箱                     |
 | title           | CharField     |      | False |              | 50         | 题目                           |
-| createtime      | DateTimeField |      | False | timezone.now |            | c创建时间                      |
+| createtime      | DateTimeField |      | False | timezone.now |            | 创建时间                       |
+| **updatetime**  | DataTimeField |      | False | timezone.now |            | 修改时间                       |
+| **remains**     | IntegerField  |      | False | 0            |            | 剩余修改时间                   |
 | branch          | BooleanField  |      |       | False        |            | 是否存在分支                   |
 | finished        | BooleanField  |      |       | False        |            | 是否完结，true表示完结         |
 | lock            | BooleanField  |      |       | False        |            | 是否可编辑，true表示正在被写   |
@@ -278,3 +254,18 @@ ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NU
 | createtime | DateTimeField |      | False | timezone.now |            | 创建时间                |
 | likescount | IntegerField  |      |       | 0            |            | 点赞数                  |
 
+**Announcement**
+
+| attribute    | type          | null | blank | default      | max_length | description  |
+| ------------ | ------------- | ---- | ----- | ------------ | ---------- | ------------ |
+| id           |               |      |       |              |            | [主键]增序   |
+| optype       | CharField     |      | False |              | 20         |              |
+| targetid     | IntegerField  |      | False |              |            | 对象id       |
+| fromuser     |               |      | False |              |            | 发起者用户id |
+| fromnickname |               |      | False |              |            | 发起者用户名 |
+| touser       |               |      | False |              |            | 目标用户id   |
+| createtime   | DataTimeField |      | False | timezone.now |            | 发起时间     |
+| content      | CharField     | True | True  |              |            | 评论         |
+| read         | BooleanField  |      | False | False        |            | 是否被浏览   |
+
+新增片段 / 故事点赞 / 片段点赞 / 故事评论 / 片段评论 / 评论评论
