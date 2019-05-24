@@ -3,6 +3,7 @@ from PuzzModel.models import Fragment, UserExtension, Story
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
+from django.utils import timezone
 import time
 import threading
 
@@ -14,7 +15,7 @@ index_dict = {
 }
 
 # time allocated for user to add fragment: seconds
-edit_time = 180
+edit_time = 30
 
 
 def homepage(request):
@@ -93,7 +94,11 @@ def upload_frag(request, story_id):
         story_record = Story.objects.get(id=story_id)
         story_record.fragscount += 1
         # unlock the story once the fragment is submitted
+        # meanwhile refresh attribute editor, remains, updatetime
         story_record.lock = False
+        story_record.editor = request.user.email
+        story_record.remains = 0
+        story_record.updatetime = timezone.now
         story_record.save()
         current_user = UserExtension.objects.get(id=request.user.id)
         current_user.experience += 2
@@ -120,7 +125,7 @@ def upload_story(request):
         frag_record.save()
         story_record = Story(
             nickname=request.user.userextension.nickname, email=request.user.email,
-            title=story_title, ffid=frag_record.id, ffcontent=first_frag_text)
+            editor=request.user.email, title=story_title, ffid=frag_record.id, ffcontent=first_frag_text)
 
         if 'branch' in request.POST:
             story_record.branch = True
@@ -167,29 +172,54 @@ def lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
     ret_dict = {}
+    ret_dict['submittimelimit'] = edit_time
+    # if story is not locked and user request to edit this story
     if not story.lock:
         story.lock = True
+        # get ready for countdown
+        story.remains = edit_time
         story.save()
         ret_dict['lock'] = False
-        ret_dict['submitcountdown'] = edit_time
+        ret_dict['submitcountdown'] = story.remains
+
         last_fragment = Fragment.objects.filter(
             storyid=request_id).order_by('-createtime')[0]
-        ret_dict['lfcontent'] = last_fragment.content
+        if len(last_fragment.content) > 20:
+            lfcontent_text = last_fragment.content[-20:]
+        else:
+            lfcontent_text = last_fragment.content
+        ret_dict['lfcontent'] = lfcontent_text
+
         # a timer thread to release lock after edit_time:seconds
-        args = [edit_time, request_id]
+        args = [request_id]
         timer = threading.Timer(1, count_down, args)
         timer.start()
+    # if the same user requests for the second time
+    elif request.user.email == story.editor:
+        ret_dict['lock'] = False
+        ret_dict['submitcountdown'] = story.remains
 
+        last_fragment = Fragment.objects.filter(
+            storyid=request_id).order_by('-createtime')[0]
+        if len(last_fragment.content) > 20:
+            lfcontent_text = last_fragment.content[-20:]
+        else:
+            lfcontent_text = last_fragment.content
+        ret_dict['lfcontent'] = lfcontent_text
+    # if another user request arrives when it's locked
     else:
         ret_dict['lock'] = True
     return JsonResponse(data=ret_dict)
 
 
-def count_down(count, request_id):
+def count_down(request_id):
     # if the counting is not over
-    if count > 0:
-        args = [count-1, request_id]
+    story = Story.objects.get(id=request_id)
+    if story.remains > 0:
+        story.remains -= 1
+        story.save()
         # start a new timer ever second
+        args = [request_id]
         timer = threading.Timer(1, count_down, args)
         timer.start()
     # now the counting is over, unlock the story
@@ -198,17 +228,3 @@ def count_down(count, request_id):
         if story.lock:
             story.lock = False
         story.save()
-
-
-# def release_lock(request):
-#     request_id = request.GET.get('story_id')
-#     story = Story.objects.get(id=request_id)
-#     ret_dict = {
-#         'message': "now story" + request_id + " is unlocked"
-#     }
-
-#     time.sleep(edit_time)
-#     story.lock = False
-#     story.save()
-
-#     return JsonResponse(data=ret_dict)
