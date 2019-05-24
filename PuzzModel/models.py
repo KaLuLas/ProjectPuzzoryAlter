@@ -178,6 +178,7 @@ class Announcement(models.Model):
     fromuser = models.CharField(max_length=150)
     fromnickname = models.CharField(max_length=20)
     touser = models.CharField(max_length=150)
+    tonickname = models.CharField(max_length=20)
     createtime = models.DateTimeField(default=timezone.now)
     content = models.CharField(max_length=150, blank=True, null=True)
     read = models.BooleanField(default=False)
