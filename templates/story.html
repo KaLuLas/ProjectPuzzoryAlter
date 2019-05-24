@@ -66,6 +66,7 @@
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
+                var t = setInterval(function(){}, 1000);
                 $.ajax({
                     url: "/lock",
                     async: false,
@@ -79,7 +80,8 @@
                             $('#submitcountdown').html(data['submitcountdown']);
                             $('#submittimelimit').html(data['submittimelimit']);
                             var remains = data['submitcountdown'];
-                            var t = setInterval(function(){ 
+                            clearInterval(t);
+                            t = setInterval(function(){ 
                                 if(remains == 0){
                                     clearInterval(t);
                                     $('#newFragSubmitBtn').hide();
@@ -96,11 +98,14 @@
             });
             {% else %}
             $("#newFragBtn").click(function () {
-                console.log(1);
-                $('#newfrag').attr('height', '310px');
-                $('#newFragBtn').attr('data-target', '#addfrag');
-                $('#newFragSubmitBtn').show();               
-                $('#separate').hide();               
+                $.ajax({
+                    url: "/lfcontent",
+                    data: {'story_id': {{story.id}}},
+                    dataType: "JSON",
+                    success: function (data) {
+                        $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);                        
+                    }
+                });               
             });
             {% endif %}
         });
