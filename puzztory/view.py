@@ -15,7 +15,7 @@ index_dict = {
 }
 
 # time allocated for user to add fragment: seconds
-edit_time = 30
+edit_time = 180
 
 
 def homepage(request):
@@ -27,9 +27,9 @@ def homepage(request):
     story_full_list = Story.objects.order_by('-createtime')
     paginator = Paginator(story_full_list, 10)
     # if request.method == 'GET':
-    page = request.GET.get('page')
-    if page == None:
-        page = 1
+    page = request.GET.get('page', 1)
+    # if page == None:
+    #     page = 1
     page_obj = paginator.get_page(page)
     index_dict['paginator'] = paginator
     index_dict['page_obj'] = page_obj
@@ -86,7 +86,8 @@ def deletefrag(request, frag_id, story_id, page):
     if paginator.num_pages < page:
         page = paginator.num_pages
     last_frag_id = paginator.page(page)[-1].id
-    append = str(story_id) + "?page=" + str(page) + "&scroll_to_frag_id=" + last_frag_id
+    append = str(story_id) + "?page=" + str(page) + \
+        "&scroll_to_frag_id=" + str(last_frag_id)
     return HttpResponseRedirect("/story/" + append)
 
 
@@ -114,7 +115,7 @@ def upload_frag(request, story_id):
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
     append = str(story_id) + "?page=" + str(paginator.num_pages) + \
-        "&scroll_to_frag_id=" + frag_record.id
+        "&scroll_to_frag_id=" + str(frag_record.id)
     return HttpResponseRedirect("/story/" + append)
 
 
