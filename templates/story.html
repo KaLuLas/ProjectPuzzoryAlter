@@ -51,7 +51,11 @@
                     scrollTop: $("#firstCard").offset().top
                 }, 500);
             });
-
+            {% if scroll_to_frag_id != -1 %}
+            $('html, body').animate({
+                    scrollTop: $("#{{scroll_to_frag_id}}").offset().top
+                }, 500);
+            {% endif %}
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
                 var text = this.value.trim();
@@ -291,7 +295,7 @@
                 {% if page_obj.object_list %}
                 {% for frag in page_obj.object_list %}
                 {% if frag.id != story.ffid %}
-                <div class="list-group-item"
+                <div class="list-group-item" id="{{ frag.id }}"
                     style="background-color: rgb(248, 248, 248); margin-bottom:20px; padding:0px; width:800px">
                     <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
                         <div class="card-body">

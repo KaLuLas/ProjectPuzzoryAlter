@@ -46,20 +46,24 @@ def storypage(request, story_id):
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
     # if request.method == 'GET':
-    page = request.GET.get('page')
-    if page == None:
-        page = 1
+    page = request.GET.get('page', 1)
+    # if page is None:
+    #     page = 1
 
     page_obj = paginator.page(page)
     if(paginator.num_pages > 1):
         is_paginated = True
     else:
         is_paginated = False
+
+    scroll_to_frag_id = request.GET.get('scroll_to_frag_id', -1)
+
     story_dict = {
         'story': Story.objects.get(id=story_id),
         'paginator': paginator,
         'page_obj': page_obj,
-        'is_paginated': is_paginated
+        'is_paginated': is_paginated,
+        'scroll_to_frag_id': scroll_to_frag_id
     }
     return render(request, 'story.html', story_dict)
 
@@ -81,7 +85,9 @@ def deletefrag(request, frag_id, story_id, page):
     paginator = Paginator(frag_full_list, 7)
     if paginator.num_pages < page:
         page = paginator.num_pages
-    return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(page))
+    last_frag_id = paginator.page(page)[-1].id
+    append = str(story_id) + "?page=" + str(page) + "&scroll_to_frag_id=" + last_frag_id
+    return HttpResponseRedirect("/story/" + append)
 
 
 def upload_frag(request, story_id):
@@ -107,7 +113,9 @@ def upload_frag(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
-    return HttpResponseRedirect("/story/" + str(story_id) + "?page=" + str(paginator.num_pages))
+    append = str(story_id) + "?page=" + str(paginator.num_pages) + \
+        "&scroll_to_frag_id=" + frag_record.id
+    return HttpResponseRedirect("/story/" + append)
 
 
 def upload_story(request):
@@ -187,7 +195,7 @@ def lock(request):
     story = Story.objects.get(id=request_id)
     ret_dict = {}
     ret_dict['submittimelimit'] = edit_time
-    
+
     # if another user request arrives when it's locked
     if story.lock or not story.modified:
         ret_dict['lock'] = True
@@ -226,7 +234,7 @@ def lock(request):
         else:
             lfcontent_text = last_fragment.content
         ret_dict['lfcontent'] = lfcontent_text
-    
+
     return JsonResponse(data=ret_dict)
 
 
