@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from PuzzModel.models import Fragment, UserExtension, Story
+from PuzzModel.models import Fragment, UserExtension, Story
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
