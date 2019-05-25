@@ -58,6 +58,9 @@ def storypage(request, story_id):
 
     scroll_to_frag_id = request.GET.get('scroll_to_frag_id', -1)
 
+    # scroll_to_frag_id == -1 代表不需要片段滚动
+    # 否则 scroll_to_frag_id 代表滚动到的片段id号
+
     story_dict = {
         'story': Story.objects.get(id=story_id),
         'paginator': paginator,
@@ -85,6 +88,8 @@ def deletefrag(request, frag_id, story_id, page):
     paginator = Paginator(frag_full_list, 7)
     if paginator.num_pages < page:
         page = paginator.num_pages
+
+    # 置 last_frag_id 为当前页最后一个片段
     last_frag_id = paginator.page(page)[-1].id
     append = str(story_id) + "?page=" + str(page) + \
         "&scroll_to_frag_id=" + str(last_frag_id)
@@ -114,6 +119,7 @@ def upload_frag(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
+    # 置 last_frag_id 为当前页最后一个片段
     append = str(story_id) + "?page=" + str(paginator.num_pages) + \
         "&scroll_to_frag_id=" + str(frag_record.id)
     return HttpResponseRedirect("/story/" + append)
