@@ -15,7 +15,7 @@ index_dict = {
 }
 
 # time allocated for user to add fragment: seconds
-edit_time = 180
+edit_time = 300
 
 
 def homepage(request):
