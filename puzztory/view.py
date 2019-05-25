@@ -24,7 +24,7 @@ def homepage(request):
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
 
     # for Pagination
-    story_full_list = Story.objects.order_by('-createtime')
+    story_full_list = Story.objects.order_by('-updatetime')
     paginator = Paginator(story_full_list, 10)
     # if request.method == 'GET':
     page = request.GET.get('page', 1)
