@@ -49,7 +49,7 @@
             $('#jumpTopBtn').click(function(){
                 $('html, body').animate({
                     scrollTop: $("#firstCard").offset().top
-                }, 1000);
+                }, 500);
             });
 
             $("#newfrag").on('input property change', function (e) {
@@ -349,7 +349,7 @@
             <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal"
                 data-target="#addfrag"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
-
+            <button id="jumpTopBtn" class="btn btn-outline-success" style="margin-left: 20px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
             <div class="modal fade" id="lockmessage" tabindex="-1" role="dialog" aria-labelledby="lockmessageLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -444,7 +444,6 @@
                 </ul>
             </nav>
             {% endif %}
-            <button id="jumpTopBtn" class="btn btn-success"><i class="fa fa-rocket" aria-hidden="true"></i></button>
         </div>
 
 
