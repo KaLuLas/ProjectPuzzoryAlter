@@ -107,7 +107,7 @@
                     success: function (data){
                         if (!data['lock']) {
                             
-                            if(date['counter'] == 0){
+                            if(data['counter'] == 0){
                                 console.log('置为0');
                                 counter = 0;
                                 $("#modifiedset").removeClass('button-action');
