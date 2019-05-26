@@ -89,11 +89,12 @@
             //     });
             // });
 
-            {% if user.email == story.email %}
-            var counter = 0;
+            {% if user.email == story.email %}           
 
             {% if story.modified == True %}
-            counter = 1;            
+            var counter = 1; 
+            {% else %}
+            var counter = 0;
             {% endif %}
 
             $("#modifiedset").on('click', function(){
