@@ -201,21 +201,16 @@ def modifiedset(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
     ret_dict = {}
-    if story.lock:
-        ret_dict['lock'] = True
-    else:
-        ret_dict['lock'] = False
-        #翻转操作
-        if story.modified:
-            ret_dict['counter'] = 0
-            story.modified = False
-            story.save()
-        else:
-            ret_dict['counter'] = 1
-            story.modified = True
-            story.save()
+    ret_dict['lock'] = story.lock
+
+    if not story.lock:
+        # 翻转操作
+        ret_dict['modified'] = story.modified
+        story.modified = not story.modified
+        story.save()
 
     return JsonResponse(data=ret_dict)
+
 
 def lock(request):
     request_id = request.GET.get('story_id')

@@ -98,16 +98,16 @@
                     dataType: "JSON",
                     success: function (data){
                         if (!data['lock']) {
-                            if(data['counter'] == 0){
-                                $("#modifiedset").removeClass('button-action');
-                                $("#modifiedset").addClass('button-highlight');
+                            if(data['modified']){
+                                $("#modifiedset").removeClass('btn-outline-warning');
+                                $("#modifiedset").addClass('btn-warning');
                                 $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-unlock-alt');
                                 $("#modifiedicon").addClass('fa-lock');
                             }
                             else{
-                                $("#modifiedset").removeClass('button-highlight');
-                                $("#modifiedset").addClass('button-action');
+                                $("#modifiedset").removeClass('btn-warning');
+                                $("#modifiedset").addClass('btn-outline-warning');
                                 $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-lock');
                                 $("#modifiedicon").addClass('fa-unlock-alt');
@@ -347,14 +347,14 @@
             <div class="col-1">
                 {% if user.email == story.email %}
                 {% if story.lock == True %}
-                <button class="button button-box disabled"
-                style="margin-top:40px; margin-left:20px" title="别人正在修改你的故事"><i class="fas fa-user-lock"></i></button>
+                <button class="btn btn-warning btn-block disabled"
+                style="margin-top:40px; margin-left:20px" title="别人正在修改你的故事"><i class="fas fa-user-lock">正在续写</i></button>
                 {% elif story.modified == True %}
-                <button id="modifiedset" class="button button-box button-action shadow"
-                style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield"></i></button>
+                <button id="modifiedset" class="btn btn-outline-warning btn-block" 
+                style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield">续写再开</i></button>
                 {% else %}
-                <button id="modifiedset" class="button button-box button-highlight shadow"
-                style="margin-top:40px; margin-left:20px" title="现在别人不能修改你的故事了"><i class="fas fa-user-shield"></i></button>
+                <button id="modifiedset" class="btn btn-warning btn-block"
+                style="margin-top:40px; margin-left:20px" title="现在别人不能修改你的故事了"><i class="fas fa-user-shield">续写中止</i></button>
                 {% endif %}
                 {% endif %}
             </div>
