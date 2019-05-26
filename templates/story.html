@@ -112,18 +112,18 @@
                                 counter = 0;
                                 $("#modifiedset").removeClass('button-action');
                                 $("#modifiedset").addClass('button-highlight');
-                                $("#modifiedset").attr('title', '现在别人不能修改你的故事了')
-                                $("#modifiedicon").removeClass('fa-unlock-alt')
-                                $("#modifiedicon").addClass('fa-lock')
+                                $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
+                                $("#modifiedicon").removeClass('fa-unlock-alt');
+                                $("#modifiedicon").addClass('fa-lock');
                             }
                             else{
                                 console.log('置为1');
                                 counter = 1;
                                 $("#modifiedset").removeClass('button-highlight');
                                 $("#modifiedset").addClass('button-action');
-                                $("#modifiedset").attr('title', '现在别人可以修改你的故事了')
-                                $("#modifiedicon").removeClass('fa-lock')
-                                $("#modifiedicon").addClass('fa-unlock-alt')
+                                $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
+                                $("#modifiedicon").removeClass('fa-lock');
+                                $("#modifiedicon").addClass('fa-unlock-alt');
                             }
                         }
                         else{
