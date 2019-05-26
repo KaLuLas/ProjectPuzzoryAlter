@@ -46,20 +46,21 @@
         }
 
         .shadow {
-            box-shadow:inset -3px -3px 2px #050533;
+            box-shadow: inset -3px -3px 2px #050533;
             height: 39px;
             line-height: 33px;
         }
+
         .shadow:active {
             line-height: 39px;
-            box-shadow:inset 1px 1px 2px #050533;
-            color:white;
+            box-shadow: inset 1px 1px 2px #050533;
+            color: white;
         }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
             // 点击小火箭滚动到故事页的最上方，因为被导航条盖住了所以多滚一点
-            $('#jumpTopBtn').click(function(){
+            $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
                     scrollTop: $("#firstCard").offset().top - 100
                 }, 500);
@@ -67,11 +68,15 @@
 
             // scroll_to_frag_id == -1 代表不需要片段滚动
             // 否则scroll_to_frag_id代表滚动到的片段id号
-            {% if scroll_to_frag_id != -1 %}
+            {
+                %
+                if scroll_to_frag_id != -1 %
+            }
             $('html, body').animate({
-                    scrollTop: $("#{{scroll_to_frag_id}}").offset().top
-                }, 500);
-            {% endif %}
+                scrollTop: $("#{{scroll_to_frag_id}}").offset().top
+            }, 500); {
+                % endif %
+            }
 
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
@@ -89,93 +94,117 @@
             //     });
             // });
 
-            {% if user.email == story.email %}           
-            $("#modifiedset").on('click', function(){
+            {
+                %
+                if user.email == story.email %
+            }
+            $("#modifiedset").on('click', function () {
                 //将判断交给后端
                 $.ajax({
                     url: "/modifiedset",
-                    data: {'story_id': {{story.id}}},
+                    data: {
+                        'story_id': {
+                            {
+                                story.id
+                            }
+                        }
+                    },
                     dataType: "JSON",
-                    success: function (data){
+                    success: function (data) {
                         if (!data['lock']) {
-                            if(data['modified']){
+                            if (data['modified']) {
                                 $("#modifiedset").removeClass('btn-outline-warning');
                                 $("#modifiedset").addClass('btn-warning');
-                                $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
+                                // $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-unlock-alt');
                                 $("#modifiedicon").addClass('fa-lock');
-                            }
-                            else{
+                            } else {
                                 $("#modifiedset").removeClass('btn-warning');
                                 $("#modifiedset").addClass('btn-outline-warning');
-                                $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
+                                // $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-lock');
                                 $("#modifiedicon").addClass('fa-unlock-alt');
                             }
-                        }
-                        else{
+                        } else {
                             $("#lockmessage").modal('show');
                         }
                     }
                 });
-                
-            });
-            {% endif %}
 
-            {% if story.modified == True %}
+            }); {
+                % endif %
+            }
+
+            {
+                %
+                if story.modified == True %
+            }
             var timer = {};
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
-                
+
                 $.ajax({
                     url: "/lock",
                     async: false,
-                    data: {'story_id': {{story.id}}},
+                    data: {
+                        'story_id': {
+                            {
+                                story.id
+                            }
+                        }
+                    },
                     dataType: "JSON",
                     success: function (data) {
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
+                            $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
                             // send release lock message
                             $('#submitcountdown').html(data['submitcountdown']);
                             $('#submittimelimit').html(data['submittimelimit']);
-                            
-                            for(var each in timer){
+
+                            for (var each in timer) {
                                 clearInterval(timer[each]);
                                 delete timer[each];
                             }
                             var remains = data['submitcountdown'];
-                            timer[remains] = setInterval(function(){ 
-                                if(remains == 0){
+                            timer[remains] = setInterval(function () {
+                                if (remains == 0) {
                                     clearInterval(timer[remains]);
                                     $('#newFragSubmitBtn').hide();
-                                }
-                                else{
+                                } else {
                                     remains--;
                                     $('#submitcountdown').html(remains);
-                                }                                
+                                }
                             }, 1000);
-                        }
-                        else {
+                        } else {
                             $('#newFragBtn').attr('data-target', '#lockmessage');
                         }
                     }
                 });
-            });
-            {% else %}
+            }); {
+                %
+                else %
+            }
             $("#newFragBtn").click(function () {
                 $.ajax({
                     url: "/lfcontent",
-                    data: {'story_id': {{story.id}}},
+                    data: {
+                        'story_id': {
+                            {
+                                story.id
+                            }
+                        }
+                    },
                     dataType: "JSON",
                     success: function (data) {
-                        $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
-                        $('#separate').hide();                        
+                        $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
+                        $('#separate').hide();
                     }
-                });               
-            });
-            {% endif %}
+                });
+            }); {
+                % endif %
+            }
 
             // 显示被锁消息后刷新页面
             $('#lockmessage').on('hidden.bs.modal', function (e) {
@@ -276,7 +305,8 @@
     <div class="container-fluid " style="background-color: rgb(248, 248, 248)">
         <div class="row justify-content-center" style="padding-top:70px">
             <div class="col-1"></div>
-            <div class="card" id="firstCard" style="background-color:rgb(246, 255, 238); padding:20px; width:800px; margin-top:30px">
+            <div class="card" id="firstCard"
+                style="background-color:rgb(246, 255, 238); padding:20px; width:800px; margin-top:30px">
 
                 <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
                     <div class="col-md-auto align-self-center" style="padding-left: 5px">
@@ -284,7 +314,8 @@
                         <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
                         <!-- if the story can be modified -->
                         {% elif story.modified == False %}
-                        <i id="modifiedicon" class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
+                        <i id="modifiedicon" class="fa fa-lock" style="font-size: 17px" aria-hidden="true"
+                            title="this story can only be modified by initiator"></i>
                         <!-- if the story is being edited -->
                         {% elif story.lock == True %}
                         <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
@@ -347,14 +378,11 @@
             <div class="col-1">
                 {% if user.email == story.email %}
                 {% if story.lock == True %}
-                <button class="btn btn-warning btn-block disabled"
-                style="margin-top:40px; margin-left:20px" title="别人正在修改你的故事"><i class="fas fa-user-lock">正在续写</i></button>
+                <button class="btn btn-warning disabled" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-lock"></i><strong>正在续写</strong></button>
                 {% elif story.modified == True %}
-                <button id="modifiedset" class="btn btn-outline-warning btn-block" 
-                style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield">续写中止</i></button>
+                <button id="modifiedset" class="btn btn-outline-warning" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-shield"></i><strong>续写中止</strong></button>
                 {% else %}
-                <button id="modifiedset" class="btn btn-warning btn-block"
-                style="margin-top:40px; margin-left:20px" title="现在别人不能修改你的故事了"><i class="fas fa-user-shield">续写再开</i></button>
+                <button id="modifiedset" class="btn btn-warning" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-shield"></i><strong>续写再开</strong></button>
                 {% endif %}
                 {% endif %}
             </div>
@@ -382,11 +410,13 @@
 
                                 <div class="col-md-auto ml-auto align-self-center">
                                     {% if story.modified == True or user.email == story.email %}
-                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}" class="fas fa-hammer"
-                                    style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
-                                    title="敲除"></a>
+                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}"
+                                        class="fas fa-hammer"
+                                        style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
+                                        title="敲除"></a>
                                     {% endif %}
-                                    <i id="likescount" fragid="{{ frag.id }}" storyid="{{ story.id }}" type="number" class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                    <i id="likescount" fragid="{{ frag.id }}" storyid="{{ story.id }}" type="number"
+                                        class="far fa-heart" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
@@ -423,7 +453,8 @@
             <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal"
                 data-target="#addfrag"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
-            <button id="jumpTopBtn" class="btn btn-outline-success" style="margin-left: 20px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+            <button id="jumpTopBtn" class="btn btn-outline-success" style="margin-left: 20px"><i class="fa fa-rocket"
+                    aria-hidden="true"></i></button>
             <div class="modal fade" id="lockmessage" tabindex="-1" role="dialog" aria-labelledby="lockmessageLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -465,15 +496,17 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown"></small><small id="separate" style="color:brown">/</small><small
-                                        id="submittimelimit" style="color:brown"></small>
+                                    <small type="number" id="submitcountdown" style="color:brown"></small><small
+                                        id="separate" style="color:brown">/</small><small id="submittimelimit"
+                                        style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
-                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
+                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
+                                        style="margin-right:5px">提交片段</button>
                                 </div>
                             </form>
 
