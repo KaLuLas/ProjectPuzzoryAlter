@@ -101,13 +101,13 @@
                     counter = false;
                     $(this).removeClass('button-action');
                     $(this).addClass('button-highlight');
-                    $(this).attr('title': '现在别人不能修改你的故事了')
+                    $(this).attr('title', '现在别人不能修改你的故事了')
                 }
                 else{
                     counter = true;
                     $(this).removeClass('button-highlight');
                     $(this).addClass('button-action');
-                    $(this).attr('title': '现在别人可以修改你的故事了')
+                    $(this).attr('title', '现在别人可以修改你的故事了')
                 }
             });
             {% endif %}
