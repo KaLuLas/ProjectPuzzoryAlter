@@ -96,19 +96,31 @@
             var counter = false;
             {% endif %}
             $("#modifiedset").on('click', function(){
+                $.ajax({
+                    url: "/modifiedset",
+                    data: {'counter': counter, 'story_id': {{story.id}}},
+                    dataType: "JSON",
+                    success: function (date){
+                        if (!data['lock']) {
+                            if(counter == true){
+                                counter = false;
+                                $(this).removeClass('button-action');
+                                $(this).addClass('button-highlight');
+                                $(this).attr('title', '现在别人不能修改你的故事了')
+                            }
+                            else{
+                                counter = true;
+                                $(this).removeClass('button-highlight');
+                                $(this).addClass('button-action');
+                                $(this).attr('title', '现在别人可以修改你的故事了')
+                            }
+                        }
+                        else{
+                            $("#lockmessage").modal('show');
+                        }
+                    }
+                });
                 
-                if(counter == true){
-                    counter = false;
-                    $(this).removeClass('button-action');
-                    $(this).addClass('button-highlight');
-                    $(this).attr('title', '现在别人不能修改你的故事了')
-                }
-                else{
-                    counter = true;
-                    $(this).removeClass('button-highlight');
-                    $(this).addClass('button-action');
-                    $(this).attr('title', '现在别人可以修改你的故事了')
-                }
             });
             {% endif %}
 
@@ -166,6 +178,7 @@
                 });               
             });
             {% endif %}
+
             // 显示被锁消息后刷新页面
             $('#lockmessage').on('hidden.bs.modal', function (e) {
                 window.location.reload();
@@ -424,7 +437,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            该故事已被上锁('皿')
+                            有人正在修改这个故事('皿')
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
