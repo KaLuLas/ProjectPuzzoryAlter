@@ -91,22 +91,22 @@
 
             {% if user.email == story.email %}           
             $("#modifiedset").on('click', function(){
-                {% if story.modified == False %}
-                var counter = 0; 
-                {% else %}
-                var counter = 1;
-                {% endif %}
-                console.log(counter);
+                
+                // var counter = 0; 
+                
+                // var counter = 1;
+                
+                // console.log(counter);
                 $.ajax({
                     url: "/modifiedset",
-                    data: {'counter': counter, 'story_id': {{story.id}}},
+                    data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data){
                         if (!data['lock']) {
-                            console.log(data['input']);
+                            // console.log(data['input']);
                             if(data['counter'] == 0){
                                 console.log('置为0');
-                                counter = 0;
+                                // counter = 0;
                                 $("#modifiedset").removeClass('button-action');
                                 $("#modifiedset").addClass('button-highlight');
                                 $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
@@ -115,7 +115,7 @@
                             }
                             else{
                                 console.log('置为1');
-                                counter = 1;
+                                // counter = 1;
                                 $("#modifiedset").removeClass('button-highlight');
                                 $("#modifiedset").addClass('button-action');
                                 $("#modifiedset").attr('title', '现在别人可以修改你的故事了');

@@ -198,7 +198,7 @@ def lfcontent(request):
 
 
 def modifiedset(request):
-    counter = request.GET.get('counter')
+    # counter = request.GET.get('counter')
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
     ret_dict = {}
@@ -206,8 +206,8 @@ def modifiedset(request):
         ret_dict['lock'] = True
     else:
         ret_dict['lock'] = False
-        ret_dict['input'] = counter
-        if (counter == 1) :
+        # ret_dict['input'] = counter
+        if story.modified:
             ret_dict['counter'] = 0
             story.modified = False
             story.save()
