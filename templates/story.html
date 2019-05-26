@@ -96,15 +96,18 @@
             var counter = false;
             {% endif %}
             $("#modifiedset").on('click', function(){
+                
                 if(counter == true){
                     counter = false;
                     $(this).removeClass('button-action');
                     $(this).addClass('button-highlight');
+                    $(this).attr('title': '现在别人不能修改你的故事了')
                 }
                 else{
                     counter = true;
                     $(this).removeClass('button-highlight');
                     $(this).addClass('button-action');
+                    $(this).attr('title': '现在别人可以修改你的故事了')
                 }
             });
             {% endif %}
@@ -337,10 +340,10 @@
                 style="margin-top:40px; margin-left:20px"><i class="fas fa-user-lock"></i></button>
                 {% elif story.modified == True %}
                 <button id="modifiedset" class="button button-box button-action shadow"
-                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield"></i></button>
                 {% else %}
                 <button id="modifiedset" class="button button-box button-highlight shadow"
-                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                style="margin-top:40px; margin-left:20px" title="现在别人不能修改你的故事了"><i class="fas fa-user-shield"></i></button>
                 {% endif %}
                 {% endif %}
             </div>
