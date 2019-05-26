@@ -90,14 +90,11 @@
             // });
 
             {% if user.email == story.email %}           
-
-            
-
             $("#modifiedset").on('click', function(){
-                {% if story.modified == True %}
-                let counter = 1; 
+                {% if story.modified == False %}
+                var counter = 0; 
                 {% else %}
-                let counter = 0;
+                var counter = 1;
                 {% endif %}
                 console.log(counter);
                 $.ajax({
@@ -106,7 +103,7 @@
                     dataType: "JSON",
                     success: function (data){
                         if (!data['lock']) {
-                            
+                            console.log(data['input']);
                             if(data['counter'] == 0){
                                 console.log('置为0');
                                 counter = 0;
