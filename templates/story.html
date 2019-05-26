@@ -100,7 +100,7 @@
                     url: "/modifiedset",
                     data: {'counter': counter, 'story_id': {{story.id}}},
                     dataType: "JSON",
-                    success: function (date){
+                    success: function (data){
                         if (!data['lock']) {
                             if(counter == true){
                                 counter = false;
