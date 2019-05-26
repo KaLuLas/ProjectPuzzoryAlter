@@ -103,14 +103,14 @@
                             if (data['modified']) {
                                 $("#modifiedset").removeClass('btn-outline-warning');
                                 $("#modifiedset").addClass('btn-warning');
-                                $("#modifiedset > .strong").html('接续再开')
+                                $("#modifiedset > strong").html('接续再开')
                                 // $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-unlock-alt');
                                 $("#modifiedicon").addClass('fa-lock');
                             } else {
                                 $("#modifiedset").removeClass('btn-warning');
                                 $("#modifiedset").addClass('btn-outline-warning');
-                                $("#modifiedset > .strong").html('接续中止')
+                                $("#modifiedset > strong").html('接续中止')
                                 // $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
                                 $("#modifiedicon").removeClass('fa-lock');
                                 $("#modifiedicon").addClass('fa-unlock-alt');
