@@ -297,12 +297,12 @@
                         <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
                         <!-- if the story can be modified -->
                         {% elif story.modified == False %}
-                        <i id="modifiedf" class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
+                        <i id="modifiedicon" class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
                         <!-- if the story is being edited -->
                         {% elif story.lock == True %}
                         <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
                         {% else %}
-                        <i id="modifiedt" class="fa fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
+                        <i id="modifiedicon" class="fa fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
                             title="you can write now"></i>
                         {% endif %}
                     </div>
