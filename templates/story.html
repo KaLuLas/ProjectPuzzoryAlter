@@ -91,33 +91,39 @@
 
             {% if user.email == story.email %}           
 
-            {% if story.modified == True %}
-            var counter = 1; 
-            {% else %}
-            var counter = 0;
-            {% endif %}
+            
 
             $("#modifiedset").on('click', function(){
+                {% if story.modified == True %}
+                let counter = 1; 
+                {% else %}
+                let counter = 0;
+                {% endif %}
+                console.log(counter);
                 $.ajax({
                     url: "/modifiedset",
                     data: {'counter': counter, 'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data){
                         if (!data['lock']) {
-                            console.log(counter);
-                            if(counter == 1){
-                                console.log('green');
+                            
+                            if(date['counter'] == 0){
+                                console.log('置为0');
                                 counter = 0;
                                 $("#modifiedset").removeClass('button-action');
                                 $("#modifiedset").addClass('button-highlight');
                                 $("#modifiedset").attr('title', '现在别人不能修改你的故事了')
+                                $("#modifiedicon").removeClass('fa-unlock-alt')
+                                $("#modifiedicon").addClass('fa-lock')
                             }
                             else{
-                                console.log('orange');
+                                console.log('置为1');
                                 counter = 1;
                                 $("#modifiedset").removeClass('button-highlight');
                                 $("#modifiedset").addClass('button-action');
                                 $("#modifiedset").attr('title', '现在别人可以修改你的故事了')
+                                $("#modifiedicon").removeClass('fa-lock')
+                                $("#modifiedicon").addClass('fa-unlock-alt')
                             }
                         }
                         else{
@@ -291,12 +297,12 @@
                         <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
                         <!-- if the story can be modified -->
                         {% elif story.modified == False %}
-                        <i class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
+                        <i id="modifiedf" class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
                         <!-- if the story is being edited -->
                         {% elif story.lock == True %}
                         <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
                         {% else %}
-                        <i class="fa fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
+                        <i id="modifiedt" class="fa fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
                             title="you can write now"></i>
                         {% endif %}
                     </div>

@@ -207,9 +207,11 @@ def modifiedset(request):
     else:
         ret_dict['lock'] = False
         if (counter == 1) :
+            ret_dict['counter'] = 0
             story.modified = False
             story.save()
         else:
+            ret_dict['counter'] = 1
             story.modified = True
             story.save()
 
