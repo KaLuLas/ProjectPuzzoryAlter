@@ -91,22 +91,14 @@
 
             {% if user.email == story.email %}           
             $("#modifiedset").on('click', function(){
-                
-                // var counter = 0; 
-                
-                // var counter = 1;
-                
-                // console.log(counter);
+                //将判断交给后端
                 $.ajax({
                     url: "/modifiedset",
                     data: {'story_id': {{story.id}}},
                     dataType: "JSON",
                     success: function (data){
                         if (!data['lock']) {
-                            // console.log(data['input']);
                             if(data['counter'] == 0){
-                                console.log('置为0');
-                                // counter = 0;
                                 $("#modifiedset").removeClass('button-action');
                                 $("#modifiedset").addClass('button-highlight');
                                 $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
@@ -114,8 +106,6 @@
                                 $("#modifiedicon").addClass('fa-lock');
                             }
                             else{
-                                console.log('置为1');
-                                // counter = 1;
                                 $("#modifiedset").removeClass('button-highlight');
                                 $("#modifiedset").addClass('button-action');
                                 $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
@@ -357,8 +347,8 @@
             <div class="col-1">
                 {% if user.email == story.email %}
                 {% if story.lock == True %}
-                <button id="modifiedset" class="button button-box disabled"
-                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-lock"></i></button>
+                <button class="button button-box disabled"
+                style="margin-top:40px; margin-left:20px" title="别人正在修改你的故事"><i class="fas fa-user-lock"></i></button>
                 {% elif story.modified == True %}
                 <button id="modifiedset" class="button button-box button-action shadow"
                 style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield"></i></button>
