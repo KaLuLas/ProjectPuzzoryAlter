@@ -206,13 +206,13 @@ def modifiedset(request):
         ret_dict['lock'] = True
     else:
         ret_dict['lock'] = False
-        if counter:
+        if counter == 1 :
             story.modified = False
             story.save()
         else:
             story.modified = True
             story.save()
-            
+
     return JsonResponse(data=ret_dict)
 
 def lock(request):
