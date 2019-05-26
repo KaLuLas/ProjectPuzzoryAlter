@@ -15,7 +15,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="http://www.bootcss.com/p/buttons/css/buttons.css">
     <!-- JAVASCRIPT -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -38,24 +38,27 @@
             font-size: 20px;
         }
 
+        .shadow {
+            box-shadow:inset -3px -3px 2px #050533;
+            height: 39px;
+            line-height: 33px;
+        }
+        .shadow:active {
+            line-height: 39px;
+            box-shadow:inset 1px 1px 2px #050533;
+            color:white;
+        }
         .story-list>.list-group-item {
             margin-bottom: 10px;
         }
     </style>
     <script type="text/javascript">
-        // function validateForm(){
-        //     var text = document.getElementById('newfrag');
-        //     var varstr = text.value.trim();
-
-        //     if (varstr.length <= 0){
-        //         //alert("禁止输入全为空格的片段");
-        //         var info = document.getElementById('blankinput');
-        //         info.innerHTML = "禁止输入全为空格的片段";
-        //         return false;
-        //     }               
-        // }
-
         $(document).ready(function () {
+            
+            $("#modifiedsett").on('click', function(){
+                var modifiedbtn = document.getElementById("#modifiedsett");
+                
+            });
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
                 var text = this.value.trim();
@@ -75,9 +78,9 @@
                 $('#lfcontent').html('现在的尾巴: 呵呵哈哈哈黑金搜索词在家在家在家在家在家在家');
                 let counter = 300;
                 $('#submitcountdown').html(counter);
-                
-                let time = setInterval(function(){ 
-                    if(counter == 0){
+
+                let time = setInterval(function () {
+                    if (counter == 0) {
                         clearInterval(time);
                         $('#newFragSubmitBtn').hide();
                     }
@@ -110,24 +113,16 @@
                 </form>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}
-                        href="{% url 'upload_story_page' %}" {% else %} data-toggle="modal" data-target="#loginRequest"
-                        {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
-                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
-                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
-                            class="fas fa-bell"></i></a></li>
-                {% if not user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
-                            class="fas fa-user"></i></a>
-                </li>
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.userextension.nickname %}"><i
-                            title="个人主页" class="fas fa-user"></i></a>
+                <li class="nav-item"><a class="nav-link" href="{% url 'upload_story_page' %}" data-toggle="modal"
+                        data-target="#loginRequest"><i title="发布故事" class="fas fa-plus"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#loginRequest"><i
+                            title="系统通知" class="fas fa-bell"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i title="登录/注册" class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
                             title="退出登录" class="fas fa-sign-in-alt"></i></a>
                 </li>
-                {% endif %}
+
             </ul>
         </div>
     </nav>
@@ -154,7 +149,7 @@
     </div>
 
     <!-- LOGIN REQUEST -->
-    {% if not user.is_authenticated %}
+
     <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -174,11 +169,12 @@
             </div>
         </div>
     </div>
-    {% endif %}
+
 
 
     <div class="container-fluid " style="background-color: #f8f8f8">
-        <div class="row justify-content-center" style="padding-top:70px">
+        <div class="row justify-content-center" style="padding-top:90px">
+            <div class="col-1"></div>
             <div class="card" style="background-color:rgb(246, 255, 238); padding:20px; width:800px;margin-top:10px">
                 <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
                     <div class="col-md-auto align-self-center" style="padding-left: 5px">
@@ -219,13 +215,7 @@
                 </div>
 
                 <div class="row">
-                    <p style="margin: 15px; white-space: pre-line">axoewcb wox ac [ahief achio 23xhico aq23c0[
-                        qaxh]]uab2ecbay9bxpea9bcreabx
-
-                        cbawueacxby739cbay8w9x y8a9xc ya89x fqya89 xu ahu
-                        abcheubpcrya7932c py4a793c y4a92 cy849axp y8ra9 cy9p
-                        shuacbrecbahocblhafic dhsiaoc dsiace fya8w9
-                        a cewuo awecioshosd;oshids;cdnjdkuiosadisnjdfsdfldksj csaxopa zuwwzo e8w
+                    <p style="margin: 15px; white-space: pre-line">测试只有一行的显示效果
                     </p>
                 </div>
 
@@ -253,6 +243,14 @@
                 <div>
                     <span><small class="text-muted">keyword1 </small></span>
                     <span><small class="text-muted">keyword2 </small></span>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="row">
+                    <button id="modifiedsetf" class="button button-box button-highlight shadow"
+                    style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                    <button id="modifiedsett" class="button button-circle button-glow button-action"
+                    style="margin-top:40px; margin-left:20px; visibility: visible"><i class="fas fa-user-friends"></i></button>
                 </div>
             </div>
         </div>

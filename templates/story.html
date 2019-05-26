@@ -15,6 +15,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://www.bootcss.com/p/buttons/css/buttons.css">
 
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
@@ -42,6 +43,17 @@
 
         .story-list>.list-group-item {
             margin-bottom: 10px;
+        }
+
+        .shadow {
+            box-shadow:inset -3px -3px 2px #050533;
+            height: 39px;
+            line-height: 33px;
+        }
+        .shadow:active {
+            line-height: 39px;
+            box-shadow:inset 1px 1px 2px #050533;
+            color:white;
         }
     </style>
     <script type="text/javascript">
@@ -229,6 +241,7 @@
 
     <div class="container-fluid " style="background-color: rgb(248, 248, 248)">
         <div class="row justify-content-center" style="padding-top:70px">
+            <div class="col-1"></div>
             <div class="card" id="firstCard" style="background-color:rgb(246, 255, 238); padding:20px; width:800px; margin-top:30px">
 
                 <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
@@ -296,6 +309,19 @@
                     <span><small class="text-muted">keyword1 </small></span>
                     <span><small class="text-muted">keyword2 </small></span>
                 </div>
+            </div>
+            <div class="col-1">
+                {% if user.email == story.email %}
+                {% if story.lock == True %}
+                <button id="modifiedset" class="button button-box button-highlight disabled"
+                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% elif story.modified == True %}
+                <button id="modifiedset" class="button button-box button-action shadow"
+                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% else %}
+                <button id="modifiedset" class="button button-box button-highlight shadow"
+                style="margin-top:40px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% endif %}
             </div>
         </div>
 
