@@ -77,6 +77,11 @@
             }
         }
         $(document).ready(function () {
+            $('#jumpTopBtn').click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#load-content").offset().top - 100
+                }, 500);
+            });
 
             // button with class removeInput will remove the input component onclick
             $('.removeInput').on('click', function () {
@@ -253,7 +258,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-10" style="background-color: rgb(248, 248, 248)">
+            <div class="col-sm-10" id="load-content" style="background-color: rgb(248, 248, 248)">
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list homepage" style="margin:30px">
