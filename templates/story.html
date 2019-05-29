@@ -46,20 +46,21 @@
         }
 
         .shadow {
-            box-shadow:inset -3px -3px 2px #050533;
+            box-shadow: inset -3px -3px 2px #050533;
             height: 39px;
             line-height: 33px;
         }
+
         .shadow:active {
             line-height: 39px;
-            box-shadow:inset 1px 1px 2px #050533;
-            color:white;
+            box-shadow: inset 1px 1px 2px #050533;
+            color: white;
         }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
             // 点击小火箭滚动到故事页的最上方，因为被导航条盖住了所以多滚一点
-            $('#jumpTopBtn').click(function(){
+            $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
                     scrollTop: $("#firstCard").offset().top - 100
                 }, 500);
@@ -105,93 +106,92 @@
                 });
             });
 
-            {% if user.email == story.email %}           
-            $("#modifiedset").on('click', function(){
+            {% if user.email == story.email %}
+            $("#modifiedset").on('click', function () {
                 //将判断交给后端
                 $.ajax({
                     url: "/modifiedset",
-                    data: {'story_id': {{ story.id }}},
+                    data: {
+                        'story_id': {{ story.id }}
+                    },
                     dataType: "JSON",
-                    success: function (data){
+                    success: function (data) {
                         if (!data['lock']) {
-                            if(data['counter'] == 0){
-                                $("#modifiedset").removeClass('button-action');
-                                $("#modifiedset").addClass('button-highlight');
-                                $("#modifiedset").attr('title', '现在别人不能修改你的故事了');
+                            if (data['modified']) {
+                                $("#modifiedset").removeClass('btn-outline-secondary');
+                                $("#modifiedset").addClass('btn-secondary');
+                                $("#modifiedset").attr('title', '接续再开');
                                 $("#modifiedicon").removeClass('fa-unlock-alt');
                                 $("#modifiedicon").addClass('fa-lock');
-                            }
-                            else{
-                                $("#modifiedset").removeClass('button-highlight');
-                                $("#modifiedset").addClass('button-action');
-                                $("#modifiedset").attr('title', '现在别人可以修改你的故事了');
+                            } else {
+                                $("#modifiedset").removeClass('btn-secondary');
+                                $("#modifiedset").addClass('btn-outline-secondary');
+                                $("#modifiedset").attr('title', '接续中止');
                                 $("#modifiedicon").removeClass('fa-lock');
                                 $("#modifiedicon").addClass('fa-unlock-alt');
                             }
-                        }
-                        else{
+                        } else {
                             $("#lockmessage").modal('show');
                         }
                     }
                 });
-                
-            });
-            {% endif %}
+
+            }); {% endif %}
 
             {% if story.modified == True %}
             var timer = {};
             $("#newFragBtn").click(function () {
                 // send lock message
                 $('#newFragSubmitBtn').show();
-                
+
                 $.ajax({
                     url: "/lock",
                     async: false,
-                    data: {'story_id': {{ story.id }}},
+                    data: {
+                        'story_id': {{ story.id }}
+                    },
                     dataType: "JSON",
                     success: function (data) {
                         if (!data['lock']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
+                            $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
                             // send release lock message
                             $('#submitcountdown').html(data['submitcountdown']);
                             $('#submittimelimit').html(data['submittimelimit']);
-                            
-                            for(var each in timer){
+
+                            for (var each in timer) {
                                 clearInterval(timer[each]);
                                 delete timer[each];
                             }
                             var remains = data['submitcountdown'];
-                            timer[remains] = setInterval(function(){ 
-                                if(remains == 0){
+                            timer[remains] = setInterval(function () {
+                                if (remains == 0) {
                                     clearInterval(timer[remains]);
                                     $('#newFragSubmitBtn').hide();
-                                }
-                                else{
+                                } else {
                                     remains--;
                                     $('#submitcountdown').html(remains);
-                                }                                
+                                }
                             }, 1000);
-                        }
-                        else {
+                        } else {
                             $('#newFragBtn').attr('data-target', '#lockmessage');
                         }
                     }
                 });
-            });
-            {% else %}
+            }); {% else %}
             $("#newFragBtn").click(function () {
                 $.ajax({
                     url: "/lfcontent",
-                    data: {'story_id': {{ story.id }}},
+                    data: {
+                        'story_id':{{ story.id }}
+                    },
                     dataType: "JSON",
                     success: function (data) {
-                        $('#lfcontent').html('现在的尾巴: '+data['lfcontent']);
-                        $('#separate').hide();                        
+                        $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
+                        $('#separate').hide();
                     }
-                });               
-            });
-            {% endif %}
+                });
+            }); {% endif %}
 
             // 显示被锁消息后刷新页面
             $('#lockmessage').on('hidden.bs.modal', function (e) {
@@ -209,17 +209,27 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
                             placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
-                            style="width: 10cm">
+                            style="width: 7cm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
                         </div>
                     </div>
-                </form>
+		        </form>
+                {% if user.email == story.email %}
+                {% if story.lock == True %}
+                <button class="btn btn-danger disabled" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
+                {% elif story.modified == True %}
+                <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% else %}
+                <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% endif %}
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}
@@ -291,8 +301,9 @@
 
     <div class="container-fluid " style="background-color: rgb(248, 248, 248)">
         <div class="row justify-content-center" style="padding-top:70px">
-            <div class="col-1"></div>
-            <div class="card" id="firstCard" style="background-color:rgb(246, 255, 238); padding:20px; width:800px; margin-top:30px">
+            <!-- <div class="col-1"></div> -->
+            <div class="card" id="firstCard"
+                style="background-color:rgb(246, 255, 238); padding:20px; width:800px; margin-top:30px">
 
                 <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
                     <div class="col-md-auto align-self-center" style="padding-left: 5px">
@@ -300,7 +311,8 @@
                         <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
                         <!-- if the story can be modified -->
                         {% elif story.modified == False %}
-                        <i id="modifiedicon" class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="this story can only be modified by initiator"></i>
+                        <i id="modifiedicon" class="fa fa-lock" style="font-size: 17px" aria-hidden="true"
+                            title="this story can only be modified by initiator"></i>
                         <!-- if the story is being edited -->
                         {% elif story.lock == True %}
                         <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
@@ -360,20 +372,17 @@
                     <span><small class="text-muted">keyword2 </small></span>
                 </div>
             </div>
-            <div class="col-1">
+            <!-- <div class="col-1">
                 {% if user.email == story.email %}
                 {% if story.lock == True %}
-                <button class="button button-box disabled"
-                style="margin-top:40px; margin-left:20px" title="别人正在修改你的故事"><i class="fas fa-user-lock"></i></button>
+                <button class="btn btn-danger disabled" title="正在续写" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-lock"></i></button>
                 {% elif story.modified == True %}
-                <button id="modifiedset" class="button button-box button-action shadow"
-                style="margin-top:40px; margin-left:20px" title="现在别人可以修改你的故事了"><i class="fas fa-user-shield"></i></button>
+                <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
                 {% else %}
-                <button id="modifiedset" class="button button-box button-highlight shadow"
-                style="margin-top:40px; margin-left:20px" title="现在别人不能修改你的故事了"><i class="fas fa-user-shield"></i></button>
+                <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-top:30px; margin-left:20px"><i class="fas fa-user-shield"></i></button>
                 {% endif %}
                 {% endif %}
-            </div>
+            </div> -->
         </div>
 
         <div class="row justify-content-center" style="margin:20px;">
@@ -398,9 +407,10 @@
 
                                 <div class="col-md-auto ml-auto align-self-center">
                                     {% if story.modified == True or user.email == story.email %}
-                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}" class="fas fa-hammer"
-                                    style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
-                                    title="敲除"></a>
+                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}"
+                                        class="fas fa-hammer"
+                                        style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
+                                        title="敲除"></a>
                                     {% endif %}
                                     <i id="{{ frag.id }}" type="number" class="far fa-heart fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
@@ -439,7 +449,7 @@
             <button type="button" id="newFragBtn" class="btn btn-outline-info" data-toggle="modal"
                 data-target="#addfrag"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
-            <button id="jumpTopBtn" class="btn btn-outline-success" style="margin-left: 20px"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+            
             <div class="modal fade" id="lockmessage" tabindex="-1" role="dialog" aria-labelledby="lockmessageLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -481,15 +491,17 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown"></small><small id="separate" style="color:brown">/</small><small
-                                        id="submittimelimit" style="color:brown"></small>
+                                    <small type="number" id="submitcountdown" style="color:brown"></small><small
+                                        id="separate" style="color:brown">/</small><small id="submittimelimit"
+                                        style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
-                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary" style="margin-right:5px">提交片段</button>
+                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
+                                        style="margin-right:5px">提交片段</button>
                                 </div>
                             </form>
 

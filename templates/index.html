@@ -77,6 +77,11 @@
             }
         }
         $(document).ready(function () {
+            $('#jumpTopBtn').click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#load-content").offset().top - 100
+                }, 500);
+            });
 
             // button with class removeInput will remove the input component onclick
             $('.removeInput').on('click', function () {
@@ -129,11 +134,12 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
                             placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
-                            style="width: 10cm">
+                            style="width: 7cm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
@@ -251,7 +257,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-10" style="background-color: rgb(248, 248, 248)">
+            <div class="col-sm-10" id="load-content" style="background-color: rgb(248, 248, 248)">
                 {% if display == 'homepage' %}
                 <!-- DISPLAY HOMEPAGE -->
                 <div class="list-group story-list homepage" style="margin:30px">
