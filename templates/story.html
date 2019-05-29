@@ -108,12 +108,12 @@
                     success: function (data){                        
                         $("#"+id).html(' '+data['count']); 
                         if(data['message']=='add'){
-                            $("#"+id).removeClass('far fa-heart');
-                            $("#"+id).addClass('fas fa-heart');
+                            $("#"+id).removeClass('far fa-thumbs-up');
+                            $("#"+id).addClass('fas fa-thumbs-up');
                         }
                         else{
-                            $("#"+id).removeClass('fas fa-heart');
-                            $("#"+id).addClass('far fa-heart');                            
+                            $("#"+id).removeClass('fas fa-thumbs-up');
+                            $("#"+id).addClass('far fa-thumbs-up');                            
                         }                      
                     }
                 });
@@ -407,7 +407,7 @@
                     </div>
 
                     <div class="col-md-auto ml-auto align-self-center">
-                        <i id="{{ story.id }}_likescount" class="far fa-heart storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
+                        <i id="{{ story.id }}_likescount" class="far fa-thumbs-up storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
                         <i class="far fa-comment" style="font-size: 12px"> {{ story.commentscount }} </i>
                     </div>
                 </div>
@@ -456,7 +456,7 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
-                                    <i id="{{ frag.id }}_likescount" type="number" class="far fa-heart fraglikescount" style="font-size: 12px; margin-right:10px">
+                                    <i id="{{ frag.id }}_likescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
