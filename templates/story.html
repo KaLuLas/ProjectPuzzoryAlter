@@ -99,7 +99,6 @@
                 else{
                     sof = 'f'
                 }
-                console.log(sof);
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
@@ -407,7 +406,11 @@
                     </div>
 
                     <div class="col-md-auto ml-auto align-self-center">
+                        {% if story_like == 'false' %}
                         <i id="{{ story.id }}_storylikescount" class="far fa-thumbs-up storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
+                        {% else %}
+                        <i id="{{ story.id }}_storylikescount" class="fas fa-thumbs-up storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
+                        {% endif %}
                         <i class="far fa-comment" style="font-size: 12px"> {{ story.commentscount }} </i>
                     </div>
                 </div>
@@ -456,8 +459,13 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
+                                    {% if frag_like_list[forloop.counter] == 'false' %}
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
+                                    {% else %}
+                                    <i id="{{ frag.id }}_fraglikescount" type="number" class="fas fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
+                                            {{ frag.likescount }}</i>
+                                    {% endif %}
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>

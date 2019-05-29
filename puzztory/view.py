@@ -49,6 +49,20 @@ def storypage(request, story_id):
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
+    frag_like_list = []
+    for frag in page_obj.object_list:
+        try:
+            Announcement.objects.get(optype='fraglike',targetid=frag.id, fromuser=request.user.email)
+            frag_like_list.append('true')
+        except Announcement.DoesNotExist:
+            frag_like_list.append('false')
+    
+    try:
+        Announcement.objects.get(optype='storylike',targetid=story_id, fromuser=request.user.email)
+        story_like = 'true'
+    except Announcement.DoesNotExist:
+        story_like = 'false'
+
     if(paginator.num_pages > 1):
         is_paginated = True
     else:
@@ -66,6 +80,8 @@ def storypage(request, story_id):
         'is_paginated': is_paginated,
         'scroll_to_frag_id': scroll_to_frag_id,
         'finished_message': bool(finished_message),
+        'frag_like_list': frag_like_list,
+        'story_like': story_like,
     }
     return render(request, 'story.html', story_dict)
 
