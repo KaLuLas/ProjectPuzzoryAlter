@@ -203,24 +203,25 @@ def lfcontent(request):
 
 def likescount(request):
     request_id = request.GET.get('id')
+    request_id = request_id[:str(request_id).find('_')]
     sof = request.GET.get('sof')
     ret_dict = {}
     if sof == 's':
         story = Story.objects.get(id=request_id)
-        announce = Announcement.objects.filter(
-            optype='storylike', targetid=request_id, fromuser=request.user.email)
-        if len(announce) > 0:
-            Announcement.objects.get(
-                optype='storylike', targetid=request_id, fromuser=request.user.email).delete()
+        try:
+            announce = Announcement.objects.get(
+                optype='storylike', targetid=request_id, fromuser=request.user.email)
+            announce.delete()
             story = Story.objects.get(id=request_id)
             story.likescount -= 1
             ret_dict['count'] = story.likescount
             story.save()           
             ret_dict['message'] = 'delete'
-        else:
+        except Announcement.DoesNotExist:
             announce_record = Announcement(
                 optype='storylike', targetid=request_id, fromuser=request.user.email, 
                 fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
+            announce_record.save()
             story = Story.objects.get(id=request_id)
             story.likescount += 1
             ret_dict['count'] = story.likescount
@@ -228,20 +229,20 @@ def likescount(request):
             ret_dict['message'] = 'add'
     else:
         frag = Fragment.objects.get(id=request_id)
-        announce = Announcement.objects.filter(
-            optype='fraglike', targetid=request_id, fromuser=request.user.email)
-        if len(announce) > 0:
-            Announcement.objects.get(
-                optype='fraglike', targetid=request_id, fromuser=request.user.email).delete()
+        try:
+            announce = Announcement.objects.get(
+                optype='fraglike', targetid=request_id, fromuser=request.user.email)
+            announce.delete()
             frag = Fragment.objects.get(id=request_id)
             frag.likescount -= 1
             ret_dict['count'] = frag.likescount
             frag.save()
             ret_dict['message'] = 'delete'
-        else:
+        except Announcement.DoesNotExist:
             announce_record = Announcement(
                 optype='fraglike', targetid=request_id, fromuser=request.user.email, 
                 fromnickname=request.user.userextension.nickname, touser=frag.email, tonickname=frag.nickname)
+            announce_record.save()
             frag = Fragment.objects.get(id=request_id)
             frag.likescount += 1
             ret_dict['count'] = frag.likescount
