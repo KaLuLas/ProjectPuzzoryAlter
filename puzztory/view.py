@@ -74,7 +74,8 @@ def upload_story_page(request):
     index_dict['display'] = 'upload_story'
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
-    return render(request, 'index.html', index_dict)
+    # return render(request, 'index.html', index_dict)
+    return render(request, 'upload_story.html', index_dict)
 
 
 def deletefrag(request, frag_id, story_id, page):
