@@ -91,23 +91,29 @@
             });
 
             $(".storylikescount").on('click', function(){
+                console.log($(this).attr('id'))
+                var id = $(this).attr('id')
                 $.ajax({
-                    url: "/likescount",
-                    data: {'id': {{ story.id }},'sof': 's'},
+                    url: "{% url 'likescount' %}",
+                    data: {'id': id,'sof': 's'},
                     dataType: "JSON",
                     success: function (data){
-                        
+                        console.log("zi");
+                        $(this).html(data['count']);
                     }
                 });
             });
 
             $(".fraglikescount").on('click', function(){
+                console.log($(this).attr('id'))
+                var id = $(this).attr('id')
                 $.ajax({
-                    url: "/likescount",
-                    data: {'frag_id': {{ story.id }},'sof':'f'},
+                    url: "{% url 'likescount' %}",
+                    data: {'id': id,'sof':'f'},
                     dataType: "JSON",
                     success: function (data){
-
+                        console.log("zi");
+                        $(this).html(data['count']);
                     }
                 });
             });
