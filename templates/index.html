@@ -134,14 +134,14 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
-                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                <button id="jumpTopBtn" class="btn btn-outline-success" style="margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
                             placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
                             style="width: 7cm">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
+                            <button class="btn btn-outline-warning" type="submit"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
                         <div class="d-flex align-items-center mb-2">
                             <!-- if the story was already finished -->
                             {% if story.finished == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-book" aria-hidden="true"></i></div>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
                             <!-- if the story cannot be modified -->
                             {% elif story.lock == True %}
                             <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
