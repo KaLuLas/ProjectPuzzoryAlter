@@ -198,7 +198,7 @@
             $('#finishedSetBtn').on('click', function(){
                 $('#systemMessageContent').html('确认要完结吗？');
                 $("#systemMessage").modal('show');
-                $("#systemMessage > .modal-footer").add('\
+                $("#systemMessageExitBtn").before('\
                 <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
                 ');
                 $('#finishedConfirmBtn').on('click', function(){
@@ -497,7 +497,7 @@
                             有人正在修改这个故事('皿')
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                            <button id="systemMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
                         </div>
                     </div>
                 </div>
