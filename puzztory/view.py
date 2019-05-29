@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from PuzzModel.models import Fragment, UserExtension, Story
+from PuzzModel.models import Fragment, UserExtension, Story, Announcement
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
@@ -194,6 +194,56 @@ def lfcontent(request):
     else:
         lfcontent_text = last_fragment.content
     ret_dict['lfcontent'] = lfcontent_text
+    return JsonResponse(data=ret_dict)
+
+
+def likescount(request):
+    request_id = request.GET.get('id')
+    sof = request.GET.get('sof')
+    ret_dict = {}
+    if sof == 's':
+        story = Story.objects.get(id=request_id)
+        announce = Announcement.objects.filter(
+            optype='storylike', targetid=request_id, fromuser=request.user.email)
+        if len(announce) > 0:
+            Announcement.objects.get(
+                optype='storylike', targetid=request_id, fromuser=request.user.email).delete()
+            story = Story.objects.get(id=request_id)
+            story.likescount -= 1
+            story.save()
+            ret_dict['count'] = story.likescount
+            ret_dict['message'] = 'delete'
+        else:
+            announce_record = Announcement(
+                optype='storylike', targetid=request_id, fromuser=request.user.email, 
+                fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
+            story = Story.objects.get(id=request_id)
+            story.likescount += 1
+            story.save()
+            ret_dict['count'] = story.likescount
+            ret_dict['message'] = 'add'
+    else:
+        frag = Fragment.objects.get(id=request_id)
+        announce = Announcement.objects.filter(
+            optype='fraglike', targetid=request_id, fromuser=request.user.email)
+        if len(announce) > 0:
+            Announcement.objects.get(
+                optype='fraglike', targetid=request_id, fromuser=request.user.email).delete()
+            frag = Fragment.objects.get(id=request_id)
+            frag.likescount -= 1
+            frag.save()
+            ret_dict['count'] = frag.likescount
+            ret_dict['message'] = 'delete'
+        else:
+            announce_record = Announcement(
+                optype='fraglike', targetid=request_id, fromuser=request.user.email, 
+                fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
+            frag = Fragment.objects.get(id=request_id)
+            frag.likescount += 1
+            frag.save()
+            ret_dict['count'] = frag.likescount
+            ret_dict['message'] = 'add'
+
     return JsonResponse(data=ret_dict)
 
 

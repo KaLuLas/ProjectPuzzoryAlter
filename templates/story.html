@@ -86,22 +86,22 @@
 
             $(".storylikescount").on('click', function(){
                 $.ajax({
-                    url: "/likescount",
-                    data: {'id': {{ story.id }},'sof': 's'},
+                    url: "{% url 'likescount' %}",
+                    data: {'id': $(this).attr('id'),'sof': 's'},
                     dataType: "JSON",
                     success: function (data){
-                        
+                        $(this).html(data['count']);
                     }
                 });
             });
 
             $(".fraglikescount").on('click', function(){
                 $.ajax({
-                    url: "/likescount",
-                    data: {'frag_id': {{ story.id }},'sof':'f'},
+                    url: "{% url 'likescount' %}",
+                    data: {'id': $(this).attr('id'),'sof':'f'},
                     dataType: "JSON",
                     success: function (data){
-
+                        $(this).html(data['count']);
                     }
                 });
             });
