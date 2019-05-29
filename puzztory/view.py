@@ -213,8 +213,8 @@ def likescount(request):
                 optype='storylike', targetid=request_id, fromuser=request.user.email).delete()
             story = Story.objects.get(id=request_id)
             story.likescount -= 1
-            story.save()
             ret_dict['count'] = story.likescount
+            story.save()           
             ret_dict['message'] = 'delete'
         else:
             announce_record = Announcement(
@@ -222,8 +222,8 @@ def likescount(request):
                 fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
             story = Story.objects.get(id=request_id)
             story.likescount += 1
-            story.save()
             ret_dict['count'] = story.likescount
+            story.save()           
             ret_dict['message'] = 'add'
     else:
         frag = Fragment.objects.get(id=request_id)
@@ -234,17 +234,17 @@ def likescount(request):
                 optype='fraglike', targetid=request_id, fromuser=request.user.email).delete()
             frag = Fragment.objects.get(id=request_id)
             frag.likescount -= 1
-            frag.save()
             ret_dict['count'] = frag.likescount
+            frag.save()
             ret_dict['message'] = 'delete'
         else:
             announce_record = Announcement(
                 optype='fraglike', targetid=request_id, fromuser=request.user.email, 
-                fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
+                fromnickname=request.user.userextension.nickname, touser=frag.email, tonickname=frag.nickname)
             frag = Fragment.objects.get(id=request_id)
             frag.likescount += 1
-            frag.save()
             ret_dict['count'] = frag.likescount
+            frag.save()           
             ret_dict['message'] = 'add'
 
     return JsonResponse(data=ret_dict)
