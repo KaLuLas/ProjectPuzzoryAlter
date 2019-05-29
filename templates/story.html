@@ -93,7 +93,7 @@
             $(".storylikescount, .fraglikescount").on('click', function(){
                 {% if user.is_authenticated %}
                 var sof = 'o';
-                if($(this).attr('id') == '{{ story.id }}_likescount'){
+                if($(this).attr('id') == '{{ story.id }}_storylikescount'){
                     sof = 's'
                 }
                 else{
@@ -407,7 +407,7 @@
                     </div>
 
                     <div class="col-md-auto ml-auto align-self-center">
-                        <i id="{{ story.id }}_likescount" class="far fa-thumbs-up storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
+                        <i id="{{ story.id }}_storylikescount" class="far fa-thumbs-up storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
                         <i class="far fa-comment" style="font-size: 12px"> {{ story.commentscount }} </i>
                     </div>
                 </div>
@@ -456,7 +456,7 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
-                                    <i id="{{ frag.id }}_likescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
+                                    <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
