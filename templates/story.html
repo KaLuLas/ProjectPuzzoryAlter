@@ -74,6 +74,12 @@
                 }, 500);
             {% endif %}
 
+            // 当用户提交片段发现故事已经完结，跳转到故事页并弹出提交失败通知
+            {% if finished_message %}
+            $('#systemMessageContent').html('故事已完结，片段提交失败');
+            $("#systemMessage").modal('show');
+            {% endif %}
+
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
                 var text = this.value.trim();
@@ -196,7 +202,7 @@
             }); {% endif %}
 
             $('#finishedSetBtn').on('click', function(){
-                $('#systemMessageContent').html('确认要完结吗？');
+                $('#systemMessageContent').html('确认要完结吗？（完结后不可再开）');
                 $("#systemMessage").modal('show');
                 $("#systemMessageExitBtn").before('\
                 <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
@@ -208,19 +214,14 @@
                         data: {
                             'story_id': {{ story.id }}
                         },
-                        dataType: "JSON",
-                        // success: function (data) {
-                        //     this.removeClass('btn-outline-secondary');
-                        //     this.addClass('btn-secondary');
-                        //     this.attr('title', '故事已完结');
-                        // }
                     });
                 });
             });
 
             // 显示被锁消息后刷新页面
             $('#systemMessage').on('hidden.bs.modal', function (e) {
-                window.location.reload();
+                // window.location.reload();
+                window.location.replace('{% url 'story_page' story.id %}');
             });
         });
     </script>
@@ -248,20 +249,20 @@
                 </form>
                 
                 {% if user.email == story.email %}
-                <!-- modified button -->
-                {% if story.lock == True %}
-                <button class="btn btn-danger disabled" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
-                {% elif story.modified == True %}
-                <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
-                {% else %}
-                <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
-                {% endif %}
-                <!-- finished button -->
-                {% if story.finished == False %}
-                <button id="finishedSetBtn" class="btn btn-outline-secondary" title="故事完结" style="margin-left:20px"><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
-                {% else %}
-                <button id="finishedSign" class="btn btn-secondary" title="故事已完结" style="margin-left:20px" disabled><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
-                {% endif %}
+                    {% if story.finished == False %}
+                        <!-- modified button -->
+                        {% if story.lock == True %}
+                        <button class="btn btn-danger disabled" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
+                        {% elif story.modified == True %}
+                        <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                        {% else %}
+                        <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                        {% endif %}
+                        <!-- finished button -->
+                        <button id="finishedSetBtn" class="btn btn-outline-secondary" title="故事完结" style="margin-left:20px"><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
+                    {% else %}
+                    <button id="finishedSign" class="btn btn-secondary" title="故事已完结" style="margin-left:20px" disabled><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
+                    {% endif %}
                 {% endif %}
             </ul>
             <ul class="navbar-nav">
