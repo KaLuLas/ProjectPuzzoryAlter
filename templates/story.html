@@ -93,7 +93,7 @@
             $(".storylikescount, .fraglikescount").on('click', function(){
                 {% if user.is_authenticated %}
                 var sof = 'o';
-                if($(this).attr('class') == 'far fa-heart storylikescount' or $(this).attr('class') == 'fas fa-heart storylikescount'){
+                if($(this).attr('class') == 'far fa-heart storylikescount' || $(this).attr('class') == 'fas fa-heart storylikescount'){
                     sof = 's'
                 }
                 else{
