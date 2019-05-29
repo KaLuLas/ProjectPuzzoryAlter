@@ -93,12 +93,13 @@
             $(".storylikescount, .fraglikescount").on('click', function(){
                 {% if user.is_authenticated %}
                 var sof = 'o';
-                if($(this).attr('class') == 'far fa-heart storylikescount' || $(this).attr('class') == 'fas fa-heart storylikescount'){
+                if($(this).attr('id') == '{{ story.id }}_likescount'){
                     sof = 's'
                 }
                 else{
                     sof = 'f'
                 }
+                console.log(sof);
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
