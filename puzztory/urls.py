@@ -32,6 +32,7 @@ urlpatterns = [
     path('story/<int:story_id>', view.storypage, name="story_page"),
     path('lock', view.lock, name="lock"),
     path('modifiedset', view.modifiedset, name="modifiedset"),
+    path('finishedset', view.finishedset, name="finishedset"),
     path('lfcontent', view.lfcontent, name="lfcontent"),
     path('deletefrag/<int:frag_id>/<int:story_id>/<int:page>', view.deletefrag, name="deletefrag"),
     re_path(r'^testdb$', testdb.testdb),  # edit
