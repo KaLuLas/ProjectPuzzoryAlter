@@ -608,14 +608,14 @@
                     <a class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                {{ comment.nickname }}</h5>
-                            <small>{{ comment.createtime }}</small>
+                                {{ user.userextension.nickname }}</h5>
+                            <small>{{ story.createtime }}</small>f'f
                         </div>
-                        <p class="mb-1">{{ comment.content }}</p>
+                        <p class="mb-1">{{ story.ffcontent }}</p>
                         <p class="mb-1">
-                            <small style="padding-right: 10px">{{ comment.createtime }}</small>
+                            <small style="padding-right: 10px">{{ story.createtime }}</small>
                             <i class="far fa-thumbs-up" aria-hidden="true" style="padding-right: 5px"></i>
-                            <small style="padding-right: 10px">comment_likescount</small>
+                            <small style="padding-right: 10px">{{ story.likescount }}</small>
                             <i class="far fa-thumbs-down" aria-hidden="true" style="padding-right: 10px"></i>
                             <button type="button" class="btn btn-light btn-sm" style="padding: 0px">回复</button>
                         </p>
