@@ -191,12 +191,13 @@
                                 }
                             }, 1000);
                         } else {
-                            $('#systemMessageContent').html('有人正在修改这个故事(\'皿\')');
                             $('#newFragBtn').attr('data-target', '#systemMessage');
+                            $('#systemMessageContent').html('当前无法接续(\'皿\')');
                         }
                     }
                 });
-            }); {% else %}
+            }); 
+            {% else %}
             $("#newFragBtn").click(function () {
                 $.ajax({
                     url: "{% url 'lfcontent' %}",
