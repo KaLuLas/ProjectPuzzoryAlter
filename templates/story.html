@@ -90,31 +90,31 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            $(".storylikescount").on('click', function(){
+            $(".storylikescount, .fraglikescount").on('click', function(){
                 {% if user.is_authenticated %}
+                var sof = 'o';
+                if($(this).attr('id') == '{{ story.id }}_likescount'){
+                    sof = 's'
+                }
+                else{
+                    sof = 'f'
+                }
+                console.log(sof);
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
-                    data: {'id': id,'sof': 's'},
+                    data: {'id': id,'sof': sof},
                     dataType: "JSON",
                     success: function (data){                        
-                        $("#"+id).html(' '+data['count']);                       
-                    }
-                });
-                {% else %}
-                $("#loginRequest").modal('show');
-                {% endif %}
-            });
-
-            $(".fraglikescount").on('click', function(){
-                {% if user.is_authenticated %}
-                var id = $(this).attr('id')
-                $.ajax({
-                    url: "{% url 'likescount' %}",
-                    data: {'id': id,'sof':'f'},
-                    dataType: "JSON",
-                    success: function (data){
-                        $("#"+id).html(' '+data['count']);
+                        $("#"+id).html(' '+data['count']); 
+                        if(data['message']=='add'){
+                            $("#"+id).removeClass('far fa-heart');
+                            $("#"+id).addClass('fas fa-heart');
+                        }
+                        else{
+                            $("#"+id).removeClass('fas fa-heart');
+                            $("#"+id).addClass('far fa-heart');                            
+                        }                      
                     }
                 });
                 {% else %}
@@ -191,13 +191,12 @@
                                 }
                             }, 1000);
                         } else {
+                            $('#systemMessageContent').html('有人正在修改这个故事(\'皿\')');
                             $('#newFragBtn').attr('data-target', '#systemMessage');
-                            $('#systemMessageContent').html('当前无法接续(\'皿\')');
                         }
                     }
                 });
-            }); 
-            {% else %}
+            }); {% else %}
             $("#newFragBtn").click(function () {
                 $.ajax({
                     url: "{% url 'lfcontent' %}",
