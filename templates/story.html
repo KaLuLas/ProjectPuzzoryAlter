@@ -70,8 +70,9 @@
             // 否则scroll_to_frag_id代表滚动到的片段id号
             {% if scroll_to_frag_id != -1 %}
             $('html, body').animate({
-                scrollTop: $("#{{scroll_to_frag_id}}").offset().top
-            }, 500); {% endif %}
+                    scrollTop: $("#{{ scroll_to_frag_id }}").offset().top
+                }, 500);
+            {% endif %}
 
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
@@ -83,11 +84,27 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            // $("#likescount").on('click', function(){
-            //     $.ajax({
-            //         url: "/likescount"
-            //     });
-            // });
+            $(".storylikescount").on('click', function(){
+                $.ajax({
+                    url: "/likescount",
+                    data: {'id': {{ story.id }},'sof': 's'},
+                    dataType: "JSON",
+                    success: function (data){
+
+                    }
+                });
+            });
+
+            $(".fraglikescount").on('click', function(){
+                $.ajax({
+                    url: "/likescount",
+                    data: {'frag_id': {{ story.id }}},
+                    dataType: "JSON",
+                    success: function (data){
+
+                    }
+                });
+            });
 
             {% if user.email == story.email %}
             $("#modifiedset").on('click', function () {
@@ -378,7 +395,7 @@
                     </div>
 
                     <div class="col-md-auto ml-auto align-self-center">
-                        <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
+                        <i id="{{ story.id }}" class="far fa-heart storylikescount" style="font-size: 12px; margin-right:10px"> {{ story.likescount }}</i>
                         <i class="far fa-comment" style="font-size: 12px"> {{ story.commentscount }} </i>
                     </div>
                 </div>
@@ -427,8 +444,7 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
-                                    <i id="likescount" fragid="{{ frag.id }}" storyid="{{ story.id }}" type="number"
-                                        class="far fa-heart" style="font-size: 12px; margin-right:10px">
+                                    <i id="{{ frag.id }}" type="number" class="far fa-heart fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
