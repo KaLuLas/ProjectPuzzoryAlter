@@ -110,7 +110,7 @@
             $("#modifiedset").on('click', function () {
                 //将判断交给后端
                 $.ajax({
-                    url: "/modifiedset",
+                    url: "{% url 'modifiedset' %}",
                     data: {
                         'story_id': {{ story.id }}
                     },
@@ -131,7 +131,8 @@
                                 $("#modifiedicon").addClass('fa-unlock-alt');
                             }
                         } else {
-                            $("#lockmessage").modal('show');
+                            $("#systemMessageContent").html('有读者正在修改这个故事(\'皿\')');
+                            $("#systemMessage").modal('show');
                         }
                     }
                 });
@@ -145,7 +146,7 @@
                 $('#newFragSubmitBtn').show();
 
                 $.ajax({
-                    url: "/lock",
+                    url: "{% url 'lock' %}",
                     async: false,
                     data: {
                         'story_id': {{ story.id }}
@@ -174,14 +175,15 @@
                                 }
                             }, 1000);
                         } else {
-                            $('#newFragBtn').attr('data-target', '#lockmessage');
+                            $('#systemMessageContent').html('有人正在修改这个故事(\'皿\')');
+                            $('#newFragBtn').attr('data-target', '#systemMessage');
                         }
                     }
                 });
             }); {% else %}
             $("#newFragBtn").click(function () {
                 $.ajax({
-                    url: "/lfcontent",
+                    url: "{% url 'lfcontent' %}",
                     data: {
                         'story_id':{{ story.id }}
                     },
@@ -193,8 +195,31 @@
                 });
             }); {% endif %}
 
+            $('#finishedSetBtn').on('click', function(){
+                $('#systemMessageContent').html('确认要完结吗？');
+                $("#systemMessage").modal('show');
+                $("#systemMessage > .modal-footer").add('\
+                <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
+                ');
+                $('#finishedConfirmBtn').on('click', function(){
+                    console.log("bind confirm successful");
+                    $.ajax({
+                        url: "{% url 'finishedset' %}",
+                        data: {
+                            'story_id': {{ story.id }}
+                        },
+                        dataType: "JSON",
+                        // success: function (data) {
+                        //     this.removeClass('btn-outline-secondary');
+                        //     this.addClass('btn-secondary');
+                        //     this.attr('title', '故事已完结');
+                        // }
+                    });
+                });
+            });
+
             // 显示被锁消息后刷新页面
-            $('#lockmessage').on('hidden.bs.modal', function (e) {
+            $('#systemMessage').on('hidden.bs.modal', function (e) {
                 window.location.reload();
             });
         });
@@ -209,7 +234,7 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
-                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
@@ -220,14 +245,22 @@
                                     aria-hidden="true"></i></button>
                         </div>
                     </div>
-		        </form>
+                </form>
+                
                 {% if user.email == story.email %}
+                <!-- modified button -->
                 {% if story.lock == True %}
                 <button class="btn btn-danger disabled" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
                 {% elif story.modified == True %}
                 <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
                 {% else %}
                 <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                {% endif %}
+                <!-- finished button -->
+                {% if story.finished == False %}
+                <button id="finishedSetBtn" class="btn btn-outline-secondary" title="故事完结" style="margin-left:20px"><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
+                {% else %}
+                <button id="finishedSign" class="btn btn-secondary" title="故事已完结" style="margin-left:20px" disabled><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
                 {% endif %}
                 {% endif %}
             </ul>
@@ -450,17 +483,17 @@
                 data-target="#addfrag"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% endif %}
             
-            <div class="modal fade" id="lockmessage" tabindex="-1" role="dialog" aria-labelledby="lockmessageLabel"
+            <div class="modal fade" id="systemMessage" tabindex="-1" role="dialog" aria-labelledby="systemMessageLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="loginRequestLabel">通知 ('/_ ') </h5>
+                            <h5 class="modal-title" id="systemMessageLabel">通知 ('/_ ') </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="systemMessageContent">
                             有人正在修改这个故事('皿')
                         </div>
                         <div class="modal-footer">

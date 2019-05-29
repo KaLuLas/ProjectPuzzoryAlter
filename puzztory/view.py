@@ -212,6 +212,17 @@ def modifiedset(request):
     return JsonResponse(data=ret_dict)
 
 
+def finishedset(request):
+    request_id = request.GET.get('story_id')
+    story = Story.objects.get(id=request_id)
+    ret_dict = {}
+
+    story.finished = True
+    story.save()
+
+    return JsonResponse(data=ret_dict)
+
+
 def lock(request):
     request_id = request.GET.get('story_id')
     story = Story.objects.get(id=request_id)
