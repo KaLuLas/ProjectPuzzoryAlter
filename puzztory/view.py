@@ -45,10 +45,8 @@ def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
-    # if request.method == 'GET':
     page = request.GET.get('page', 1)
-    # if page is None:
-    #     page = 1
+    finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
     if(paginator.num_pages > 1):
@@ -66,7 +64,8 @@ def storypage(request, story_id):
         'paginator': paginator,
         'page_obj': page_obj,
         'is_paginated': is_paginated,
-        'scroll_to_frag_id': scroll_to_frag_id
+        'scroll_to_frag_id': scroll_to_frag_id,
+        'finished_message': bool(finished_message),
     }
     return render(request, 'story.html', story_dict)
 
@@ -98,12 +97,16 @@ def deletefrag(request, frag_id, story_id, page):
 
 def upload_frag(request, story_id):
     if request.method == 'POST':
+        story_record = Story.objects.get(id=story_id)
+        # 当用户提交片段时故事已被作者完结，返回故事首页并提示
+        if story_record.finished:
+            append = str(story_id) + "?alreadyfinished=" + str(True)
+            return HttpResponseRedirect("/story/" + append)  
         frag_text = request.POST['fcontent']
         frag_record = Fragment(
             content=frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=story_id)
         frag_record.save()
-        story_record = Story.objects.get(id=story_id)
         story_record.fragscount += 1
         # unlock the story once the fragment is submitted
         # meanwhile refresh attribute editor, remains, updatetime
@@ -268,6 +271,8 @@ def finishedset(request):
     ret_dict = {}
 
     story.finished = True
+    story.modified = True
+    story.lock = False
     story.save()
 
     return JsonResponse(data=ret_dict)
