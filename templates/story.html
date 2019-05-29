@@ -91,7 +91,7 @@
             });
 
             $(".storylikescount").on('click', function(){
-                console.log($(this).attr('id'))
+                {% if user.is_authenticated %}
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
@@ -101,10 +101,13 @@
                         $("#"+id).html(' '+data['count']);                       
                     }
                 });
+                {% else %}
+
+                {% endif %}
             });
 
             $(".fraglikescount").on('click', function(){
-                console.log($(this).attr('id'))
+                {% if user.is_authenticated %}
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
@@ -114,6 +117,9 @@
                         $("#"+id).html(' '+data['count']);
                     }
                 });
+                {% else %}
+                $("#loginRequest").modal('show');
+                {% endif %}
             });
 
             {% if user.email == story.email %}
