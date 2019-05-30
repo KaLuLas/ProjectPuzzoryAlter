@@ -469,17 +469,10 @@
                                         title="敲除"></a>
                                     {% endif %}
                                     
-                                    <!-- {% for key,value in frag_like_list.items %}                        
-                                    {% if key == frag.id %}
-                                    {% if value == 'false' %} -->
+                                    
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
-                                    <!-- {% else %}
-                                    <i id="{{ frag.id }}_fraglikescount" type="number" class="fas fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
-                                            {{ frag.likescount }}</i>
-                                    {% endif %}
-                                    {% endif %}
-                                    {% endfor %} -->
+                                    
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
