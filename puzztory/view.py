@@ -271,7 +271,7 @@ def likescount(request):
     ret_dict = {}
     if liketype == 'storylikescount':
         var_set = Story.objects
-    elif liketype == 'commentlikescount':
+    elif liketype == 'fraglikescount':
         var_set = Fragment.objects
     else:
         var_set = Comment.objects
