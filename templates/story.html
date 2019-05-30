@@ -243,7 +243,7 @@
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
             $('.replyCommentBtn').on('click', function(){
-                $('#commentSubmit').val($(this).attr('id') + ' <br>');
+                $('#commentSubmit').val($(this).attr('id') + ' ');
             });
 
             // 显示被锁消息后刷新页面
