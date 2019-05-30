@@ -49,13 +49,13 @@ def storypage(request, story_id):
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
-    frag_like_list = []
+    frag_like_list = {}
     for frag in page_obj.object_list:
         try:
             Announcement.objects.get(optype='fraglike',targetid=frag.id, fromuser=request.user.email)
-            frag_like_list.append('true')
+            frag_like_list[frag.id] = 'true'
         except Announcement.DoesNotExist:
-            frag_like_list.append('false')
+            frag_like_list[frag.id] = 'false'
     
     try:
         Announcement.objects.get(optype='storylike',targetid=story_id, fromuser=request.user.email)
