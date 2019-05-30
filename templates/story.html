@@ -98,12 +98,14 @@
 
             $(".storylikescount, .fraglikescount").on('click', function(){
                 {% if user.is_authenticated %}
-                var sof = 'o';
+                // 修改： 我看了下数据库我们评论表的sof设置的是布尔值
+                // 那这里就用True表示story（前面的）吧不然和评论功能不一致
+                var sof = null;
                 if($(this).attr('id') == '{{ story.id }}_storylikescount'){
-                    sof = 's'
+                    sof = true
                 }
                 else{
-                    sof = 'f'
+                    sof = false
                 }
                 var id = $(this).attr('id')
                 $.ajax({

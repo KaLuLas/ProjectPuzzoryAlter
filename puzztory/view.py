@@ -45,7 +45,7 @@ def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     comment_full_list = Comment.objects.filter(
-        sof='s', storyid=story_id).order_by('createtime')
+        sof=True, storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
     page = request.GET.get('page', 1)
     finished_message = request.GET.get('alreadyfinished', False)
@@ -158,7 +158,7 @@ def submit_comment(request, story_id, page):
         comment_content = request.POST['content']
         story_id = request.POST['story_id']
         comment = Comment(nickname=request.user.userextension.nickname,
-                          email=request.user.email, sof='s', storyid=story_id,
+                          email=request.user.email, sof=True, storyid=story_id,
                           content=comment_content)
         comment.save()
         story = Story.objects.get(id=story_id)
@@ -252,7 +252,7 @@ def likescount(request):
     request_id = request_id[:str(request_id).find('_')]
     sof = request.GET.get('sof')
     ret_dict = {}
-    if sof == 's':
+    if sof:
         story = Story.objects.get(id=request_id)
         try:
             announce = Announcement.objects.get(
