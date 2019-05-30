@@ -45,7 +45,7 @@ def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     comment_full_list = Comment.objects.filter(
-        sof=True, storyid=story_id).order_by('createtime')
+        sof=True, storyid=story_id).order_by('-createtime')
     paginator = Paginator(frag_full_list, 7)
     page = request.GET.get('page', 1)
     finished_message = request.GET.get('alreadyfinished', False)
