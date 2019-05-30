@@ -460,7 +460,7 @@
                                         title="敲除"></a>
                                     {% endif %}
                                     
-                                    {% if frag_like_list.{{ forloop.counter }} == 'false' %}
+                                    {% if frag_like_list.forloop.counter == 'false' %}
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     {% else %}
