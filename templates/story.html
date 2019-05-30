@@ -241,6 +241,11 @@
                 });
             });
 
+            // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
+            $('.replyCommentBtn').on('click', function(){
+                $('#commentSubmit').val($(this).attr('id'));
+            });
+
             // 显示被锁消息后刷新页面
             $('#systemMessage').on('hidden.bs.modal', function (e) {
                 // window.location.reload();
@@ -632,18 +637,18 @@
                     {% if comment_full_list %}
                     {% for comment in comment_full_list %}
                     <a class="list-group-item list-group-item-action flex-column align-items-start" id="comment_{{ comment.id }}">
-                        <div class="d-flex w-100 align-items-center">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 {{ comment.nickname }}</h5>
-                            <small style="margin-left: 10px">{{ comment.email }}</small>
+                            <small style="margin-left: 10px" id="commentIdx">No.{{ forloop.counter }}</small>
                         </div>
                         <p class="mb-1">{{ comment.content }}</p>
                         <p class="mb-1">
                             <small style="padding-right: 10px">{{ comment.createtime }}</small>
                             <i id="{{ comment.id }}_commentlikescount" class="far fa-thumbs-up commentlikescount" aria-hidden="true" style="padding-right: 5px"> {{ comment.likescount }}</i>
                             <!-- <small style="padding-right: 10px">{{ comment.likescount }}</small> -->
-                            <i class="far fa-thumbs-down" aria-hidden="true" style="padding-right: 10px"></i>
-                            <button type="button" class="btn btn-light btn-sm" style="padding: 0px">回复</button>
+                            <i class="far fa-thumbs-down" aria-hidden="true" style="padding-right: 10px" title="还没做抱歉"></i>
+                            <button type="button" class="btn btn-light btn-sm replyCommentBtn" style="padding: 0px" id=">>{{ forloop.counter }}">回复</button>
                         </p>
 
                     </a>
