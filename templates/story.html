@@ -79,6 +79,11 @@
             $('#{{ frag_id }}_fraglikescount').removeClass('far');
             $('#{{ frag_id }}_fraglikescount').addClass('fas');
             {% endfor %}
+            // 上面是片段的这里是评论的
+            {% for comment_id in comment_like_list %}                        
+            $('#{{ comment_id }}_commentlikescount').removeClass('far');
+            $('#{{ comment_id }}_commentlikescount').addClass('fas');
+            {% endfor %}
 
             // 当用户提交片段发现故事已经完结，跳转到故事页并弹出提交失败通知
             {% if finished_message %}
@@ -96,19 +101,22 @@
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            $(".storylikescount, .fraglikescount").on('click', function(){
+            // [修改意愿] 我觉得这三个类可以写成同一个？也没起到判断作用啥的
+            $(".storylikescount, .fraglikescount, .commentlikescount").on('click', function(){
                 {% if user.is_authenticated %}
-                var sof = 'o';
-                if($(this).attr('id') == '{{ story.id }}_storylikescount'){
-                    sof = 's'
-                }
-                else{
-                    sof = 'f'
-                }
+                // var sof = 'o';
+                // if($(this).attr('id') == '{{ story.id }}_storylikescount'){
+                //     sof = 's'
+                // }
+                // else{
+                //     sof = 'f'
+                // }
+                // [id中就包含了点赞的类型，可以不传这个sof，而且加上评论点赞后也不够用了]
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
-                    data: {'id': id,'sof': sof},
+                    // data: {'id': id,'sof': sof},
+                    data: {'id': id},
                     dataType: "JSON",
                     success: function (data){                        
                         $("#"+id).html(' '+data['count']); 
@@ -632,7 +640,7 @@
                         <p class="mb-1">{{ comment.content }}</p>
                         <p class="mb-1">
                             <small style="padding-right: 10px">{{ comment.createtime }}</small>
-                            <i class="far fa-thumbs-up" aria-hidden="true" style="padding-right: 5px"></i>
+                            <i id="{{ comment.id }}_commentlikescount" class="far fa-thumbs-up commentlikescount" aria-hidden="true" style="padding-right: 5px"></i>
                             <small style="padding-right: 10px">{{ comment.likescount }}</small>
                             <i class="far fa-thumbs-down" aria-hidden="true" style="padding-right: 10px"></i>
                             <button type="button" class="btn btn-light btn-sm" style="padding: 0px">回复</button>
