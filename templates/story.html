@@ -77,9 +77,9 @@
             // 尝试django生成点赞图标置换代码
             {% for key,value in frag_like_list.items %}                        
             {% if value == 'false' %}
-            $('{{ key }}_fraglikescount').addClass('far');
+            $('#{{ key }}_fraglikescount').addClass('far');
             {% else %}
-            $('{{ key }}_fraglikescount').addClass('fas');
+            $('#{{ key }}_fraglikescount').addClass('fas');
             {% endif %}
             {% endfor %}
 
