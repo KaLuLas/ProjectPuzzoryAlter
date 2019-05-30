@@ -271,14 +271,17 @@ def likescount(request):
     ret_dict = {}
     if liketype == 'storylikescount':
         var_set = Story.objects
+        optype = 'storylike'
     elif liketype == 'fraglikescount':
         var_set = Fragment.objects
+        optype = 'fraglike'
     else:
         var_set = Comment.objects
+        optype = 'commentlike'
     var = var_set.get(id=request_id)
     try:
         announce = Announcement.objects.get(
-            optype='storylike', targetid=request_id, fromuser=request.user.email)
+            optype=optype, targetid=request_id, fromuser=request.user.email)
         announce.delete()
         var = var_set.get(id=request_id)
         var.likescount -= 1
@@ -287,7 +290,7 @@ def likescount(request):
         ret_dict['message'] = 'delete'
     except Announcement.DoesNotExist:
         announce_record = Announcement(
-            optype='storylike', targetid=request_id, fromuser=request.user.email,
+            optype=optype, targetid=request_id, fromuser=request.user.email,
             fromnickname=request.user.userextension.nickname, touser=var.email, tonickname=var.nickname)
         announce_record.save()
         var = var_set.get(id=request_id)
