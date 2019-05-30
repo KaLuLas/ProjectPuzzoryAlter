@@ -460,6 +460,9 @@
                                         title="敲除"></a>
                                     {% endif %}
                                     {% for key,value in frag_like_list.items %}
+                                    <!-- NOTE: 这里可以直接用frag_like_list[frag.id]吗 -->
+                                    <!-- 判断语句就写 if frag_like_list[frag.id]就好了 -->
+                                    <!-- 如果键值对不存在 会返回 False，后端就可以不用把 { frag.id: False}这样的对放进来 -->
                                     {% if key == frag.id %}
                                     {% if value == 'false' %}
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
