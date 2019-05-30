@@ -169,7 +169,9 @@ def submit_comment(request, story_id, page):
                                     fromnickname=request.user.userextension.nickname,
                                     touser=touser, tonickname=tonickname,
                                     content=comment_content)
-        announcement.save()                                    
+        announcement.save()
+        story.commentscount += 1
+        story.save()                                    
         append = str(story_id) + "?page=" + str(page) + \
             "&scroll_to_type_id=" + 'comment_' + str(comment.id)
     return HttpResponseRedirect("/story/" + append)
