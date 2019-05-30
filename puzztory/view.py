@@ -49,14 +49,15 @@ def storypage(request, story_id):
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
-    frag_like_list = {}
+    frag_like_list = []
     for frag in page_obj.object_list:
         try:
             Announcement.objects.get(optype='fraglike',targetid=frag.id, fromuser=request.user.email)
-            # NOTE: 为什么用字符串的true和false不用布尔值True和False？
-            frag_like_list[frag.id] = 'true'
+            # frag_like_list[frag.id] = 'true'
+            frag_like_list.append(frag.id)
         except Announcement.DoesNotExist:
-            frag_like_list[frag.id] = 'false'
+            # frag_like_list[frag.id] = 'false'
+            pass
     
     try:
         Announcement.objects.get(optype='storylike',targetid=story_id, fromuser=request.user.email)

@@ -75,12 +75,9 @@
             {% endif %}
                 
             // 尝试django生成点赞图标置换代码
-            {% for key,value in frag_like_list.items %}                        
-            {% if value == 'false' %}
-            $('#{{ key }}_fraglikescount').addClass('far');
-            {% else %}
-            $('#{{ key }}_fraglikescount').addClass('fas');
-            {% endif %}
+            {% for frag_id in frag_like_list %}                        
+            $('#{{ frag_id }}_fraglikescount').removeClass('far');
+            $('#{{ frag_id }}_fraglikescount').addClass('fas');
             {% endfor %}
 
             // 当用户提交片段发现故事已经完结，跳转到故事页并弹出提交失败通知
@@ -470,7 +467,7 @@
                                     {% endif %}
                                     
                                     
-                                    <i id="{{ frag.id }}_fraglikescount" type="number" class="fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
+                                    <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
