@@ -640,8 +640,8 @@
                         <p class="mb-1">{{ comment.content }}</p>
                         <p class="mb-1">
                             <small style="padding-right: 10px">{{ comment.createtime }}</small>
-                            <i id="{{ comment.id }}_commentlikescount" class="far fa-thumbs-up commentlikescount" aria-hidden="true" style="padding-right: 5px"></i>
-                            <small style="padding-right: 10px">{{ comment.likescount }}</small>
+                            <i id="{{ comment.id }}_commentlikescount" class="far fa-thumbs-up commentlikescount" aria-hidden="true" style="padding-right: 5px">{{ comment.likescount }}</i>
+                            <!-- <small style="padding-right: 10px">{{ comment.likescount }}</small> -->
                             <i class="far fa-thumbs-down" aria-hidden="true" style="padding-right: 10px"></i>
                             <button type="button" class="btn btn-light btn-sm" style="padding: 0px">回复</button>
                         </p>
