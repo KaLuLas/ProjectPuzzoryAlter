@@ -252,7 +252,7 @@ def likescount(request):
     request_id = request_id[:str(request_id).find('_')]
     sof = request.GET.get('sof')
     ret_dict = {}
-    if sof:
+    if sof == 's':
         story = Story.objects.get(id=request_id)
         try:
             announce = Announcement.objects.get(
