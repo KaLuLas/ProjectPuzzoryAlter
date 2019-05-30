@@ -610,8 +610,10 @@
                 <!-- NOTE: form-control! 好用！ -->
                 <hr>
                 <form id="commentForm" action="{% url 'submit_comment' story.id page_obj.number %}" method="POST">
+
                     <div class="input-group mb-3">
-                        <textarea class="form-control" type="text" name="content" id="commentSubmit" rows="3" placeholder="在此输入你的评论（小于等于150字）..." maxlength="150"></textarea>
+                        <textarea class="form-control" type="text" name="content" id="commentSubmit" rows="3" placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" required></textarea>
+                        {% csrf_token %}
                         <div class="input-group-append">
                             <button class="btn btn-info" type="submit" id="submitCommentBtn">发表评论</button>
                         </div>
