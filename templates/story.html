@@ -459,22 +459,27 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
-                                    {% if frag_like_list.(frag.id) == 'true'}
-                                    {% endif %}
-                                    {% for key,value in frag_like_list.items %}
-                                    <!-- NOTE: 这里可以直接用frag_like_list[frag.id]吗 -->
-                                    <!-- 判断语句就写 if frag_like_list[frag.id]就好了 -->
-                                    <!-- 如果键值对不存在 会返回 False，后端就可以不用把 { frag.id: False}这样的对放进来 -->
-                                    {% if key == frag.id %}
-                                    {% if value == 'false' %}
+                                    {% if frag_like_list.(frag.id) == 'false' %}
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     {% else %}
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="fas fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
-                                            {{ frag.likescount }}</i>
+                                        {{ frag.likescount }}</i>
                                     {% endif %}
+                                    {% comment %} {% for key,value in frag_like_list.items %} {% endcomment %}
+                                    <!-- NOTE: 这里可以直接用frag_like_list[frag.id]吗 -->
+                                    <!-- 判断语句就写 if frag_like_list[frag.id]就好了 -->
+                                    <!-- 如果键值对不存在 会返回 False，后端就可以不用把 { frag.id: False}这样的对放进来 -->
+                                    {% comment %} {% if key == frag.id %}
+                                    {% if value == 'false' %} {% endcomment %}
+                                    <!-- <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
+                                        {{ frag.likescount }}</i> -->
+                                    {% comment %} {% else %} {% endcomment %}
+                                    <!-- <i id="{{ frag.id }}_fraglikescount" type="number" class="fas fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
+                                            {{ frag.likescount }}</i> -->
+                                    {% comment %} {% endif %}
                                     {% endif %}
-                                    {% endfor %}
+                                    {% endfor %} {% endcomment %}
                                     <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
