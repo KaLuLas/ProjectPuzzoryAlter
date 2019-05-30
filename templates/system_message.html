@@ -1,4 +1,148 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Puzztory</title>
+    <link rel="shortcut icon" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+    <link rel="bookmark" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <style type="text/css">
+        .construct-notice {
+            font-size: 50px;
+            text-align: center;
+        }
+
+        .side-bar-title {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .story-list>.list-group-item {
+            margin-bottom: 10px;
+        }
+
+        /* 边栏文本显示省略 */
+        .dropdown-menu-left .list-group-item {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .homepage .title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .homepage .ffcontent {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 7;
+        }
+    </style>
+    <script type="text/javascript">
+        var ruleCount = 0;
+        var keywordCount = 0;
+        const ruleLimit = 5;
+        const keywordLimit = 5;
+
+        function switchInput(id) {
+            var input = document.getElementById(id);
+            input.disabled = !input.disabled;
+            if (input.disabled) {
+                input.value = "";
+            }
+        }
+        $(document).ready(function () {
+            $('#jumpTopBtn').click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#load-content").offset().top - 100
+                }, 500);
+            });
+
+            // button with class removeInput will remove the input component onclick
+            $('.removeInput').on('click', function () {
+                $(this).parent().parent().remove();
+            });
+            $('#addNewRuleBTN, #addNewKeywordBTN').on('click', function () {
+                if ($(this).attr('id') == 'addNewRuleBTN' && ruleCount < ruleLimit) {
+                    $rule =
+                        '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
+                        name="Rule' + ruleCount + '" id="selfDefinedRule' + ruleCount + '" placeholder="自定义规则..."><div class="input-group-append"> \
+                        <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus" \
+                        aria-hidden="true"></i></button></div></div>';
+                    ruleCount++;
+                    $(this).before($rule);
+                } else if ($(this).attr('id') == 'addNewKeywordBTN' && keywordCount < keywordLimit) {
+                    $keyword =
+                        '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
+                        name="Keyword' + keywordCount + '" id="selfDefinedKeyword' + keywordCount + '" placeholder="新关键词...">\
+                        <div class="input-group-append"> <button class="btn btn-outline-danger removeInput" type="button">\
+                        <i class="fa fa-minus" aria-hidden="true"></i></button></div> </div>';
+                    keywordCount++;
+                    $(this).before($keyword);
+                }
+                $('.removeInput').on('click', function () {
+                    var containerName = $(this).parent().parent().parent().attr('id');
+                    if (containerName == 'selfDefinedRules') ruleCount--;
+                    else if (containerName == 'selfDefinedKeywordsContain') keywordCount--;
+                    $(this).parent().parent().remove();
+                });
+            });
+            $("#title").on('input property change', function (e) {
+                $("#titleWordCount").html(e.target.value.length);
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
+            });
+            $("#ffcontent").on('input property change', function (e) {
+                $("#partOneWordCount").html(e.target.value.length);
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
+            });
+        });
+    </script>
+</head>
 {% extends "index.html" %}
 {% block system_message_page %}
-
+<div id="systemMessageContainer" style="margin:30px">
+    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+            aria-selected="false">Contact</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+    </div>
+</div>
 {% endblock %}

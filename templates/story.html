@@ -459,6 +459,8 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     {% endif %}
+                                    {% if frag_like_list.(frag.id) == 'true'}
+                                    {% endif %}
                                     {% for key,value in frag_like_list.items %}
                                     <!-- NOTE: 这里可以直接用frag_like_list[frag.id]吗 -->
                                     <!-- 判断语句就写 if frag_like_list[frag.id]就好了 -->
