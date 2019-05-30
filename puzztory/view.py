@@ -156,7 +156,7 @@ def submit_comment(request, story_id, page):
     append = ""
     if request.method == 'POST':
         comment_content = request.POST['content']
-        story_id = request.POST['story_id']
+        # story_id = request.POST['story_id']
         comment = Comment(nickname=request.user.userextension.nickname,
                           email=request.user.email, sof=True, storyid=story_id,
                           content=comment_content)
