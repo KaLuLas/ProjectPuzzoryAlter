@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from PuzzModel.models import Fragment, UserExtension, Story, Announcement
+from PuzzModel.models import Fragment, UserExtension, Story, Announcement, Comment
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.paginator import Paginator
@@ -44,6 +44,8 @@ def homepage(request):
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
+    comment_full_list = Comment.objects.filter(
+        sof='s', storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
     page = request.GET.get('page', 1)
     finished_message = request.GET.get('alreadyfinished', False)
@@ -52,15 +54,17 @@ def storypage(request, story_id):
     frag_like_list = []
     for frag in page_obj.object_list:
         try:
-            Announcement.objects.get(optype='fraglike',targetid=frag.id, fromuser=request.user.email)
+            Announcement.objects.get(
+                optype='fraglike', targetid=frag.id, fromuser=request.user.email)
             # frag_like_list[frag.id] = 'true'
             frag_like_list.append(frag.id)
         except Announcement.DoesNotExist:
             # frag_like_list[frag.id] = 'false'
             pass
-    
+
     try:
-        Announcement.objects.get(optype='storylike',targetid=story_id, fromuser=request.user.email)
+        Announcement.objects.get(
+            optype='storylike', targetid=story_id, fromuser=request.user.email)
         story_like = 'true'
     except Announcement.DoesNotExist:
         story_like = 'false'
@@ -70,17 +74,18 @@ def storypage(request, story_id):
     else:
         is_paginated = False
 
-    scroll_to_frag_id = request.GET.get('scroll_to_frag_id', -1)
+    scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
 
-    # scroll_to_frag_id == -1 代表不需要片段滚动
-    # 否则 scroll_to_frag_id 代表滚动到的片段id号
+    # scroll_to_type_id == -1 代表不需要片段滚动
+    # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
         'paginator': paginator,
         'page_obj': page_obj,
+        'comment_full_list': comment_full_list,
         'is_paginated': is_paginated,
-        'scroll_to_frag_id': scroll_to_frag_id,
+        'scroll_to_type_id': scroll_to_type_id,
         'finished_message': bool(finished_message),
         'frag_like_list': frag_like_list,
         'story_like': story_like,
@@ -110,7 +115,7 @@ def deletefrag(request, frag_id, story_id, page):
     # 置 last_frag_id 为当前页最后一个片段
     last_frag_id = paginator.page(page)[-1].id
     append = str(story_id) + "?page=" + str(page) + \
-        "&scroll_to_frag_id=" + str(last_frag_id)
+        "&scroll_to_type_id=" + 'frag' + str(last_frag_id)
     return HttpResponseRedirect("/story/" + append)
 
 
@@ -120,7 +125,7 @@ def upload_frag(request, story_id):
         # 当用户提交片段时故事已被作者完结，返回故事首页并提示
         if story_record.finished:
             append = str(story_id) + "?alreadyfinished=" + str(True)
-            return HttpResponseRedirect("/story/" + append)  
+            return HttpResponseRedirect("/story/" + append)
         frag_text = request.POST['fcontent']
         frag_record = Fragment(
             content=frag_text, nickname=request.user.userextension.nickname,
@@ -143,7 +148,30 @@ def upload_frag(request, story_id):
     paginator = Paginator(frag_full_list, 7)
     # 置 last_frag_id 为当前页最后一个片段
     append = str(story_id) + "?page=" + str(paginator.num_pages) + \
-        "&scroll_to_frag_id=" + str(frag_record.id)
+        "&scroll_to_type_id=" + 'frag_' + str(frag_record.id)
+    return HttpResponseRedirect("/story/" + append)
+
+
+def submit_comment(request, story_id, page):
+    append = ""
+    if request.method == 'POST':
+        comment_content = request.POST['content']
+        story_id = request.POST['story_id']
+        comment = Comment(nickname=request.user.userextension.nickname,
+                          email=request.user.email, sof='s', storyid=story_id,
+                          content=comment_content)
+        comment.save()
+        story = Story.objects.get(id=story_id)
+        touser = story.email
+        tonickname = story.nickname
+        announcement = Announcement(optype='storycomment', targetid=story_id,
+                                    fromuser=request.user.email,
+                                    fromnickname=request.user.userextension.nickname,
+                                    touser=touser, tonickname=tonickname,
+                                    content=comment_content)
+        announcement.save()                                    
+        append = str(story_id) + "?page=" + str(page) + \
+            "&scroll_to_type_id=" + 'comment_' + str(comment.id)
     return HttpResponseRedirect("/story/" + append)
 
 
@@ -233,17 +261,17 @@ def likescount(request):
             story = Story.objects.get(id=request_id)
             story.likescount -= 1
             ret_dict['count'] = story.likescount
-            story.save()           
+            story.save()
             ret_dict['message'] = 'delete'
         except Announcement.DoesNotExist:
             announce_record = Announcement(
-                optype='storylike', targetid=request_id, fromuser=request.user.email, 
+                optype='storylike', targetid=request_id, fromuser=request.user.email,
                 fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
             announce_record.save()
             story = Story.objects.get(id=request_id)
             story.likescount += 1
             ret_dict['count'] = story.likescount
-            story.save()           
+            story.save()
             ret_dict['message'] = 'add'
     else:
         frag = Fragment.objects.get(id=request_id)
@@ -258,13 +286,13 @@ def likescount(request):
             ret_dict['message'] = 'delete'
         except Announcement.DoesNotExist:
             announce_record = Announcement(
-                optype='fraglike', targetid=request_id, fromuser=request.user.email, 
+                optype='fraglike', targetid=request_id, fromuser=request.user.email,
                 fromnickname=request.user.userextension.nickname, touser=frag.email, tonickname=frag.nickname)
             announce_record.save()
             frag = Fragment.objects.get(id=request_id)
             frag.likescount += 1
             ret_dict['count'] = frag.likescount
-            frag.save()           
+            frag.save()
             ret_dict['message'] = 'add'
 
     return JsonResponse(data=ret_dict)

@@ -29,13 +29,16 @@ urlpatterns = [
     path('message', view.system_message, name="system_message"),
     path('uploading', view.upload_story, name="upload_story"),
     path('story/adding/<int:story_id>', view.upload_frag, name="upload_frag"),
+    path('story/comment/<int:story_id>/<int:page>',
+         view.submit_comment, name="submit_comment"),
     path('story/<int:story_id>', view.storypage, name="story_page"),
     path('lock', view.lock, name="lock"),
     path('likescount', view.likescount, name="likescount"),
     path('modifiedset', view.modifiedset, name="modifiedset"),
     path('finishedset', view.finishedset, name="finishedset"),
     path('lfcontent', view.lfcontent, name="lfcontent"),
-    path('deletefrag/<int:frag_id>/<int:story_id>/<int:page>', view.deletefrag, name="deletefrag"),
+    path('deletefrag/<int:frag_id>/<int:story_id>/<int:page>',
+         view.deletefrag, name="deletefrag"),
     re_path(r'^testdb$', testdb.testdb),  # edit
     path('admin/', admin.site.urls),
 ]
