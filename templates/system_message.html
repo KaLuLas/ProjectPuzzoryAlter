@@ -12,6 +12,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://www.bootcss.com/p/buttons/css/buttons.css">
 
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
@@ -61,88 +62,130 @@
         }
     </style>
     <script type="text/javascript">
-        var ruleCount = 0;
-        var keywordCount = 0;
-        const ruleLimit = 5;
-        const keywordLimit = 5;
-
-        function switchInput(id) {
-            var input = document.getElementById(id);
-            input.disabled = !input.disabled;
-            if (input.disabled) {
-                input.value = "";
-            }
-        }
+       
         $(document).ready(function () {
             $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
                     scrollTop: $("#load-content").offset().top - 100
                 }, 500);
             });
-
-            // button with class removeInput will remove the input component onclick
-            $('.removeInput').on('click', function () {
-                $(this).parent().parent().remove();
-            });
-            $('#addNewRuleBTN, #addNewKeywordBTN').on('click', function () {
-                if ($(this).attr('id') == 'addNewRuleBTN' && ruleCount < ruleLimit) {
-                    $rule =
-                        '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
-                        name="Rule' + ruleCount + '" id="selfDefinedRule' + ruleCount + '" placeholder="自定义规则..."><div class="input-group-append"> \
-                        <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus" \
-                        aria-hidden="true"></i></button></div></div>';
-                    ruleCount++;
-                    $(this).before($rule);
-                } else if ($(this).attr('id') == 'addNewKeywordBTN' && keywordCount < keywordLimit) {
-                    $keyword =
-                        '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
-                        name="Keyword' + keywordCount + '" id="selfDefinedKeyword' + keywordCount + '" placeholder="新关键词...">\
-                        <div class="input-group-append"> <button class="btn btn-outline-danger removeInput" type="button">\
-                        <i class="fa fa-minus" aria-hidden="true"></i></button></div> </div>';
-                    keywordCount++;
-                    $(this).before($keyword);
-                }
-                $('.removeInput').on('click', function () {
-                    var containerName = $(this).parent().parent().parent().attr('id');
-                    if (containerName == 'selfDefinedRules') ruleCount--;
-                    else if (containerName == 'selfDefinedKeywordsContain') keywordCount--;
-                    $(this).parent().parent().remove();
-                });
-            });
-            $("#title").on('input property change', function (e) {
-                $("#titleWordCount").html(e.target.value.length);
-                var text = this.value.trim();
-                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
-            });
-            $("#ffcontent").on('input property change', function (e) {
-                $("#partOneWordCount").html(e.target.value.length);
-                var text = this.value.trim();
-                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
-            });
         });
     </script>
 </head>
-{% extends "index.html" %}
-{% block system_message_page %}
-<div id="systemMessageContainer" style="margin:30px">
-    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-            aria-selected="false">Contact</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+<body style="background-color: rgb(248, 248, 248)">
+    <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
+        <div class="navbar-collapse collapse justify-content-between">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img title="PuzzTory首页" alt="Logo" src="http://www.puzztory.cn/static/images/PuzzWithTitle.png"
+                    style="height: 50px">
+            </a>
+            <ul class="navbar-nav">
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="height:40px; margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                <form class="form-inline" action="search#TODO">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                            placeholder="welcome, Alexxx"
+                            style="width: 7cm">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
+                                    aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}
+                        href="{% url 'upload_story_page' %}" {% else %} data-toggle="modal" data-target="#loginRequest"
+                        {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
+                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
+                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
+                            class="fas fa-bell"></i></a></li>
+                
+                <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
+                            class="fas fa-user"></i></a>
+                </li>
+                
+                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.email %}"><i title="个人主页"
+                            class="fas fa-user"></i></a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
+                            title="退出登录" class="fas fa-sign-in-alt"></i></a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <!-- LOGOUT WINDOW -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">通知 ('/_ ') </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    确定要退出吗？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">退出</button></a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- LOGIN REQUEST -->
+    
+    <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginRequestLabel">通知 ('/_ ') </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    请先登录
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container-fluid" style="margin-top: 70px">
+        <div class="row">
+            <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
+                <div class="dropdown-menu-left" style="margin-bottom: 30px; margin-top: 30px;">
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
+                            aria-hidden="true"></i> 点赞飙升</h1>
+                    <a class="dropdown-item list-group disabled" href="#">
+                        
+                        
+                        <p>No storys are available.</p>
+                        
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i class="fa fa-trophy"
+                            aria-hidden="true"></i> 用户排行</h1>
+                    <a class="dropdown-item list-group disabled" href="#">
+                        
+                        <p>No users are available.</p>
+                        
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-10" id="load-content" style="background-color: rgb(248, 248, 248)">
+            
+            </div>
+        </div>
+    </div>
+</body>
