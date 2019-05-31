@@ -70,7 +70,7 @@
             // 否则scroll_to_frag_id代表滚动到的片段id号
             {% if scroll_to_type_id != -1 %}
             $('html, body').animate({
-                    scrollTop: $("#{{ scroll_to_type_id }}").offset().top
+                    scrollTop: $("#{{ scroll_to_type_id }}").offset().top - 100
                 }, 500);
             {% endif %}
                 
