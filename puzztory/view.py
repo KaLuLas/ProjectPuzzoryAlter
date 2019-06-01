@@ -158,8 +158,7 @@ def upload_frag(request, story_id):
         current_user.experience += 2
         current_user.save()
 
-        if len(frag_text) > 25:
-            frag_text = frag_text[:25] + '...'
+        frag_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
         # 修改通知表
         announcement = Announcement(optype='addfrag', targetid=story_id,
                                     fromuser=request.user.email,
@@ -256,6 +255,9 @@ def system_message(request):
     
     index_dict['storycommentm_list'] = Announcement.objects.filter(
         optype='storycomment', touser=request.user.email).order_by('-createtime')
+
+    index_dict['fragcommentm_list'] = Announcement.objects.filter(
+        optype='fragcomment', touser=request.user.email).order_by('-createtime')
 
     return render(request, 'index.html', index_dict)
 

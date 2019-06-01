@@ -567,7 +567,7 @@
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                             {{ storylikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">{{ storylikem.createtime }}</small>
+                                            <small style="margin-left: 10px">{{ storylikem.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ storylikem.content }}』中点了赞</p>
                                     </a>
@@ -580,7 +580,7 @@
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                             {{ fraglikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">{{ fraglikem.createtime }}</small>
+                                            <small style="margin-left: 10px">{{ fraglikem.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px">在你的片段："{{ fraglikem.content }}"中点了赞</p>
                                     </a>
@@ -593,9 +593,9 @@
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                             {{ commentlikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">{{ commentlikem.createtime }}</small>
+                                            <small style="margin-left: 10px">{{ commentlikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的片段："{{ commentlikem.content }}"中点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的评论："{{ commentlikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -603,7 +603,7 @@
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="d-flex w-100">
-                                            <h5 class="mb-1">还没有收到赞呢，继续努力吧(。・∀・)ノ</h5>
+                                            <h6 class="mb-1">还没有收到赞呢，继续努力吧(。・∀・)ノ</h6>
                                         </div>
                                     </a>
                                     {% endif %}
@@ -611,39 +611,58 @@
                             </div>
                             <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
                                 <div class="list-group">
+                                    {% if addfragm_list %}
+                                    {% for addfragm in addfragm_list %}
                                     <a style="margin-top: 10px"
-                                        class="list-group-item list-group-item-action flex-column align-items-start"
-                                        id="comment_{{ comment.id }}">
+                                        class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                                Alexxx</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
+                                            {{ addfragm.fromnickname }}</h5>
+                                            <small style="margin-left: 10px">{{ addfragm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">故事标题</p>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">
-                                            接续内容
+                                        <p class="mb-1 ml-4" style="font-size: 14px">{{ addfragm.targetid }}</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">
+                                            {{ addfragm.content }}
                                         </p>
-    
                                     </a>
+                                    {% endfor %}
+                                    {% else %}
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100">
+                                            <h6 class="mb-1">还没有得到接续呢，再等等吧X﹏X</h6>
+                                        </div>
+                                    </a>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="commentmessage" role="tabpanel"
                                 aria-labelledby="commentmessage-tab">
                                 <div class="list-group">
+                                    {% if storycommentm_list %}
+                                    {% for storycommentm in storycommentm_list %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start"
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                                Alexxx</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
+                                                {{ storycommentm.fromnickname }}</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">{{ storycommentm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的···中评论：</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的故事中评论：</p>
                                         <p class="mb-1 ml-4" style="font-size: 14px">
-                                            评论内容
+                                            {{ storycommentm.content }}
                                         </p>
-    
                                     </a>
+                                    {% endfor %}
+                                    {% else %}
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100">
+                                            <h6 class="mb-1">然而并没有评论(￣_,￣ )</h6>
+                                        </div>
+                                    </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
