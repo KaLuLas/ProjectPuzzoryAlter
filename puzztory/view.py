@@ -304,12 +304,12 @@ def likescount(request):
     elif liketype == 'fraglikescount':
         var_set = Fragment.objects
         optype = 'fraglike'
-        content = var_set.objects.get(id=request_id).content
+        content = var_set.get(id=request_id).content
 
     else:
         var_set = Comment.objects
         optype = 'commentlike'
-        content = var_set.objects.get(id=request_id).content
+        content = var_set.get(id=request_id).content
 
     var = var_set.get(id=request_id)
     try:
