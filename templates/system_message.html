@@ -16,7 +16,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
@@ -60,9 +60,37 @@
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 7;
         }
+
+        #systemMessageContainer .nav-tabs .nav-item.show .nav-link,
+        #systemMessageContainer .nav-tabs .nav-link.active {
+            color: rgb(13, 198, 207);
+            background-color: transparent;
+            border-color: transparent transparent #f3f3f3;
+            border-bottom: 3px solid !important;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #systemMessageContainer .nav-link {
+            border: 1px solid transparent;
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+            color: rgb(6, 89, 92);
+            font-size: 16px;
+            font-weight:600;
+        }
+
+        #systemMessageContainer .nav-link:hover {
+            border: none;
+        }
+
+        /* #systemMessageContainer a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 400;
+        } */
     </style>
     <script type="text/javascript">
-       
         $(document).ready(function () {
             $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
@@ -72,6 +100,7 @@
         });
     </script>
 </head>
+
 <body style="background-color: rgb(248, 248, 248)">
     <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
         <div class="navbar-collapse collapse justify-content-between">
@@ -80,12 +109,11 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
-                <button id="jumpTopBtn" class="btn btn-outline-warning" style="height:40px; margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="height:40px; margin-right: 20px"
+                    title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
-                        <input type="text" class="form-control"
-                            placeholder="welcome, Alexxx"
-                            style="width: 7cm">
+                        <input type="text" class="form-control" placeholder="welcome, Alexxx" style="width: 7cm">
                         <div class="input-group-append">
                             <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
@@ -100,18 +128,18 @@
                 <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
                         {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
                             class="fas fa-bell"></i></a></li>
-                
+
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
                 </li>
-                
+
                 <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.email %}"><i title="个人主页"
                             class="fas fa-user"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
                             title="退出登录" class="fas fa-sign-in-alt"></i></a>
                 </li>
-                
+
             </ul>
         </div>
     </nav>
@@ -139,7 +167,7 @@
     </div>
 
     <!-- LOGIN REQUEST -->
-    
+
     <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -159,7 +187,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="container-fluid" style="margin-top: 70px">
         <div class="row">
@@ -168,23 +196,71 @@
                     <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
                             aria-hidden="true"></i> 点赞飙升</h1>
                     <a class="dropdown-item list-group disabled" href="#">
-                        
-                        
+
+
                         <p>No storys are available.</p>
-                        
+
                     </a>
                     <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i class="fa fa-trophy"
-                            aria-hidden="true"></i> 用户排行</h1>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i
+                            class="fa fa-trophy" aria-hidden="true"></i> 用户排行</h1>
                     <a class="dropdown-item list-group disabled" href="#">
-                        
+
                         <p>No users are available.</p>
-                        
+
                     </a>
                 </div>
             </div>
             <div class="col-sm-10" id="load-content" style="background-color: rgb(248, 248, 248)">
+                <div id="systemMessageContainer" style="margin-top:10px ">
+                    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                                aria-controls="contact" aria-selected="false">Contact</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="list-group">
+                                
+                                <a class="list-group-item list-group-item-action flex-column align-items-start" id="comment_{{ comment.id }}">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                            Alexxx</h5>
+                                        <small style="margin-left: 10px" id="commentIdx">No.6</small>
+                                    </div>
+                                    <p class="mb-1">在你的···中点了赞</p>
+                                    <p class="mb-1">
+                                        <small style="padding-right: 10px">2019/6/5</small>
+                                    </p>
             
+                                </a>
+                                
+                                <a class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100">
+                                        <h5 class="mb-1"> <i class="far fa-comment" aria-hidden="true"></i>  继续努力吧('/_ ')</h5>
+                                    </div>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            i hwqu
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            auhb quiw z
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
