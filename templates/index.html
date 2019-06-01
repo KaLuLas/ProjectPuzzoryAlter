@@ -572,7 +572,8 @@
                                         <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ storylikem.content }}』中点了赞</p>
                                     </a>
                                     {% endfor %}
-                                    {% elif fraglikem_list %}
+                                    {% endif %}
+                                    {% if fraglikem_list %}
                                     {% for fraglikem in fraglikem_list %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
@@ -584,7 +585,8 @@
                                         <p class="mb-1 ml-4" style="font-size: 14px">在你的片段："{{ fraglikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
-                                    {% elif commentlikem_list %}
+                                    {% endif %}
+                                    {% if commentlikem_list %}
                                     {% for commentlikem in commentlikem_list %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
@@ -596,7 +598,8 @@
                                         <p class="mb-1 ml-4" style="font-size: 14px">在你的片段："{{ commentlikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
-                                    {% else %}
+                                    {% endif %}
+                                    {% if not commentlikem_list and not fraglikem_list and not storylikem_list %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
                                         <div class="d-flex w-100">
