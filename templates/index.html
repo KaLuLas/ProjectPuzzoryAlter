@@ -518,28 +518,87 @@
                 <!-- <h5 style="margin:30px">system_message施工中</h5> -->
                 <!-- {% block system_message_page %}
                 {% endblock %} -->
-                <div id="systemMessageContainer" style="margin:30px">
-                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                            aria-selected="true">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                            aria-selected="false">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-                            aria-selected="false">Contact</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                    </div>
-                    
-                </div> 
+                <div id="systemMessageContainer" style="margin-top:10px">
+                        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="likemessage-tab" data-toggle="tab" href="#likemessage"
+                                    role="tab" aria-controls="likemessage" aria-selected="true">收到的赞</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="fragmessage-tab" data-toggle="tab" href="#fragmessage" role="tab"
+                                    aria-controls="fragmessage" aria-selected="false">得到的接续</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="commentmessage-tab" data-toggle="tab" href="#commentmessage"
+                                    role="tab" aria-controls="commentmessage" aria-selected="false">收到的评论</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="likemessage" role="tabpanel"
+                                aria-labelledby="likemessage-tab">
+                                <div class="list-group">
+    
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                            <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                                Alexxx</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">2019/07/07</small>
+                                        </div>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的···中点了赞</p>
+    
+                                    </a>
+    
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100">
+                                            <h5 class="mb-1">继续努力吧('/_ ')</h5>
+                                        </div>
+                                    </a>
+    
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
+                                <div class="list-group">
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start"
+                                        id="comment_{{ comment.id }}">
+                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                            <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                                Alexxx</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
+                                        </div>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">故事标题</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">
+                                            接续内容
+                                        </p>
+    
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="commentmessage" role="tabpanel"
+                                aria-labelledby="commentmessage-tab">
+                                <div class="list-group">
+                                    <a style="margin-top: 10px"
+                                        class="list-group-item list-group-item-action flex-column align-items-start"
+                                        id="comment_{{ comment.id }}">
+                                        <div class="d-flex w-100 align-items-center justify-content-between">
+                                            <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                                Alexxx</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
+                                        </div>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的···中评论：</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px">
+                                            评论内容
+                                        </p>
+    
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+    
+                </div>
+                
                 {% endif %}
             </div>
         </div>
