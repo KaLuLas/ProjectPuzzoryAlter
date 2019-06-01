@@ -449,98 +449,12 @@
 
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
-                <!-- {% block upload_story_page %}
-                {% endblock %} -->
-                <form id="uploadStoryForm" style="margin:30px" action="{% url 'upload_story' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row mb-3 align-items-end">
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"
-                                        id="StoryTitlePrepend">#</span></div>
-                                <input type="text" class="form-control" id="title" placeholder="故事标题"
-                                    aria-describedby="StoryTitlePrepend" maxlength="30" name="title" required>
-                            </div>
-                        </div>
-                        <span id="titleWordCount">0</span><span id="titleWordLimit">/30</span>
-                    </div>
-                    <div class="form-row mb-3 align-items-end">
-                        <div class="col-md-10">
-                            <textarea type="text" class="form-control" id="ffcontent" rows="10"
-                                placeholder="在此输入故事的第一节..." maxlength="500" name="ffcontent" required></textarea>
-                        </div>
-                        <span id="partOneWordCount">0</span><span id="partOneWordLimit">/500</span>
-                    </div>
-                    <!-- self defined rules & keywords -->
-                    <small id="addNewRuleHelp" class="form-text text-muted">设置续写片段必须遵守的规则（软规则）</small>
-                    <div class="form-row align-items-center" id="selfDefinedRules">
-                        <!-- button removeInput will remove the whole input-group -->
-                        <!-- set new rules here -->
-                        <div class="btn mb-2 btn-outline-primary" id="addNewRuleBTN"><i class="fa fa-plus"
-                                aria-hidden="true"></i></div>
-                    </div>
-                    <small id="addNewKeywordHelp" class="form-text text-muted">设置故事片段必须包含的关键词</small>
-                    <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
-                        <!-- button removeInput will remove the whole input-group -->
-                        <!-- add new keywords here -->
-                        <div class="btn btn-outline-primary" id="addNewKeywordBTN"><i class="fa fa-plus"
-                                aria-hidden="true"></i></div>
-                    </div>
-
-
-                    <!-- decide frag count & words limit -->
-                    <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
-                    <div class="form-row mb-3  align-items-center">
-                        <div class="input-group col-md-3">
-                            <input type="number" class="form-control" disabled="disabled" name="fragsCountLimit"
-                                id="fragCountSetInput" required min="1">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
-                                    <label class="form-check-label" for="fragCountSet">
-                                        片段个数
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group col-md-3">
-                            <input type="number" class="form-control" disabled="disabled" name="fragWordsLimit"
-                                id="fragWordSetInput" required min="10">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
-                                    <label class="form-check-label" for="fragWordSet">
-                                        片段字数
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row mb-3 align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="branchCheck" name="branch">
-                            <label class="custom-control-label" for="branchCheck" style="margin-right: 20px">
-                                允许分支
-                            </label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="modifiedCheck" checked="checked"
-                                name="modified">
-                            <label class="custom-control-label" for="modifiedCheck" style="margin-right: 20px">
-                                允许修改
-                            </label>
-                        </div>
-                        <button class="btn btn-outline-primary" type="submit" name="submit"
-                            id="uploadStorySubmit">提交故事</button>
-                    </div>
-                </form>
+                {% block upload_story_page %}
+                {% endblock %} 
 
                 {% elif display == 'system_message' %}
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
-                <!-- <h5 style="margin:30px">system_message施工中</h5> -->
-                <!-- {% block system_message_page %}
-                {% endblock %} -->
+                
                 <div id="systemMessageContainer" style="margin-top:10px">
                         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                             <li class="nav-item">
