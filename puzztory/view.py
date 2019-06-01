@@ -188,6 +188,8 @@ def submit_comment(request, story_id, page):
         story = Story.objects.get(id=story_id)
         touser = story.email
         tonickname = story.nickname
+        title = story.title
+        content = '在你的故事『' + title + '』中评论：\n' + comment_content
         announcement = Announcement(optype='storycomment', targetid=story_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,

@@ -582,7 +582,7 @@
                                             {{ fraglikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ fraglikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的片段："{{ fraglikem.content }}"中点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">在你的片段："{{ fraglikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -595,7 +595,7 @@
                                             {{ commentlikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ commentlikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的评论："{{ commentlikem.content }}"中点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">在你的评论："{{ commentlikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -620,7 +620,6 @@
                                             {{ addfragm.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ addfragm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">{{ addfragm.targetid }}</p>
                                         <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">
                                             {{ addfragm.content }}
                                         </p>
@@ -649,8 +648,7 @@
                                                 {{ storycommentm.fromnickname }}</h5>
                                             <small style="margin-left: 10px" id="commentIdx">{{ storycommentm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的故事中评论：</p>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">
                                             {{ storycommentm.content }}
                                         </p>
                                     </a>
