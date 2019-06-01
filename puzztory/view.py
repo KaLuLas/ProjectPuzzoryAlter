@@ -62,7 +62,7 @@ def storypage(request, story_id):
         except Announcement.DoesNotExist:
             # frag_like_list[frag.id] = 'false'
             pass
-    
+
     # 获得故事的点赞情况
     try:
         Announcement.objects.get(
@@ -70,7 +70,7 @@ def storypage(request, story_id):
         story_like = 'true'
     except Announcement.DoesNotExist:
         story_like = 'false'
-    
+
     # 获得评论的点赞情况
     comment_like_list = []
     for comment in comment_full_list:
@@ -140,6 +140,7 @@ def upload_frag(request, story_id):
         if story_record.finished:
             append = str(story_id) + "?alreadyfinished=" + str(True)
             return HttpResponseRedirect("/story/" + append)
+
         frag_text = request.POST['fcontent']
         frag_record = Fragment(
             content=frag_text, nickname=request.user.userextension.nickname,
@@ -156,6 +157,16 @@ def upload_frag(request, story_id):
         current_user = UserExtension.objects.get(id=request.user.id)
         current_user.experience += 2
         current_user.save()
+
+        if len(frag_text) > 25:
+            frag_text = frag_text[:25] + '...'
+        # 修改通知表
+        announcement = Announcement(optype='addfrag', targetid=story_id,
+                                    fromuser=request.user.email,
+                                    fromnickname=request.user.userextension.nickname,
+                                    touser=story_record.email, tonickname=story_record.nickname,
+                                    content=frag_text)
+        announcement.save()
 
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
@@ -230,6 +241,22 @@ def system_message(request):
     index_dict['display'] = 'system_message'
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
+    
+    index_dict['storylikem_list'] = Announcement.objects.filter(
+        optype='storylike', touser=request.user.email).order_by('-createtime')
+    
+    index_dict['fraglikem_list'] = Announcement.objects.filter(
+        optype='fraglike', touser=request.user.email).order_by('-createtime')
+    
+    index_dict['commentlikem_list'] = Announcement.objects.filter(
+        optype='commentlike', touser=request.user.email).order_by('-createtime')
+    
+    index_dict['addfragm_list'] = Announcement.objects.filter(
+        optype='addfrag', touser=request.user.email).order_by('-createtime')
+    
+    index_dict['storycommentm_list'] = Announcement.objects.filter(
+        optype='storycomment', touser=request.user.email).order_by('-createtime')
+
     return render(request, 'index.html', index_dict)
 
 
@@ -272,12 +299,18 @@ def likescount(request):
     if liketype == 'storylikescount':
         var_set = Story.objects
         optype = 'storylike'
+        content = var_set.get(id=request_id).title
+
     elif liketype == 'fraglikescount':
         var_set = Fragment.objects
         optype = 'fraglike'
+        content = var_set.objects.get(id=request_id).content
+
     else:
         var_set = Comment.objects
         optype = 'commentlike'
+        content = var_set.objects.get(id=request_id).content
+
     var = var_set.get(id=request_id)
     try:
         announce = Announcement.objects.get(
@@ -291,57 +324,14 @@ def likescount(request):
     except Announcement.DoesNotExist:
         announce_record = Announcement(
             optype=optype, targetid=request_id, fromuser=request.user.email,
-            fromnickname=request.user.userextension.nickname, touser=var.email, tonickname=var.nickname)
+            fromnickname=request.user.userextension.nickname, touser=var.email, tonickname=var.nickname, content=content)
+        
         announce_record.save()
         var = var_set.get(id=request_id)
         var.likescount += 1
         ret_dict['count'] = var.likescount
         var.save()
         ret_dict['message'] = 'add'
-
-
-    # if liketype == 'storylikescount':
-    #     story = Story.objects.get(id=request_id)
-    #     try:
-    #         announce = Announcement.objects.get(
-    #             optype='storylike', targetid=request_id, fromuser=request.user.email)
-    #         announce.delete()
-    #         story = Story.objects.get(id=request_id)
-    #         story.likescount -= 1
-    #         ret_dict['count'] = story.likescount
-    #         story.save()
-    #         ret_dict['message'] = 'delete'
-    #     except Announcement.DoesNotExist:
-    #         announce_record = Announcement(
-    #             optype='storylike', targetid=request_id, fromuser=request.user.email,
-    #             fromnickname=request.user.userextension.nickname, touser=story.email, tonickname=story.nickname)
-    #         announce_record.save()
-    #         story = Story.objects.get(id=request_id)
-    #         story.likescount += 1
-    #         ret_dict['count'] = story.likescount
-    #         story.save()
-    #         ret_dict['message'] = 'add'
-    # else:
-    #     frag = Fragment.objects.get(id=request_id)
-    #     try:
-    #         announce = Announcement.objects.get(
-    #             optype='fraglike', targetid=request_id, fromuser=request.user.email)
-    #         announce.delete()
-    #         frag = Fragment.objects.get(id=request_id)
-    #         frag.likescount -= 1
-    #         ret_dict['count'] = frag.likescount
-    #         frag.save()
-    #         ret_dict['message'] = 'delete'
-    #     except Announcement.DoesNotExist:
-    #         announce_record = Announcement(
-    #             optype='fraglike', targetid=request_id, fromuser=request.user.email,
-    #             fromnickname=request.user.userextension.nickname, touser=frag.email, tonickname=frag.nickname)
-    #         announce_record.save()
-    #         frag = Fragment.objects.get(id=request_id)
-    #         frag.likescount += 1
-    #         ret_dict['count'] = frag.likescount
-    #         frag.save()
-    #         ret_dict['message'] = 'add'
 
     return JsonResponse(data=ret_dict)
 
