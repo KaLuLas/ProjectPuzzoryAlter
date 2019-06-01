@@ -194,7 +194,7 @@ def submit_comment(request, story_id, page):
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=touser, tonickname=tonickname,
-                                    content=comment_content)
+                                    content=content)
         announcement.save()
         story.commentscount += 1
         story.save()
