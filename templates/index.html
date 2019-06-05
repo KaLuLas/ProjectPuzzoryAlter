@@ -496,7 +496,7 @@
                                             {{ fraglikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ fraglikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">对你的片段：<br/>"{{ fraglikem.content }}" 点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">对你的片段：<br/><span style="color: gray">{{ fraglikem.content }}</span><br/>点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -509,7 +509,7 @@
                                             {{ commentlikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ commentlikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">对你的评论：<br/>"{{ commentlikem.content }}" 点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">对你的评论：<br/><span style="color: gray">{{ commentlikem.content }}</span><br/>点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
