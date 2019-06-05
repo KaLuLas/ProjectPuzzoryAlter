@@ -316,9 +316,7 @@
                         </div>
                         <div class="row d-flex">
                             <div class="col-10">
-                                <p class="mb-1 ffcontent" style="white-space: pre-line">
-                                    {{ story.ffcontent }}
-                                </p>
+                                <p class="mb-1 ffcontent" style="white-space: pre">{{ story.ffcontent }}</p>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end mb-2 pr-2">
@@ -498,7 +496,7 @@
                                             {{ fraglikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ fraglikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">在你的片段："{{ fraglikem.content }}"中点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">在你的片段："{{ fraglikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -511,7 +509,7 @@
                                             {{ commentlikem.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ commentlikem.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">在你的评论："{{ commentlikem.content }}"中点了赞</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">在你的评论："{{ commentlikem.content }}"中点了赞</p>
                                     </a>
                                     {% endfor %}
                                     {% endif %}
@@ -536,8 +534,7 @@
                                             {{ addfragm.fromnickname }}</h5>
                                             <small style="margin-left: 10px">{{ addfragm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">{{ addfragm.content }}
-                                        </p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">{{ addfragm.content }}</p>
                                     </a>
                                     {% endfor %}
                                     {% else %}
@@ -563,8 +560,7 @@
                                                 {{ storycommentm.fromnickname }}</h5>
                                             <small style="margin-left: 10px" id="commentIdx">{{ storycommentm.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-line">{{ storycommentm.content }}
-                                        </p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre">{{ storycommentm.content }}</p>
                                     </a>
                                     {% endfor %}
                                     {% else %}
