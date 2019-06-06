@@ -620,7 +620,7 @@
                                 {{ comment.nickname }}</h5>
                             <small style="margin-left: 10px" id="commentIdx">No.{{ forloop.revcounter }}</small>
                         </div>
-                        <p class="mb-1">{{ comment.content }}</p>
+                        <p class="mb-1" style="white-space: pre">{{ comment.content }}</p>
                         <p class="mb-1">
                             <small style="padding-right: 10px">{{ comment.createtime }}</small>
                             <i id="{{ comment.id }}_commentlikescount" class="far fa-thumbs-up commentlikescount" aria-hidden="true" style="padding-right: 5px"> {{ comment.likescount }}</i>
