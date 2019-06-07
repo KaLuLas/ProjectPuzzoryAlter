@@ -116,10 +116,27 @@ def upload_story_page(request):
 
 
 def deletefrag(request, frag_id, story_id, page):
-    Fragment.objects.get(id=frag_id).delete()
+    # Fragment.objects.get(id=frag_id).delete()
+    frag_record = Fragment.objects.get(id=frag_id)
+    
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
+    announce = Announcement(optype='deletefrag', targetid=frag_id,
+                                    fromuser=request.user.email,
+                                    fromnickname=request.user.userextension.nickname,
+                                    touser=frag_record.email, tonickname=frag_record.nickname,
+                                    content=story_record.title)
+    
+    announce.save()
+    announce = Announcement(optype='deletefrag', targetid=frag_id,
+                                    fromuser=request.user.email,
+                                    fromnickname=request.user.userextension.nickname,
+                                    touser=story_record.email, tonickname=story_record.nickname,
+                                    content=story_record.title)
+    announce.save()
+
+    frag_record.delete()
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, 7)
