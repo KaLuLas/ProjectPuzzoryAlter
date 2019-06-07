@@ -122,18 +122,20 @@ def deletefrag(request, frag_id, story_id, page):
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
+    announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
     announce = Announcement(optype='deletefrag', targetid=frag_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=frag_record.email, tonickname=frag_record.nickname,
-                                    content=story_record.title)
+                                    content=announce_content)
     
     announce.save()
+    announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
     announce = Announcement(optype='deletefrag', targetid=frag_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=story_record.email, tonickname=story_record.nickname,
-                                    content=story_record.title)
+                                    content=announce_content)
     announce.save()
 
     frag_record.delete()
@@ -282,6 +284,9 @@ def system_message(request):
     
     index_dict['addfragm_list'] = Announcement.objects.filter(
         optype='addfrag', touser=request.user.email).order_by('-createtime')
+
+    index_dict['deletefragm_list'] = Announcement.objects.filter(
+        optype='deletefrag', touser=request.user.email).order_by('-createtime')
     
     index_dict['storycommentm_list'] = Announcement.objects.filter(
         optype='storycomment', touser=request.user.email).order_by('-createtime')
