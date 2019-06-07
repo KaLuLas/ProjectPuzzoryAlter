@@ -159,6 +159,8 @@ def upload_frag(request, story_id):
             return HttpResponseRedirect("/story/" + append)
 
         frag_text = request.POST['fcontent']
+        last_frag = Fragment.objects.filter(storyid=story_id).order_by('createtime')[0]
+        
         frag_record = Fragment(
             content=frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=story_id)
@@ -175,13 +177,22 @@ def upload_frag(request, story_id):
         current_user.experience += 2
         current_user.save()
 
-        frag_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
+        fragm_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
         # 修改通知表
         announcement = Announcement(optype='addfrag', targetid=story_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=story_record.email, tonickname=story_record.nickname,
-                                    content=frag_text)
+                                    content=fragm_text)
+        announcement.save()
+
+        
+        fragm_text = '在你的片段：\n“' + last_frag.content + '” 下接续：\n' + frag_text
+        announcement = Announcement(optype='addfrag', targetid=last_frag.id,
+                                    fromuser=request.user.email,
+                                    fromnickname=request.user.userextension.nickname,
+                                    touser=last_frag.email, tonickname=last_frag.nickname,
+                                    content=fragm_text)
         announcement.save()
 
     frag_full_list = Fragment.objects.filter(
