@@ -159,8 +159,8 @@ def upload_frag(request, story_id):
             return HttpResponseRedirect("/story/" + append)
 
         frag_text = request.POST['fcontent']
-        last_frag = Fragment.objects.filter(storyid=story_id).order_by('createtime')[0]
-        
+        last_frag = Fragment.objects.filter(storyid=story_id).order_by('-createtime')[0]
+
         frag_record = Fragment(
             content=frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=story_id)
