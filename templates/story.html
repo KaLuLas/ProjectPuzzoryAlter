@@ -301,11 +301,12 @@
             
         });
 
-        function fillFragComment(frag_id){
+        function fillFragComment(frag_id, obj){
             var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
-            if($(this).hasClass('closed')){
-                $(this).addClass('opened');
-                $(this).removeClass('closed');
+            if($(obj).hasClass('closed')){
+		// alert("open");
+                $(obj).addClass('opened');
+                $(obj).removeClass('closed');
                 $.ajax({
                     url: "{% url 'show_frag_comment' %}",
                     data: {
@@ -333,9 +334,10 @@
                     }
                 });
             }
-            else if($(this).hasClass('opened')){
-                $(this).addClass('closed');
-                $(this).removeClass('opened');
+            else if($(obj).hasClass('opened')){
+		// alert("close");
+                $(obj).addClass('closed');
+                $(obj).removeClass('opened');
                 comment_list.empty();
             }
         }
@@ -559,7 +561,7 @@
                                         {{ frag.likescount }}</i>
                                     
                                     <i class="far fa-comment closed" style="font-size: 12px" data-toggle="collapse"
-                                    href="#frag_comment_{{ frag.id }}" onclick="fillFragComment('{{ frag.id }}')"> {{ frag.commentscount }}</i>
+                                    href="#frag_comment_{{ frag.id }}" onclick="fillFragComment('{{ frag.id }}', this)"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
                         </div>
