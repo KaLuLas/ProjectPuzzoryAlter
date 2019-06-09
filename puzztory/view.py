@@ -43,9 +43,15 @@ def storypage(request, story_id):
         storyid=story_id).order_by('createtime')
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
-    paginator = Paginator(frag_full_list, 7)
+    paginator = Paginator(frag_full_list, 1)
     comment_paginator = Paginator(comment_full_list, 20)
     page = request.GET.get('page', 1)
+    # 分页栏省略显示的一个尝试
+    frag_page_bound = {
+        'left': page - 1,
+        'right': page + 1
+    }
+    
     comment_page = request.GET.get('comment_page', -1)
     # 区分是用户切换了评论页还是初次进入故事页
     # 如果是切换评论也需要滚动
@@ -102,6 +108,7 @@ def storypage(request, story_id):
     story_dict = {
         'story': Story.objects.get(id=story_id),
         'paginator': paginator,
+        'frag_page_bound': frag_page_bound,
         'comment_paginator': comment_paginator,
         'page_obj': page_obj,
         'comment_page_obj': comment_page_obj,

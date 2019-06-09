@@ -587,9 +587,13 @@
                     {% endif %}
 
                     {% for i in paginator.page_range %}
-                    {% if page_obj.number == i %}
+                    {% if i == frag_page_bound.left %}
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                    {% elif i == frag_page_bound.right %}
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                    {% elif page_obj.number == i %}
                     <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                    {% else %}
+                    {% elif i > frag_page_bound.left and i < frag_page_bound.right %}
                     <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
                     {% endif %}
                     {% endfor %}
