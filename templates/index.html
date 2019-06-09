@@ -563,17 +563,17 @@
                             <div class="tab-pane fade" id="commentmessage" role="tabpanel"
                                 aria-labelledby="commentmessage-tab">
                                 <div class="list-group">
-                                    {% if storycommentm_list %}
-                                    {% for storycommentm in storycommentm_list %}
+                                    {% if comment_notifications %}
+                                    {% for comment_noti in comment_notifications %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start"
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
-                                                {{ storycommentm.fromnickname }}</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">{{ storycommentm.createtime }}</small>
+                                                {{ comment_noti.fromnickname }}</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">{{ comment_noti.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ storycommentm.content }}</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ comment_noti.content }}</p>
                                     </a>
                                     {% endfor %}
                                     {% else %}
