@@ -283,7 +283,9 @@
                     success: function(data){
                         console.log('success!');
                         alert(data['comments']);
+                        console.log(data['comments'].lenght)
                         for (var json of data['comments']) {
+                            console.log(json);
                             var comment = $.parseJSON(json);
                             console.log(comment['nickname']);
                             console.log(comment['content']);

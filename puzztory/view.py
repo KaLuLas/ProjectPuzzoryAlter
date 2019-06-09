@@ -31,7 +31,7 @@ comment_content_display_limit = 20
 
 class CJsonEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, datetime.datetime):
+        if isinstance(obj, datetime):
             return obj.strftime('%Y-%m-%d %H:%M:%S')
         elif isinstance(obj, date):
             return obj.strftime("%Y-%m-%d")
