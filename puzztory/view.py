@@ -58,6 +58,7 @@ def storypage(request, story_id):
 
     page_obj = paginator.page(page)
     comment_page_obj = comment_paginator.page(comment_page)
+    comment_start_index = comment_paginator.count - comment_page_obj.number*20
     # 获得片段的点赞情况
     frag_like_list = []
     for frag in page_obj.object_list:
@@ -106,7 +107,7 @@ def storypage(request, story_id):
         'comment_page_obj': comment_page_obj,
         'is_paginated': is_paginated,
         'comment_is_paginated': comment_is_paginated,
-        'comment_start_index': comment_page_obj.start_index(),
+        'comment_start_index': comment_start_index,
         'scroll_to_type_id': scroll_to_type_id,
         'finished_message': bool(finished_message),
         'frag_like_list': frag_like_list,
