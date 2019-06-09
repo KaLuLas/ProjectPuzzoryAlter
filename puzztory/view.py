@@ -17,9 +17,9 @@ index_dict = {
 # time allocated for user to add fragment: seconds
 edit_time = 300
 # 分页栏可视范围为(当前页-range，当前页+range)之外省略号...
-paginator_view_range = 2
-story_each_page = 2
-frag_each_page = 2
+paginator_view_range = 3
+story_each_page = 10
+frag_each_page = 7
 comment_each_page = 2
 
 
