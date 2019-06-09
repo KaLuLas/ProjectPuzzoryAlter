@@ -299,45 +299,46 @@
                 });
             });
             
-            function fillFragComment(frag_id) {
-                var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
-                if($(this).hasClass('closed')){
-                    $(this).addClass('opened');
-                    $(this).removeClass('closed');
-                    $.ajax({
-                        url: "{% url 'show_frag_comment' %}",
-                        data: {
-                            'frag_id': frag_id,
-                            csrfmiddlewaretoken: '{{ csrf_token }}'
-                        },
-                        type: "POST",
-                        dataType: "JSON",
-                        async: false,
-                        success: function(data){
-			                var jsonObj =  $.parseJSON(data['comments']);
-                            console.log('success!');
-                            console.log(data['comments']);
-			                for(var i = 0;i < jsonObj.length;i++){
-                                $frag_comment = 
-                                '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                    <p>\
-                                        <em>' + jsonObj[i].nickname + '</em>\
-                                        <small style="margin-left: 10px; color:#E8A676">' + jsonObj[i].content + '</small>\
-                                    </p>\
-                                    <small>' + jsonObj[i].createtime + '</small>\
-                                </li>';
-                                comment_list.append($frag_comment);
-			                }
-                        }
-                    });
-                }
-                else if($(this).hasClass('opened')){
-                    $(this).addClass('closed');
-                    $(this).removeClass('opened');
-                    comment_list.empty();
-                }
-            };
         });
+
+        function fillFragComment(frag_id){
+            var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
+            if($(this).hasClass('closed')){
+                $(this).addClass('opened');
+                $(this).removeClass('closed');
+                $.ajax({
+                    url: "{% url 'show_frag_comment' %}",
+                    data: {
+                        'frag_id': frag_id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    async: false,
+                    success: function(data){
+			            var jsonObj =  $.parseJSON(data['comments']);
+                        console.log('success!');
+                        console.log(data['comments']);
+			            for(var i = 0;i < jsonObj.length;i++){
+                            $frag_comment = 
+                            '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
+                                <p>\
+                                    <em>' + jsonObj[i].nickname + '</em>\
+                                    <small style="margin-left: 10px; color:#E8A676">' + jsonObj[i].content + '</small>\
+                                </p>\
+                                <small>' + jsonObj[i].createtime + '</small>\
+                            </li>';
+                            comment_list.append($frag_comment);
+			            }
+                    }
+                });
+            }
+            else if($(this).hasClass('opened')){
+                $(this).addClass('closed');
+                $(this).removeClass('opened');
+                comment_list.empty();
+            }
+        }
     </script>
 </head>
 
