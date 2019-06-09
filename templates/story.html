@@ -281,17 +281,13 @@
                     type: "POST",
                     dataType: "JSON",
                     success: function(data){
-                        packJson = data['comments'];
+                        jsonStr = data['comments'];
+			var jsonObj =  $.parseJSON(jsonStr);
                         console.log('success!');
-                        alert(data['comments']);
-                        console.log(data['comments'].length)
-                        for (var idx in packJson) {
-                            console.log(packJson[idx]);
-                            var comment = $.parseJSON(packJson[idx]);
-                            console.log(comment['nickname']);
-                            console.log(comment['content']);
-                        }
-                        
+                        console.log(data['comments']);
+			for(var i=0;i<jsonObj.length;i++){
+			    console.log(jsonObj[i].nickname);  //取json中的值
+			}
                     }
                 });
             });
