@@ -300,7 +300,7 @@ def submit_comment(request, story_id, page):
 
 def submit_frag_comment(request):
     ret_dict = {}
-    ret_dict['comments'] = ''
+    ret_dict['comment'] = ''
     if request.method == 'POST':
         frag_id = request.POST['frag_id']
         content = request.POST['content']
@@ -330,9 +330,23 @@ def submit_frag_comment(request):
         # comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
         # comments = list(comments)
         # comments = json.dumps(comments, cls=CJsonEncoder)
+
+        # 现在只发送一个片段（即刚发送的片段）
         comment = Comment.objects.filter(id=comment.id).values('nickname', 'content', 'createtime')
         comment = json.dumps(list(comment), cls=CJsonEncoder)
         ret_dict['comment'] = comment
+    return JsonResponse(data=ret_dict)
+
+
+# 点击按钮时把点击片段对应的所有评论发给前端
+def show_frag_comment(request):
+    ret_dict = {}
+    ret_dict['comments'] = ''
+    if request.method == 'POST':
+        frag_id = request.POST['frag_id']
+        comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
+        comments = json.dumps(list(comments), cls=CJsonEncoder)
+        ret_dict['comments'] = comments
     return JsonResponse(data=ret_dict)
 
 
