@@ -493,46 +493,7 @@
                                             {% endif %}
                                         </a>
                                         {% endfor %}
-                                    <!-- {% if storylikem_list %}
-                                    {% for storylikem in storylikem_list %}
-                                    <a style="margin-top: 10px"
-                                        class="list-group-item list-group-item-action flex-column align-items-start">
-                                        <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <h5 class="mb-1"> <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
-                                            {{ storylikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px">{{ storylikem.createtime }}</small>
-                                        </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ storylikem.content }}』中点了赞</p>
-                                    </a>
-                                    {% endfor %}
-                                    {% endif %}
-                                    {% if fraglikem_list %}
-                                    {% for fraglikem in fraglikem_list %}
-                                    <a style="margin-top: 10px"
-                                        class="list-group-item list-group-item-action flex-column align-items-start">
-                                        <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <h5 class="mb-1"> <i style="color:palevioletred" class="fab fa-gratipay" aria-hidden="true"></i>
-                                            {{ fraglikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px">{{ fraglikem.createtime }}</small>
-                                        </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的片段：<br/>"{{ fraglikem.content }}"<br/>点了赞</p>
-                                    </a>
-                                    {% endfor %}
-                                    {% endif %}
-                                    {% if commentlikem_list %}
-                                    {% for commentlikem in commentlikem_list %}
-                                    <a style="margin-top: 10px"
-                                        class="list-group-item list-group-item-action flex-column align-items-start">
-                                        <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <h5 class="mb-1"> <i style="color:rgb(184, 74, 111)" class="fab fa-gratipay" aria-hidden="true"></i>
-                                            {{ commentlikem.fromnickname }}</h5>
-                                            <small style="margin-left: 10px">{{ commentlikem.createtime }}</small>
-                                        </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的评论：<br/>"{{ commentlikem.content }}"<br/>点了赞</p>
-                                    </a>
-                                    {% endfor %}
-                                    {% endif %} -->
-                                    <!-- {% if not commentlikem_list and not fraglikem_list and not storylikem_list %} -->
+                                    <!-- 好像注释掉也会被django识别不好意思我先删掉了 -->
                                     {% else %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
