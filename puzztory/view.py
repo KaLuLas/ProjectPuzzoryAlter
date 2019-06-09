@@ -330,7 +330,7 @@ def submit_frag_comment(request):
         # comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
         # comments = list(comments)
         # comments = json.dumps(comments, cls=CJsonEncoder)
-        comment = comment.values('nickname', 'content', 'createtime')
+        comment = Comment.objects.filter(id=comment.id).values('nickname', 'content', 'createtime')
         comment = json.dumps(list(comment), cls=CJsonEncoder)
         ret_dict['comment'] = comment
     return JsonResponse(data=ret_dict)
