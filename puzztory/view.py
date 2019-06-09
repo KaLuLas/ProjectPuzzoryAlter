@@ -16,6 +16,7 @@ index_dict = {
 
 # time allocated for user to add fragment: seconds
 edit_time = 300
+paginator_view_range = 2
 
 
 def homepage(request):
@@ -47,9 +48,10 @@ def storypage(request, story_id):
     comment_paginator = Paginator(comment_full_list, 20)
     page = request.GET.get('page', 1)
     # 分页栏省略显示的一个尝试
+    
     frag_page_bound = {
-        'left': page - 1,
-        'right': page + 1
+        'left': int(page) - paginator_view_range,
+        'right': int(page) + paginator_view_range
     }
     
     comment_page = request.GET.get('comment_page', -1)
