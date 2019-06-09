@@ -22,6 +22,9 @@ story_each_page = 10
 frag_each_page = 7
 comment_each_page = 2
 
+frag_content_display_limit = 40
+comment_content_display_limit = 20
+
 
 def homepage(request):
     index_dict['display'] = 'homepage'
@@ -253,8 +256,8 @@ def submit_comment(request, story_id, page):
             tonickname = reply_comment.nickname
             reply_comment_content = reply_comment.content
             # 原评论长度过长，缩略显示
-            if len(reply_comment_content) > 20:
-                reply_comment_content = reply_comment_content[:20] + '...'
+            if len(reply_comment_content) > comment_content_display_limit:
+                reply_comment_content = reply_comment_content[:comment_content_display_limit] + '...'
             # 在通知栏里就不显示“>>***”那部分了
             comment_content = comment_content[str(comment_content).find(' ')+1:]
             content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
@@ -288,18 +291,26 @@ def submit_frag_comment(request):
         frag_id = request.POST['frag_id']
         content = request.POST['content']
         frag = Fragment.objects.get(id=frag_id)
+        # 添加到评论表中
         comment = Comment(
             nickname=request.user.userextension.nickname, email=request.user.email,
             sof=False, fragid=frag_id, content=content
         )
         # commment.save()
-        notification_content = ''
+        # 通知栏中不显示过长的内容
+        if len(frag.content) > frag_content_display_limit:
+            frag_content = frag.content[:frag_content_display_limit] + '...'
+        else:
+            frag_content = frag.content
+        notification_content = '在你的片段：\n“' + frag_content + '”下评论：\n' + content
+        # 添加到通知表中
         announcement = Announcement(
             optype='fragcomment', targetid=frag_id, fromuser=request.user.email,
             fromnickname=request.user.userextension.nickname, touser=frag.email,
             tousernickname=frag.nickname, content=notification_content
         )
         # announcement.save()
+        # 把这个片段下的内容更新（其实发布片段评论的时候可以不用发送所有的，在点击按钮的时候更新才对）
         comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime')
         ret_dict['comments'] = comments
         return JsonResponse(data=ret_dict)
