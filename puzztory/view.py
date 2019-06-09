@@ -325,7 +325,7 @@ def submit_frag_comment(request):
             fromnickname=request.user.userextension.nickname, touser=frag.email,
             tonickname=frag.nickname, content=notification_content
         )
-        # announcement.save()
+        announcement.save()
         # 把这个片段下的内容更新（其实发布片段评论的时候可以不用发送所有的，在点击按钮的时候更新才对）
         # comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
         # comments = list(comments)
