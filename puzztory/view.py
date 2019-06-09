@@ -49,7 +49,12 @@ def storypage(request, story_id):
     paginator = Paginator(frag_full_list, 7)
     comment_paginator = Paginator(comment_full_list, 20)
     page = request.GET.get('page', 1)
-    comment_page = request.GET.get('comment_page', 1)
+    comment_page = request.GET.get('comment_page', -1)
+    if comment_page == -1:
+        comment_page = 1
+        jump_page = False
+    else:
+        jump_page = True
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
@@ -93,6 +98,8 @@ def storypage(request, story_id):
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
+    if jump_page:
+        scroll_to_type_id = 'commentForm'
 
     # scroll_to_type_id == -1 代表不需要片段滚动
     # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号

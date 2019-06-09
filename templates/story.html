@@ -69,7 +69,7 @@
             // scroll_to_frag_id == -1 代表不需要片段滚动
             // 否则scroll_to_frag_id代表滚动到的片段id号
             {% if scroll_to_type_id != -1 %}
-            $('html, body').scrollTop($("#{{ scroll_to_type_id }}").offset().top - 100);
+            $('html, body').scrollTop($("#{{ scroll_to_type_id }}").offset().top - 200);
             // $('html, body').animate({
             //         scrollTop: $("#{{ scroll_to_type_id }}").offset().top - 100
             //     }, 500);
@@ -636,7 +636,7 @@
                         <div class="d-flex w-100 align-items-center justify-content-between">
                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 {{ comment.nickname }}</h5>
-                            <small style="margin-left: 10px" id="commentIdx">No.{{ forloop.revcounter }}</small>
+                            <small style="margin-left: 10px" id="commentIdx">No.{{ comment_page_obj.start_index() + forloop.revcounter }}</small>
                         </div>
                         <p class="mb-1" style="white-space: pre-wrap">{{ comment.content }}</p>
                         <p class="mb-1">
