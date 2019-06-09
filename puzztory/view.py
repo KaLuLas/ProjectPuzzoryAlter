@@ -236,8 +236,10 @@ def submit_comment(request, story_id, page):
             tonickname = reply_comment.nickname
             reply_comment_content = reply_comment.content
             # 原评论长度过长，缩略显示
-            if len(reply_comment_content) > 10:
+            if len(reply_comment_content) > 20:
                 reply_comment_content = reply_comment_content[:10] + '...'
+            # 在通知栏里就不显示“>>***”那部分了
+            comment_content = comment_content[str(comment_content).find(' ')+1:]
             content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
             announcement = Announcement(optype='cocomment', targetid=comment_reply_id,
                                         fromuser=request.user.email,
@@ -303,15 +305,19 @@ def system_message(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     
-    index_dict['storylikem_list'] = Announcement.objects.filter(
-        optype='storylike', touser=request.user.email).order_by('-createtime')
+    # index_dict['storylikem_list'] = Announcement.objects.filter(
+    #     optype='storylike', touser=request.user.email).order_by('-createtime')
     
-    index_dict['fraglikem_list'] = Announcement.objects.filter(
-        optype='fraglike', touser=request.user.email).order_by('-createtime')
+    # index_dict['fraglikem_list'] = Announcement.objects.filter(
+    #     optype='fraglike', touser=request.user.email).order_by('-createtime')
     
-    index_dict['commentlikem_list'] = Announcement.objects.filter(
-        optype='commentlike', touser=request.user.email).order_by('-createtime')
+    # index_dict['commentlikem_list'] = Announcement.objects.filter(
+    #     optype='commentlike', touser=request.user.email).order_by('-createtime')
     
+    index_dict['like_notifications'] = Announcement.objects.filter(
+        optype__endswith='like', touser=request.user.email
+    ).order_by('-createtime')
+
     index_dict['addfragm_list'] = Announcement.objects.filter(
         optype='addfrag', touser=request.user.email).order_by('-createtime')
 
