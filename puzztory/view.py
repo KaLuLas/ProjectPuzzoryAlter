@@ -221,21 +221,41 @@ def submit_comment(request, story_id, page):
     if request.method == 'POST':
         comment_content = request.POST['content']
         # story_id = request.POST['story_id']
+        # 被回复评论的ID
+        comment_reply_id = request.POST['replyToCommentID']
+        if comment_reply_id:
+            comment_reply_id = comment_reply_id[str(comment_reply_id).find('_')+1:]
         comment = Comment(nickname=request.user.userextension.nickname,
                           email=request.user.email, sof=True, storyid=story_id,
                           content=comment_content)
         comment.save()
         story = Story.objects.get(id=story_id)
-        touser = story.email
-        tonickname = story.nickname
-        title = story.title
-        content = '在你的故事『' + title + '』中评论：\n' + comment_content
-        announcement = Announcement(optype='storycomment', targetid=story_id,
-                                    fromuser=request.user.email,
-                                    fromnickname=request.user.userextension.nickname,
-                                    touser=touser, tonickname=tonickname,
-                                    content=content)
-        announcement.save()
+        if str(comment_content).startswith('>>No.') and comment_reply_id:
+            reply_comment = Comment.objects.get(id=comment_reply_id)
+            touser = reply_comment.email
+            tonickname = reply_comment.nickname
+            reply_comment_content = reply_comment.content
+            # 原评论长度过长，缩略显示
+            if len(reply_comment_content) > 10:
+                reply_comment_content = reply_comment_content[:10] + '...'
+            content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
+            announcement = Announcement(optype='cocomment', targetdi=comment_reply_id,
+                                        fromuser=request.user.email,
+                                        fromnickname=request.user.userextension.nickname,
+                                        touser=touser, tonickname=tonickname,
+                                        content=content)
+            announcement.save()                                            
+        else:
+            touser = story.email
+            tonickname = story.nickname
+            title = story.title
+            content = '在你的故事『' + title + '』中评论：\n' + comment_content
+            announcement = Announcement(optype='storycomment', targetid=story_id,
+                                        fromuser=request.user.email,
+                                        fromnickname=request.user.userextension.nickname,
+                                        touser=touser, tonickname=tonickname,
+                                        content=content)
+            announcement.save()
         story.commentscount += 1
         story.save()
         append = str(story_id) + "?page=" + str(page) + \
