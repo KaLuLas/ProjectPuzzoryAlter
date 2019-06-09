@@ -45,6 +45,17 @@
             margin-bottom: 10px;
         }
 
+        .frag_comment_list .list-group-item{
+            margin-bottom: 10px;
+            background-color:#FFF0DB;
+            color: #B38952;
+            border-radius: 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 0px;
+            height: 30px;
+        }
+
         .shadow {
             box-shadow: inset -3px -3px 2px #050533;
             height: 39px;
@@ -255,6 +266,14 @@
                 // window.location.reload();
                 window.location.replace('{% url 'story_page' story.id %}');
             });
+            
+            $('.commentSubmitBtn').on('click', function(){
+                var form = $(this).parent().parent();
+                var content = $(form).find('.content').attr('value');
+                var frag_id = $(form).find('.frag_id').attr('value');
+                alert(String(content) + String(frag_id));
+            });
+            
         });
     </script>
 </head>
@@ -475,11 +494,37 @@
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     
-                                    <i class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
+                                    <i class="far fa-comment" style="font-size: 12px" data-toggle="collapse"
+                                    href="#frag_comment_{{ frag.id }}"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
-
-
+                        </div>
+                        <div class="row justify-content-center"
+                            style="background-color:rgb(255, 207, 144); margin: 0px; padding-top: 15px">
+                            <div class="col-sm-10">
+                                <div class="collapse" id="frag_comment_{{ frag.id }}">
+                                    <form class="fragCommentForm">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <input type="text" class="form-control content"
+                                                placeholder="在此输入你的评论...（小于150字，不支持换行）">
+                                            <input type="hidden" class="frag_id" value="{{ frag.id }}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-light commentSubmitBtn" type="button">
+                                                    <i class="fa fa-plane" aria-hidden="true">发送</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <ul class="list-group frag_comment_list">
+                                        <!-- <li class="d-flex list-group-item justify-content-between">
+                                            <p>
+                                                <em>edwardchen</em>
+                                                <small style="margin-left: 10px; color:#E8A676">content</small>
+                                            </p>
+                                            <small>createtime</small>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -571,6 +616,7 @@
                 </div>
             </div>
         </div>
+        <!-- 片段分页栏 -->
         {% if is_paginated %}
         <div class="row justify-content-center" style="padding-bottom:30px;">
             <nav aria-label="Page navigation example">
