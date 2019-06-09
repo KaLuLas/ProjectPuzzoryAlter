@@ -47,10 +47,13 @@ def storypage(request, story_id):
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
     paginator = Paginator(frag_full_list, 7)
+    comment_paginator = Paginator(comment_full_list, 20)
     page = request.GET.get('page', 1)
+    comment_page = request.GET.get('comment_page', 1)
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
+    comment_page_obj = paginator.page(comment_page)
     # 获得片段的点赞情况
     frag_like_list = []
     for frag in page_obj.object_list:
@@ -73,7 +76,7 @@ def storypage(request, story_id):
 
     # 获得评论的点赞情况
     comment_like_list = []
-    for comment in comment_full_list:
+    for comment in comment_page_obj.object_list:
         try:
             Announcement.objects.get(
                 optype='commentlike', targetid=comment.id, fromuser=request.user.email)
@@ -82,11 +85,13 @@ def storypage(request, story_id):
         except Announcement.DoesNotExist:
             pass
 
-    if(paginator.num_pages > 1):
-        is_paginated = True
-    else:
-        is_paginated = False
+    # if(paginator.num_pages > 1):
+    #     is_paginated = True
+    # else:
+    #     is_paginated = False
 
+    is_paginated = paginator.num_pages > 1
+    comment_is_paginated = comment_paginator.num_pages > 1
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
 
     # scroll_to_type_id == -1 代表不需要片段滚动
@@ -95,9 +100,11 @@ def storypage(request, story_id):
     story_dict = {
         'story': Story.objects.get(id=story_id),
         'paginator': paginator,
+        'comment_paginator': comment_paginator,
         'page_obj': page_obj,
-        'comment_full_list': comment_full_list,
+        'comment_full_list': comment_page_obj,
         'is_paginated': is_paginated,
+        'comment_is_paginated': comment_is_paginated,
         'scroll_to_type_id': scroll_to_type_id,
         'finished_message': bool(finished_message),
         'frag_like_list': frag_like_list,
