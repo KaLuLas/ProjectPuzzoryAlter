@@ -294,7 +294,7 @@
                                 </p>\
                                 <small>' + jsonObj[i].createtime + '</small>\
                             </li>';
-                            $('#frag_comment_' + frag_id + ' .frag_comment_list').before($frag_comment);
+                            $('#frag_comment_' + frag_id + ' .frag_comment_list').prepend($frag_comment);
 			            }
                     }
                 });
