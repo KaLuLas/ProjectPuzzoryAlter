@@ -26,10 +26,7 @@ def homepage(request):
     # for Pagination
     story_full_list = Story.objects.order_by('-updatetime')
     paginator = Paginator(story_full_list, 10)
-    # if request.method == 'GET':
     page = request.GET.get('page', 1)
-    # if page == None:
-    #     page = 1
     page_obj = paginator.get_page(page)
     index_dict['paginator'] = paginator
     index_dict['page_obj'] = page_obj
@@ -50,6 +47,8 @@ def storypage(request, story_id):
     comment_paginator = Paginator(comment_full_list, 20)
     page = request.GET.get('page', 1)
     comment_page = request.GET.get('comment_page', -1)
+    # 区分是用户切换了评论页还是初次进入故事页
+    # 如果是切换评论也需要滚动
     if comment_page == -1:
         comment_page = 1
         jump_page = False
@@ -90,11 +89,6 @@ def storypage(request, story_id):
         except Announcement.DoesNotExist:
             pass
 
-    # if(paginator.num_pages > 1):
-    #     is_paginated = True
-    # else:
-    #     is_paginated = False
-
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
@@ -112,6 +106,7 @@ def storypage(request, story_id):
         'comment_page_obj': comment_page_obj,
         'is_paginated': is_paginated,
         'comment_is_paginated': comment_is_paginated,
+        'comment_start_index': comment_page_obj.start_index(),
         'scroll_to_type_id': scroll_to_type_id,
         'finished_message': bool(finished_message),
         'frag_like_list': frag_like_list,

@@ -636,7 +636,7 @@
                         <div class="d-flex w-100 align-items-center justify-content-between">
                             <h5 class="mb-1"> <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 {{ comment.nickname }}</h5>
-                            <small style="margin-left: 10px" id="commentIdx">No.{{ comment_page_obj.start_index() + forloop.revcounter }}</small>
+                            <small style="margin-left: 10px" id="commentIdx">No.{{ comment_start_index + forloop.revcounter }}</small>
                         </div>
                         <p class="mb-1" style="white-space: pre-wrap">{{ comment.content }}</p>
                         <p class="mb-1">
