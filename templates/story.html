@@ -69,9 +69,10 @@
             // scroll_to_frag_id == -1 代表不需要片段滚动
             // 否则scroll_to_frag_id代表滚动到的片段id号
             {% if scroll_to_type_id != -1 %}
-            $('html, body').animate({
-                    scrollTop: $("#{{ scroll_to_type_id }}").offset().top - 100
-                }, 500);
+            $('html, body').scrollTop($("#{{ scroll_to_type_id }}").offset().top - 100);
+            // $('html, body').animate({
+            //         scrollTop: $("#{{ scroll_to_type_id }}").offset().top - 100
+            //     }, 500);
             {% endif %}
                 
             // 尝试django生成点赞图标置换代码
