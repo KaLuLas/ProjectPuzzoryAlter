@@ -281,13 +281,21 @@
                     type: "POST",
                     dataType: "JSON",
                     success: function(data){
-                        jsonStr = data['comments'];
-			var jsonObj =  $.parseJSON(jsonStr);
+			            var jsonObj =  $.parseJSON(data['comments']);
                         console.log('success!');
                         console.log(data['comments']);
-			for(var i=0;i<jsonObj.length;i++){
-			    console.log(jsonObj[i].nickname);  //取json中的值
-			}
+			            for(var i = 0;i < jsonObj.length;i++){
+			                console.log(jsonObj[i].nickname);  //取json中的值
+                            $frag_comment = 
+                            '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
+                                <p>\
+                                    <em>' + jsonObj[i].nickname + '</em>\
+                                    <small style="margin-left: 10px; color:#E8A676">' + jsonObj[i].content + '</small>\
+                                </p>\
+                                <small>' + jsonObj[i].createime + '</small>\
+                            </li>';
+                            $('#frag_comment_' + frag_id + ' .frag_comment_list').add($frag_comment);
+			            }
                     }
                 });
             });
