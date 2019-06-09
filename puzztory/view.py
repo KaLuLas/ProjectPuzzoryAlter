@@ -327,7 +327,7 @@ def system_message(request):
     # 选择所有以comment结尾的，之后要注意optype的命名
     # 或者使用optype__in=[?, ?, ?]这样也可以
     index_dict['comment_notifications'] = Announcement.objects.filter(
-        opytpe__endswith='comment', touser=request.user.email
+        optype__endswith='comment', touser=request.user.email
     ).order_by('-createtime')
 
     return render(request, 'index.html', index_dict)
