@@ -427,9 +427,11 @@
                         {% endif %}
 
                         {% for i in paginator.page_range %}
-                            {% if page_obj.number == i %}
+                            {% if i == story_page_bound.left or i == story_page_bound.right %}
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                            {% elif page_obj.number == i %}
                             <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                            {% else %}
+                            {% elif i > story_page_bound.left and i < story_page_bound.right %}
                             <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
                             {% endif %}
                         {% endfor %}
