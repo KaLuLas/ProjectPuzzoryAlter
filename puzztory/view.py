@@ -2,6 +2,7 @@ from django.shortcuts import render
 from PuzzModel.models import Fragment, UserExtension, Story, Announcement, Comment
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.paginator import Paginator
 from django.utils import timezone
 import time
@@ -285,6 +286,7 @@ def submit_comment(request, story_id, page):
     return HttpResponseRedirect("/story/" + append)
 
 
+@ensure_csrf_cookie
 def submit_frag_comment(request):
     if request.method == 'POST':
         ret_dict = {}
