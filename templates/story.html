@@ -283,6 +283,12 @@
                     success: function(data){
                         console.log('success!');
                         alert(data['comments']);
+                        for (var json of data['comments']) {
+                            var comment = $.parseJSON(json);
+                            console.log(comment['nickname']);
+                            console.log(comment['content']);
+                        }
+                        
                     }
                 });
             });
