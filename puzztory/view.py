@@ -287,7 +287,7 @@ def submit_comment(request, story_id, page):
 
 def submit_frag_comment(request):
     ret_dict = {}
-    ret_dict['comments'] = []
+    ret_dict['comments'] = ''
     if request.method == 'POST':
         frag_id = request.POST['frag_id']
         content = request.POST['content']
@@ -310,7 +310,7 @@ def submit_frag_comment(request):
         announcement = Announcement(
             optype='fragcomment', targetid=frag_id, fromuser=request.user.email,
             fromnickname=request.user.userextension.nickname, touser=frag.email,
-            tousernickname=frag.nickname, content=notification_content
+            tonickname=frag.nickname, content=notification_content
         )
         # announcement.save()
         # 把这个片段下的内容更新（其实发布片段评论的时候可以不用发送所有的，在点击按钮的时候更新才对）
