@@ -296,7 +296,9 @@ def submit_frag_comment(request):
             nickname=request.user.userextension.nickname, email=request.user.email,
             sof=False, fragid=frag_id, content=content
         )
-        # commment.save()
+        comment.save()
+        frag.commentscount += 1
+        frag.save()
         # 通知栏中不显示过长的内容
         if len(frag.content) > frag_content_display_limit:
             frag_content = frag.content[:frag_content_display_limit] + '...'
