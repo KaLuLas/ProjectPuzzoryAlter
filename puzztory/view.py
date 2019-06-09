@@ -18,6 +18,9 @@ index_dict = {
 edit_time = 300
 # 分页栏可视范围为(当前页-range，当前页+range)之外省略号...
 paginator_view_range = 2
+story_each_page = 2
+frag_each_page = 2
+comment_each_page = 2
 
 
 def homepage(request):
@@ -27,7 +30,7 @@ def homepage(request):
 
     # for Pagination
     story_full_list = Story.objects.order_by('-updatetime')
-    paginator = Paginator(story_full_list, 10)
+    paginator = Paginator(story_full_list, story_each_page)
     page = request.GET.get('page', 1)
     story_page_bound = {
         'left': int(page) - paginator_view_range,
@@ -46,8 +49,8 @@ def storypage(request, story_id):
         storyid=story_id).order_by('createtime')
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
-    paginator = Paginator(frag_full_list, 10)
-    comment_paginator = Paginator(comment_full_list, 20)
+    paginator = Paginator(frag_full_list, frag_each_page)
+    comment_paginator = Paginator(comment_full_list, comment_each_page)
     page = request.GET.get('page', 1)
     # 分页栏省略显示的一个尝试
     frag_page_bound = {
@@ -70,7 +73,7 @@ def storypage(request, story_id):
 
     page_obj = paginator.page(page)
     comment_page_obj = comment_paginator.page(comment_page)
-    comment_start_index = comment_paginator.count - (comment_page_obj.number - 1) * 20
+    comment_start_index = comment_paginator.count - (comment_page_obj.number - 1) * comment_each_page
     # 获得片段的点赞情况
     frag_like_list = []
     for frag in page_obj.object_list:
@@ -165,7 +168,7 @@ def deletefrag(request, frag_id, story_id, page):
     frag_record.delete()
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
-    paginator = Paginator(frag_full_list, 7)
+    paginator = Paginator(frag_full_list, frag_each_page)
     if paginator.num_pages < page:
         page = paginator.num_pages
 
@@ -223,7 +226,7 @@ def upload_frag(request, story_id):
 
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
-    paginator = Paginator(frag_full_list, 7)
+    paginator = Paginator(frag_full_list, frag_each_page)
     # 置 last_frag_id 为当前页最后一个片段
     append = str(story_id) + "?page=" + str(paginator.num_pages) + \
         "&scroll_to_type_id=" + 'frag_' + str(frag_record.id)
@@ -251,7 +254,7 @@ def submit_comment(request, story_id, page):
             reply_comment_content = reply_comment.content
             # 原评论长度过长，缩略显示
             if len(reply_comment_content) > 20:
-                reply_comment_content = reply_comment_content[:10] + '...'
+                reply_comment_content = reply_comment_content[:20] + '...'
             # 在通知栏里就不显示“>>***”那部分了
             comment_content = comment_content[str(comment_content).find(' ')+1:]
             content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
