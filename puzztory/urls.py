@@ -31,6 +31,8 @@ urlpatterns = [
     path('story/adding/<int:story_id>', view.upload_frag, name="upload_frag"),
     path('story/comment/<int:story_id>/<int:page>',
          view.submit_comment, name="submit_comment"),
+    path('story/frag_comment', view.submit_frag_comment, 
+         name="submit_frag_comment"),
     path('story/<int:story_id>', view.storypage, name="story_page"),
     path('lock', view.lock, name="lock"),
     path('likescount', view.likescount, name="likescount"),

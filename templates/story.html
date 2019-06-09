@@ -269,9 +269,19 @@
             
             $('.commentSubmitBtn').on('click', function(){
                 var form = $(this).parent().parent();
-                var content = $(form).find('.content').attr('value');
-                var frag_id = $(form).find('.frag_id').attr('value');
-                alert(String(content) + String(frag_id));
+                var content = $(form).find('.content').val();
+                var frag_id = $(form).find('.frag_id').val();
+                $.ajax({
+                    url: "{% url 'submit_frag_comment' %}",
+                    data: {
+                        'frag_id': frag_id,
+                        'content': content
+                    },
+                    dataType: "JSON",
+                    success: function(data){
+                        alert(data);
+                    }
+                });
             });
             
         });

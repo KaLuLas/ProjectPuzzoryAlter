@@ -57,11 +57,7 @@ def storypage(request, story_id):
         'left': int(page) - paginator_view_range,
         'right': int(page) + paginator_view_range
     }
-    comment_page = request.GET.get('comment_page', -1)
-    comment_page_bound = {
-        'left': int(comment_page) - paginator_view_range,
-        'right': int(comment_page) + paginator_view_range
-    }
+    comment_page = request.GET.get('comment_page', -1) 
     # 区分是用户切换了评论页还是初次进入故事页
     # 如果是切换评论也需要滚动
     if comment_page == -1:
@@ -69,6 +65,10 @@ def storypage(request, story_id):
         jump_page = False
     else:
         jump_page = True
+    comment_page_bound = {
+        'left': int(comment_page) - paginator_view_range,
+        'right': int(comment_page) + paginator_view_range
+    }
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
@@ -280,6 +280,29 @@ def submit_comment(request, story_id, page):
         append = str(story_id) + "?page=" + str(page) + \
             "&scroll_to_type_id=" + 'comment_' + str(comment.id)
     return HttpResponseRedirect("/story/" + append)
+
+
+def submit_frag_comment(request):
+    if request.method == 'POST':
+        ret_dict = {}
+        frag_id = request.POST['frag_id']
+        content = request.POST['content']
+        frag = Fragment.objects.get(id=frag_id)
+        comment = Comment(
+            nickname=request.user.userextension.nickname, email=request.user.email,
+            sof=False, fragid=frag_id, content=content
+        )
+        # commment.save()
+        notification_content = ''
+        announcement = Announcement(
+            optype='fragcomment', targetid=frag_id, fromuser=request.user.email,
+            fromnickname=request.user.userextension.nickname, touser=frag.email,
+            tousernickname=frag.nickname, content=notification_content
+        )
+        # announcement.save()
+        comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime')
+        ret_dict['comments'] = comments
+        return JsonResponse(data=ret_dict)
 
 
 def upload_story(request):
