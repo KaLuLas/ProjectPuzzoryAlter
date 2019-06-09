@@ -239,7 +239,7 @@ def submit_comment(request, story_id, page):
             if len(reply_comment_content) > 10:
                 reply_comment_content = reply_comment_content[:10] + '...'
             content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
-            announcement = Announcement(optype='cocomment', targetdi=comment_reply_id,
+            announcement = Announcement(optype='cocomment', targetid=comment_reply_id,
                                         fromuser=request.user.email,
                                         fromnickname=request.user.userextension.nickname,
                                         touser=touser, tonickname=tonickname,
