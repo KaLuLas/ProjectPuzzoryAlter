@@ -86,6 +86,12 @@
             $('#{{ comment_id }}_commentlikescount').addClass('fas');
             {% endfor %}
 
+            {% if comment_page_obj.object_list %}
+            {% for comment in comment_page_obj.object_list %}
+            var idx = Number({{comment_start_index}}) - Number({{forloop.counter}}) + 1
+            $('#comment_{{ comment.id }} #commentIdx').html('No.' + String(idx))
+            {% endfor %}
+            {% endif %}
             // 当用户提交片段发现故事已经完结，跳转到故事页并弹出提交失败通知
             {% if finished_message %}
             $('#systemMessageContent').html('故事已完结，片段提交失败');
