@@ -102,7 +102,7 @@ def storypage(request, story_id):
         'paginator': paginator,
         'comment_paginator': comment_paginator,
         'page_obj': page_obj,
-        'comment_full_list': comment_page_obj,
+        'comment_page_obj': comment_page_obj,
         'is_paginated': is_paginated,
         'comment_is_paginated': comment_is_paginated,
         'scroll_to_type_id': scroll_to_type_id,
