@@ -242,7 +242,7 @@
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
             $('.replyCommentBtn').on('click', function(){
                 // 回复时的滚动
-                $('html, body').scrollTop($("#commentForm").offset().top - 200);
+                $('html, body').scrollTop($("#commentscount").offset().top - 200);
                 var comment_id = $(this).parent().parent().attr('id');
                 // 读取正确的评论序列号
                 var reply_to_index = $('#' + comment_id + ' #commentIdx').html();
@@ -613,7 +613,7 @@
 
         <div class="row justify-content-center" style="padding-bottom: 30px;">
             <div class="col-sm-8">
-                <p><strong id="fragscount">{{ story.commentscount }}</strong>评论</p>
+                <p><strong id="commentscount">{{ story.commentscount }}</strong>评论</p>
                 <!-- NOTE: form-control! 好用！ -->
                 <hr>
                 <form id="commentForm" action="{% url 'submit_comment' story.id page_obj.number %}" method="POST">

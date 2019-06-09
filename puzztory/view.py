@@ -106,7 +106,7 @@ def storypage(request, story_id):
     comment_is_paginated = comment_paginator.num_pages > 1
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
     if jump_page:
-        scroll_to_type_id = 'commentForm'
+        scroll_to_type_id = 'commentscount'
 
     # scroll_to_type_id == -1 代表不需要片段滚动
     # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号
