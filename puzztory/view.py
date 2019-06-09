@@ -327,11 +327,12 @@ def submit_frag_comment(request):
         )
         # announcement.save()
         # 把这个片段下的内容更新（其实发布片段评论的时候可以不用发送所有的，在点击按钮的时候更新才对）
-        comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
-        # comments = serializers.serialize("json", comments)
-        comments = list(comments)
-        comments = json.dumps(comments, cls=CJsonEncoder)
-        ret_dict['comments'] = comments
+        # comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
+        # comments = list(comments)
+        # comments = json.dumps(comments, cls=CJsonEncoder)
+        comment = comment.values('nickname', 'content', 'createtime')
+        comment = json.dumps(list(comment), cls=CJsonEncoder)
+        ret_dict['comment'] = comment
     return JsonResponse(data=ret_dict)
 
 

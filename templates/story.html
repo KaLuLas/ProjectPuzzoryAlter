@@ -49,7 +49,6 @@
             margin-bottom: 10px;
             background-color:#FFF0DB;
             color: #B38952;
-            border-radius: 30px;
             padding-left: 10px;
             padding-right: 10px;
             padding-top: 0px;
@@ -281,9 +280,9 @@
                     type: "POST",
                     dataType: "JSON",
                     success: function(data){
-			            var jsonObj =  $.parseJSON(data['comments']);
+			            var jsonObj =  $.parseJSON(data['comment']);
                         console.log('success!');
-                        console.log(data['comments']);
+                        console.log(data['comment']);
 			            for(var i = 0;i < jsonObj.length;i++){
 			                console.log(jsonObj[i].nickname);  //取json中的值
                             $frag_comment = 
@@ -292,7 +291,7 @@
                                     <em>' + jsonObj[i].nickname + '</em>\
                                     <small style="margin-left: 10px; color:#E8A676">' + jsonObj[i].content + '</small>\
                                 </p>\
-                                <small>' + jsonObj[i].createime + '</small>\
+                                <small>' + jsonObj[i].createtime + '</small>\
                             </li>';
                             $('#frag_comment_' + frag_id + ' .frag_comment_list').append($frag_comment);
 			            }
