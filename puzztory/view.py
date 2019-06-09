@@ -335,6 +335,7 @@ def system_message(request):
         optype__endswith='like', touser=request.user.email
     ).order_by('-createtime')
 
+    # TODO: 感觉deletefrag还在写那就之后再合并了
     index_dict['addfragm_list'] = Announcement.objects.filter(
         optype='addfrag', touser=request.user.email).order_by('-createtime')
 

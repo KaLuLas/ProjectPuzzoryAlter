@@ -629,7 +629,7 @@
                 <hr>
                 {% if comment_is_paginated %}
                 <nav aria-label="Page navigation example" style="margin-top: 20px">
-                    <ul class="pagination pagination-sm justify-content-start">
+                    <ul class="pagination pagination-sm justify-content-end">
                         {% for i in comment_paginator.page_range%}
                             {% if i == comment_page_bound.left or i == comment_page_bound.right %}
                             <li class="page-item disabled"><a class="page-link">...</a></li>
