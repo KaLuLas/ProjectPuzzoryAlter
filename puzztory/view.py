@@ -286,8 +286,9 @@ def submit_comment(request, story_id, page):
 
 
 def submit_frag_comment(request):
+    ret_dict = {}
+    ret_dict['comments'] = []
     if request.method == 'POST':
-        ret_dict = {}
         frag_id = request.POST['frag_id']
         content = request.POST['content']
         frag = Fragment.objects.get(id=frag_id)
@@ -315,7 +316,7 @@ def submit_frag_comment(request):
         # 把这个片段下的内容更新（其实发布片段评论的时候可以不用发送所有的，在点击按钮的时候更新才对）
         comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime')
         ret_dict['comments'] = comments
-        return JsonResponse(data=ret_dict)
+    return JsonResponse(data=ret_dict)
 
 
 def upload_story(request):
