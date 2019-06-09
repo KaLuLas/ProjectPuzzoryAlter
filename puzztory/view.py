@@ -53,7 +53,7 @@ def storypage(request, story_id):
     finished_message = request.GET.get('alreadyfinished', False)
 
     page_obj = paginator.page(page)
-    comment_page_obj = paginator.page(comment_page)
+    comment_page_obj = comment_paginator.page(comment_page)
     # 获得片段的点赞情况
     frag_like_list = []
     for frag in page_obj.object_list:
