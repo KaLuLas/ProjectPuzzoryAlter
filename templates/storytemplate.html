@@ -18,10 +18,10 @@
 
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-    
+
     <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
@@ -43,6 +43,17 @@
         .story-list>.list-group-item {
             margin-bottom: 10px;
         }
+
+        .frag_comment_list .list-group-item{
+            margin-bottom: 10px;
+            background-color:#FFF0DB;
+            border-radius: 30px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 0px;
+            height: 30px;
+        }
+
     </style>
     <script type="text/javascript">
         function uploadfrag() {
@@ -165,84 +176,87 @@
 
     <div class="container-fluid " style="background-color: #f8f8f8">
         <div class="row justify-content-center" style="padding-top:50px; margin:20px;">
-        <div class="col-sm-8" style="padding-left:0px">
-            <div class="card" id="firstfrag" style="background-color:rgb(246, 255, 238); padding:20px; margin-top:10px">
-                <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
-                    <div class="col-md-auto align-self-center" style="padding-left: 5px">
+            <div class="col-sm-8" style="padding-left:0px">
+                <div class="card" id="firstfrag"
+                    style="background-color:rgb(246, 255, 238); padding:20px; margin-top:10px">
+                    <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
+                        <div class="col-md-auto align-self-center" style="padding-left: 5px">
 
-                        <!-- if the story is finished -->
-                        <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
+                            <!-- if the story is finished -->
+                            <i class="fa fa-book" style="font-size: 17px" aria-hidden="true" title="finished"></i>
 
-                        <!-- if the story cannot be modified -->
-                        <i class="fa fa-lock" style="font-size: 17px" aria-hidden="true" title="cannot be modified"></i>
+                            <!-- if the story cannot be modified -->
+                            <i class="fa fa-lock" style="font-size: 17px" aria-hidden="true"
+                                title="cannot be modified"></i>
 
-                        <!-- if the story is being edited -->
-                        <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true" title="being edited"></i>
+                            <!-- if the story is being edited -->
+                            <i class="fa fa-pen-alt" style="font-size: 17px" aria-hidden="true"
+                                title="being edited"></i>
 
-                        <!-- if the story can be modified -->
-                        <i class="fas fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
-                            title="you can write now"></i>
+                            <!-- if the story can be modified -->
+                            <i class="fas fa-unlock-alt" style="font-size: 17px" aria-hidden="true"
+                                title="you can write now"></i>
 
-                    </div>
+                        </div>
 
-                    <div class="align-self-center">
-                        <h4 style="margin-bottom: 0px; padding-left: 0px">Test-title</h4>
-                    </div>
+                        <div class="align-self-center">
+                            <h4 style="margin-bottom: 0px; padding-left: 0px">Test-title</h4>
+                        </div>
 
-                    <div class="col-md-auto ml-auto align-self-center">
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">R</div>
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">K</div>
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">F</div>
+                        <div class="col-md-auto ml-auto align-self-center">
+                            <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">R</div>
+                            <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">K</div>
+                            <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">F</div>
 
-                        <!-- TODO: add if statement after storytable has attribute 'rules' -->
-                        <!-- <div class="badge badge-light mr-1">R</div> -->
-                        <!-- TODO: add if statement after storytable has attribute 'keywords' -->
-                        <!-- <div class="badge badge-light mr-1">K</div> -->
+                            <!-- TODO: add if statement after storytable has attribute 'rules' -->
+                            <!-- <div class="badge badge-light mr-1">R</div> -->
+                            <!-- TODO: add if statement after storytable has attribute 'keywords' -->
+                            <!-- <div class="badge badge-light mr-1">K</div> -->
 
-                        <!-- {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
+                            <!-- {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
                         <div class="badge badge-light">F</div>
                         {% endif %} -->
-                    </div>
-                </div>
-
-                <div class="row">
-                    <p style="margin: 15px; white-space: pre-line">axoewcb wox ac [ahief achio 23xhico aq23c0[
-                        qaxh]]uab2ecbay9bxpea9bcreabx
-
-                        cbawueacxby739cbay8w9x y8a9xc ya89x fqya89 xu ahu
-                        abcheubpcrya7932c py4a793c y4a92 cy849axp y8ra9 cy9p
-                        shuacbrecbahocblhafic dhsiaoc dsiace fya8w9
-                        a cewuo awecioshosd;oshids;cdnjdkuiosadisnjdfsdfldksj csaxopa zuwwzo e8w
-                    </p>
-                </div>
-
-
-                <div class="progress" style="margin-top: 20px; margin-bottom: 10px">
-                    <div class="progress-bar" role="progressbar" style="background-color:cadetblue; width: 25%"
-                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        25/100</div>
-                </div>
-
-
-                <div class="row" style="margin-bottom: 7px">
-                    <div class="col-md-auto align-self-center">
-                        <i class="far fa-user" style="font-size: 12px"> Alexxx </i>
-                    </div>
-                    <div class="col-md-auto align-self-center">
-                        <i class="far fa-clock" style="font-size: 12px"> 2019/7/7</i>
+                        </div>
                     </div>
 
-                    <div class="col-md-auto ml-auto align-self-center">
-                        <a class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</a>
-                        <i class="far fa-comment" style="font-size: 12px"> 19</i>
+                    <div class="row">
+                        <p style="margin: 15px; white-space: pre-line">axoewcb wox ac [ahief achio 23xhico aq23c0[
+                            qaxh]]uab2ecbay9bxpea9bcreabx
+
+                            cbawueacxby739cbay8w9x y8a9xc ya89x fqya89 xu ahu
+                            abcheubpcrya7932c py4a793c y4a92 cy849axp y8ra9 cy9p
+                            shuacbrecbahocblhafic dhsiaoc dsiace fya8w9
+                            a cewuo awecioshosd;oshids;cdnjdkuiosadisnjdfsdfldksj csaxopa zuwwzo e8w
+                        </p>
                     </div>
-                </div>
-                <div>
-                    <span><small class="text-muted">keyword1 </small></span>
-                    <span><small class="text-muted">keyword2 </small></span>
+
+
+                    <div class="progress" style="margin-top: 20px; margin-bottom: 10px">
+                        <div class="progress-bar" role="progressbar" style="background-color:cadetblue; width: 25%"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            25/100</div>
+                    </div>
+
+
+                    <div class="row" style="margin-bottom: 7px">
+                        <div class="col-md-auto align-self-center">
+                            <i class="far fa-user" style="font-size: 12px"> Alexxx </i>
+                        </div>
+                        <div class="col-md-auto align-self-center">
+                            <i class="far fa-clock" style="font-size: 12px"> 2019/7/7</i>
+                        </div>
+
+                        <div class="col-md-auto ml-auto align-self-center">
+                            <a class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</a>
+                            <i class="far fa-comment" style="font-size: 12px"> 19</i>
+                        </div>
+                    </div>
+                    <div>
+                        <span><small class="text-muted">keyword1 </small></span>
+                        <span><small class="text-muted">keyword2 </small></span>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <div class="row justify-content-center" style="margin:20px;">
@@ -252,7 +266,8 @@
                     <div class="card" style="border:0px; background-color: rgb(255, 251, 234)">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-puzzle-piece"></i></h5>
-                            <p class="card-text" style="white-space: pre-wrap; padding-top: 15px">This is a wider card with supporting text
+                            <p class="card-text" style="white-space: pre-wrap; padding-top: 15px">This is a wider card
+                                with supporting text
                                 below as a natural lead-in to
                                 additional content.
                                 This content is a little bit longer.
@@ -272,11 +287,36 @@
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
                                     <i class="far fa-heart" style="font-size: 12px; margin-right:10px"> 23</i>
-                                    <i class="far fa-comment" style="font-size: 12px"> 19</i>
+                                    <i class="far fa-comment" style="font-size: 12px" data-toggle="collapse"
+                                        href="#frag_comment"> 19</i>
                                 </div>
                             </div>
-
                             <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                        </div>
+                        <div class="row justify-content-center" style="background-color:rgb(255, 207, 144); margin: 0px; padding-top: 15px">
+                            <div class="col-sm-10">
+                                <div class="collapse" id="frag_comment">
+                                    <form id="fragCommentForm">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <input type="text" class="form-control" placeholder="在此输入你的评论...（小于150字，不支持换行）">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-outline-light" type="button"><i class="fa fa-plane" aria-hidden="true">发送</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <ul class="list-group frag_comment_list">
+                                        <li class="d-flex list-group-item justify-content-between" style="color:#B38952">
+                                            <p >
+                                                <em>edwardchen</em>
+                                                <small style="margin-left: 10px; color:#E8A676">随便打点评论试试</small>
+                                            </p>
+                                            <small>createtime</small>
+                                        </li>
+                                        <li class="list-group-item">Item</li>
+                                        <li class="list-group-item">Disabled item</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
