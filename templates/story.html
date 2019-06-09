@@ -281,6 +281,7 @@
                     dataType: "JSON",
                     success: function(data){
 			            var jsonObj =  $.parseJSON(data['comment']);
+                        $(form).find('.content').val('');
                         // console.log('success!');
                         // console.log(data['comment']);
 			            for(var i = 0;i < jsonObj.length;i++){
@@ -293,7 +294,7 @@
                                 </p>\
                                 <small>' + jsonObj[i].createtime + '</small>\
                             </li>';
-                            $('#frag_comment_' + frag_id + ' .frag_comment_list').append($frag_comment);
+                            $('#frag_comment_' + frag_id + ' .frag_comment_list').before($frag_comment);
 			            }
                     }
                 });
