@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.core import serializers
 import time
+from datetime import date, datetime
 import threading
 import json
 
@@ -26,6 +27,16 @@ comment_each_page = 2
 
 frag_content_display_limit = 40
 comment_content_display_limit = 20
+
+
+class CJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, date):
+            return obj.strftime("%Y-%m-%d")
+        else:
+            return json.JSONEncoder.default(self, obj)
 
 
 def homepage(request):
@@ -319,7 +330,7 @@ def submit_frag_comment(request):
         comments = Comment.objects.filter(fragid=frag_id).order_by('-createtime').values('nickname', 'content', 'createtime')
         # comments = serializers.serialize("json", comments)
         comments = list(comments)
-        comments = json.dumps(comments)
+        comments = json.dumps(comments, cls=CJsonEncoder)
         ret_dict['comments'] = comments
     return JsonResponse(data=ret_dict)
 
