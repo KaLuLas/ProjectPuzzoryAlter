@@ -247,6 +247,7 @@
                 // 读取正确的评论序列号
                 var reply_to_index = $('#' + comment_id + ' #commentIdx').html();
                 $('#commentSubmit').val('>>' + reply_to_index + ' ');
+                $('#replyToCommentID').html(comment_id);
             });
 
             // 显示被锁消息后刷新页面
@@ -621,6 +622,7 @@
                             <button class="btn btn-info" type="submit" id="submitCommentBtn">发表评论</button>
                         </div>
                     </div>
+                    <div name="cocomment" id="replyToCommentID"></div>
                 </form>
                 <hr>
                 {% if comment_is_paginated %}
@@ -669,8 +671,8 @@
                     {% endif %}
                 </div>
                 {% if comment_is_paginated %}
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-sm justify-content-end">
+                <nav aria-label="Page navigation example" style="margin-top: 10px">
+                    <ul class="pagination pagination-sm justify-content-start">
                         {% for i in comment_paginator.page_range%}
                             {% if comment_page_obj.number == i %}
                             <li class="page-item active">
