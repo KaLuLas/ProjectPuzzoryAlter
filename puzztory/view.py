@@ -396,23 +396,10 @@ def system_message(request):
 
     index_dict['frag_notifications'] = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
-    ).order_by('createtime')
+    ).order_by('-createtime')
 
-    
-    # index_dict['addfragm_list'] = Announcement.objects.filter(
-    #     optype='addfrag', touser=request.user.email).order_by('-createtime')
-
-    # index_dict['deletefragm_list'] = Announcement.objects.filter(
-    #     optype='deletefrag', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['storycommentm_list'] = Announcement.objects.filter(
-    #     optype='storycomment', touser=request.user.email).order_by('-createtime')
-
-    # index_dict['fragcommentm_list'] = Announcement.objects.filter(
-    #     optype='fragcomment', touser=request.user.email).order_by('-createtime')
-
-    # 选择所有以comment结尾的，之后要注意optype的命名
-    # 或者使用optype__in=[?, ?, ?]这样也可以
+    # 注意optype的命名
+    # 或者使用optype__in=[?, ?, ?]
     index_dict['comment_notifications'] = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
     ).order_by('-createtime')
