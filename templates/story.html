@@ -255,12 +255,13 @@
                 $("#systemMessageExitBtn").before('\
                 <button id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
                 ');
-                $('#deleteConfirmBtn').on('click', function(){
-                    $.ajax({
-                        url: "{% url 'deletefrag' lastfrag_id story.id %}",
+                $('#deleteConfirmBtn').attr("href","{% url 'deletefrag' lastfrag_id story.id %}");
+                // $('#deleteConfirmBtn').on('click', function(){
+                //     $.ajax({
+                //         url: "",
                         
-                    });
-                });
+                //     });
+                // });
             });
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
