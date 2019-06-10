@@ -275,10 +275,13 @@
             });
 
             // 显示被锁消息后刷新页面
-            $('#systemMessage').on('hidden.bs.modal', function (e) {
-                // window.location.reload();
-                window.location.replace('{% url 'story_page' story.id %}');
-            });
+            if(('#systemMessageContent').html()!='确认要敲除吗？（敲除后该片段将消失）'){
+                $('#systemMessage').on('hidden.bs.modal', function (e) {
+                    // window.location.reload();
+                    window.location.replace('{% url 'story_page' story.id %}');
+                });
+            }
+            
             
             $('.commentSubmitBtn').on('click', function(){
                 var form = $(this).parent().parent();
