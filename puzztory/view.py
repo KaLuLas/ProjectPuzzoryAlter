@@ -161,7 +161,7 @@ def upload_story_page(request):
     return render(request, 'upload_story.html', index_dict)
 
 
-def deletefrag(request, frag_id, story_id, page):
+def deletefrag(request, frag_id, story_id):
     # Fragment.objects.get(id=frag_id).delete()
     frag_record = Fragment.objects.get(id=frag_id)
     
@@ -188,8 +188,8 @@ def deletefrag(request, frag_id, story_id, page):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, frag_each_page)
-    if paginator.num_pages < page:
-        page = paginator.num_pages
+    # if paginator.num_pages < page:
+    page = paginator.num_pages
 
     # 置 last_frag_id 为当前页最后一个片段
     last_frag_id = paginator.page(page)[-1].id

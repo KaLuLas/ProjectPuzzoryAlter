@@ -257,7 +257,7 @@
                 ');
                 $('#deleteConfirmBtn').on('click', function(){
                     $.ajax({
-                        url: "{% url 'deletefrag' lastfrag_id story.id page_obj.number %}",
+                        url: "{% url 'deletefrag' lastfrag_id story.id %}",
                         
                     });
                 });
