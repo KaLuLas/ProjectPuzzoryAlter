@@ -63,7 +63,7 @@ def homepage(request):
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')   
-    lastfrag_id = frag_full_list[-1].id
+    lastfrag_id = frag_full_list[len(frag_full_list)-1].id
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
 
