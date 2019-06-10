@@ -250,18 +250,11 @@
             });
 
             $('#deleteFragBtn').on('click', function(){
-                $('#systemMessageContent').html('确认要敲除吗？（敲除后该片段将消失）');
-                $("#systemMessage").modal('show');
-                $("#systemMessageExitBtn").before('\
-                <button id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
-                ');
-                $('#deleteConfirmBtn').attr("href","{% url 'deletefrag' lastfrag_id story.id %}");
-                // $('#deleteConfirmBtn').on('click', function(){
-                //     $.ajax({
-                //         url: "",
-                        
-                //     });
-                // });
+                
+                $("#deleteMessage").modal('show');
+                
+                $('#deleteConfirmBtn').attr("href",);
+                
             });
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
@@ -275,13 +268,12 @@
                 $('#replyToCommentID').val(comment_id);
             });
 
-            // 显示被锁消息后刷新页面
-            if(('#systemMessageContent').html()!='确认要敲除吗？（敲除后该片段将消失）'){
-                $('#systemMessage').on('hidden.bs.modal', function (e) {
-                    // window.location.reload();
-                    window.location.replace('{% url 'story_page' story.id %}');
-                });
-            }
+            // 显示被锁消息后刷新页面          
+            $('#systemMessage').on('hidden.bs.modal', function (e) {
+                // window.location.reload();
+                window.location.replace('{% url 'story_page' story.id %}');
+            });
+            
             
             
             $('.commentSubmitBtn').on('click', function(){
@@ -571,9 +563,29 @@
                                     {% if frag.id == lastfrag_id %}
                                     {% if user.email == story.email or user.email == frag.email %}
                                     <a id="deleteFragBtn"
-                                        class="fas fa-hammer"
+                                        class="fas fa-hammer" data-toggle="modal" data-target="#deleteMessage"
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
+                                    <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog" aria-labelledby="deleteMessageLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteMessageLabel">提醒 ('/_ ') </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" id="deleteMessageContent">
+                                                    确认要敲除吗？（敲除后该片段将消失）
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button href="{% url 'deletefrag' lastfrag_id story.id %}" id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                                                    <button id="deleteMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {% endif %}
                                     {% endif %}
                                     
