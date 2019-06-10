@@ -62,13 +62,15 @@ def homepage(request):
 
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
-        storyid=story_id).order_by('createtime')
+        storyid=story_id).order_by('createtime')   
+    lastfrag_id = frag_full_list[-1].id
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
+
     paginator = Paginator(frag_full_list, frag_each_page)
     comment_paginator = Paginator(comment_full_list, comment_each_page)
     page = request.GET.get('page', 1)
-    # 分页栏省略显示的一个尝试
+    # 翻页栏省略显示的一个尝试
     frag_page_bound = {
         'left': int(page) - paginator_view_range,
         'right': int(page) + paginator_view_range
@@ -146,6 +148,7 @@ def storypage(request, story_id):
         'frag_like_list': frag_like_list,
         'comment_like_list': comment_like_list,
         'story_like': story_like,
+        'lastfrag_id': lastfrag_id,
     }
     return render(request, 'story.html', story_dict)
 
