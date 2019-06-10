@@ -451,13 +451,13 @@
                     确认要敲除吗？（敲除后该片段将消失）
                 </div>
                 <div class="modal-footer">
-                    <button href="{% url 'deletefrag' lastfrag_id story.id %}" id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                    <a href="{% url 'deletefrag' lastfrag_id story.id %}" id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</a>
                     <button id="deleteMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- LOGIN REQUEST -->
     {% if not user.is_authenticated %}
     <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
@@ -639,7 +639,7 @@
         <div class="row justify-content-center" style="padding-bottom:90px;">
             {% if not user.is_authenticated %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="modal"
-                data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
+                data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></a>
             {% elif story.lock == True and story.editor != user.email %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="有人正在修改这个故事"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
