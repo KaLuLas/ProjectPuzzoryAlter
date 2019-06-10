@@ -162,9 +162,7 @@ def upload_story_page(request):
 
 
 def deletefrag(request, frag_id, story_id):
-    # Fragment.objects.get(id=frag_id).delete()
-    frag_record = Fragment.objects.get(id=frag_id)
-    
+    frag_record = Fragment.objects.get(id=frag_id)   
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
