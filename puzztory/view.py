@@ -390,25 +390,20 @@ def system_message(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     
-    # index_dict['storylikem_list'] = Announcement.objects.filter(
-    #     optype='storylike', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['fraglikem_list'] = Announcement.objects.filter(
-    #     optype='fraglike', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['commentlikem_list'] = Announcement.objects.filter(
-    #     optype='commentlike', touser=request.user.email).order_by('-createtime')
-    
     index_dict['like_notifications'] = Announcement.objects.filter(
         optype__endswith='like', touser=request.user.email
     ).order_by('-createtime')
 
-    # TODO: 感觉deletefrag还在写那就之后再合并了
-    index_dict['addfragm_list'] = Announcement.objects.filter(
-        optype='addfrag', touser=request.user.email).order_by('-createtime')
+    index_dict['frag_notifications'] = Announcement.objects.filter(
+        optype__endswith='frag', touser=request.user.email
+    ).order_by('createtime')
 
-    index_dict['deletefragm_list'] = Announcement.objects.filter(
-        optype='deletefrag', touser=request.user.email).order_by('-createtime')
+    
+    # index_dict['addfragm_list'] = Announcement.objects.filter(
+    #     optype='addfrag', touser=request.user.email).order_by('-createtime')
+
+    # index_dict['deletefragm_list'] = Announcement.objects.filter(
+    #     optype='deletefrag', touser=request.user.email).order_by('-createtime')
     
     # index_dict['storycommentm_list'] = Announcement.objects.filter(
     #     optype='storycomment', touser=request.user.email).order_by('-createtime')

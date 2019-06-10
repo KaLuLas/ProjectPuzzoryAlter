@@ -173,7 +173,7 @@ class Comment(models.Model):
 
 
 class Announcement(models.Model):
-    optype = models.CharField(max_length=20) #addfrag/storylike/fraglike/commentlike/storycomment/fragcomment/cocomment
+    optype = models.CharField(max_length=20) #addfrag/deletefrag/storylike/fraglike/commentlike/storycomment/fragcomment/cocomment
     targetid = models.IntegerField()
     fromuser = models.CharField(max_length=150)
     fromnickname = models.CharField(max_length=20)
