@@ -250,8 +250,7 @@
             });
 
             $('#deleteConfirmBtn').on('click', function(){
-                window.location.href = "{% url 'deletefrag' lastfrag_id story.id %}";
-                
+                window.location.href = "{% url 'deletefrag' lastfrag_id story.id %}";                
             });
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
@@ -633,10 +632,10 @@
             </ul>
         </div>
 
-        <a class="row justify-content-center" style="padding-bottom:90px;">
+        <div class="row justify-content-center" style="padding-bottom:90px;">
             {% if not user.is_authenticated %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="modal"
-                data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></a>
+                data-target="#loginRequest"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
             {% elif story.lock == True and story.editor != user.email %}
             <button type="button" class="btn btn-outline-info disabled" data-toggle="tooltip" data-placement="top"
                 title="有人正在修改这个故事"><i class="fas fa-feather-alt"> 添加一个新片段 </i></button>
@@ -672,7 +671,7 @@
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
