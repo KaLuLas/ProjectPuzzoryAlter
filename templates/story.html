@@ -189,29 +189,37 @@
                     },
                     dataType: "JSON",
                     success: function (data) {
-                        if (!data['lock']) {
+                        if (data['allowed']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
                             $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
-                            // send release lock message
-                            $('#submitcountdown').html(data['submitcountdown']);
-                            $('#submittimelimit').html(data['submittimelimit']);
 
-                            for (var each in timer) {
-                                clearInterval(timer[each]);
-                                delete timer[each];
-                            }
-                            var remains = data['submitcountdown'];
-                            timer[remains] = setInterval(function () {
-                                if (remains == 0) {
-                                    clearInterval(timer[remains]);
-                                    $('#newFragSubmitBtn').hide();
-                                } else {
-                                    remains--;
-                                    $('#submitcountdown').html(remains);
+                            if(data['countdown']){
+                                $('#separate').show();
+                                $('#submitcountdown').html(data['submitcountdown']);
+                                $('#submittimelimit').html(data['submittimelimit']);
+
+                                for (var each in timer) {
+                                    clearInterval(timer[each]);
+                                    delete timer[each];
                                 }
-                            }, 1000);
+                                var remains = data['submitcountdown'];
+                                timer[remains] = setInterval(function () {
+                                    if (remains == 0) {
+                                        clearInterval(timer[remains]);
+                                        $('#newFragSubmitBtn').hide();
+                                    } else {
+                                        remains--;
+                                        $('#submitcountdown').html(remains);
+                                    }
+                                }, 1000);
+                            }
+                            else{
+                                $('#separate').hide();
+                                $('#submitcountdown').html('');
+                                $('#submittimelimit').html('');
+                            }
                         } else {
-                            $('#systemMessageContent').html('有人正在修改这个故事(\'皿\')');
+                            $('#systemMessageContent').html('当前不能修改这个故事(\'皿\')');
                             $('#newFragBtn').attr('data-target', '#systemMessage');
                         }
                     }

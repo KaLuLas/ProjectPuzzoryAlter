@@ -522,6 +522,7 @@ def lock(request):
     story = Story.objects.get(id=request_id)
     ret_dict = {}
     ret_dict['submittimelimit'] = edit_time
+    ret_dict['countdown'] = True
     last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
     if len(last_fragment.content) > 20:
         lfcontent_text = '...' + last_fragment.content[-20:]
