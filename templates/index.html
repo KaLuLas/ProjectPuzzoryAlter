@@ -250,13 +250,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            {{ forloop.counter }} {{ story.title }} {{story.likescount}}赞
+                            <div class="menu-text">{{ forloop.counter }} {{ story.title }} {{story.likescount}}赞</div>
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            {{ forloop.counter }} {{ story.title }} {{story.likescount}}赞
+                            <div class="menu-text">{{ forloop.counter }} {{ story.title }} {{story.likescount}}赞</div>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -273,13 +273,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            {{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}
+                            <div class="menu-text">{{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}</div>
                         </a>
 
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            {{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}
+                            <div class="menu-text">{{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}</div>
                         </a>
                         {% endif %}
                         {% endfor %}
