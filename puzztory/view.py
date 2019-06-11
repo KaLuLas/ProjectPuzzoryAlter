@@ -60,7 +60,8 @@ def homepage(request):
     return render(request, 'index.html', index_dict)
 
 def messagejump(request, optype, targetid):
-
+    pass
+    # if optype == 'addfrag'
 
 
 def storypage(request, story_id):
