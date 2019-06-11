@@ -250,9 +250,8 @@
             });
 
             $('#deleteConfirmBtn').on('click', function(){
-                $.ajax({
-                    url: "{% url 'deletefrag' lastfrag_id story.id %}"
-                });
+                window.location.href = "{% url 'deletefrag' lastfrag_id story.id %}";
+                
             });
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
