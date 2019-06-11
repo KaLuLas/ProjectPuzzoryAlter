@@ -213,7 +213,10 @@ def deletefrag(request, frag_id, story_id):
                                         content=announce_content)
         announce.save()
         Announcement.objects.filter(optype='addfrag', targetid=frag_id).delete()
-
+        try:
+            Announcement.objects.filter(optype='deletefrag', targetid=frag_id).delete()
+        except:
+            pass
         frag_record.delete()
 
     except Fragment.DoesNotExist:
