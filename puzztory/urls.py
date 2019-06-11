@@ -43,6 +43,6 @@ urlpatterns = [
     path('lfcontent', view.lfcontent, name="lfcontent"),
     path('deletefrag/<int:frag_id>/<int:story_id>',
          view.deletefrag, name="deletefrag"),
-    re_path(r'^testdb$', testdb.testdb),  # edit
+    path('messagejump/<optype>/<int:targetid>', view.messagejump, name="messagejump"),
     path('admin/', admin.site.urls),
 ]

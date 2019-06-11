@@ -479,7 +479,7 @@
                                 <div class="list-group">
                                     {% if like_notifications %}
                                         {% for notification in like_notifications %}
-                                        <a style="margin-top: 10px"
+                                        <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                             class="list-group-item list-group-item-action flex-column align-items-start">
                                             {% if notification.optype == 'storylike' %}
                                             <div class="d-flex w-100 align-items-center justify-content-between">
@@ -522,7 +522,7 @@
                                 <div class="list-group">
                                     {% if frag_notifications %}
                                     {% for notification in frag_notifications %}
-                                    <a style="margin-top: 10px"
+                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
                                         
                                         <div class="d-flex w-100 align-items-center justify-content-between">
@@ -553,16 +553,16 @@
                                 aria-labelledby="commentmessage-tab">
                                 <div class="list-group">
                                     {% if comment_notifications %}
-                                    {% for comment_noti in comment_notifications %}
-                                    <a style="margin-top: 10px"
+                                    {% for notification in comment_notifications %}
+                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start"
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
-                                                {{ comment_noti.fromnickname }}</h5>
-                                            <small style="margin-left: 10px" id="commentIdx">{{ comment_noti.createtime }}</small>
+                                                {{ notification.fromnickname }}</h5>
+                                            <small style="margin-left: 10px" id="commentIdx">{{ notification.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ comment_noti.content }}</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>
                                     </a>
                                     {% endfor %}
                                     {% else %}
