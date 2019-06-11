@@ -79,7 +79,7 @@ def messagejump(request, optype, targetid):
         location = comment_full_list.index({'id': targetid})
         page = location // comment_each_page + 1
         append = str(story_id) + "?comment_page=" + str(page) + \
-        "&scroll_to_type_id=" + 'commemt_' + str(targetid)
+        "&scroll_to_type_id=" + 'comment_' + str(targetid)
         return HttpResponseRedirect("/story/" + append)       
 
 
