@@ -65,8 +65,8 @@ def messagejump(request, optype, targetid):
     if optype == 'fraglike' or optype == 'addfrag' or optype == 'fragcomment' or optype == 'deletefrag':
         story_id = Fragment.objects.get(id=targetid).storyid
         frag_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id')) 
-        print(frag_full_list)
-        location = frag_full_list.index(str(targetid))
+        # print(frag_full_list)
+        location = frag_full_list.index({'id': targetid})
         page = location // frag_each_page
         append = str(story_id) + "?page=" + str(page) + \
         "&scroll_to_type_id=" + 'frag_' + str(targetid)
