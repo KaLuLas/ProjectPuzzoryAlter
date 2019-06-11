@@ -249,11 +249,11 @@
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-action">{{ story.title }}</a>
+                            class="list-group-item list-group-item-action" style="font-size:14px"><i class="fa fa-book" style="margin-right:10px" aria-hidden="true"></i>{{ story.title }}</a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-warning">{{ story.title }}</a>
+                            class="list-group-item list-group-item-warning" style="font-size:14px"><i class="fa fa-book" style="margin-right:10px" aria-hidden="true"></i>{{ story.title }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
@@ -268,10 +268,10 @@
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-action">{{ user.nickname }}</a>
+                            class="list-group-item list-group-item-action" style="font-size:14px"><i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i>{{ user.nickname }}</a>
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-warning">{{ user.nickname }}</a>
+                            class="list-group-item list-group-item-warning" style="font-size:14px"><i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i>{{ user.nickname }}</a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
