@@ -286,9 +286,9 @@
                 <div class="list-group story-list homepage" style="margin:30px">
                     {% if page_obj %}
                     {% for story in page_obj %}
-                    <a {% if user.is_authenticated %}
-                    href="{% url 'story_page' story.id %}" {% else %} data-toggle="modal" data-target="#loginRequest"
-                    {% endif %}
+                    <a 
+                    href="{% url 'story_page' story.id %}" 
+                    
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
@@ -481,21 +481,33 @@
                                         {% for notification in like_notifications %}
                                         <a style="margin-top: 10px"
                                             class="list-group-item list-group-item-action flex-column align-items-start">
+                                            {% if notification.optype == 'storylike' %}
                                             <div class="d-flex w-100 align-items-center justify-content-between">
                                                 <h5 class="mb-1"> <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
                                                 {{ notification.fromnickname }}</h5>
                                                 <small style="margin-left: 10px">{{ notification.createtime }}</small>
-                                            </div>
-                                            {% if notification.optype == 'storylike' %}
+                                            </div>            
                                             <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ notification.content }}』中点了赞</p>
+                                            
                                             {% elif notification.optype == 'fraglike' %}
+                                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                                <h5 class="mb-1"> <i style="color:rgb(211, 123, 152)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                {{ notification.fromnickname }}</h5>
+                                                <small style="margin-left: 10px">{{ notification.createtime }}</small>
+                                            </div>
                                             <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的片段：<br/>"{{ notification.content }}"<br/>点了赞</p>
+                                            
                                             {% elif notification.optype == 'commentlike' %}
+                                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                                <h5 class="mb-1"> <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                {{ notification.fromnickname }}</h5>
+                                                <small style="margin-left: 10px">{{ notification.createtime }}</small>
+                                            </div>
                                             <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的评论：<br/>"{{ notification.content }}"<br/>点了赞</p>
                                             {% endif %}
                                         </a>
                                         {% endfor %}
-                                    <!-- 好像注释掉也会被django识别不好意思我先删掉了 -->
+                                    
                                     {% else %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
@@ -508,16 +520,22 @@
                             </div>
                             <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
                                 <div class="list-group">
-                                    {% if addfragm_list %}
-                                    {% for addfragm in addfragm_list %}
+                                    {% if frag_notifications %}
+                                    {% for notification in frag_notifications %}
                                     <a style="margin-top: 10px"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
+                                        
                                         <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <h5 class="mb-1"> <i style="color:olivedrab" class="fas fa-feather-alt" aria-hidden="true"></i>
-                                            {{ addfragm.fromnickname }}</h5>
-                                            <small style="margin-left: 10px">{{ addfragm.createtime }}</small>
+                                            <h5 class="mb-1">
+                                            {% if notification.optype == 'addfrag' %}
+                                            <i style="color:olivedrab" class="fas fa-feather-alt" aria-hidden="true"></i>
+                                            {% elif notification.optype == 'deletefrag' %}
+                                            <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
+                                            {% endif %}
+                                            {{ notification.fromnickname }}</h5>
+                                            <small style="margin-left: 10px">{{ notification.createtime }}</small>
                                         </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ addfragm.content }}</p>
+                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>            
                                     </a>
                                     {% endfor %}
                                     {% else %}
@@ -528,19 +546,7 @@
                                         </div>
                                     </a>
                                     {% endif %}
-                                    {% if deletefragm_list %}
-                                    {% for deletefragm in deletefragm_list %}
-                                    <a style="margin-top: 10px"
-                                        class="list-group-item list-group-item-action flex-column align-items-start">
-                                        <div class="d-flex w-100 align-items-center justify-content-between">
-                                            <h5 class="mb-1"> <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
-                                            {{ deletefragm.fromnickname }}</h5>
-                                            <small style="margin-left: 10px">{{ deletefragm.createtime }}</small>
-                                        </div>
-                                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ deletefragm.content }}</p>
-                                    </a>
-                                    {% endfor %}
-                                    {% endif %}
+                                    
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="commentmessage" role="tabpanel"

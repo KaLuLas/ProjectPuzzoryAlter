@@ -62,13 +62,15 @@ def homepage(request):
 
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
-        storyid=story_id).order_by('createtime')
+        storyid=story_id).order_by('createtime')   
+    lastfrag_id = frag_full_list[len(frag_full_list)-1].id
     comment_full_list = Comment.objects.filter(
         sof=True, storyid=story_id).order_by('-createtime')
+
     paginator = Paginator(frag_full_list, frag_each_page)
     comment_paginator = Paginator(comment_full_list, comment_each_page)
     page = request.GET.get('page', 1)
-    # 分页栏省略显示的一个尝试
+    # 翻页栏省略显示的一个尝试
     frag_page_bound = {
         'left': int(page) - paginator_view_range,
         'right': int(page) + paginator_view_range
@@ -90,39 +92,42 @@ def storypage(request, story_id):
     page_obj = paginator.page(page)
     comment_page_obj = comment_paginator.page(comment_page)
     comment_start_index = comment_paginator.count - (comment_page_obj.number - 1) * comment_each_page
-    # 获得片段的点赞情况
+    
     frag_like_list = []
-    for frag in page_obj.object_list:
-        try:
-            Announcement.objects.get(
-                optype='fraglike', targetid=frag.id, fromuser=request.user.email)
-            # frag_like_list[frag.id] = 'true'
-            frag_like_list.append(frag.id)
-        except Announcement.DoesNotExist:
-            # frag_like_list[frag.id] = 'false'
-            pass
-
-    # 获得故事的点赞情况
-    try:
-        Announcement.objects.get(
-            optype='storylike', targetid=story_id, fromuser=request.user.email)
-        story_like = 'true'
-    except Announcement.DoesNotExist:
-        story_like = 'false'
-
-    # 获得评论的点赞情况
     comment_like_list = []
-    for comment in comment_page_obj.object_list:
+    story_like = 'false'
+    # 获得片段的点赞情况
+    if request.user.is_authenticated:
+       
+        for frag in page_obj.object_list:
+            try:
+                Announcement.objects.get(
+                    optype='fraglike', targetid=frag.id, fromuser=request.user.email)
+                frag_like_list.append(frag.id)
+            except Announcement.DoesNotExist:
+                pass
+
+        # 获得故事的点赞情况
         try:
             Announcement.objects.get(
-                optype='commentlike', targetid=comment.id, fromuser=request.user.email)
-            # frag_like_list[frag.id] = 'true'
-            comment_like_list.append(comment.id)
+                optype='storylike', targetid=story_id, fromuser=request.user.email)
+            story_like = 'true'
         except Announcement.DoesNotExist:
-            pass
+            story_like = 'false'
+
+        # 获得评论的点赞情况
+        
+        for comment in comment_page_obj.object_list:
+            try:
+                Announcement.objects.get(
+                    optype='commentlike', targetid=comment.id, fromuser=request.user.email)
+                comment_like_list.append(comment.id)
+            except Announcement.DoesNotExist:
+                pass
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
+    
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
     if jump_page:
         scroll_to_type_id = 'commentscount'
@@ -146,6 +151,7 @@ def storypage(request, story_id):
         'frag_like_list': frag_like_list,
         'comment_like_list': comment_like_list,
         'story_like': story_like,
+        'lastfrag_id': lastfrag_id,
     }
     return render(request, 'story.html', story_dict)
 
@@ -158,10 +164,8 @@ def upload_story_page(request):
     return render(request, 'upload_story.html', index_dict)
 
 
-def deletefrag(request, frag_id, story_id, page):
-    # Fragment.objects.get(id=frag_id).delete()
-    frag_record = Fragment.objects.get(id=frag_id)
-    
+def deletefrag(request, frag_id, story_id):
+    frag_record = Fragment.objects.get(id=frag_id)   
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
@@ -185,12 +189,14 @@ def deletefrag(request, frag_id, story_id, page):
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, frag_each_page)
-    if paginator.num_pages < page:
-        page = paginator.num_pages
+    # if paginator.num_pages < page:
+    num_pages = paginator.num_pages
 
-    # 置 last_frag_id 为当前页最后一个片段
-    last_frag_id = paginator.page(page)[-1].id
-    append = str(story_id) + "?page=" + str(page) + \
+    # 置 last_frag_id 为最后一页最后一个片段
+    fraglist = paginator.page(num_pages).object_list
+    location = len(fraglist) - 1 
+    last_frag_id = fraglist[location].id
+    append = str(story_id) + "?page=" + str(num_pages) + \
         "&scroll_to_type_id=" + 'frag_' + str(last_frag_id)
     return HttpResponseRedirect("/story/" + append)
 
@@ -390,34 +396,16 @@ def system_message(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     
-    # index_dict['storylikem_list'] = Announcement.objects.filter(
-    #     optype='storylike', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['fraglikem_list'] = Announcement.objects.filter(
-    #     optype='fraglike', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['commentlikem_list'] = Announcement.objects.filter(
-    #     optype='commentlike', touser=request.user.email).order_by('-createtime')
-    
     index_dict['like_notifications'] = Announcement.objects.filter(
         optype__endswith='like', touser=request.user.email
     ).order_by('-createtime')
 
-    # TODO: 感觉deletefrag还在写那就之后再合并了
-    index_dict['addfragm_list'] = Announcement.objects.filter(
-        optype='addfrag', touser=request.user.email).order_by('-createtime')
+    index_dict['frag_notifications'] = Announcement.objects.filter(
+        optype__endswith='frag', touser=request.user.email
+    ).order_by('-createtime')
 
-    index_dict['deletefragm_list'] = Announcement.objects.filter(
-        optype='deletefrag', touser=request.user.email).order_by('-createtime')
-    
-    # index_dict['storycommentm_list'] = Announcement.objects.filter(
-    #     optype='storycomment', touser=request.user.email).order_by('-createtime')
-
-    # index_dict['fragcommentm_list'] = Announcement.objects.filter(
-    #     optype='fragcomment', touser=request.user.email).order_by('-createtime')
-
-    # 选择所有以comment结尾的，之后要注意optype的命名
-    # 或者使用optype__in=[?, ?, ?]这样也可以
+    # 注意optype的命名
+    # 或者使用optype__in=[?, ?, ?]
     index_dict['comment_notifications'] = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
     ).order_by('-createtime')

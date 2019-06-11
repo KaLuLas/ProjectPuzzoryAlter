@@ -120,7 +120,6 @@
 
             $(".storylikescount, .fraglikescount, .commentlikescount").on('click', function(){
                 {% if user.is_authenticated %}
-
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
@@ -176,7 +175,7 @@
 
             }); {% endif %}
 
-            {% if story.modified == True %}
+            
             var timer = {};
             $("#newFragBtn").click(function () {
                 // send lock message
@@ -217,20 +216,20 @@
                         }
                     }
                 });
-            }); {% else %}
-            $("#newFragBtn").click(function () {
-                $.ajax({
-                    url: "{% url 'lfcontent' %}",
-                    data: {
-                        'story_id':{{ story.id }}
-                    },
-                    dataType: "JSON",
-                    success: function (data) {
-                        $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
-                        $('#separate').hide();
-                    }
-                });
-            }); {% endif %}
+            }); 
+            // $("#newFragBtn").click(function () {
+            //     $.ajax({
+            //         url: "",
+            //         data: {
+            //             'story_id':
+            //         },
+            //         dataType: "JSON",
+            //         success: function (data) {
+            //             $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
+            //             $('#separate').hide();
+            //         }
+            //     });
+            // });
 
             $('#finishedSetBtn').on('click', function(){
                 $('#systemMessageContent').html('确认要完结吗？（完结后不可再开）');
@@ -239,7 +238,7 @@
                 <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
                 ');
                 $('#finishedConfirmBtn').on('click', function(){
-                    console.log("bind confirm successful");
+                    // console.log("bind confirm successful");
                     $.ajax({
                         url: "{% url 'finishedset' %}",
                         data: {
@@ -247,6 +246,10 @@
                         },
                     });
                 });
+            });
+
+            $('#deleteConfirmBtn').on('click', function(){
+                window.location.href = "{% url 'deletefrag' lastfrag_id story.id %}";                
             });
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
@@ -260,11 +263,13 @@
                 $('#replyToCommentID').val(comment_id);
             });
 
-            // 显示被锁消息后刷新页面
+            // 显示被锁消息后刷新页面          
             $('#systemMessage').on('hidden.bs.modal', function (e) {
                 // window.location.reload();
                 window.location.replace('{% url 'story_page' story.id %}');
             });
+            
+            
             
             $('.commentSubmitBtn').on('click', function(){
                 var form = $(this).parent().parent();
@@ -427,6 +432,28 @@
         </div>
     </div>
 
+    <!-- DELETE WINDOW -->
+    <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog" aria-labelledby="deleteMessageLabel"
+    aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteMessageLabel">提醒 ('/_ ') </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="deleteMessageContent">
+                    确认要敲除吗？（敲除后该片段将消失）
+                </div>
+                <div class="modal-footer">
+                    <button id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>                   
+                    <button id="deleteMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- LOGIN REQUEST -->
     {% if not user.is_authenticated %}
     <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
@@ -550,11 +577,14 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
-                                    {% if story.modified == True or user.email == story.email %}
-                                    <a href="{% url 'deletefrag' frag.id story.id page_obj.number %}"
-                                        class="fas fa-hammer"
+                                    {% if frag.id == lastfrag_id %}
+                                    {% if user.email == story.email or user.email == frag.email %}
+                                    <a id="deleteFragBtn"
+                                        class="fas fa-hammer" data-toggle="modal" data-target="#deleteMessage"
                                         style="font-size: 12px; margin-right:10px; color:rgb(48, 48, 48); text-decoration: none"
                                         title="敲除"></a>
+                                    
+                                    {% endif %}
                                     {% endif %}
                                     
                                     
