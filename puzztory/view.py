@@ -125,6 +125,7 @@ def storypage(request, story_id):
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
+    
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
     if jump_page:
         scroll_to_type_id = 'commentscount'

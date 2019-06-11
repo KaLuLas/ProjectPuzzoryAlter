@@ -249,6 +249,12 @@
                 });
             });
 
+            $('#deleteConfirmBtn').on('click', function(){
+                $.ajax({
+                    url: "{% url 'deletefrag' lastfrag_id story.id %}"
+                });
+            });
+
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
             $('.replyCommentBtn').on('click', function(){
                 // 回复时的滚动
@@ -443,9 +449,9 @@
                     确认要敲除吗？（敲除后该片段将消失）
                 </div>
                 <div class="modal-footer">
-                    <a href="{% url 'deletefrag' lastfrag_id story.id %}">
+                    <!-- <a href="{% url 'deletefrag' lastfrag_id story.id %}"> -->
                     <button id="deleteConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-                    </a>
+                    <!-- </a> -->
                     <button id="deleteMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
                 </div>
             </div>
