@@ -59,6 +59,10 @@ def homepage(request):
     index_dict['is_paginated'] = paginator.num_pages > 1
     return render(request, 'index.html', index_dict)
 
+def messagejump(request, optype, targetid):
+    pass
+    # if optype == 'addfrag'
+
 
 def storypage(request, story_id):
     frag_full_list = Fragment.objects.filter(
@@ -96,9 +100,10 @@ def storypage(request, story_id):
     frag_like_list = []
     comment_like_list = []
     story_like = 'false'
-    # 获得片段的点赞情况
+    
     if request.user.is_authenticated:
-       
+        
+        # 获得片段的点赞情况
         for frag in page_obj.object_list:
             try:
                 Announcement.objects.get(
@@ -230,7 +235,7 @@ def upload_frag(request, story_id):
 
         fragm_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
         # 修改通知表
-        announcement = Announcement(optype='addfrag', targetid=story_id,
+        announcement = Announcement(optype='addfrag', targetid=frag_record.id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=story_record.email, tonickname=story_record.nickname,
@@ -239,7 +244,7 @@ def upload_frag(request, story_id):
 
         
         fragm_text = '在你的片段：\n“' + last_frag.content + '” 下接续：\n' + frag_text
-        announcement = Announcement(optype='addfrag', targetid=last_frag.id,
+        announcement = Announcement(optype='addfrag', targetid=frag_record.id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=last_frag.email, tonickname=last_frag.nickname,
