@@ -250,13 +250,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><span class="ml-auto">{{story.likescount}}赞</span>
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto" aria-hidden="true">{{story.likescount}}</i>
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><span class="ml-auto">{{story.likescount}}赞</span>
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto" aria-hidden="true">{{story.likescount}}</i>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -273,13 +273,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-action d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><span class="ml-auto">Level{{user.experience}}</span>
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><span class="ml-auto">{{user.experience}}</span>
                         </a>
 
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-warning d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><span class="ml-auto">Level{{user.experience}}</span>
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><span class="ml-auto">{{user.experience}}</span>
                         </a>
                         {% endif %}
                         {% endfor %}
