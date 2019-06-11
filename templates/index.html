@@ -250,15 +250,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div><div class="menu-text">{{ story.title }}</div></div>
-                            <span>{{story.likescount}}赞</span>
+                            {{ forloop.counter }} {{ story.title }} {{story.likescount}}赞
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div><div class="menu-text">{{ story.title }}</div></div>
-                            <span>{{story.likescount}}赞</span>
+                            {{ forloop.counter }} {{ story.title }} {{story.likescount}}赞
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -275,16 +273,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div>
-                            <i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i><div class="menu-text">{{ user.nickname }}</div></div>
-                            <span>Exp {{user.experience}}</span>
+                            {{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}
                         </a>
+
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div>
-                            <i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i></i><div class="menu-text">{{ user.nickname }}</div></div>
-                            <span>Exp {{user.experience}}</span>
+                            {{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}
                         </a>
                         {% endif %}
                         {% endfor %}
