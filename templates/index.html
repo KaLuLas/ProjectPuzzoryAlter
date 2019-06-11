@@ -43,7 +43,7 @@
         }
 
         /* 边栏文本显示省略 */
-        .dropdown-menu-left .list-group-item nickname, .dropdown-menu-left .list-group-item title{
+        .dropdown-menu-left .list-group-item nickname, .dropdown-menu-left .list-group-item stitle{
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -238,7 +238,7 @@
     </div>
     {% endif %}
 
-    <div class="container-fluid" style="margin-top: 70px">
+    <div class="container-fluid d-flex flex-sm-wrap" style="margin-top: 70px">
         <div class="row">
             <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
                 <div class="dropdown-menu-left" style="margin-bottom: 30px; margin-top: 30px;">
@@ -250,14 +250,14 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div><title>{{ story.title }}</title></div>
+                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div><stitle>{{ story.title }}</stitle></div>
                             <span>{{story.likescount}}赞</span>
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div><title>{{ story.title }}</title></div>
+                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div><stitle>{{ story.title }}</stitle></div>
                             <span>{{story.likescount}}赞</span>
                         </a>
                         {% endif %}
