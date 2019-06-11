@@ -526,7 +526,43 @@
                                     </a>
                                     {% endif %}
                                 </div>
+                                {% if like_is_paginated %}
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        {% if like_page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?likepage={{ like_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    
+                                        {% for i in like_paginator.page_range %}
+                                            {% if i == like_page_bound.left or i == like_page_bound.right %}
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                            {% elif like_page_obj.number == i %}
+                                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                                            {% elif i > like_page_bound.left and i < like_page_bound.right %}
+                                            <li class="page-item"><a class="page-link" href="?likepage={{ i }}">{{i}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    
+                                        {% if like_page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?likepage={{ like_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                                {% endif %}
                             </div>
+
                             <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
                                 <div class="list-group">
                                     {% if frag_notifications %}
@@ -557,7 +593,43 @@
                                     {% endif %}
                                     
                                 </div>
+                                {% if frag_is_paginated %}
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        {% if frag_page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?fragpage={{ frag_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    
+                                        {% for i in frag_paginator.page_range %}
+                                            {% if i == frag_page_bound.left or i == frag_page_bound.right %}
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                            {% elif frag_page_obj.number == i %}
+                                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                                            {% elif i > frag_page_bound.left and i < frag_page_bound.right %}
+                                            <li class="page-item"><a class="page-link" href="?fragpage={{ i }}">{{i}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    
+                                        {% if frag_page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?fragpage={{ frag_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                                {% endif %}
                             </div>
+
                             <div class="tab-pane fade" id="commentmessage" role="tabpanel"
                                 aria-labelledby="commentmessage-tab">
                                 <div class="list-group">
@@ -583,6 +655,41 @@
                                     </a>
                                     {% endif %}
                                 </div>
+                                {% if comment_is_paginated %}
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        {% if comment_page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?commentpage={{ comment_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    
+                                        {% for i in comment_paginator.page_range %}
+                                            {% if i == comment_page_bound.left or i == comment_page_bound.right %}
+                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                            {% elif comment_page_obj.number == i %}
+                                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                                            {% elif i > comment_page_bound.left and i < comment_page_bound.right %}
+                                            <li class="page-item"><a class="page-link" href="?commentpage={{ i }}">{{i}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    
+                                        {% if frag_page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?coommentpage={{ comment_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                                {% endif %}
                             </div>
                         </div>
     
