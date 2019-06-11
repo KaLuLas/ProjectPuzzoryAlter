@@ -213,8 +213,11 @@ def deletefrag(request, frag_id, story_id):
         Announcement.objects.filter(optype='addfrag', targetid=frag_id).delete()
         try:
             Announcement.objects.filter(optype='deletefrag', targetid=frag_id).delete()
-        except:
+            Announcement.objects.filter(optype='fraglike', targetid=frag_id).delete()
+            Announcement.objects.filter(optype='fragcomment', targetid=frag_id).delete()
+        except Announcement.DoesNotExist:
             pass
+            
         frag_record.delete()
 
     except Fragment.DoesNotExist:
