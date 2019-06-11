@@ -191,7 +191,9 @@ def deletefrag(request, frag_id, story_id):
     num_pages = paginator.num_pages
 
     # 置 last_frag_id 为最后一页最后一个片段
-    last_frag_id = paginator.page(num_pages).object_list[-1].id
+    fraglist = paginator.page(num_pages).object_list
+    length = len(fraglist)
+    last_frag_id = fraglist[len-1].id
     append = str(story_id) + "?page=" + str(num_pages) + \
         "&scroll_to_type_id=" + 'frag_' + str(last_frag_id)
     return HttpResponseRedirect("/story/" + append)
