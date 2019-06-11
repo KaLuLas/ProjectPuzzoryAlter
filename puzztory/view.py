@@ -534,50 +534,41 @@ def lock(request):
     story = Story.objects.get(id=request_id)
     ret_dict = {}
     ret_dict['submittimelimit'] = edit_time
+    last_fragment = Fragment.objects.filter(storyid=request_id).order_by('-createtime')[0]
+    if len(last_fragment.content) > 20:
+        lfcontent_text = '...' + last_fragment.content[-20:]
+    else:
+        lfcontent_text = last_fragment.content
+    ret_dict['lfcontent'] = lfcontent_text
 
     # if the author forbade this story from editting
     if not story.modified:
-        ret_dict['lock'] = True
-        return JsonResponse(data=ret_dict)
-
-    # if story is not locked and user request to edit this story
-    if not story.lock:
-        story.lock = True
-        # get ready for countdown
-        story.editor = request.user.email
-        story.remains = edit_time
-        story.save()
-        ret_dict['lock'] = False
-        ret_dict['submitcountdown'] = story.remains
-
-        last_fragment = Fragment.objects.filter(
-            storyid=request_id).order_by('-createtime')[0]
-        if len(last_fragment.content) > 20:
-            lfcontent_text = '...' + last_fragment.content[-20:]
+        if request.user.email is not story.email:
+            ret_dict['allowed'] = False
         else:
-            lfcontent_text = last_fragment.content
-        ret_dict['lfcontent'] = lfcontent_text
-
-        # a timer thread to release lock after edit_time:seconds
-        args = [request_id]
-        timer = threading.Timer(1, count_down, args)
-        timer.start()
-    # if the same user requests for the second time
-    elif request.user.email == story.editor:
-        ret_dict['lock'] = False
-        ret_dict['submitcountdown'] = story.remains
-
-        last_fragment = Fragment.objects.filter(
-            storyid=request_id).order_by('-createtime')[0]
-        if len(last_fragment.content) > 20:
-            lfcontent_text = '...' + last_fragment.content[-20:]
-        else:
-            lfcontent_text = last_fragment.content
-        ret_dict['lfcontent'] = lfcontent_text
-    # if another user request arrives when it's locked
+            ret_dict['allowed'] = True
+            ret_dict['countdown'] = False
     else:
-        ret_dict['lock'] = True
-
+        if story.lock:
+            # if the same user requests for the second time
+            if request.user.email == story.editor:
+                ret_dict['allowed'] = True
+                ret_dict['submitcountdown'] = story.remains
+            # if another user request arrives when it's locked
+            else:
+                ret_dict['allowed'] = False
+        # if story is not locked and user request to edit this story
+        else:
+            story.lock = True
+            story.editor = request.user.email
+            story.remains = edit_time
+            story.save()
+            ret_dict['allowed'] = True
+            ret_dict['submitcountdown'] = story.remains
+            # a timer thread to release lock after edit_time:seconds
+            args = [request_id]
+            timer = threading.Timer(1, count_down, args)
+            timer.start()
     return JsonResponse(data=ret_dict)
 
 
