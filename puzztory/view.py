@@ -532,7 +532,7 @@ def lock(request):
 
     # if the author forbade this story from editting
     if not story.modified:
-        if request.user.email is not story.email:
+        if request.user.email != story.email:
             ret_dict['allowed'] = False
         else:
             ret_dict['allowed'] = True

@@ -194,9 +194,7 @@
                             $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
 
                             if(data['countdown']){
-                                $('#separate').show();
-                                $('#submitcountdown').html(data['submitcountdown']);
-                                $('#submittimelimit').html(data['submittimelimit']);
+                                $('#countdown').html(data['submitcountdown'] + '/' + data['submittimelimit']);
 
                                 for (var each in timer) {
                                     clearInterval(timer[each]);
@@ -209,14 +207,12 @@
                                         $('#newFragSubmitBtn').hide();
                                     } else {
                                         remains--;
-                                        $('#submitcountdown').html(remains);
+                                        $('#countdown').html(String(remains) + '/' + data['submittimelimit']);
                                     }
                                 }, 1000);
                             }
                             else{
-                                $('#separate').hide();
-                                $('#submitcountdown').html('');
-                                $('#submittimelimit').html('');
+                                $('#countdown').html('');
                             }
                         } else {
                             $('#systemMessageContent').html('当前不能修改这个故事(\'皿\')');
@@ -702,9 +698,7 @@
                                         name="fcontent" required></textarea>
                                 </div>
                                 <span class="row text-muted" style="margin-right: 10px; margin-left: 5px">
-                                    <small type="number" id="submitcountdown" style="color:brown"></small><small
-                                        id="separate" style="color:brown">/</small><small id="submittimelimit"
-                                        style="color:brown"></small>
+                                    <small type="number" id="countdown" style="color:brown"></small>
                                     <small class="ml-auto" id="fragWordCount">0</small><small
                                         id="fragWordLimit">/{% if story.fragwordslimit != -1 %}{{ story.fragwordslimit }}{% else %}500{% endif %}</small>
                                 </span>
