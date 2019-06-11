@@ -23,6 +23,7 @@ edit_time = 300
 paginator_view_range = 3
 story_each_page = 10
 frag_each_page = 7
+message_each_page = 8
 comment_each_page = 2
 
 frag_content_display_limit = 40
@@ -93,7 +94,7 @@ def storypage(request, story_id):
     paginator = Paginator(frag_full_list, frag_each_page)
     comment_paginator = Paginator(comment_full_list, comment_each_page)
     page = request.GET.get('page', 1)
-    # 翻页栏省略显示的一个尝试
+    # 翻页栏省略显示
     frag_page_bound = {
         'left': int(page) - paginator_view_range,
         'right': int(page) + paginator_view_range
@@ -161,14 +162,14 @@ def storypage(request, story_id):
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
-        'paginator': paginator,
-        'frag_page_bound': frag_page_bound,
-        'comment_paginator': comment_paginator,
-        'comment_page_bound': comment_page_bound,
-        'page_obj': page_obj,
-        'comment_page_obj': comment_page_obj,
         'is_paginated': is_paginated,
+        'paginator': paginator,
+        'page_obj': page_obj,
+        'frag_page_bound': frag_page_bound,
         'comment_is_paginated': comment_is_paginated,
+        'comment_paginator': comment_paginator,
+        'comment_page_obj': comment_page_obj,
+        'comment_page_bound': comment_page_bound,
         'comment_start_index': comment_start_index,
         'scroll_to_type_id': scroll_to_type_id,
         'finished_message': bool(finished_message),
@@ -427,19 +428,47 @@ def system_message(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     
-    index_dict['like_notifications'] = Announcement.objects.filter(
+    like_full_list = Announcement.objects.filter(
         optype__endswith='like', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
+    paginator = Paginator(like_full_list, message_each_page)
+    likepage = request.GET.get('likepage', 1)
+    index_dict['like_page_bound'] = {
+        'left': int(likepage) - paginator_view_range,
+        'right': int(likepage) + paginator_view_range
+    }
+    index_dict['like_page_obj'] = paginator.get_page(likepage)
+    index_dict['like_paginator'] = paginator
+    index_dict['like_is_paginated'] = paginator.num_pages > 1
 
-    index_dict['frag_notifications'] = Announcement.objects.filter(
+
+    fragnoti_full_list = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
+    paginator = Paginator(fragnoti_full_list, message_each_page)
+    fragpage = request.GET.get('fragpage', 1)
+    index_dict['frag_page_bound'] = {
+        'left': int(fragpage) - paginator_view_range,
+        'right': int(fragpage) + paginator_view_range
+    }
+    index_dict['frag_page_obj'] = paginator.get_page(fragpage)
+    index_dict['frag_paginator'] = paginator
+    index_dict['frag_is_paginated'] = paginator.num_pages > 1
 
     # 注意optype的命名
     # 或者使用optype__in=[?, ?, ?]
-    index_dict['comment_notifications'] = Announcement.objects.filter(
+    commentnoti_full_list = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
+    paginator = Paginator(commentnoti_full_list, message_each_page)
+    commentpage = request.GET.get('commentpage', 1)
+    index_dict['comment_page_bound'] = {
+        'left': int(commentpage) - paginator_view_range,
+        'right': int(commentpage) + paginator_view_range
+    }
+    index_dict['comment_page_obj'] = paginator.get_page(likepage)
+    index_dict['comment_paginator'] = paginator
+    index_dict['comment_is_paginated'] = paginator.num_pages > 1
 
     return render(request, 'index.html', index_dict)
 
