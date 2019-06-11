@@ -202,6 +202,7 @@ def deletefrag(request, frag_id, story_id):
                                         touser=story_record.email, tonickname=story_record.nickname,
                                         content=announce_content)
         announce.save()
+        Announcement.objects.filter(optype='addfrag', targetid=frag_id).delete()
 
         frag_record.delete()
 
