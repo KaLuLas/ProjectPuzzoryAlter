@@ -60,8 +60,18 @@ def homepage(request):
     return render(request, 'index.html', index_dict)
 
 def messagejump(request, optype, targetid):
-    pass
-    # if optype == 'addfrag'
+    if optype == 'storylike' or optype == 'storycomment':
+        return HttpResponseRedirect("/story/" + str(targetid))
+    if optype == 'fraglike' or optype == 'addfrag' or optype == 'fragcomment' or optype == 'deletefrag':
+        story_id = Fragment.objects.get(id=targetid).storyid
+        frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id') 
+        location = frag_full_list.index(targetid)
+        page = location // frag_each_page
+        append = str(story_id) + "?page=" + str(page) + \
+        "&scroll_to_type_id=" + 'frag_' + str(targetid)
+        return HttpResponseRedirect("/story/" + append)
+    if optype == 'commentlike' or optype == 'cocomment':
+        pass
 
 
 def storypage(request, story_id):
@@ -170,12 +180,13 @@ def upload_story_page(request):
 
 
 def deletefrag(request, frag_id, story_id):
-    frag_record = Fragment.objects.get(id=frag_id)   
+    frag_record = Fragment.objects.get(id=frag_id) 
+    targetfrag_id = Fragment.objects.filter(storyid=story_id).order_by('-createtime')[1].id  
     story_record = Story.objects.get(id=story_id)
     story_record.fragscount -= 1
     story_record.save()
     announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
-    announce = Announcement(optype='deletefrag', targetid=frag_id,
+    announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=frag_record.email, tonickname=frag_record.nickname,
@@ -183,7 +194,7 @@ def deletefrag(request, frag_id, story_id):
     
     announce.save()
     announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
-    announce = Announcement(optype='deletefrag', targetid=frag_id,
+    announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
                                     touser=story_record.email, tonickname=story_record.nickname,
