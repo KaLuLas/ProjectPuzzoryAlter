@@ -43,7 +43,7 @@
         }
 
         /* 边栏文本显示省略 */
-        .dropdown-menu-left .list-group-item {
+        .dropdown-menu-left .list-group-item nickname, .dropdown-menu-left .list-group-item title{
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -250,15 +250,15 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div>{{ story.title }}</div>
-                            <span>\ {{story.likescount}}赞</span>
+                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div><title>{{ story.title }}</title></div>
+                            <span>{{story.likescount}}赞</span>
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" style="font-size:14px">
-                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div>{{ story.title }}</div>
-                            <span>\ {{story.likescount}}赞</span>
+                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div><title>{{ story.title }}</title></div>
+                            <span>{{story.likescount}}赞</span>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -274,12 +274,18 @@
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-action" style="font-size:14px">
-                            <i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i>{{ user.nickname }}
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="font-size:14px">
+                            <div style="margin-right:10px" ><div class="badge badge-secondary" style="margin-right:10px">{{ forloop.counter }}</div>
+                            <i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i><nickname>{{ user.nickname }}</nickname></div>
+                            <span>Exp {{user.experience}}</span>
                         </a>
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-warning" style="font-size:14px"><i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i>{{ user.nickname }}</a>
+                            class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" style="font-size:14px">
+                            <div style="margin-right:10px" ><div class="badge badge-warning" style="margin-right:10px">{{ forloop.counter }}</div>
+                            <i class="fa fa-user-circle" style="margin-right:10px" aria-hidden="true"></i><nickname>{{ user.nickname }}</nickname></div>
+                            <span>Exp {{user.experience}}</span>
+                        </a>
                         {% endif %}
                         {% endfor %}
                         {% else %}
