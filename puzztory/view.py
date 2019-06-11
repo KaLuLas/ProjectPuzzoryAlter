@@ -428,17 +428,17 @@ def system_message(request):
     
     index_dict['like_notifications'] = Announcement.objects.filter(
         optype__endswith='like', touser=request.user.email
-    ).order_by('-createtime')
+    ).exclude(fromuser=request.user.email).order_by('-createtime')
 
     index_dict['frag_notifications'] = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
-    ).order_by('-createtime')
+    ).exclude(fromuser=request.user.email).order_by('-createtime')
 
     # 注意optype的命名
     # 或者使用optype__in=[?, ?, ?]
     index_dict['comment_notifications'] = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
-    ).order_by('-createtime')
+    ).exclude(fromuser=request.user.email).order_by('-createtime')
 
     return render(request, 'index.html', index_dict)
 
