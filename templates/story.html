@@ -412,8 +412,11 @@
                         href="{% url 'upload_story_page' %}" {% else %} data-toggle="modal" data-target="#loginRequest"
                         {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
                 <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
-                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
-                            class="fas fa-bell"></i></a></li>
+                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}>
+                        {% if message_count > 0 %} <i title="系统通知" class="fas fa-bell" style="color:orange"></i>
+                        {% else %} <i title="系统通知" class="fas fa-bell"></i>
+                        {% endif %}
+                    </a></li>
                 {% if not user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
