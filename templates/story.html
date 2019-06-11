@@ -52,7 +52,7 @@
             padding-left: 10px;
             padding-right: 10px;
             padding-top: 0px;
-            height: 30px;
+            /* height: 30px; */
         }
 
         .shadow {
@@ -307,10 +307,10 @@
 			                // console.log(jsonObj[i].nickname);  //取json中的值
                             $frag_comment = 
                             '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <p>\
+                                <div>\
                                     <strong>' + htmlEscape(jsonObj[i].nickname) + '</strong>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
-                                </p>\
+                                </div>\
                                 <small>' + '刚刚发布' + '</small>\
                             </li>';
                             $('#frag_comment_' + frag_id + ' .frag_comment_list').prepend($frag_comment);
@@ -344,10 +344,10 @@
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
                             '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <p>\
+                                <div>\
                                     <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
-                                </p>\
+                                </div>\
                                 <small>' + htmlEscape(jsonObj[i].createtime) + '</small>\
                             </li>';
                             comment_list.append($frag_comment);
