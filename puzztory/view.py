@@ -20,7 +20,7 @@ index_dict = {
 
 experience_dict = {
     'upload_story': 20,
-    'upload_frag': 2
+    'upload_frag': 5
 }
 
 # time allocated for user to add fragment: seconds
@@ -49,7 +49,7 @@ class CJsonEncoder(json.JSONEncoder):
 def update_experience(request, type):
     current_user = UserExtension.objects.get(id=request.user.id)
     current_user.experience += experience_dict[type]
-    current_user.level = round((round(math.sqrt(current_user.experience))) / 5)
+    current_user.level = round(math.sqrt(round(current_user.experience / 5)))
     current_user.save()
 
 
@@ -67,6 +67,15 @@ def homepage(request):
         'right': int(page) + paginator_view_range
     }
     page_obj = paginator.get_page(page)
+
+    if request.user.is_authenticated:
+        message_count = len(Announcement.objects
+                            .filter(touser=request.user.email)
+                            .exclude(fromuser=request.user.email))
+    else:
+        message_count = 0
+    index_dict['message_count'] = message_count
+
     index_dict['paginator'] = paginator
     index_dict['story_page_bound'] = story_page_bound
     index_dict['page_obj'] = page_obj
@@ -129,13 +138,11 @@ def storypage(request, story_id):
     page_obj = paginator.page(page)
     comment_page_obj = comment_paginator.page(comment_page)
     comment_start_index = comment_paginator.count - (comment_page_obj.number - 1) * comment_each_page
-    
+
     frag_like_list = []
     comment_like_list = []
-    story_like = 'false'
-    
+
     if request.user.is_authenticated:
-        
         # 获得片段的点赞情况
         for frag in page_obj.object_list:
             try:
@@ -144,7 +151,6 @@ def storypage(request, story_id):
                 frag_like_list.append(frag.id)
             except Announcement.DoesNotExist:
                 pass
-
         # 获得故事的点赞情况
         try:
             Announcement.objects.get(
@@ -152,9 +158,7 @@ def storypage(request, story_id):
             story_like = 'true'
         except Announcement.DoesNotExist:
             story_like = 'false'
-
         # 获得评论的点赞情况
-        
         for comment in comment_page_obj.object_list:
             try:
                 Announcement.objects.get(
@@ -162,6 +166,13 @@ def storypage(request, story_id):
                 comment_like_list.append(comment.id)
             except Announcement.DoesNotExist:
                 pass
+
+    if request.user.is_authenticated:
+        message_count = len(Announcement.objects
+                            .filter(touser=request.user.email)
+                            .exclude(fromuser=request.user.email))
+    else:
+        message_count = 0
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
@@ -190,6 +201,7 @@ def storypage(request, story_id):
         'comment_like_list': comment_like_list,
         'story_like': story_like,
         'lastfrag_id': lastfrag_id,
+        'message_count': message_count,
     }
     return render(request, 'story.html', story_dict)
 
@@ -199,6 +211,10 @@ def upload_story_page(request):
     index_dict['story_list'] = Story.objects.order_by('-likescount')[:5]
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     # return render(request, 'index.html', index_dict)
+    message_count = len(Announcement.objects
+                        .filter(touser=request.user.email)
+                        .exclude(fromuser=request.user.email))
+    index_dict['message_count'] = message_count
     return render(request, 'upload_story.html', index_dict)
 
 
@@ -449,7 +465,6 @@ def system_message(request):
     index_dict['like_paginator'] = paginator
     index_dict['like_is_paginated'] = paginator.num_pages > 1
 
-
     fragnoti_full_list = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
@@ -468,6 +483,10 @@ def system_message(request):
     commentnoti_full_list = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
+    message_count = len(Announcement.objects
+                        .filter(touser=request.user.email)
+                        .exclude(fromuser=request.user.email))
+    index_dict['message_count'] = message_count
     paginator = Paginator(commentnoti_full_list, message_each_page)
     commentpage = request.GET.get('commentpage', 1)
     index_dict['comment_page_bound'] = {

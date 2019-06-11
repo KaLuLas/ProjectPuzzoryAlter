@@ -18,7 +18,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
@@ -43,7 +43,7 @@
         }
 
         /* 边栏文本显示省略 */
-        .menu-text{
+        .menu-text {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -61,6 +61,16 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 7;
+        }
+
+        .point {
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 6px;
+            height: 6px;
+            background: red;
+            border-radius: 50%;
         }
 
         #systemMessageContainer .nav-tabs .nav-item.show .nav-link,
@@ -157,7 +167,8 @@
                     style="height: 50px">
             </a>
             <ul class="navbar-nav">
-                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
+                <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i
+                        class="fa fa-rocket" aria-hidden="true"></i></button>
                 <form class="form-inline" action="search#TODO">
                     <div class="input-group">
                         <input type="text" class="form-control"
@@ -175,8 +186,11 @@
                         href="{% url 'upload_story_page' %}" {% else %} data-toggle="modal" data-target="#loginRequest"
                         {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
                 <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
-                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
-                            class="fas fa-bell"></i></a></li>
+                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}>
+                        {% if message_count > 0 %} <i title="系统通知" class="fas fa-bell" style="color:orange"></i>
+                        {% else %} <i title="系统通知" class="fas fa-bell"></i>
+                        {% endif %}
+                    </a></li>
                 {% if not user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
                             class="fas fa-user"></i></a>
@@ -249,14 +263,20 @@
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-action d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto" aria-hidden="true">{{story.likescount}}</i>
+                            class="list-group-item list-group-item-action d-flex align-items-center"
+                            style="font-size:14px">
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span>
+                            <div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto"
+                                aria-hidden="true">{{story.likescount}}</i>
                         </a>
-                            
+
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
-                            class="list-group-item list-group-item-warning d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto" aria-hidden="true">{{story.likescount}}</i>
+                            class="list-group-item list-group-item-warning d-flex align-items-center"
+                            style="font-size:14px">
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span>
+                            <div class="menu-text"> {{ story.title }} </div><i class="fa fa-arrow-up ml-auto"
+                                aria-hidden="true">{{story.likescount}}</i>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -265,21 +285,27 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i class="fa fa-trophy"
-                            aria-hidden="true"></i> 用户排行</h1>
+                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i
+                            class="fa fa-trophy" aria-hidden="true"></i> 用户排行</h1>
                     <a class="dropdown-item list-group disabled" href="#">
                         {% if user_list %}
                         {% for user in user_list %}
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
-                        class="list-group-item list-group-item-action d-flex align-items-center" style="font-size:14px"> 
-                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><i class="fas fa-crown ml-auto" aria-hidden="true">{{user.level}}</i>
+                            class="list-group-item list-group-item-action d-flex align-items-center"
+                            style="font-size:14px">
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span>
+                            <div class="menu-text">{{ user.nickname }}</div><i class="fas fa-crown ml-auto"
+                                aria-hidden="true">{{user.level}}</i>
                         </a>
 
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
-                            class="list-group-item list-group-item-warning d-flex align-items-center" style="font-size:14px">
-                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span><div class="menu-text">{{ user.nickname }}</div><i class="fas fa-crown ml-auto" aria-hidden="true">{{user.level}}</i>
+                            class="list-group-item list-group-item-warning d-flex align-items-center"
+                            style="font-size:14px">
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span>
+                            <div class="menu-text">{{ user.nickname }}</div><i class="fas fa-crown ml-auto"
+                                aria-hidden="true">{{user.level}}</i>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -295,15 +321,14 @@
                 <div class="list-group story-list homepage" style="margin:30px">
                     {% if page_obj %}
                     {% for story in page_obj %}
-                    <a 
-                    href="{% url 'story_page' story.id %}" 
-                    
+                    <a href="{% url 'story_page' story.id %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">
                             <!-- if the story was already finished -->
                             {% if story.finished == True %}
-                            <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
+                            <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                            </div>
                             <!-- if the story cannot be modified -->
                             {% elif story.lock == True %}
                             <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
@@ -422,50 +447,52 @@
                     </a>
                     {% endif %}
                 </div>
-                    {% if is_paginated %}
+                {% if is_paginated %}
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         {% if page_obj.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i
+                                    class="fa fa-angle-left" aria-hidden="true"></i></a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
                         </li>
                         {% endif %}
 
                         {% for i in paginator.page_range %}
-                            {% if i == story_page_bound.left or i == story_page_bound.right %}
-                            <li class="page-item disabled"><a class="page-link">...</a></li>
-                            {% elif page_obj.number == i %}
-                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                            {% elif i > story_page_bound.left and i < story_page_bound.right %}
-                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
-                            {% endif %}
+                        {% if i == story_page_bound.left or i == story_page_bound.right %}
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        {% elif page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                        {% elif i > story_page_bound.left and i < story_page_bound.right %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                        {% endif %}
                         {% endfor %}
 
                         {% if page_obj.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i
+                                    class="fa fa-angle-right" aria-hidden="true"></i></a>
                         </li>
                         {% else %}
                         <li class="page-item disabled">
-                                <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                         </li>
                         {% endif %}
                     </ul>
                 </nav>
-                    {% endif %}
+                {% endif %}
 
                 {% elif display == 'upload_story' %}
                 <!-- DISPLAY UPLOAD STORY PAGE -->
                 {% block upload_story_page %}
-                {% endblock %} 
+                {% endblock %}
 
                 {% elif display == 'system_message' %}
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
-                
+
                 <div id="systemMessageContainer" style="margin-top:10px; margin-bottom: 30px">
                         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -573,7 +600,8 @@
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1">
                                             {% if notification.optype == 'addfrag' %}
-                                            <i style="color:olivedrab" class="fas fa-feather-alt" aria-hidden="true"></i>
+                                            <i style="color:olivedrab" class="fas fa-feather-alt"
+                                                aria-hidden="true"></i>
                                             {% elif notification.optype == 'deletefrag' %}
                                             <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
                                             {% endif %}
@@ -692,13 +720,14 @@
                                 {% endif %}
                             </div>
                         </div>
-    
+                    </div>
+
                 </div>
-                
+
                 {% endif %}
             </div>
         </div>
     </div>
 </body>
-    
+
 </html>
