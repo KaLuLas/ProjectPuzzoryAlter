@@ -68,18 +68,20 @@ def messagejump(request, optype, targetid):
     if optype in jump_to_frag:
         order = 'createtime'
         objects = Fragment.objects
-        objects_page = frag_each_page         
+        objects_page = frag_each_page
+        scrollto = 'frag'         
     elif optype in jump_to_comment:  
         order = '-createtime'
         objects = Comment.objects
         objects_page = comment_each_page
+        scrollto = 'comment'
 
     story_id = objects.get(id=targetid).storyid
     object_full_list = list(objects.filter(storyid=story_id).order_by(order).values('id'))  
     location = object_full_list.index({'id': targetid})
     page = location // objects_page + 1
     append = str(story_id) + "?page=" + str(page) + \
-    "&scroll_to_type_id=" + 'frag_' + str(targetid)
+    "&scroll_to_type_id=" + scrollto + '_' + str(targetid)
     return HttpResponseRedirect("/story/" + append)       
 
 
