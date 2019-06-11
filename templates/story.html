@@ -309,7 +309,7 @@
                             
 			                // console.log(jsonObj[i].nickname);  //取json中的值
                             $frag_comment = 
-                            '<li class="d-flex flex-row list-group-item justify-content-between" style="color:#B38952">\
+                            '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
                                 <div class="p-2 mr-auto">\
                                     <strong>' + htmlEscape(jsonObj[i].nickname) + '</strong>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
@@ -346,7 +346,7 @@
                         // console.log(data['comments']);
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
-                            '<li class="d-flex flex-row list-group-item justify-content-between" style="color:#B38952">\
+                            '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
                                 <div class="p-2 mr-auto">\
                                     <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
