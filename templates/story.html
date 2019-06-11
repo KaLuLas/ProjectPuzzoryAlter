@@ -52,7 +52,7 @@
             padding-left: 10px;
             padding-right: 10px;
             padding-top: 0px;
-            height: 30px;
+            /* height: 30px; */
         }
 
         .shadow {
@@ -274,14 +274,20 @@
             
             $('.commentSubmitBtn').on('click', function(){
                 var form = $(this).parent().parent();
-                var content = $(form).find('.content').val();
+                var $content = $(form).find('.content');
+                var content = $content.val();
                 var frag_id = $(form).find('.frag_id').val();
+
                 var text = content.trim();
-                if(text.length == 0) {$(form).find('.content').popover({
+                if(text.length == 0) {
+                    $content.val('');
+                    $content.popover({
                     container: 'body',
                     placement: 'top',
+                    trigger: 'manual',
                     content: '输入不能为空或者全空格'
                 });
+                    $content.popover('show');
                     return;
                 }
                 $.ajax({
@@ -301,10 +307,10 @@
 			                // console.log(jsonObj[i].nickname);  //取json中的值
                             $frag_comment = 
                             '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <p>\
+                                <div>\
                                     <strong>' + htmlEscape(jsonObj[i].nickname) + '</strong>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
-                                </p>\
+                                </div>\
                                 <small>' + '刚刚发布' + '</small>\
                             </li>';
                             $('#frag_comment_' + frag_id + ' .frag_comment_list').prepend($frag_comment);
@@ -338,10 +344,10 @@
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
                             '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <p>\
+                                <div>\
                                     <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
-                                </p>\
+                                </div>\
                                 <small>' + htmlEscape(jsonObj[i].createtime) + '</small>\
                             </li>';
                             comment_list.append($frag_comment);
@@ -612,7 +618,8 @@
                                     <form class="fragCommentForm">
                                         <div class="input-group input-group-sm mb-3">
                                             <input type="text" class="form-control content"
-                                                placeholder="在此输入你的评论...（小于150字，不支持换行）" data-toggle="popover">
+                                                placeholder="在此输入你的评论...（小于150字，不支持换行）" data-toggle="popover"
+                                                onkeydown="if(event.keyCode==13){return false;}">
                                             <input type="hidden" class="frag_id" value="{{ frag.id }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-light commentSubmitBtn" type="button">
