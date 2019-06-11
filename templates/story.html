@@ -81,7 +81,7 @@
             return escape[match]; }); 
         }
 
-        
+
         $(document).ready(function () {
             // 点击小火箭滚动到故事页的最上方，因为被导航条盖住了所以多滚一点
             $('#jumpTopBtn').click(function () {
@@ -94,9 +94,6 @@
             // 否则scroll_to_frag_id代表滚动到的片段id号
             {% if scroll_to_type_id != -1 %}
             $('html, body').scrollTop($("#{{ scroll_to_type_id }}").offset().top - 200);
-            // $('html, body').animate({
-            //         scrollTop: $("#{{ scroll_to_type_id }}").offset().top - 100
-            //     }, 500);
             {% endif %}
                 
             // 尝试django生成点赞图标置换代码
@@ -124,6 +121,11 @@
 
             $("#newfrag").on('input property change', function (e) {
                 $("#fragWordCount").html(e.target.value.length);
+                var text = this.value.trim();
+                this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
+            });
+
+            $(".content").on('input property change', function () {
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
             });
@@ -235,19 +237,6 @@
                     }
                 });
             }); 
-            // $("#newFragBtn").click(function () {
-            //     $.ajax({
-            //         url: "",
-            //         data: {
-            //             'story_id':
-            //         },
-            //         dataType: "JSON",
-            //         success: function (data) {
-            //             $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
-            //             $('#separate').hide();
-            //         }
-            //     });
-            // });
 
             $('#finishedSetBtn').on('click', function(){
                 $('#systemMessageContent').html('确认要完结吗？（完结后不可再开）');
@@ -293,6 +282,7 @@
                 var form = $(this).parent().parent();
                 var content = $(form).find('.content').val();
                 var frag_id = $(form).find('.frag_id').val();
+
                 $.ajax({
                     url: "{% url 'submit_frag_comment' %}",
                     data: {
@@ -623,7 +613,7 @@
                                     <form class="fragCommentForm">
                                         <div class="input-group input-group-sm mb-3">
                                             <input type="text" class="form-control content"
-                                                placeholder="在此输入你的评论...（小于150字，不支持换行）">
+                                                placeholder="在此输入你的评论...（小于150字，不支持换行）" required>
                                             <input type="hidden" class="frag_id" value="{{ frag.id }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-light commentSubmitBtn" type="button">
@@ -632,13 +622,6 @@
                                         </div>
                                     </form>
                                     <ul class="list-group frag_comment_list">
-                                        <!-- <li class="d-flex list-group-item justify-content-between">
-                                            <p>
-                                                <em>edwardchen</em>
-                                                <small style="margin-left: 10px; color:#E8A676">content</small>
-                                            </p>
-                                            <small>createtime</small>
-                                        </li> -->
                                     </ul>
                                 </div>
                             </div>
