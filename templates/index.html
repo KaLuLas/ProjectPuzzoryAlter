@@ -250,13 +250,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div class="menu-text">{{ forloop.counter }} {{ story.title }} {{story.likescount}}赞</div>
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span> <div class="menu-text"> [{{story.likescount}}赞] {{ story.title }} </div>
                         </a>
                             
                         {% else %}
                         <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div class="menu-text">{{ forloop.counter }} {{ story.title }} {{story.likescount}}赞</div>
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span> <div class="menu-text"> [{{story.likescount}}赞] {{ story.title }} </div>
                         </a>
                         {% endif %}
                         {% endfor %}
@@ -273,13 +273,13 @@
                         {% if forloop.counter > 1 %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div class="menu-text">{{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}</div>
+                            <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span> <div class="menu-text"> [LEVEL{{user.experience}}] {{ user.nickname }} </div>
                         </a>
 
                         {% else %}
                         <a href="{% url 'user_page' user.email %}"
                             class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center menu-text" style="font-size:14px">
-                            <div class="menu-text">{{ forloop.counter }} {{ user.nickname }} Exp {{user.experience}}</div>
+                            <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span> <div class="menu-text"> [LEVEL{{user.experience}}] {{ user.nickname }} </div>
                         </a>
                         {% endif %}
                         {% endfor %}
