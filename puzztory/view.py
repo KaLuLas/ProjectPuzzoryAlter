@@ -180,34 +180,37 @@ def upload_story_page(request):
 
 
 def deletefrag(request, frag_id, story_id):
-    frag_record = Fragment.objects.get(id=frag_id) 
-    targetfrag_id = Fragment.objects.filter(storyid=story_id).order_by('-createtime')[1].id  
-    story_record = Story.objects.get(id=story_id)
-    story_record.fragscount -= 1
-    story_record.save()
-    announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
-    announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
-                                    fromuser=request.user.email,
-                                    fromnickname=request.user.userextension.nickname,
-                                    touser=frag_record.email, tonickname=frag_record.nickname,
-                                    content=announce_content)
-    
-    announce.save()
-    announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
-    announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
-                                    fromuser=request.user.email,
-                                    fromnickname=request.user.userextension.nickname,
-                                    touser=story_record.email, tonickname=story_record.nickname,
-                                    content=announce_content)
-    announce.save()
+    try:
+        frag_record = Fragment.objects.get(id=frag_id) 
+        targetfrag_id = Fragment.objects.filter(storyid=story_id).order_by('-createtime')[1].id  
+        story_record = Story.objects.get(id=story_id)
+        story_record.fragscount -= 1
+        story_record.save()
+        announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
+        announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
+                                        fromuser=request.user.email,
+                                        fromnickname=request.user.userextension.nickname,
+                                        touser=frag_record.email, tonickname=frag_record.nickname,
+                                        content=announce_content)
 
-    frag_record.delete()
+        announce.save()
+        announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
+        announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
+                                        fromuser=request.user.email,
+                                        fromnickname=request.user.userextension.nickname,
+                                        touser=story_record.email, tonickname=story_record.nickname,
+                                        content=announce_content)
+        announce.save()
+
+        frag_record.delete()
+
+    except Fragment.DoesNotExist:
+        pass
+
     frag_full_list = Fragment.objects.filter(
         storyid=story_id).order_by('createtime')
     paginator = Paginator(frag_full_list, frag_each_page)
-    # if paginator.num_pages < page:
     num_pages = paginator.num_pages
-
     # 置 last_frag_id 为最后一页最后一个片段
     fraglist = paginator.page(num_pages).object_list
     location = len(fraglist) - 1 
@@ -215,7 +218,7 @@ def deletefrag(request, frag_id, story_id):
     append = str(story_id) + "?page=" + str(num_pages) + \
         "&scroll_to_type_id=" + 'frag_' + str(last_frag_id)
     return HttpResponseRedirect("/story/" + append)
-
+    
 
 def upload_frag(request, story_id):
     if request.method == 'POST':
