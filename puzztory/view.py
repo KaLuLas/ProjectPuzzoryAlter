@@ -65,24 +65,22 @@ def messagejump(request, optype, targetid):
     jump_to_comment = ['commentlike', 'cocomment', 'storycomment']
     if optype == 'storylike':
         return HttpResponseRedirect("/story/" + str(targetid))
-    if optype in jump_to_frag:
-        order = 'createtime'
-        objects = Fragment.objects
-        objects_page = frag_each_page
-        scrollto = 'frag'         
+    if optype in jump_to_frag:  
+        story_id = Fragment.objects.get(id=targetid).storyid
+        object_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id'))  
+        location = object_full_list.index({'id': targetid})
+        page = location // frag_each_page + 1
+        append = str(story_id) + "?page=" + str(page) + \
+        "&scroll_to_type_id=" + 'frag_' + str(targetid)
+        return HttpResponseRedirect("/story/" + append)       
     elif optype in jump_to_comment:  
-        order = '-createtime'
-        objects = Comment.objects
-        objects_page = comment_each_page
-        scrollto = 'comment'
-
-    story_id = objects.get(id=targetid).storyid
-    object_full_list = list(objects.filter(storyid=story_id).order_by(order).values('id'))  
-    location = object_full_list.index({'id': targetid})
-    page = location // objects_page + 1
-    append = str(story_id) + "?page=" + str(page) + \
-    "&scroll_to_type_id=" + scrollto + '_' + str(targetid)
-    return HttpResponseRedirect("/story/" + append)       
+        story_id = Comment.objects.get(id=targetid).storyid
+        comment_full_list = list(Comment.objects.filter(storyid=story_id).order_by('-createtime').values('id'))  
+        location = comment_full_list.index({'id': targetid})
+        page = location // comment_each_page + 1
+        append = str(story_id) + "?comment_page=" + str(page) + \
+        "&scroll_to_type_id=" + 'commemt_' + str(targetid)
+        return HttpResponseRedirect("/story/" + append)       
 
 
 def storypage(request, story_id):
@@ -155,7 +153,7 @@ def storypage(request, story_id):
     comment_is_paginated = comment_paginator.num_pages > 1
     
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
-    if jump_page:
+    if jump_page and scroll_to_type_id == -1:
         scroll_to_type_id = 'commentscount'
 
     # scroll_to_type_id == -1 代表不需要片段滚动
