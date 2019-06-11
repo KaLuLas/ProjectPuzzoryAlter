@@ -59,20 +59,28 @@ def homepage(request):
     index_dict['is_paginated'] = paginator.num_pages > 1
     return render(request, 'index.html', index_dict)
 
+
 def messagejump(request, optype, targetid):
-    if optype == 'storylike' or optype == 'storycomment':
+    jump_to_frag = ['fraglike', 'addfrag', 'deletefrag', 'fragcomment']
+    jump_to_comment = ['commentlike', 'cocomment', 'storycomment']
+    if optype == 'storylike':
         return HttpResponseRedirect("/story/" + str(targetid))
-    if optype == 'fraglike' or optype == 'addfrag' or optype == 'fragcomment' or optype == 'deletefrag':
-        story_id = Fragment.objects.get(id=targetid).storyid
-        frag_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id')) 
-        # print(frag_full_list)
-        location = frag_full_list.index({'id': targetid})
-        page = location // frag_each_page + 1
-        append = str(story_id) + "?page=" + str(page) + \
-        "&scroll_to_type_id=" + 'frag_' + str(targetid)
-        return HttpResponseRedirect("/story/" + append)
-    if optype == 'commentlike' or optype == 'cocomment':
-        pass
+    if optype in jump_to_frag:
+        order = 'createtime'
+        objects = Fragment.objects
+        objects_page = frag_each_page         
+    elif optype in jump_to_comment:  
+        order = '-createtime'
+        objects = Comment.objects
+        objects_page = comment_each_page
+
+    story_id = objects.get(id=targetid).storyid
+    object_full_list = list(objects.filter(storyid=story_id).order_by(order).values('id'))  
+    location = object_full_list.index({'id': targetid})
+    page = location // objects_page + 1
+    append = str(story_id) + "?page=" + str(page) + \
+    "&scroll_to_type_id=" + 'frag_' + str(targetid)
+    return HttpResponseRedirect("/story/" + append)       
 
 
 def storypage(request, story_id):
@@ -281,7 +289,7 @@ def submit_comment(request, story_id, page):
     if request.method == 'POST':
         comment_content = request.POST['content']
         # story_id = request.POST['story_id']
-        # 被回复评论的ID
+        # 被回复的评论ID
         comment_reply_id = request.POST['replyToCommentID']
         if comment_reply_id:
             comment_reply_id = comment_reply_id[str(comment_reply_id).find('_')+1:]
@@ -312,7 +320,7 @@ def submit_comment(request, story_id, page):
             tonickname = story.nickname
             title = story.title
             content = '在你的故事『' + title + '』中评论：\n' + comment_content
-            announcement = Announcement(optype='storycomment', targetid=story_id,
+            announcement = Announcement(optype='storycomment', targetid=comment.id,
                                         fromuser=request.user.email,
                                         fromnickname=request.user.userextension.nickname,
                                         touser=touser, tonickname=tonickname,
