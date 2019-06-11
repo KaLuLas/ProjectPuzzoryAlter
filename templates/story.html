@@ -284,8 +284,10 @@
                     $content.popover({
                     container: 'body',
                     placement: 'top',
+                    trigger: 'manual',
                     content: '输入不能为空或者全空格'
                 });
+                    $content.popover('show');
                     return;
                 }
                 $.ajax({
