@@ -92,36 +92,37 @@ def storypage(request, story_id):
     page_obj = paginator.page(page)
     comment_page_obj = comment_paginator.page(comment_page)
     comment_start_index = comment_paginator.count - (comment_page_obj.number - 1) * comment_each_page
-    # 获得片段的点赞情况
+    
     frag_like_list = []
-    for frag in page_obj.object_list:
-        try:
-            Announcement.objects.get(
-                optype='fraglike', targetid=frag.id, fromuser=request.user.email)
-            # frag_like_list[frag.id] = 'true'
-            frag_like_list.append(frag.id)
-        except Announcement.DoesNotExist:
-            # frag_like_list[frag.id] = 'false'
-            pass
-
-    # 获得故事的点赞情况
-    try:
-        Announcement.objects.get(
-            optype='storylike', targetid=story_id, fromuser=request.user.email)
-        story_like = 'true'
-    except Announcement.DoesNotExist:
-        story_like = 'false'
-
-    # 获得评论的点赞情况
     comment_like_list = []
-    for comment in comment_page_obj.object_list:
+    # 获得片段的点赞情况
+    if request.user.is_authenticated():
+       
+        for frag in page_obj.object_list:
+            try:
+                Announcement.objects.get(
+                    optype='fraglike', targetid=frag.id, fromuser=request.user.email)
+                frag_like_list.append(frag.id)
+            except Announcement.DoesNotExist:
+                pass
+
+        # 获得故事的点赞情况
         try:
             Announcement.objects.get(
-                optype='commentlike', targetid=comment.id, fromuser=request.user.email)
-            # frag_like_list[frag.id] = 'true'
-            comment_like_list.append(comment.id)
+                optype='storylike', targetid=story_id, fromuser=request.user.email)
+            story_like = 'true'
         except Announcement.DoesNotExist:
-            pass
+            story_like = 'false'
+
+        # 获得评论的点赞情况
+        
+        for comment in comment_page_obj.object_list:
+            try:
+                Announcement.objects.get(
+                    optype='commentlike', targetid=comment.id, fromuser=request.user.email)
+                comment_like_list.append(comment.id)
+            except Announcement.DoesNotExist:
+                pass
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1

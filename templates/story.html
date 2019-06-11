@@ -120,7 +120,6 @@
 
             $(".storylikescount, .fraglikescount, .commentlikescount").on('click', function(){
                 {% if user.is_authenticated %}
-
                 var id = $(this).attr('id')
                 $.ajax({
                     url: "{% url 'likescount' %}",
@@ -176,7 +175,7 @@
 
             }); {% endif %}
 
-            {% if story.modified == True %}
+            
             var timer = {};
             $("#newFragBtn").click(function () {
                 // send lock message
@@ -217,20 +216,20 @@
                         }
                     }
                 });
-            }); {% else %}
-            $("#newFragBtn").click(function () {
-                $.ajax({
-                    url: "{% url 'lfcontent' %}",
-                    data: {
-                        'story_id':{{ story.id }}
-                    },
-                    dataType: "JSON",
-                    success: function (data) {
-                        $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
-                        $('#separate').hide();
-                    }
-                });
-            }); {% endif %}
+            }); 
+            // $("#newFragBtn").click(function () {
+            //     $.ajax({
+            //         url: "",
+            //         data: {
+            //             'story_id':
+            //         },
+            //         dataType: "JSON",
+            //         success: function (data) {
+            //             $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
+            //             $('#separate').hide();
+            //         }
+            //     });
+            // });
 
             $('#finishedSetBtn').on('click', function(){
                 $('#systemMessageContent').html('确认要完结吗？（完结后不可再开）');
@@ -433,6 +432,7 @@
         </div>
     </div>
 
+    <!-- DELETE WINDOW -->
     <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog" aria-labelledby="deleteMessageLabel"
     aria-hidden="true">
         <div class="modal-dialog" role="document">
