@@ -288,6 +288,9 @@
                     content: '输入不能为空或者全空格'
                 });
                     $content.popover('show');
+                    $content.on('focus', function(){
+                        $content.popover('hide');
+                    });
                     return;
                 }
                 $.ajax({
@@ -306,12 +309,12 @@
                             
 			                // console.log(jsonObj[i].nickname);  //取json中的值
                             $frag_comment = 
-                            '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <div>\
+                            '<li class="d-flex flex-row list-group-item justify-content-between" style="color:#B38952">\
+                                <div class="p-2 mr-auto">\
                                     <strong>' + htmlEscape(jsonObj[i].nickname) + '</strong>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
                                 </div>\
-                                <small>' + '刚刚发布' + '</small>\
+                                <small class="p-2">' + '刚刚发布' + '</small>\
                             </li>';
                             $('#frag_comment_' + frag_id + ' .frag_comment_list').prepend($frag_comment);
 			            }
@@ -343,12 +346,12 @@
                         // console.log(data['comments']);
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
-                            '<li class="d-flex list-group-item justify-content-between" style="color:#B38952">\
-                                <div>\
+                            '<li class="d-flex flex-row list-group-item justify-content-between" style="color:#B38952">\
+                                <div class="p-2 mr-auto">\
                                     <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
                                     <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
                                 </div>\
-                                <small>' + htmlEscape(jsonObj[i].createtime) + '</small>\
+                                <small class="p-2">' + htmlEscape(jsonObj[i].createtime) + '</small>\
                             </li>';
                             comment_list.append($frag_comment);
 			            }
