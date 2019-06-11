@@ -9,12 +9,18 @@ import time
 from datetime import date, datetime
 import threading
 import json
+import math
 
 
 index_dict = {
     'display': 'homepage',
     'story_list': '',
     'user_list': ''
+}
+
+experience_dict = {
+    'upload_story': 20,
+    'upload_frag': 2
 }
 
 # time allocated for user to add fragment: seconds
@@ -37,6 +43,13 @@ class CJsonEncoder(json.JSONEncoder):
             return obj.strftime("%Y-%m-%d")
         else:
             return json.JSONEncoder.default(self, obj)
+
+
+def update_experience(request, type):
+    current_user = UserExtension.objects.get(id=request.user.id)
+    current_user.experience += experience_dict[type]
+    current_user.level = round(math.sqrt(round(current_user.experience / 5)))
+    current_user.save()
 
 
 def homepage(request):
@@ -197,18 +210,18 @@ def deletefrag(request, frag_id, story_id):
         story_record.save()
         announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
         announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
-                                        fromuser=request.user.email,
-                                        fromnickname=request.user.userextension.nickname,
-                                        touser=frag_record.email, tonickname=frag_record.nickname,
-                                        content=announce_content)
+                                fromuser=request.user.email,
+                                fromnickname=request.user.userextension.nickname,
+                                touser=frag_record.email, tonickname=frag_record.nickname,
+                                content=announce_content)
 
         announce.save()
         announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
         announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
-                                        fromuser=request.user.email,
-                                        fromnickname=request.user.userextension.nickname,
-                                        touser=story_record.email, tonickname=story_record.nickname,
-                                        content=announce_content)
+                                fromuser=request.user.email,
+                                fromnickname=request.user.userextension.nickname,
+                                touser=story_record.email, tonickname=story_record.nickname,
+                                content=announce_content)
         announce.save()
         Announcement.objects.filter(optype='addfrag', targetid=frag_id).delete()
         try:
@@ -259,9 +272,7 @@ def upload_frag(request, story_id):
         # story_record.updatetime = timezone.now
         story_record.updatetime = frag_record.createtime
         story_record.save()
-        current_user = UserExtension.objects.get(id=request.user.id)
-        current_user.experience += 2
-        current_user.save()
+        update_experience(request, 'upload_frag')
 
         fragm_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
         # 修改通知表
@@ -271,7 +282,6 @@ def upload_frag(request, story_id):
                                     touser=story_record.email, tonickname=story_record.nickname,
                                     content=fragm_text)
         announcement.save()
-
         
         fragm_text = '在你的片段：\n“' + last_frag.content + '” 下接续：\n' + frag_text
         announcement = Announcement(optype='addfrag', targetid=frag_record.id,
@@ -415,9 +425,7 @@ def upload_story(request):
         story_record.save()
         frag_record.storyid = story_record.id
         frag_record.save()
-        current_user = UserExtension.objects.get(id=request.user.id)
-        current_user.experience += 10
-        current_user.save()
+        update_experience(request, 'upload_story')
 
     return HttpResponseRedirect("/")
 

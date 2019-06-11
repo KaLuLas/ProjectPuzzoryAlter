@@ -73,7 +73,7 @@ class AuthUserUserPermissions(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),) 
+        unique_together = (('user', 'permission'),)
 
 
 class DjangoAdminLog(models.Model):
@@ -126,11 +126,11 @@ class Fragment(models.Model):
     email = models.CharField(max_length=150)
     content = models.CharField(max_length=500)
     createtime = models.DateTimeField(default=timezone.now)
-    likescount = models.IntegerField(default=0)  
-    commentscount = models.IntegerField(default=0)   
+    likescount = models.IntegerField(default=0)
+    commentscount = models.IntegerField(default=0)
     branchid = models.IntegerField(default=0)
-    branchleft = models.IntegerField(blank=True, null=True) 
-    branchright = models.IntegerField(blank=True, null=True) 
+    branchleft = models.IntegerField(blank=True, null=True)
+    branchright = models.IntegerField(blank=True, null=True)
 
 
 class Story(models.Model):
@@ -147,7 +147,7 @@ class Story(models.Model):
     finished = models.BooleanField(default=False)
     lock = models.BooleanField(default=False)
     modified = models.BooleanField(default=True)
-    likescount = models.IntegerField(default=0)  
+    likescount = models.IntegerField(default=0)
     commentscount = models.IntegerField(default=0)
     fragscount = models.IntegerField(default=1)
     fragscountlimit = models.IntegerField(default=-1)
@@ -173,7 +173,8 @@ class Comment(models.Model):
 
 
 class Announcement(models.Model):
-    optype = models.CharField(max_length=20) #addfrag/deletefrag/storylike/fraglike/commentlike/storycomment/fragcomment/cocomment
+    optype = models.CharField(max_length=20)
+    # addfrag/deletefrag/storylike/fraglike/commentlike/storycomment/fragcomment/cocomment
     targetid = models.IntegerField()
     fromuser = models.CharField(max_length=150)
     fromnickname = models.CharField(max_length=20)
