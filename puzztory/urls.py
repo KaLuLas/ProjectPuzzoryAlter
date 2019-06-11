@@ -40,7 +40,6 @@ urlpatterns = [
     path('likescount', view.likescount, name="likescount"),
     path('modifiedset', view.modifiedset, name="modifiedset"),
     path('finishedset', view.finishedset, name="finishedset"),
-    path('lfcontent', view.lfcontent, name="lfcontent"),
     path('deletefrag/<int:frag_id>/<int:story_id>',
          view.deletefrag, name="deletefrag"),
     path('messagejump/<optype>/<int:targetid>', view.messagejump, name="messagejump"),

@@ -433,20 +433,6 @@ def register_page(request):
     return render(request, 'register.html', register_dict)
 
 
-def lfcontent(request):
-    request_id = request.GET.get('story_id')
-    story = Story.objects.get(id=request_id)
-    ret_dict = {}
-    last_fragment = Fragment.objects.filter(
-        storyid=request_id).order_by('-createtime')[0]
-    if len(last_fragment.content) > 20:
-        lfcontent_text = '...' + last_fragment.content[-20:]
-    else:
-        lfcontent_text = last_fragment.content
-    ret_dict['lfcontent'] = lfcontent_text
-    return JsonResponse(data=ret_dict)
-
-
 def likescount(request):
     request_id = request.GET.get('id')
     liketype = request_id[str(request_id).find('_')+1:]
