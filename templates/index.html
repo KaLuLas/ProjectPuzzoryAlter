@@ -486,8 +486,8 @@
                             <div class="tab-pane fade show active" id="likemessage" role="tabpanel"
                                 aria-labelledby="likemessage-tab">
                                 <div class="list-group">
-                                    {% if like_notifications %}
-                                        {% for notification in like_notifications %}
+                                    {% if like_page_obj %}
+                                        {% for notification in like_page_obj %}
                                         <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                             class="list-group-item list-group-item-action flex-column align-items-start">
                                             {% if notification.optype == 'storylike' %}
@@ -565,8 +565,8 @@
 
                             <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
                                 <div class="list-group">
-                                    {% if frag_notifications %}
-                                    {% for notification in frag_notifications %}
+                                    {% if frag_page_obj %}
+                                    {% for notification in frag_page_obj %}
                                     <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
                                         
@@ -633,8 +633,8 @@
                             <div class="tab-pane fade" id="commentmessage" role="tabpanel"
                                 aria-labelledby="commentmessage-tab">
                                 <div class="list-group">
-                                    {% if comment_notifications %}
-                                    {% for notification in comment_notifications %}
+                                    {% if comment_page_obj %}
+                                    {% for notification in comment_page_obj %}
                                     <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start"
                                         id="comment_{{ comment.id }}">
