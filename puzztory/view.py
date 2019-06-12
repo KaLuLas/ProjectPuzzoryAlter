@@ -28,9 +28,9 @@ edit_time = 300
 # 分页栏可视范围为(当前页-range，当前页+range)之外省略号...
 paginator_view_range = 3
 story_each_page = 10
-frag_each_page = 7
-message_each_page = 8
-comment_each_page = 2
+frag_each_page = 10
+message_each_page = 2
+comment_each_page = 20
 
 frag_content_display_limit = 40
 comment_content_display_limit = 20
@@ -557,7 +557,7 @@ def likescount(request):
         # ret_dict['count'] = var.likescount
         # var.save()
         ret_dict['message'] = 'add'
-        
+
     ret_dict['count'] = var.likescount
     var.save()
     return JsonResponse(data=ret_dict)
