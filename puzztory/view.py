@@ -141,7 +141,8 @@ def storypage(request, story_id):
 
     frag_like_list = []
     comment_like_list = []
-
+    story_like = 'false'
+    
     if request.user.is_authenticated:
         # 获得片段的点赞情况
         for frag in page_obj.object_list:
