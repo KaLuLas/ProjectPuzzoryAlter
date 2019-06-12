@@ -348,9 +348,11 @@
                 }
             });
 
-            $('.fillCommentBtn').toggle(function(){
+            $('.fillCommentBtn').on('click',function(){
                 var frag_id = $(this).attr('target');
                 var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
+                $(this).toggleClass('opened');
+                if($(this).hasClass('opened')){
                 $.ajax({
                     url: "{% url 'show_frag_comment' %}",
                     data: {
@@ -380,10 +382,10 @@
                         // $(this).addClass('opened');
                     }
                 });
-            }, function(){
-                var frag_id = $(this).attr('target');
-                var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
-                comment_list.empty();
+                }
+                else{
+                    comment_list.empty();
+                }
             });
 
         });
