@@ -342,7 +342,7 @@
                     return;
                 }
                 else{
-                    var form = $('#storyCommentForm');
+                    var form = document.getElementById('storyCommentForm');
                     form.action = "{% url 'submit_comment' story.id page_obj.number %}";
                     form.submit();
                 }
