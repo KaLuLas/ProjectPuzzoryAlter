@@ -306,8 +306,11 @@ def upload_frag(request, story_id):
                                     touser=story_record.email, tonickname=story_record.nickname,
                                     content=fragm_text)
         announcement.save()
-        
-        fragm_text = '在你的片段：\n“' + last_frag.content + '” 下接续：\n' + frag_text
+        if len(last_frag.content) > announce_content_limit:
+            last_frag_content = last_frag.content[:announce_content_limit] + '...'
+        else:
+            last_frag_content = last_frag.content
+        fragm_text = '在你的片段：\n“' + last_frag_content + '” 下接续：\n' + frag_text
         announcement = Announcement(optype='addfrag', targetid=frag_record.id,
                                     fromuser=request.user.email,
                                     fromnickname=request.user.userextension.nickname,
