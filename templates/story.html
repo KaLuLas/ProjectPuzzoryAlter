@@ -324,7 +324,7 @@
             });
             
             //这个是故事评论的提交绑定
-            $('storyCommentSubmitBtn').on('click', function(){
+            $('#storyCommentSubmitBtn').on('click', function(){
                 // 评论输入栏
                 var $content = $('.storyCommentSubmit');
                 var text = $content.val().trim();
@@ -676,7 +676,7 @@
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     
-                                    <i class="far fa-comment fillCommentBtn closed" style="font-size: 12px" data-toggle="collapse"
+                                    <i class="far fa-comment fillCommentBtn" style="font-size: 12px" data-toggle="collapse"
                                     href="#frag_comment_{{ frag.id }}" target="{{ frag.id }}"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
@@ -850,7 +850,7 @@
                         <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" 
                         placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" data-toggle="popover"></textarea>
                         <div class="input-group-append">
-                            <button class="btn btn-info" type="submit" id="storyCommentSubmitBtn">发表评论</button>
+                            <button class="btn btn-info" type="button" id="storyCommentSubmitBtn">发表评论</button>
                         </div>
                     </div>
                     <input type="hidden" name="replyToCommentID" id="replyToCommentID">
