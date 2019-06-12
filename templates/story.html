@@ -326,7 +326,7 @@
             //这个是故事评论的提交绑定
             $('#storyCommentSubmitBtn').on('click', function(){
                 // 评论输入栏
-                var $content = $('.storyCommentSubmit');
+                var $content = $('#storyCommentSubmit');
                 var text = $content.val().trim();
                 if(text.length == 0) {
                     $content.popover({
