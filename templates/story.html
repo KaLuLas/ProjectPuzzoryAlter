@@ -203,7 +203,7 @@
                     success: function (data) {
                         if (data['allowed']) {
                             $('#newFragBtn').attr('data-target', '#addfrag');
-                            $('#lfcontent').html('现在的尾巴: ' + data['lfcontent']);
+                            $('#lfcontent').html('现在的尾巴: ' + htmlEscape(data['lfcontent']));
 
                             if(data['countdown']){
                                 $('#countdown').html(data['submitcountdown'] + '/' + data['submittimelimit']);
