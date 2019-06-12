@@ -96,7 +96,7 @@
             $('html, body').scrollTop($("#{{ scroll_to_type_id }}").offset().top - 200);
             {% endif %}
                 
-            // 尝试django生成点赞图标置换代码
+            // 生成点赞图标置换代码
             {% for frag_id in frag_like_list %}                        
             $('#{{ frag_id }}_fraglikescount').removeClass('far');
             $('#{{ frag_id }}_fraglikescount').addClass('fas');
