@@ -347,6 +347,45 @@
                     form.submit();
                 }
             });
+
+            $('.fillCommentBtn').toggle(function(){
+                var frag_id = $(this).attr('target');
+                var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
+                $.ajax({
+                    url: "{% url 'show_frag_comment' %}",
+                    data: {
+                        'frag_id': frag_id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    async: false,
+                    success: function(data){
+			            var jsonObj =  $.parseJSON(data['comments']);
+                        // console.log('success!');
+                        // console.log(data['comments']);
+                        $(this).html(jsonObj.length);
+			            for(var i = 0;i < jsonObj.length;i++){
+                            $frag_comment = 
+                            '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
+                                <div class="p-2 mr-auto">\
+                                    <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
+                                    <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
+                                </div>\
+                                <small class="p-2">' + htmlEscape(jsonObj[i].createtime) + '</small>\
+                            </li>';
+                            comment_list.append($frag_comment);
+			            }
+                        // $(this).removeClass('closed');
+                        // $(this).addClass('opened');
+                    }
+                });
+            }, function(){
+                var frag_id = $(this).attr('target');
+                var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
+                comment_list.empty();
+            });
+
         });
 
         
@@ -637,8 +676,8 @@
                                     <i id="{{ frag.id }}_fraglikescount" type="number" class="far fa-thumbs-up fraglikescount" style="font-size: 12px; margin-right:10px">
                                         {{ frag.likescount }}</i>
                                     
-                                    <i class="far fa-comment closed" style="font-size: 12px" data-toggle="collapse"
-                                    href="#frag_comment_{{ frag.id }}" onclick="fillFragComment('{{ frag.id }}', this)"> {{ frag.commentscount }}</i>
+                                    <i class="far fa-comment fillCommentBtn closed" style="font-size: 12px" data-toggle="collapse"
+                                    href="#frag_comment_{{ frag.id }}" target="{{ frag.id }}"> {{ frag.commentscount }}</i>
                                 </div>
                             </div>
                         </div>
@@ -808,7 +847,8 @@
                 <form id="storyCommentForm" action="" method="POST">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" placeholder="在此输入你的评论（小于等于150字）..." maxlength="150"></textarea>
+                        <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" 
+                        placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" data-toggle="popover"></textarea>
                         <div class="input-group-append">
                             <button class="btn btn-info" type="submit" id="storyCommentSubmitBtn">发表评论</button>
                         </div>
