@@ -366,7 +366,7 @@
 			            var jsonObj =  $.parseJSON(data['comments']);
                         // console.log('success!');
                         // console.log(data['comments']);
-                        $obj.html(jsonObj.length);
+                        $obj.html(' ' + jsonObj.length);
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
                             '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
