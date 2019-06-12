@@ -29,7 +29,7 @@ edit_time = 300
 paginator_view_range = 3
 story_each_page = 10
 frag_each_page = 10
-message_each_page = 2
+message_each_page = 10
 comment_each_page = 20
 
 frag_content_display_limit = 40
