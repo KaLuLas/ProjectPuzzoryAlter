@@ -351,8 +351,8 @@
             $('.fillCommentBtn').on('click',function(){
                 var frag_id = $(this).attr('target');
                 var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
-                $(this).toggleClass('opened');
-                if($(this).hasClass('opened')){
+                var $obj = $(this);
+                if($obj.hasClass('collapsed')){
                 $.ajax({
                     url: "{% url 'show_frag_comment' %}",
                     data: {
@@ -366,7 +366,7 @@
 			            var jsonObj =  $.parseJSON(data['comments']);
                         // console.log('success!');
                         // console.log(data['comments']);
-                        $(this).html(jsonObj.length);
+                        $obj.html(jsonObj.length);
 			            for(var i = 0;i < jsonObj.length;i++){
                             $frag_comment = 
                             '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
@@ -378,8 +378,6 @@
                             </li>';
                             comment_list.append($frag_comment);
 			            }
-                        // $(this).removeClass('closed');
-                        // $(this).addClass('opened');
                     }
                 });
                 }
@@ -389,48 +387,6 @@
             });
 
         });
-
-        
-        function fillFragComment(frag_id, obj){
-            var comment_list = $('#frag_comment_' + frag_id + ' .frag_comment_list');
-            if($(obj).hasClass('closed')){
-		// alert("open");
-                $.ajax({
-                    url: "{% url 'show_frag_comment' %}",
-                    data: {
-                        'frag_id': frag_id,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    type: "POST",
-                    dataType: "JSON",
-                    async: false,
-                    success: function(data){
-			            var jsonObj =  $.parseJSON(data['comments']);
-                        // console.log('success!');
-                        // console.log(data['comments']);
-                        $(obj).html(jsonObj.length);
-			            for(var i = 0;i < jsonObj.length;i++){
-                            $frag_comment = 
-                            '<li class="d-flex flex-row list-group-item justify-content-between flex-wrap" style="color:#B38952">\
-                                <div class="p-2 mr-auto">\
-                                    <em>' + htmlEscape(jsonObj[i].nickname) + '</em>\
-                                    <small style="margin-left: 10px; color:#E8A676">' + htmlEscape(jsonObj[i].content) + '</small>\
-                                </div>\
-                                <small class="p-2">' + htmlEscape(jsonObj[i].createtime) + '</small>\
-                            </li>';
-                            comment_list.append($frag_comment);
-			            }
-                        $(obj).removeClass('closed');
-                        $(obj).addClass('opened');
-                    }
-                });
-            }
-            else if($(obj).hasClass('opened')){
-                comment_list.empty();
-                $(obj).removeClass('opened');
-                $(obj).addClass('closed');
-            }
-        }
     </script>
 </head>
 
