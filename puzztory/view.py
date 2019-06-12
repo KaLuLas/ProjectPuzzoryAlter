@@ -552,6 +552,8 @@ def likescount(request):
         content = var_set.get(id=request_id).content
 
     var = var_set.get(id=request_id)
+    if len(content) > announce_content_limit:
+        content = content[:announce_content_limit] + '...'
     try:
         announce = Announcement.objects.get(
             optype=optype, targetid=request_id, fromuser=request.user.email)
