@@ -32,9 +32,9 @@ frag_each_page = 10
 message_each_page = 10
 comment_each_page = 20
 
-frag_content_display_limit = 40
-comment_content_display_limit = 20
-
+# frag_content_display_limit = 40
+# comment_content_display_limit = 20
+announce_content_limit = 35
 
 class CJsonEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -142,7 +142,7 @@ def storypage(request, story_id):
     frag_like_list = []
     comment_like_list = []
     story_like = 'false'
-    
+
     if request.user.is_authenticated:
         # 获得片段的点赞情况
         for frag in page_obj.object_list:
@@ -226,7 +226,11 @@ def deletefrag(request, frag_id, story_id):
         story_record = Story.objects.get(id=story_id)
         story_record.fragscount -= 1
         story_record.save()
-        announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record.content
+        if len(frag_record.content) > announce_content_limit:
+            frag_record_content = frag_record.content[:announce_content_limit] + '...'
+        else:
+            frag_record_content = frag_record.content
+        announce_content = '删除了你在故事『' + story_record.title + '』中的片段：\n' + frag_record_content
         announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
                                 fromuser=request.user.email,
                                 fromnickname=request.user.userextension.nickname,
@@ -234,7 +238,7 @@ def deletefrag(request, frag_id, story_id):
                                 content=announce_content)
 
         announce.save()
-        announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record.content
+        announce_content = '删除了你的故事『' + story_record.title + '』中的片段：\n' + frag_record_content
         announce = Announcement(optype='deletefrag', targetid=targetfrag_id,
                                 fromuser=request.user.email,
                                 fromnickname=request.user.userextension.nickname,
@@ -292,6 +296,8 @@ def upload_frag(request, story_id):
         story_record.save()
         update_experience(request, 'upload_frag')
 
+        if len(frag_text) > announce_content_limit:
+            frag_text = frag_text[:announce_content_limit] + '...'
         fragm_text = '在你的故事『' + story_record.title + '』中接续：\n' + frag_text
         # 修改通知表
         announcement = Announcement(optype='addfrag', targetid=frag_record.id,
@@ -338,11 +344,13 @@ def submit_comment(request, story_id, page):
             tonickname = reply_comment.nickname
             reply_comment_content = reply_comment.content
             # 原评论长度过长，缩略显示
-            if len(reply_comment_content) > comment_content_display_limit:
-                reply_comment_content = reply_comment_content[:comment_content_display_limit] + '...'
+            if len(reply_comment_content) > announce_content_limit:
+                reply_comment_content = reply_comment_content[:announce_content_limit] + '...'
             # 在通知栏里就不显示“>>***”那部分了
             comment_content = comment_content[str(comment_content).find(' ')+1:]
-            content = '在你的评论『' + reply_comment_content + '』下回复：\n' + comment_content
+            if len(comment_content) > announce_content_limit:
+                comment_content = comment_content[:announce_content_limit] + '...'
+            content = '在你的评论 “' + reply_comment_content + '” 下回复：\n' + comment_content
             announcement = Announcement(optype='cocomment', targetid=comment_reply_id,
                                         fromuser=request.user.email,
                                         fromnickname=request.user.userextension.nickname,
@@ -383,10 +391,13 @@ def submit_frag_comment(request):
         frag.commentscount += 1
         frag.save()
         # 通知栏中不显示过长的内容
-        if len(frag.content) > frag_content_display_limit:
-            frag_content = frag.content[:frag_content_display_limit] + '...'
+        if len(frag.content) > announce_content_limit:
+            frag_content = frag.content[:announce_content_limit] + '...'
         else:
             frag_content = frag.content
+        
+        if len(content) > announce_content_limit:
+            content = content[:announce_content_limit]
         notification_content = '在你的片段：\n“' + frag_content + '”下评论：\n' + content
         # 添加到通知表中
         announcement = Announcement(
