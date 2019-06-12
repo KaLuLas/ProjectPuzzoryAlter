@@ -262,7 +262,7 @@
                 var comment_id = $(this).parent().parent().attr('id');
                 // 读取正确的评论序列号
                 var reply_to_index = $('#' + comment_id + ' #commentIdx').html();
-                $('#commentSubmit').val('>>' + reply_to_index + ' ');
+                $('#storyCommentSubmit').val('>>' + reply_to_index + ' ');
                 $('#replyToCommentID').val(comment_id);
             });
 
@@ -272,7 +272,8 @@
                 window.location.replace('{% url 'story_page' story.id %}');
             });
             
-            $('.commentSubmitBtn').on('click', function(){
+            // 这个是片段评论不要搞错了
+            $('.fragCommentSubmitBtn').on('click', function(){
                 var form = $(this).parent().parent();
                 var $content = $(form).find('.content');
                 var content = $content.val();
@@ -322,6 +323,30 @@
                 });
             });
             
+            //这个是故事评论的提交绑定
+            $('storyCommentSubmitBtn').on('click', function(){
+                // 评论输入栏
+                var $content = $('.storyCommentSubmit');
+                var text = $content.val().trim();
+                if(text.length == 0) {
+                    $content.popover({
+                    container: 'body',
+                    placement: 'top',
+                    trigger: 'manual',
+                    content: '输入不能为空或者全空格'
+                });
+                    $content.popover('show');
+                    $content.on('focus', function(){
+                        $content.popover('hide');
+                    });
+                    return;
+                }
+                else{
+                    var form = $('#storyCommentForm');
+                    form.action = "{% url 'submit_comment' story.id page_obj.number %}";
+                    form.submit();
+                }
+            });
         });
 
         
@@ -629,7 +654,7 @@
                                                 onkeydown="if(event.keyCode==13){return false;}">
                                             <input type="hidden" class="frag_id" value="{{ frag.id }}">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-light commentSubmitBtn" type="button">
+                                                <button class="btn btn-outline-light fragCommentSubmitBtn" type="button">
                                                     <i class="fa fa-plane" aria-hidden="true">发送</i></button>
                                             </div>
                                         </div>
@@ -773,12 +798,12 @@
                 <p><strong id="commentscount">{{ story.commentscount }}</strong>评论</p>
                 <!-- NOTE: form-control! 好用！ -->
                 <hr>
-                <form id="commentForm" action="{% url 'submit_comment' story.id page_obj.number %}" method="POST">
+                <form id="storyCommentForm" action="" method="POST">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <textarea class="form-control" type="text" name="content" id="commentSubmit" rows="3" placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" required></textarea>
+                        <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" placeholder="在此输入你的评论（小于等于150字）..." maxlength="150"></textarea>
                         <div class="input-group-append">
-                            <button class="btn btn-info" type="submit" id="submitCommentBtn">发表评论</button>
+                            <button class="btn btn-info" type="submit" id="storyCommentSubmitBtn">发表评论</button>
                         </div>
                     </div>
                     <input type="hidden" name="replyToCommentID" id="replyToCommentID">
