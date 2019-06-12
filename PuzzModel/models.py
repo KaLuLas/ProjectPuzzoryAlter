@@ -152,6 +152,8 @@ class Story(models.Model):
     fragscount = models.IntegerField(default=1)
     fragscountlimit = models.IntegerField(default=-1)
     fragwordslimit = models.IntegerField(default=-1) 
+    # keywords = models.CharField(max_length=100, blank=True, null=True)
+    # rules = models.CharField(max_length=300, blank=True, null=True)
 
 
 class UserExtension(User):

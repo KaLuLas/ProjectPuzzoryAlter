@@ -169,7 +169,7 @@
             <ul class="navbar-nav">
                 <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i
                         class="fa fa-rocket" aria-hidden="true"></i></button>
-                <form class="form-inline" action="search#TODO">
+                <form class="form-inline" action="#">
                     <div class="input-group">
                         <input type="text" class="form-control"
                             placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
@@ -554,7 +554,7 @@
                                     {% endif %}
                                 </div>
                                 {% if like_is_paginated %}
-                                <nav aria-label="Page navigation example">
+                                <nav aria-label="Page navigation example" style="margin-top:40px">
                                     <ul class="pagination justify-content-center">
                                         {% if like_page_obj.has_previous %}
                                         <li class="page-item">
@@ -622,7 +622,7 @@
                                     
                                 </div>
                                 {% if frag_is_paginated %}
-                                <nav aria-label="Page navigation example">
+                                <nav aria-label="Page navigation example" style="margin-top:40px">
                                     <ul class="pagination justify-content-center">
                                         {% if frag_page_obj.has_previous %}
                                         <li class="page-item">
@@ -684,7 +684,7 @@
                                     {% endif %}
                                 </div>
                                 {% if comment_is_paginated %}
-                                <nav aria-label="Page navigation example">
+                                <nav aria-label="Page navigation example" style="margin-top:40px">
                                     <ul class="pagination justify-content-center">
                                         {% if comment_page_obj.has_previous %}
                                         <li class="page-item">

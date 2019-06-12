@@ -28,9 +28,9 @@ edit_time = 300
 # 分页栏可视范围为(当前页-range，当前页+range)之外省略号...
 paginator_view_range = 3
 story_each_page = 10
-frag_each_page = 7
-message_each_page = 8
-comment_each_page = 2
+frag_each_page = 10
+message_each_page = 10
+comment_each_page = 20
 
 frag_content_display_limit = 40
 comment_content_display_limit = 20
@@ -141,7 +141,8 @@ def storypage(request, story_id):
 
     frag_like_list = []
     comment_like_list = []
-
+    story_like = 'false'
+    
     if request.user.is_authenticated:
         # 获得片段的点赞情况
         for frag in page_obj.object_list:
@@ -520,7 +521,6 @@ def likescount(request):
     request_id = request.GET.get('id')
     liketype = request_id[str(request_id).find('_')+1:]
     request_id = request_id[:str(request_id).find('_')]
-    # sof = request.GET.get('sof')
     ret_dict = {}
     if liketype == 'storylikescount':
         var_set = Story.objects
@@ -542,10 +542,10 @@ def likescount(request):
         announce = Announcement.objects.get(
             optype=optype, targetid=request_id, fromuser=request.user.email)
         announce.delete()
-        var = var_set.get(id=request_id)
+        # var = var_set.get(id=request_id)
         var.likescount -= 1
-        ret_dict['count'] = var.likescount
-        var.save()
+        # ret_dict['count'] = var.likescount
+        # var.save()
         ret_dict['message'] = 'delete'
     except Announcement.DoesNotExist:
         announce_record = Announcement(
@@ -553,12 +553,14 @@ def likescount(request):
             fromnickname=request.user.userextension.nickname, touser=var.email, tonickname=var.nickname, content=content)
         
         announce_record.save()
-        var = var_set.get(id=request_id)
+        # var = var_set.get(id=request_id)
         var.likescount += 1
-        ret_dict['count'] = var.likescount
-        var.save()
+        # ret_dict['count'] = var.likescount
+        # var.save()
         ret_dict['message'] = 'add'
 
+    ret_dict['count'] = var.likescount
+    var.save()
     return JsonResponse(data=ret_dict)
 
 
