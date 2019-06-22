@@ -506,7 +506,7 @@ def system_message(request):
         optype__endswith='comment', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
     message_count = len(Announcement.objects
-                        .filter(touser=request.user.email)
+                        .filter(touser=request.user.email, read=False)
                         .exclude(fromuser=request.user.email))
     index_dict['message_count'] = message_count
     paginator = Paginator(commentnoti_full_list, message_each_page)
