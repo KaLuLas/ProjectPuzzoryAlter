@@ -487,6 +487,8 @@ def system_message(request):
     index_dict['like_paginator'] = paginator
     index_dict['like_is_paginated'] = paginator.num_pages > 1
 
+    index_dict['unread_likes_count'] = len(like_full_list.exclude(read=True).values())
+
     fragnoti_full_list = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
@@ -499,6 +501,9 @@ def system_message(request):
     index_dict['frag_page_obj'] = paginator.get_page(fragpage)
     index_dict['frag_paginator'] = paginator
     index_dict['frag_is_paginated'] = paginator.num_pages > 1
+
+    index_dict['unread_fragnoti_count'] = len(fragnoti_full_list.exclude(read=True).values())
+
 
     # 注意optype的命名
     # 或者使用optype__in=[?, ?, ?]
@@ -518,6 +523,8 @@ def system_message(request):
     index_dict['comment_page_obj'] = paginator.get_page(likepage)
     index_dict['comment_paginator'] = paginator
     index_dict['comment_is_paginated'] = paginator.num_pages > 1
+
+    index_dict['unread_commentnoti_count'] = len(commentnoti_full_list.exclude(read=True).values())
 
     return render(request, 'index.html', index_dict)
 
