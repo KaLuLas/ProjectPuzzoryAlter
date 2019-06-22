@@ -257,6 +257,11 @@
 
             // 偷懒实现：用户回复评论时会在输入栏里加上一块前缀
             $('.replyCommentBtn').on('click', function(){
+                // 用户未登录时不允许回复故事评论
+                {% if not user.is_authenticated %}
+                $("#loginRequest").modal('show');
+                return;
+                {% endif %}
                 // 回复时的滚动
                 $('html, body').scrollTop($("#commentscount").offset().top - 200);
                 var comment_id = $(this).parent().parent().attr('id');
@@ -645,14 +650,24 @@
                                 <div class="collapse" id="frag_comment_{{ frag.id }}">
                                     <form class="fragCommentForm">
                                         <div class="input-group input-group-sm mb-3">
+                                            {% if user.is_authenticated %}
                                             <input type="text" class="form-control content"
                                                 placeholder="在此输入你的评论...（小于150字，不支持换行）" data-toggle="popover"
                                                 onkeydown="if(event.keyCode==13){return false;}">
-                                            <input type="hidden" class="frag_id" value="{{ frag.id }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-light fragCommentSubmitBtn" type="button">
                                                     <i class="fa fa-plane" aria-hidden="true">发送</i></button>
                                             </div>
+                                            {% else %}
+                                            <input type="text" class="form-control content"
+                                                placeholder="在此输入你的评论...（小于150字，不支持换行）" data-toggle="popover"
+                                                onkeydown="if(event.keyCode==13){return false;}" disabled="disabled">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-light fragCommentSubmitBtn" type="button" disabled="disabled">
+                                                    <i class="fa fa-plane" aria-hidden="true">发送</i></button>
+                                            </div>
+                                            {% endif %}
+                                            <input type="hidden" class="frag_id" value="{{ frag.id }}">
                                         </div>
                                     </form>
                                     <ul class="list-group frag_comment_list">
@@ -805,11 +820,19 @@
                 <form id="storyCommentForm" action="" method="POST">
                     {% csrf_token %}
                     <div class="input-group mb-3">
+                        {% if user.is_authenticated %}
                         <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" 
                         placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" data-toggle="popover"></textarea>
                         <div class="input-group-append">
                             <button class="btn btn-info" type="button" id="storyCommentSubmitBtn">发表评论</button>
                         </div>
+                        {% else %}
+                        <textarea class="form-control" type="text" name="content" id="storyCommentSubmit" rows="3" 
+                        placeholder="在此输入你的评论（小于等于150字）..." maxlength="150" data-toggle="popover" disabled="disabled"></textarea>
+                        <div class="input-group-append">
+                            <button class="btn btn-info" type="button" id="storyCommentSubmitBtn" disabled="disabled">发表评论</button>
+                        </div>
+                        {% endif %}
                     </div>
                     <input type="hidden" name="replyToCommentID" id="replyToCommentID">
                 </form>
