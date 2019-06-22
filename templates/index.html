@@ -119,6 +119,13 @@
             // } else {
             //     window.name = "";
             // }
+            // 清空通知的new标识
+            $('.annoucement').click(function(){
+                $newTag = $(this).find('em');
+                if($newTag.html() == '(new!)'){
+                    $newTag.html('');
+                }
+            });
 
             $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
@@ -538,7 +545,7 @@
                                     {% if like_page_obj %}
                                         {% for notification in like_page_obj %}
                                         <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
-                                            class="list-group-item list-group-item-action flex-column align-items-start">
+                                            class="list-group-item list-group-item-action flex-column align-items-start annoucement">
                                             <div class="d-flex w-100 align-items-center justify-content-between">
                                                 <h5 class="mb-1"> 
                                                 {% if notification.optype == 'storylike' %}
@@ -616,7 +623,7 @@
                                     {% if frag_page_obj %}
                                     {% for notification in frag_page_obj %}
                                     <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
-                                        class="list-group-item list-group-item-action flex-column align-items-start">
+                                        class="list-group-item list-group-item-action flex-column align-items-start annoucement">
                                         
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1">
@@ -689,7 +696,7 @@
                                     {% if comment_page_obj %}
                                     {% for notification in comment_page_obj %}
                                     <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
-                                        class="list-group-item list-group-item-action flex-column align-items-start"
+                                        class="list-group-item list-group-item-action flex-column align-items-start annoucement"
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
