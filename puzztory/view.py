@@ -36,6 +36,7 @@ comment_each_page = 20
 # comment_content_display_limit = 20
 announce_content_limit = 35
 
+
 class CJsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
@@ -70,7 +71,7 @@ def homepage(request):
 
     if request.user.is_authenticated:
         message_count = len(Announcement.objects
-                            .filter(touser=request.user.email)
+                            .filter(touser=request.user.email, read=False)
                             .exclude(fromuser=request.user.email))
     else:
         message_count = 0
@@ -176,7 +177,7 @@ def storypage(request, story_id):
 
     if request.user.is_authenticated:
         message_count = len(Announcement.objects
-                            .filter(touser=request.user.email)
+                            .filter(touser=request.user.email, read=False)
                             .exclude(fromuser=request.user.email))
     else:
         message_count = 0

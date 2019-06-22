@@ -439,7 +439,7 @@
                         {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
                 <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
                         {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}>
-                        {% if message_count > 0 %} <i title="系统通知" class="fas fa-bell" style="color:orange"></i>{{ message_count }}
+                        {% if message_count > 0 %} <i title="系统通知" class="fas fa-bell" style="color:orange">{{ message_count }}</i>
                         {% else %} <i title="系统通知" class="fas fa-bell"></i>
                         {% endif %}
                     </a></li>
