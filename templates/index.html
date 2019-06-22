@@ -531,26 +531,25 @@
                                             class="list-group-item list-group-item-action flex-column align-items-start">
                                             {% if notification.optype == 'storylike' %}
                                             <div class="d-flex w-100 align-items-center justify-content-between">
-                                                <h5 class="mb-1"> <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                <h5 class="mb-1"> 
+                                                {% if notification.optype == 'storylike' %}
+                                                <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                {% elif notification.optype == 'fraglike' %}
+                                                <i style="color:rgb(211, 123, 152)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                {% elif notification.optype == 'commentlike' %}
+                                                <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                                {% endif %}
                                                 {{ notification.fromnickname }}</h5>
+                                                {% if not notification.read %}
+                                                <span class="badge badge-primary">new!</span>
+                                                {% endif %}
                                                 <small style="margin-left: 10px">{{ notification.createtime }}</small>
-                                            </div>            
+                                            </div>
+                                            {% if notification.optype == 'storylike' %}            
                                             <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ notification.content }}』中点了赞</p>
-                                            
                                             {% elif notification.optype == 'fraglike' %}
-                                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                                <h5 class="mb-1"> <i style="color:rgb(211, 123, 152)" class="fab fa-gratipay" aria-hidden="true"></i>
-                                                {{ notification.fromnickname }}</h5>
-                                                <small style="margin-left: 10px">{{ notification.createtime }}</small>
-                                            </div>
                                             <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的片段：<br/>"{{ notification.content }}"<br/>点了赞</p>
-                                            
                                             {% elif notification.optype == 'commentlike' %}
-                                            <div class="d-flex w-100 align-items-center justify-content-between">
-                                                <h5 class="mb-1"> <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
-                                                {{ notification.fromnickname }}</h5>
-                                                <small style="margin-left: 10px">{{ notification.createtime }}</small>
-                                            </div>
                                             <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的评论：<br/>"{{ notification.content }}"<br/>点了赞</p>
                                             {% endif %}
                                         </a>
@@ -618,6 +617,9 @@
                                             <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
                                             {% endif %}
                                             {{ notification.fromnickname }}</h5>
+                                            {% if not notification.read %}
+                                            <span class="badge badge-primary">new!</span>
+                                            {% endif %}
                                             <small style="margin-left: 10px">{{ notification.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>            
@@ -681,6 +683,9 @@
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
                                                 {{ notification.fromnickname }}</h5>
+                                                {% if not notification.read %}
+                                                <span class="badge badge-primary">new!</span>
+                                                {% endif %}
                                             <small style="margin-left: 10px" id="commentIdx">{{ notification.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>
