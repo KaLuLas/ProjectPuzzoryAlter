@@ -538,10 +538,11 @@
                                                 {% elif notification.optype == 'commentlike' %}
                                                 <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
                                                 {% endif %}
-                                                {{ notification.fromnickname }}</h5>
+                                                {{ notification.fromnickname }}
                                                 {% if not notification.read %}
-                                                <span class="badge badge-primary">new!</span>
+                                                <em>(new!)</em>
                                                 {% endif %}
+                                                </h5>
                                                 <small style="margin-left: 10px">{{ notification.createtime }}</small>
                                             </div>
                                             {% if notification.optype == 'storylike' %}            
@@ -615,10 +616,11 @@
                                             {% elif notification.optype == 'deletefrag' %}
                                             <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
                                             {% endif %}
-                                            {{ notification.fromnickname }}</h5>
+                                            {{ notification.fromnickname }}
                                             {% if not notification.read %}
-                                            <span class="badge badge-primary">new!</span>
+                                            <em>(new!)</em>
                                             {% endif %}
+                                            </h5>
                                             <small style="margin-left: 10px">{{ notification.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>            
@@ -681,10 +683,11 @@
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
                                             <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
-                                                {{ notification.fromnickname }}</h5>
+                                                {{ notification.fromnickname }}
                                                 {% if not notification.read %}
-                                                <span class="badge badge-primary">new!</span>
+                                                <em>(new!)</em>
                                                 {% endif %}
+                                                </h5>
                                             <small style="margin-left: 10px" id="commentIdx">{{ notification.createtime }}</small>
                                         </div>
                                         <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>
