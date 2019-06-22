@@ -109,7 +109,15 @@
                 input.value = "";
             }
         }
+
         $(document).ready(function () {
+            if (window.name != "bencalie") {
+                location.reload();
+                window.name = "bencalie";
+            } else {
+                window.name = "";
+            }
+
             $('#jumpTopBtn').click(function () {
                 $('html, body').animate({
                     scrollTop: $("#load-content").offset().top - 100
