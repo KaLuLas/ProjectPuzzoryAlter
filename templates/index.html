@@ -497,24 +497,27 @@
                         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="likemessage-tab" data-toggle="tab" href="#likemessage"
-                                    role="tab" aria-controls="likemessage" aria-selected="true">收到的赞</a>
-                                {% if unread_likes_count > 0 %}
-                                <span class="badge badge-light">{{ unread_likes_count }}</span>
-                                {% endif %}
+                                    role="tab" aria-controls="likemessage" aria-selected="true">收到的赞
+                                    {% if unread_likes_count > 0 %}
+                                    <span class="badge badge-light">{{ unread_likes_count }}</span>
+                                    {% endif %}
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="fragmessage-tab" data-toggle="tab" href="#fragmessage" role="tab"
-                                    aria-controls="fragmessage" aria-selected="false">得到的接续</a>
-                                {% if unread_fragnoti_count > 0 %}
-                                <span class="badge badge-light">{{ unread_fragnoti_count }}</span>
-                                {% endif %}
+                                    aria-controls="fragmessage" aria-selected="false">得到的接续
+                                    {% if unread_fragnoti_count > 0 %}
+                                    <span class="badge badge-light">{{ unread_fragnoti_count }}</span>
+                                    {% endif %}
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="commentmessage-tab" data-toggle="tab" href="#commentmessage"
-                                    role="tab" aria-controls="commentmessage" aria-selected="false">收到的评论</a>
-                                {% if unread_commentnoti_count > 0 %}
-                                <span class="badge badge-light">{{ unread_commentnoti_count }}</span>
-                                {% endif %}
+                                    role="tab" aria-controls="commentmessage" aria-selected="false">收到的评论
+                                    {% if unread_commentnoti_count > 0 %}
+                                    <span class="badge badge-light">{{ unread_commentnoti_count }}</span>
+                                    {% endif %}
+                                </a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
