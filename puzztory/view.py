@@ -83,7 +83,13 @@ def homepage(request):
     return render(request, 'index.html', index_dict)
 
 
-def messagejump(request, optype, targetid):
+def messagejump(request, notification_id):
+    announce = Announcement.objects.get(id=notification_id)
+    optype = announce.optype
+    targetid = announce.targetid
+    # 跳转即已读：简单的实现
+    announce.read = True
+    announce.save()
     jump_to_frag = ['fraglike', 'addfrag', 'deletefrag', 'fragcomment']
     jump_to_comment = ['commentlike', 'cocomment', 'storycomment']
     if optype == 'storylike':

@@ -42,6 +42,6 @@ urlpatterns = [
     path('finishedset', view.finishedset, name="finishedset"),
     path('deletefrag/<int:frag_id>/<int:story_id>',
          view.deletefrag, name="deletefrag"),
-    path('messagejump/<optype>/<int:targetid>', view.messagejump, name="messagejump"),
+    path('messagejump/<int:notification_id>', view.messagejump, name="messagejump"),
     path('admin/', admin.site.urls),
 ]
