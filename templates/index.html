@@ -594,7 +594,7 @@
                                 <div class="list-group">
                                     {% if frag_page_obj %}
                                     {% for notification in frag_page_obj %}
-                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
+                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start">
                                         
                                         <div class="d-flex w-100 align-items-center justify-content-between">
@@ -663,7 +663,7 @@
                                 <div class="list-group">
                                     {% if comment_page_obj %}
                                     {% for notification in comment_page_obj %}
-                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.optype notification.targetid %}"
+                                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}"
                                         class="list-group-item list-group-item-action flex-column align-items-start"
                                         id="comment_{{ comment.id }}">
                                         <div class="d-flex w-100 align-items-center justify-content-between">
