@@ -47,7 +47,8 @@
     $(document).ready(function(){
         $('.user-frag').on('mouseover', function(){
             var $obj = $(this).find('.frag-title');
-            console.log("ajax request sent" + String($obj.attr('id')))
+            console.log("ajax request sent" + String($obj.attr('id')));
+            // TODO: 用haveclass addclass的方法
             $.ajax({
                 url: "{% url 'get_frag_title' %}",
                 data: {
