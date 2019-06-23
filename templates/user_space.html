@@ -78,14 +78,70 @@
                     success: function(data){
                         if(data['authenticated']){
                             $('#password-helpId').html('密码验证成功');
-                            $('#password-helpId').attr('style', 'color: greenyellow');
+                            $('#password-helpId').attr('style', 'color: #28a745');
+                            $('#submit-newpwd-btn').removeClass('disabled');
                         }
                         else{
                             $('#password-helpId').html('密码验证错误');
-                            $('#password-helpId').attr('style', 'color: crimson');
+                            $('#password-helpId').attr('style', 'color: #bd2130');
+                            $('#submit-newpwd-btn').addClass('disabled');
                         }
                 }
             });
+        });
+        $('#new-password').on('input propertychange', function(){
+            if($('#password').val() == $(this).val()){
+                $('#new-password-helpId').html('不能与旧密码相同');
+                $('#new-password-helpId').attr('style', 'color: #bd2130');
+                $('#submit-newpwd-btn').addClass('disabled');
+            }
+            else{
+                $('#new-password-helpId').html('');
+                $('#submit-newpwd-btn').removeClass('disabled');
+            }
+            if($('#repeat-password').val() != $(this).val()){
+                $('#repeat-password-helpId').html('请与新密码保持一致');
+                $('#repeat-password-helpId').attr('style', 'color: #bd2130');
+                $('#submit-newpwd-btn').addClass('disabled');
+            }
+            else{
+                $('#repeat-password-helpId').html('');
+                $('#submit-newpwd-btn').removeClass('disabled');
+            }
+        });
+        $('#repeat-password').on('input propertychange', function(){
+            if($('#new-password').val() != $(this).val()){
+                $('#repeat-password-helpId').html('请与新密码保持一致');
+                $('#repeat-password-helpId').attr('style', 'color: #bd2130');
+                $('#submit-newpwd-btn').addClass('disabled');
+            }
+            else{
+                $('#repeat-password-helpId').html('');
+                $('#submit-newpwd-btn').removeClass('disabled');
+            }
+        });
+        $('#submit-newpwd-btn').on('click', function(){
+            $.ajax({
+                    url: "{% url 'reset_password' %}",
+                    data: {
+                        'old_pwd': $('#password').val(),
+                        'new-pwd': $('#repeat-password').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data){
+                        if(data['authenticated']){
+                            alert('密码修改成功:D');
+                            window.location.replace('{% url 'user_page' user.id %}');
+                        }
+                        else{
+                            $('#password-helpId').html('密码验证错误');
+                            $('#password-helpId').attr('style', 'color: #bd2130');
+                            $('#submit-newpwd-btn').addClass('disabled');
+                        }
+                    }
+                });
         });
     });
 </script>
@@ -345,37 +401,33 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <div class="input-group" style="margin-top: 10px">
-                        <div class="input-group-prepend">
-                                <span class="input-group-text" id="">old</span>
-                              </div>
+                    <div class="input-group align-items-center" style="margin-top: 10px">
+                        <span>输入旧密码：</span>
                         <input
                           class="form-control" name="p" id="password" aria-describedby="password-helpId" 
-                          type="password" placeholder="在此输入你的旧密码...">
+                          type="password" placeholder="在此输入你的旧密码..." required>
                     </div>
-                    <small id="password-helpId" class="form-text text-muted text-right"></small>
-                    <div class="input-group" style="margin-top: 20px">
-                        <div class="input-group-prepend">
-                                <span class="input-group-text" id="">new</span>
-                              </div>
+                    <small id="password-helpId" class="form-text text-right"></small>
+                    <div class="input-group align-items-center" style="margin-top: 20px">
+                        <span>输入新密码：</span>
                         <input
                           class="form-control" name="p" id="new-password" aria-describedby="new-password-helpId" 
-                          type="password" placeholder="在此输入你的新密码...">
+                          type="password" placeholder="在此输入你的新密码..." required maxlength="20"
+                          onfocus="$('#new-password-helpId').html('')">
                     </div>
-                    <small id="new-password-helpId" class="form-text text-muted text-right"></small>
-                    <div class="input-group" style="margin-top: 20px">
-                        <div class="input-group-prepend">
-                                <span class="input-group-text" id="">new</span>
-                              </div>
+                    <small id="new-password-helpId" class="form-text text-right">密码长度不得长于20字符</small>
+                    <div class="input-group align-items-center" style="margin-top: 20px">
+                        <span>重复新密码：</span>
                         <input
                           class="form-control" name="p" id="repeat-password" aria-describedby="repeat-password-helpId" 
-                          type="password" placeholder="再次确认你的新密码...">
+                          type="password" placeholder="再次确认你的新密码..." required maxlength="20"
+                          onfocus="$('#repeat-password-helpId').html('')">
                     </div>
-                    <small id="repeat-password-helpId" class="form-text text-muted text-right"></small>
+                    <small id="repeat-password-helpId" class="form-text text-right">密码长度不得长于20字符</small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">提交</button>
+                <button id="submit-newpwd-btn" type="button" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>
