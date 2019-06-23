@@ -50,7 +50,7 @@ class CJsonEncoder(json.JSONEncoder):
 def update_experience(request, type):
     current_user = UserExtension.objects.get(id=request.user.id)
     current_user.experience += experience_dict[type]
-    current_user.level = round(math.sqrt(round(current_user.experience / 5)))
+    current_user.level = math.floor(math.sqrt(round(current_user.experience / 5)))
     current_user.save()
 
 
