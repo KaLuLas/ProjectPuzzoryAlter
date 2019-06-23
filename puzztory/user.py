@@ -2,7 +2,7 @@ from PuzzModel.models import Fragment, UserExtension, Story, Announcement, Comme
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db import IntegrityError
 
 
@@ -86,7 +86,15 @@ def userpage(request, id):
         'storytitle_': 'storytitle_',
     }
     # 当时真的该设计外键的，哭了
-    for frag in user_frag_list:
-        story = Story.objects.get(id=frag.storyid)
-        index_dict['storytitle_' + str(frag.storyid)] = story.title
+
     return render(request, "user_space.html", index_dict)
+
+
+def get_title_byid(request):
+    frag_id = request.POST['frag_id']
+    frag = Fragment.objects.get(id=frag_id)
+    story = Story.objects.get(id=frag.storyid)
+    ret_dict = {
+        'title': story.title,
+    }
+    return JsonResponse(data=ret_dict)

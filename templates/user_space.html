@@ -42,6 +42,25 @@
             margin-top: -50px;
         }
 </style>
+<script>
+    // 绝望的实现方式
+    $(document).ready(function(){
+        $('.frag-title').ready(function(){
+            $.ajax({
+                url: "{% url 'get_frag_title' %}",
+                data: {
+                    'frag_id': $(this).attr('id'),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                type: "POST",
+                dataType: "JSON",
+                success: function(data){
+                    $(this).html(data['title']);
+                }
+            })
+        });
+    });
+</script>
 <div class="row justify-content-center">
     <div class="col-sm-11">
         <div class="card" style="margin-top:30px">
@@ -178,7 +197,7 @@
                                     <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
                                         class="card list-group-item list-group-item-action flex-column align-items-start">
                                             <div class="card-body" style="padding:10px">
-                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> {{ storytitle_|add:frag.storyid }}</h5>
+                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> <span class="frag-title" id="{{ frag.id }}">{{ frag.storyid }}</span></h5>
                                                 <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
                                                 <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                                     <div class="col-md-auto align-self-center">
