@@ -65,7 +65,7 @@
             }
         });
         // 验证用户输入的旧密码正确性
-        $('#password').on('blur'), function(){
+        $('#password').on('blur', function(){
             var $obj = $(this);
             $.ajax({
                 url: "{% url 'check_password' %}",
@@ -86,7 +86,7 @@
                         }
                 }
             });
-        }
+        });
     });
 </script>
 <div class="row justify-content-center">
@@ -349,27 +349,27 @@
                         <div class="input-group-prepend">
                                 <span class="input-group-text" id="">old</span>
                               </div>
-                        <input type="text"
+                        <input
                           class="form-control" name="p" id="password" aria-describedby="password-helpId" 
-                          type="password" placeholder="在此处输入你的旧密码...">
+                          type="password" placeholder="在此输入你的旧密码...">
                     </div>
                     <small id="password-helpId" class="form-text text-muted text-right"></small>
                     <div class="input-group" style="margin-top: 20px">
                         <div class="input-group-prepend">
                                 <span class="input-group-text" id="">new</span>
                               </div>
-                        <input type="text"
+                        <input
                           class="form-control" name="p" id="new-password" aria-describedby="new-password-helpId" 
-                          type="password" placeholder="在此处输入你的新密码...">
+                          type="password" placeholder="在此输入你的新密码...">
                     </div>
                     <small id="new-password-helpId" class="form-text text-muted text-right"></small>
                     <div class="input-group" style="margin-top: 20px">
                         <div class="input-group-prepend">
                                 <span class="input-group-text" id="">new</span>
                               </div>
-                        <input type="text"
+                        <input
                           class="form-control" name="p" id="repeat-password" aria-describedby="repeat-password-helpId" 
-                          type="password" placeholder="在此处重复确认你的新密码...">
+                          type="password" placeholder="再次确认你的新密码...">
                     </div>
                     <small id="repeat-password-helpId" class="form-text text-muted text-right"></small>
                 </div>
