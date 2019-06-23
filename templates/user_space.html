@@ -94,15 +94,18 @@
                         {{ owner.experience }}/{{ experience_upper }}</div>
                 </div>
             </p>
+            {% if owner.email == user.email %}
             <div class="row">
                 <a href="#" class="card-link btn btn-light" style="margin-left:10px">更改昵称（还没做）</a>
                 <a href="#" class="card-link btn btn-light">修改密码（还没做）</a>
             </div>
+            {% endif %}
           </div>
         </div>
         <div class="card custom-nav" style="margin-top:20px">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
+                    {% if owner.email == user.email %}
                     <li class="nav-item">
                         <a class="nav-link active" id="story-tab" data-toggle="tab" href="#story" role="tab" aria-controls="story" aria-selected="true">我的故事</a>
                     </li>
@@ -112,6 +115,20 @@
                     <li class="nav-item">
                         <a class="nav-link" id="like-tab" data-toggle="tab" href="#like" role="tab" aria-controls="like" aria-selected="false">我的赞</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" id="story-tab" data-toggle="tab" href="#story" role="tab" aria-controls="story"
+                            aria-selected="true">TA的故事</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="frag-tab" data-toggle="tab" href="#frag" role="tab" aria-controls="frag"
+                            aria-selected="false">TA的接续</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="like-tab" data-toggle="tab" href="#like" role="tab" aria-controls="like"
+                            aria-selected="false">TA的赞</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="card-body">
