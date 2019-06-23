@@ -44,7 +44,7 @@
 </style>
 <div class="row justify-content-center">
     <div class="col-sm-11">
-        <div class="card">
+        <div class="card" style="margin-top:30px">
             <div class="card-body row">
                 <div class="col-1">
                     <div id="{{ owner.id }}_avator">
@@ -64,7 +64,7 @@
                 </div>
             
           </div>
-          <div class="card-body">
+          <div class="card-body" style="padding-top:0px">
             <p class="card-text">
                 <div class="progress" style="margin-bottom: 10px">
                     <div class="progress-bar" role="progressbar"
@@ -72,11 +72,13 @@
                         {{ owner.experience }}/{{ experience_upper }}</div>
                 </div>
             </p>
-            <a href="#" class="card-link">更改昵称</a>
-            <a href="#" class="card-link">修改密码</a>
+            <div class="row">
+                <a href="#" class="card-link btn btn-light" style="margin-left:10px">更改昵称（还没做）</a>
+                <a href="#" class="card-link btn btn-light">修改密码（还没做）</a>
+            </div>
           </div>
         </div>
-        <div class="card text-center">
+        <div class="card text-center" style="margin-top:20px">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
