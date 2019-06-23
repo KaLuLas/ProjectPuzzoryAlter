@@ -78,24 +78,102 @@
             </div>
           </div>
         </div>
-        <div class="card text-center" style="margin-top:20px">
+        <div class="card text-center custom-nav" style="margin-top:20px">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
+                        <a class="nav-link active" id="story-tab" data-toggle="tab" href="#story" role="tab" aria-controls="story" aria-selected="true">我的故事</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" id="frag-tab" data-toggle="tab" href="#frag" role="tab" aria-controls="frag" aria-selected="false">我的接续</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" id="like-tab" data-toggle="tab" href="#like" role="tab" aria-controls="like" aria-selected="false">我的赞</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="story" role="tabpanel" aria-labelledby="story-tab"> 
+                                <div class="list-group story-list homepage" style="margin:30px">
+                                        {% if user_story_list %}
+                                        {% for story in user_story_list %}
+                                        <a href="{% url 'story_page' story.id %}"
+                                            class=" list-group-item list-group-item-action flex-column align-items-start">
+                                            <!-- d-flex : made <small> stay at the end of row -->
+                                            <div class="d-flex align-items-center mb-2">
+                                                <!-- if the story was already finished -->
+                                                {% if story.finished == True %}
+                                                <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                                </div>
+                                                <!-- if the story cannot be modified -->
+                                                {% elif story.lock == True %}
+                                                <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
+                                                <!-- if the story is being edited -->
+                                                {% elif story.modified == False %}
+                                                <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                                                {% elif story.modified == True %}
+                                                <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
+                                                {% endif %}
+                                                <h5 class="mb-1 pr-2 title">{{ story.title }}</h5>
+                                                <!-- TODO: add if statement after storytable has attribute 'rules' -->
+                                                <!-- <div class="badge badge-light mr-1">R</div> -->
+                                                <!-- TODO: add if statement after storytable has attribute 'keywords' -->
+                                                <!-- <div class="badge badge-light mr-1">K</div> -->
+                                                {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
+                                                <div class="badge badge-light">F</div>
+                                                {% endif %}
+                                                <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
+                                            </div>
+                                            <div class="row d-flex">
+                                                <div class="col-10">
+                                                    <p class="mb-1 ffcontent" style="white-space: pre-wrap; padding-top: 15px">{{ story.ffcontent }}</p>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="row justify-content-end mb-2 pr-2">
+                                                        <button type="button" class="btn btn-light btn-sm" disabled>
+                                                            <i class="fa fa-comment" aria-hidden="true"></i>
+                                                            <span id="commentNum">{{ story.commentscount }}</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="row justify-content-end mb-2 pr-2">
+                                                        <button type="button" class="btn btn-light btn-sm" disabled>
+                                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                            <span id="likesNum">{{ story.likescount }}</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-end pr-2">
+                                                <div class="col-10">
+                                                    <small class="text-muted">Published by </small>
+                                                    <span><small class="text-muted" id="author">{{ story.nickname }}</small></span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="row justify-content-end">
+                                                        <button type="button" class="btn btn-info" disabled>
+                                                            <i class="fa fa-hourglass-half" aria-hidden="true"></i>
+                                                            <span id="storyFragCount">{{ story.fragscount }}</span>
+                                                            {% if story.fragscountlimit == -1 %}
+                                                            <span id="storyFragTotalInf">/ <i class="fa fa-infinity"></i></span>
+                                                            {% else %}
+                                                            <span id="storyFragTotal">/ {{ story.fragscountlimit }}</span>
+                                                            {% endif %}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p>你还没有发表任何故事(￣、￣)</p>
+                                        {% endif %}
+                                    </div>
+                        </div>
+                        <div class="tab-pane fade" id="frag" role="tabpanel" aria-labelledby="frag-tab">...</div>
+                        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">...</div>
+                      </div>
+
             </div>
         </div>
         

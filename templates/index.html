@@ -73,8 +73,8 @@
             border-radius: 50%;
         }
 
-        #systemMessageContainer .nav-tabs .nav-item.show .nav-link,
-        #systemMessageContainer .nav-tabs .nav-link.active {
+        .custom-nav .nav-tabs .nav-item.show .nav-link,
+        .custom-nav .nav-tabs .nav-link.active {
             color: rgb(13, 198, 207);
             background-color: transparent;
             border-color: transparent transparent #f3f3f3;
@@ -83,7 +83,7 @@
             font-weight: bold;
         }
 
-        #systemMessageContainer .nav-link {
+        .custom-nav .nav-link {
             border: 1px solid transparent;
             border-top-left-radius: .25rem;
             border-top-right-radius: .25rem;
@@ -92,7 +92,7 @@
             font-weight: 600;
         }
 
-        #systemMessageContainer .nav-link:hover {
+        .custom-nav .nav-link:hover {
             border: none;
         }
     </style>
@@ -517,7 +517,7 @@
                 {% elif display == 'system_message' %}
                 <!-- DISPLAY SYSTEM MESSAGE PAGE -->
 
-                <div id="systemMessageContainer" style="margin-top:10px; margin-bottom: 30px">
+                <div id="systemMessageContainer" class="custom-nav" style="margin-top:10px; margin-bottom: 30px">
                         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="likemessage-tab" data-toggle="tab" href="#likemessage"
