@@ -47,20 +47,23 @@
     $(document).ready(function(){
         $('.user-frag').on('mouseover', function(){
             var $obj = $(this).find('.frag-title');
-            console.log("ajax request sent" + String($obj.attr('id')));
             // TODO: 用haveclass addclass的方法
-            $.ajax({
-                url: "{% url 'get_frag_title' %}",
-                data: {
-                    'frag_id': $obj.attr('id'),
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                type: "POST",
-                dataType: "JSON",
-                success: function(data){
-                    $obj.html(data['title']);
-                }
-            });
+            if(!$(this).hasClass('title-displayed')){
+                console.log("ajax request sent" + String($obj.attr('id')));
+                $.ajax({
+                    url: "{% url 'get_frag_title' %}",
+                    data: {
+                        'frag_id': $obj.attr('id'),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data){
+                        $obj.html("在故事《" + data['title'] + "》下接续");
+                    }
+                });
+                $(this).addClass('title-displayed');
+            }
         });
     });
 </script>
@@ -206,7 +209,7 @@
                             </a>
                             {% endfor %}
                             {% else %}
-                            <p>你还没有发表任何故事(￣、￣)</p>
+                            <p>还没有发布任何故事┌( ´_ゝ` )┐</p>
                             {% endif %}
                         </div>
                     </div>
@@ -217,11 +220,11 @@
                             <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
                                 class="card list-group-item list-group-item-action flex-column align-items-start user-frag">
                                     <div class="card-body" style="padding:10px">
-                                        <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> <span class="frag-title" id="{{ frag.id }}"></span></h5>
-                                        <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
+                                        <h6 class="card-title"><i class="fas fa-puzzle-piece"></i> <span class="frag-title" id="{{ frag.id }}"></span></h6>
+                                        <strong class="card-text" style="white-space: pre-wrap">{{ frag.content }}</strong>
                                         <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                             <div class="col-md-auto align-self-center">
-                                                <i class="far fa-clock" style="font-size: 12px">发布于 {{ frag.createtime }}</i>
+                                                <i class="far fa-clock" style="font-size: 12px">片段发布时间 {{ frag.createtime }}</i>
                                             </div>
                                             <div class="col-md-auto ml-auto align-self-center">
                                                 <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
@@ -232,7 +235,7 @@
                             </a>
                             {% endfor %}
                             {% else %}
-                            <p>你还没有发表任何片段(￣、￣)</p>
+                            <p>还没有发布任何片段┌( ´_ゝ` )┐</p>
                             {% endif %}
                         </div>
                     </div>
@@ -264,7 +267,7 @@
                             </a>
                             {% endfor %}
                             {% else %}
-                            <p>你还没有赞过任何人噢(￣、￣)</p>
+                            <p>还没有赞过任何人噢┌( ´_ゝ` )┐</p>
                             {% endif %}
                     </div>
                     
