@@ -220,7 +220,7 @@ def upload_story_page(request):
     index_dict['user_list'] = UserExtension.objects.order_by('-experience')[:5]
     # return render(request, 'index.html', index_dict)
     message_count = len(Announcement.objects
-                        .filter(touser=request.user.email)
+                        .filter(touser=request.user.email, read=False)
                         .exclude(fromuser=request.user.email))
     index_dict['message_count'] = message_count
     return render(request, 'upload_story.html', index_dict)

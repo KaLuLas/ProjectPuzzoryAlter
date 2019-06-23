@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Puzztory</title>
+    <title>{{ owner.nickname }}的个人空间 - Puzztory</title>
     <link rel="shortcut icon" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
     <link rel="bookmark" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
 
@@ -30,5 +30,73 @@
 
 {% extends "index.html" %}
 {% block user_space %}
-THIS IS YOUR PERSONAL PAGE {{ user.userextension.nickname }}
+<style>
+    .avator {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            position: absolute;
+            top: 90%;
+            left: 70%;
+            margin-left: -50px;
+            margin-top: -50px;
+        }
+</style>
+<div class="row justify-content-center">
+    <div class="col-sm-11">
+        <div class="card">
+            <div class="card-body row">
+                <div class="col-1">
+                    <div id="{{ owner.id }}_avator">
+                        <img class="avator" alt="user's avator" src="../static/images/イカ.png">
+                    </div>
+                </div>
+                <div class="col-11">
+                    <h4 class="card-title">
+                        {{ owner.nickname }}
+                        <span class="badge badge-warning">
+                            <i class="fas fa-crown" aria-hidden="true">{{ owner.level }}
+                            </i>
+                        </span>
+                    </h4>
+                    <h6 class="card-subtitle text-muted">个人描述（如果有的话）</h6>
+                </div>
+            
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+                <div class="progress" style="margin-bottom: 10px">
+                    <div class="progress-bar" role="progressbar"
+                        style="background-color:cadetblue; width: {% widthratio owner.experience experience_upper 100 %}%">
+                        {{ owner.experience }}/{{ experience_upper }}</div>
+                </div>
+            </p>
+            <a href="#" class="card-link">更改昵称</a>
+            <a href="#" class="card-link">修改密码</a>
+          </div>
+        </div>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
 {% endblock %}

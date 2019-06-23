@@ -67,14 +67,17 @@ def userpage(request, id):
     '''
     生成用户个人空间页
     '''
-    # user = UserExtension.objects.get(id=id)
+    owner = UserExtension.objects.get(id=id)
+    message_count = len(Announcement.objects
+                        .filter(touser=request.user.email, read=False)
+                        .exclude(fromuser=request.user.email))
+    experience_upper = 5 * pow(owner.level+1, 2)
     index_dict = {
         'display': 'user_space',
         'story_list': Story.objects.order_by('-likescount')[:5],
-        'user_list': UserExtension.objects.order_by('-experience')[:5]
+        'user_list': UserExtension.objects.order_by('-experience')[:5],
+        'owner': owner,
+        'experience_upper': experience_upper,
+        'message_count': message_count
     }
-    message_count = len(Announcement.objects
-                        .filter(touser=request.user.email)
-                        .exclude(fromuser=request.user.email))
-    index_dict['message_count'] = message_count
     return render(request, "user_space.html", index_dict)
