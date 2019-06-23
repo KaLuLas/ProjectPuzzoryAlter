@@ -1,4 +1,4 @@
-from PuzzModel.models import UserExtension
+from PuzzModel.models import Fragment, UserExtension, Story, Announcement, Comment
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -63,5 +63,14 @@ def Logout(request):
     return HttpResponseRedirect("/")
 
 
-def userpage(request, nickname):
-    return HttpResponse("Sorry no userpage for you " + nickname + " yet")
+def userpage(request, id):
+    '''
+    生成用户个人空间页
+    '''
+    # user = UserExtension.objects.get(id=id)
+    index_dict = {
+        'display': 'user_space',
+        'story_list': Story.objects.order_by('-likescount')[:5],
+        'user_list': UserExtension.objects.order_by('-experience')[:5]
+    }
+    return render(request, "index.html", index_dict)
