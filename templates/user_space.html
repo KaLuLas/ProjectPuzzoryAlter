@@ -123,7 +123,7 @@
                                     {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
                                     <div class="badge badge-light">F</div>
                                     {% endif %}
-                                    <small class="text-muted ml-auto" id="createTime">lastest update: {{ story.updatetime }}</small>
+                                    <small class="text-muted ml-auto" id="createTime">最后更新 {{ story.updatetime }}</small>
                                 </div>
                                 <div class="row d-flex">
                                     <div class="col-10">
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="row align-items-end pr-2">
                                     <div class="col-10">
-                                        <small class="text-muted">Published on </small>
+                                        <small class="text-muted">发布于 </small>
                                         <span><small class="text-muted" id="author">{{ story.createtime }}</small></span>
                                     </div>
                                     <div class="col-2">
@@ -177,16 +177,12 @@
                                     <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
                                         class="card list-group-item list-group-item-action flex-column align-items-start">
                                             <div class="card-body">
-                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i>{{ frag.storyid }}</h5>
+                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> {{ frag.storyid }}</h5>
                                                 <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
                                                 <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                                     <div class="col-md-auto align-self-center">
-                                                        <i class="far fa-user" style="font-size: 12px"> {{ frag.nickname }} </i>
+                                                        <i class="far fa-clock" style="font-size: 12px">发布于 {{ frag.createtime }}</i>
                                                     </div>
-                                                    <div class="col-md-auto align-self-center">
-                                                        <i class="far fa-clock" style="font-size: 12px"> {{ frag.createtime }}</i>
-                                                    </div>
-                    
                                                     <div class="col-md-auto ml-auto align-self-center">
                                                         <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
                                                         <i type="number" class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>

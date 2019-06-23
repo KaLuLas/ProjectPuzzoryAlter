@@ -142,8 +142,8 @@ def storypage(request, story_id):
 
     # 有滚动但是没有指定页或者 无法指定页 的情况
     if scroll_to_type_id != -1 and page == 1:
-        object_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id'))  
-        location = object_full_list.index({'id': scroll_to_type_id[scroll_to_type_id.find('_') + 1:]})
+        object_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id'))
+        location = object_full_list.index({'id': int(scroll_to_type_id[scroll_to_type_id.find('_') + 1:])})
         page = location // frag_each_page + 1
 
     # 翻页栏省略显示
