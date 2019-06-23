@@ -84,4 +84,8 @@ def userpage(request, id):
         'user_story_list': user_story_list,
         'user_frag_list': user_frag_list
     }
+    # 当时真的该设计外键的，哭了
+    for frag in user_frag_list.object_list:
+        story = Story.objects.get(id=frag.storyid)
+        index_dict['story' + frag.id + '_title'] = story.title
     return render(request, "user_space.html", index_dict)

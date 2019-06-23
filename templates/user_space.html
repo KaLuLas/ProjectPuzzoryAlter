@@ -178,7 +178,7 @@
                                     <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
                                         class="card list-group-item list-group-item-action flex-column align-items-start">
                                             <div class="card-body" style="padding:10px">
-                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> {{ frag.storyid }}</h5>
+                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> {{ 'story' + frag.storyid + '_title' }}</h5>
                                                 <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
                                                 <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                                     <div class="col-md-auto align-self-center">
