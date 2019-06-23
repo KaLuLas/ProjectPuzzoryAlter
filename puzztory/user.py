@@ -91,7 +91,7 @@ def userpage(request, id):
 
 
 def get_title_byid(request):
-    frag_id = request.POST['frag_id']
+    frag_id = request.POST.get('frag_id')
     frag = Fragment.objects.get(id=frag_id)
     story = Story.objects.get(id=frag.storyid)
     ret_dict = {
