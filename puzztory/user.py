@@ -75,9 +75,10 @@ def userpage(request, id):
         email=owner.email).order_by('-createtime')
     user_frag_list = Fragment.objects.filter(
         email=owner.email).order_by('-createtime')
+    # 把自赞过滤掉了
     user_like_list = Announcement.objects.filter(
         optype__endswith='like', fromuser=owner.email).exclude(
-        fromuser=owner.email).order_by('-createtime')
+        touser=owner.email).order_by('-createtime')
 
     experience_upper = 5 * pow(owner.level+1, 2)
     index_dict = {
