@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-        <div class="card ustom-nav" style="margin-top:20px">
+        <div class="card custom-nav" style="margin-top:20px">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
@@ -99,7 +99,8 @@
                             {% if user_story_list %}
                             {% for story in user_story_list %}
                             <a href="{% url 'story_page' story.id %}" target="_Blank"
-                                class=" list-group-item list-group-item-action flex-column align-items-start">
+                                class=" list-group-item list-group-item-action flex-column align-items-start"
+                                style="padding: 30px">
                                 <!-- d-flex : made <small> stay at the end of row -->
                                 <div class="d-flex align-items-center mb-2">
                                     <!-- if the story was already finished -->
@@ -176,7 +177,7 @@
                                     {% for frag in user_frag_list %}
                                     <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
                                         class="card list-group-item list-group-item-action flex-column align-items-start">
-                                            <div class="card-body">
+                                            <div class="card-body" style="padding:10px">
                                                 <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> {{ frag.storyid }}</h5>
                                                 <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
                                                 <div class="row" style="margin-bottom: 7px; margin-top: 20px">
