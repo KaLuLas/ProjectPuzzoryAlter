@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-        <div class="card text-center custom-nav" style="margin-top:20px">
+        <div class="card ustom-nav" style="margin-top:20px">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
@@ -94,84 +94,113 @@
             </div>
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="story" role="tabpanel" aria-labelledby="story-tab"> 
-                                <div class="list-group story-list homepage" style="margin:30px">
-                                        {% if user_story_list %}
-                                        {% for story in user_story_list %}
-                                        <a href="{% url 'story_page' story.id %}"
-                                            class=" list-group-item list-group-item-action flex-column align-items-start">
-                                            <!-- d-flex : made <small> stay at the end of row -->
-                                            <div class="d-flex align-items-center mb-2">
-                                                <!-- if the story was already finished -->
-                                                {% if story.finished == True %}
-                                                <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                                                </div>
-                                                <!-- if the story cannot be modified -->
-                                                {% elif story.lock == True %}
-                                                <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
-                                                <!-- if the story is being edited -->
-                                                {% elif story.modified == False %}
-                                                <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
-                                                {% elif story.modified == True %}
-                                                <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
-                                                {% endif %}
-                                                <h5 class="mb-1 pr-2 title">{{ story.title }}</h5>
-                                                <!-- TODO: add if statement after storytable has attribute 'rules' -->
-                                                <!-- <div class="badge badge-light mr-1">R</div> -->
-                                                <!-- TODO: add if statement after storytable has attribute 'keywords' -->
-                                                <!-- <div class="badge badge-light mr-1">K</div> -->
-                                                {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
-                                                <div class="badge badge-light">F</div>
-                                                {% endif %}
-                                                <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
-                                            </div>
-                                            <div class="row d-flex">
-                                                <div class="col-10">
-                                                    <p class="mb-1 ffcontent" style="white-space: pre-wrap; padding-top: 15px">{{ story.ffcontent }}</p>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="row justify-content-end mb-2 pr-2">
-                                                        <button type="button" class="btn btn-light btn-sm" disabled>
-                                                            <i class="fa fa-comment" aria-hidden="true"></i>
-                                                            <span id="commentNum">{{ story.commentscount }}</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="row justify-content-end mb-2 pr-2">
-                                                        <button type="button" class="btn btn-light btn-sm" disabled>
-                                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <span id="likesNum">{{ story.likescount }}</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row align-items-end pr-2">
-                                                <div class="col-10">
-                                                    <small class="text-muted">Published by </small>
-                                                    <span><small class="text-muted" id="author">{{ story.nickname }}</small></span>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="row justify-content-end">
-                                                        <button type="button" class="btn btn-info" disabled>
-                                                            <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                                                            <span id="storyFragCount">{{ story.fragscount }}</span>
-                                                            {% if story.fragscountlimit == -1 %}
-                                                            <span id="storyFragTotalInf">/ <i class="fa fa-infinity"></i></span>
-                                                            {% else %}
-                                                            <span id="storyFragTotal">/ {{ story.fragscountlimit }}</span>
-                                                            {% endif %}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        {% endfor %}
-                                        {% else %}
-                                        <p>你还没有发表任何故事(￣、￣)</p>
-                                        {% endif %}
+                    <div class="tab-pane fade show active" id="story" role="tabpanel" aria-labelledby="story-tab"> 
+                        <div class="list-group story-list homepage" style="margin-bottom:30px">
+                            {% if user_story_list %}
+                            {% for story in user_story_list %}
+                            <a href="{% url 'story_page' story.id %}" target="_Blank"
+                                class=" list-group-item list-group-item-action flex-column align-items-start">
+                                <!-- d-flex : made <small> stay at the end of row -->
+                                <div class="d-flex align-items-center mb-2">
+                                    <!-- if the story was already finished -->
+                                    {% if story.finished == True %}
+                                    <div class="badge badge-warning mr-1"><i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                     </div>
+                                    <!-- if the story cannot be modified -->
+                                    {% elif story.lock == True %}
+                                    <div class="badge badge-warning mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
+                                    <!-- if the story is being edited -->
+                                    {% elif story.modified == False %}
+                                    <div class="badge badge-warning mr-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
+                                    {% elif story.modified == True %}
+                                    <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
+                                    {% endif %}
+                                    <h5 class="mb-1 pr-2 title">{{ story.title }}</h5>
+                                    <!-- TODO: add if statement after storytable has attribute 'rules' -->
+                                    <!-- <div class="badge badge-light mr-1">R</div> -->
+                                    <!-- TODO: add if statement after storytable has attribute 'keywords' -->
+                                    <!-- <div class="badge badge-light mr-1">K</div> -->
+                                    {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
+                                    <div class="badge badge-light">F</div>
+                                    {% endif %}
+                                    <small class="text-muted ml-auto" id="createTime">lastest update: {{ story.updatetime }}</small>
+                                </div>
+                                <div class="row d-flex">
+                                    <div class="col-10">
+                                        <p class="mb-1 ffcontent" style="white-space: pre-wrap; padding-top: 15px">{{ story.ffcontent }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="row justify-content-end mb-2 pr-2">
+                                            <button type="button" class="btn btn-light btn-sm" disabled>
+                                                <i class="fa fa-comment" aria-hidden="true"></i>
+                                                <span id="commentNum">{{ story.commentscount }}</span>
+                                            </button>
+                                        </div>
+                                        <div class="row justify-content-end mb-2 pr-2">
+                                            <button type="button" class="btn btn-light btn-sm" disabled>
+                                                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                <span id="likesNum">{{ story.likescount }}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-end pr-2">
+                                    <div class="col-10">
+                                        <small class="text-muted">Published on </small>
+                                        <span><small class="text-muted" id="author">{{ story.createtime }}</small></span>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="row justify-content-end">
+                                            <button type="button" class="btn btn-info" disabled>
+                                                <i class="fa fa-hourglass-half" aria-hidden="true"></i>
+                                                <span id="storyFragCount">{{ story.fragscount }}</span>
+                                                {% if story.fragscountlimit == -1 %}
+                                                <span id="storyFragTotalInf">/ <i class="fa fa-infinity"></i></span>
+                                                {% else %}
+                                                <span id="storyFragTotal">/ {{ story.fragscountlimit }}</span>
+                                                {% endif %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                            {% else %}
+                            <p>你还没有发表任何故事(￣、￣)</p>
+                            {% endif %}
                         </div>
-                        <div class="tab-pane fade" id="frag" role="tabpanel" aria-labelledby="frag-tab">...</div>
-                        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">...</div>
+                    </div>
+                    <div class="tab-pane fade" id="frag" role="tabpanel" aria-labelledby="frag-tab">
+                            <div class="list-group story-list homepage" style="margin-bottom:30px">
+                                    {% if user_frag_list %}
+                                    {% for frag in user_frag_list %}
+                                    <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
+                                        class="card list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i>{{ frag.storyid }}</h5>
+                                                <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
+                                                <div class="row" style="margin-bottom: 7px; margin-top: 20px">
+                                                    <div class="col-md-auto align-self-center">
+                                                        <i class="far fa-user" style="font-size: 12px"> {{ frag.nickname }} </i>
+                                                    </div>
+                                                    <div class="col-md-auto align-self-center">
+                                                        <i class="far fa-clock" style="font-size: 12px"> {{ frag.createtime }}</i>
+                                                    </div>
+                    
+                                                    <div class="col-md-auto ml-auto align-self-center">
+                                                        <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
+                                                        <i type="number" class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </a>
+                                    {% endfor %}
+                                    {% else %}
+                                    <p>你还没有发表任何片段(￣、￣)</p>
+                                    {% endif %}
+                                </div>
+                    </div>
+                    <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">...</div>
                       </div>
 
             </div>

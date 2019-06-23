@@ -72,6 +72,7 @@ def userpage(request, id):
                         .filter(touser=request.user.email, read=False)
                         .exclude(fromuser=request.user.email))
     user_story_list = Story.objects.filter(email=owner.email).order_by('-createtime')
+    user_frag_list = Fragment.objects.filter(email=owner.email).order_by('-createtime')
     experience_upper = 5 * pow(owner.level+1, 2)
     index_dict = {
         'display': 'user_space',
@@ -80,6 +81,7 @@ def userpage(request, id):
         'owner': owner,
         'experience_upper': experience_upper,
         'message_count': message_count,
-        'user_story_list': user_story_list
+        'user_story_list': user_story_list,
+        'user_frag_list': user_frag_list
     }
     return render(request, "user_space.html", index_dict)

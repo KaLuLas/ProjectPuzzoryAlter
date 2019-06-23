@@ -122,12 +122,6 @@ def storypage(request, story_id):
 
     paginator = Paginator(frag_full_list, frag_each_page)
     comment_paginator = Paginator(comment_full_list, comment_each_page)
-    page = request.GET.get('page', 1)
-    # 翻页栏省略显示
-    frag_page_bound = {
-        'left': int(page) - paginator_view_range,
-        'right': int(page) + paginator_view_range
-    }
     comment_page = request.GET.get('comment_page', -1) 
     # 区分是用户切换了评论页还是初次进入故事页
     # 如果是切换评论也需要滚动
@@ -136,6 +130,29 @@ def storypage(request, story_id):
         jump_page = False
     else:
         jump_page = True
+
+    page = request.GET.get('page', -1)
+    # scroll_to_type_id == -1 代表不需要片段滚动
+    # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号
+    scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
+    # 评论栏翻页，没有指定滚动到哪一条
+    if jump_page and scroll_to_type_id == -1:
+        scroll_to_type_id = 'commentscount'
+    # 有滚动但是没有指定页或者 无法指定页 的情况
+    elif scroll_to_type_id != -1 and page == -1:
+        object_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id'))  
+        location = object_full_list.index({'id': scroll_to_type_id[scroll_to_type_id.find('_') + 1:]})
+        page = location // frag_each_page + 1
+    # 无翻页无滚动的情况
+    else:
+        page = 1
+
+    # 翻页栏省略显示
+    frag_page_bound = {
+        'left': int(page) - paginator_view_range,
+        'right': int(page) + paginator_view_range
+    }
+
     comment_page_bound = {
         'left': int(comment_page) - paginator_view_range,
         'right': int(comment_page) + paginator_view_range
@@ -184,13 +201,6 @@ def storypage(request, story_id):
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
-    
-    scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
-    if jump_page and scroll_to_type_id == -1:
-        scroll_to_type_id = 'commentscount'
-
-    # scroll_to_type_id == -1 代表不需要片段滚动
-    # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
