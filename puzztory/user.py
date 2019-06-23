@@ -73,4 +73,8 @@ def userpage(request, id):
         'story_list': Story.objects.order_by('-likescount')[:5],
         'user_list': UserExtension.objects.order_by('-experience')[:5]
     }
+    message_count = len(Announcement.objects
+                        .filter(touser=request.user.email)
+                        .exclude(fromuser=request.user.email))
+    index_dict['message_count'] = message_count
     return render(request, "user_space.html", index_dict)
