@@ -303,11 +303,17 @@
                                         <strong class="card-text" style="white-space: pre-wrap">{{ frag.content }}</strong>
                                         <div class="row" style="margin-bottom: 7px; margin-top: 20px">
                                             <div class="col-md-auto align-self-center">
-                                                <i class="far fa-clock" style="font-size: 12px">片段发布时间 {{ frag.createtime }}</i>
+                                                <small>片段发布时间 </small><i class="far fa-clock" style="font-size: 12px">{{ frag.createtime }}</i>
                                             </div>
                                             <div class="col-md-auto ml-auto align-self-center">
-                                                <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
-                                                <i type="number" class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
+                                                <button type="button" class="btn btn-light btn-sm" disabled>
+                                                    <i class="fa fa-comment" aria-hidden="true"></i>
+                                                    <span>{{ frag.commentscount }}</span>
+                                                </button>
+                                                <button type="button" class="btn btn-light btn-sm" style="margin-left:10px" disabled>
+                                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                    <span>{{ frag.likescount }}</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
