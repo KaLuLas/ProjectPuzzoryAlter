@@ -115,4 +115,16 @@ def reset_nickname(request):
         user = UserExtension.objects.get(email=request.user.email)
         user.nickname = new_nickname
         user.save()
-    return userpage(request, user.id)
+    return HttpResponseRedirect('/space/' + str(user.id))
+
+
+def check_password(request):
+    ret_dict = {}
+    if request.method == 'POST':
+        password = request.POST['password']
+        user = authenticate(username=request.user.email, password=password)
+        if user is None:
+            ret_dict['authenticated'] = False
+        else:
+            ret_dict['authenticated'] = True
+    return JsonResponse(data=ret_dict)

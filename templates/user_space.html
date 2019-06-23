@@ -47,7 +47,6 @@
     $(document).ready(function(){
         $('.user-frag').on('mouseover', function(){
             var $obj = $(this).find('.frag-title');
-            // TODO: 用haveclass addclass的方法
             if(!$(this).hasClass('title-displayed')){
                 console.log("ajax request sent" + String($obj.attr('id')));
                 $.ajax({
@@ -65,11 +64,34 @@
                 $(this).addClass('title-displayed');
             }
         });
+        // 验证用户输入的旧密码正确性
+        $('#password').on('blur'), function(){
+            var $obj = $(this);
+            $.ajax({
+                url: "{% url 'check_password' %}",
+                data: {
+                    'password': $obj.val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                type: "POST",
+                    dataType: "JSON",
+                    success: function(data){
+                        if(data['authenticated']){
+                            $('#password-helpId').html('密码验证成功');
+                            $('#password-helpId').attr('style', 'color: greenyellow');
+                        }
+                        else{
+                            $('#password-helpId').html('密码验证错误');
+                            $('#password-helpId').attr('style', 'color: crimson');
+                        }
+                }
+            });
+        }
     });
 </script>
 <div class="row justify-content-center">
     <div class="col-sm-11">
-        <div class="card" style="margin-top:30px">
+        <div class="card" style="margin-top:30px;">
             <div class="card-body row">
                 <div class="col-1">
                     <div id="{{ owner.id }}_avator">
@@ -297,10 +319,10 @@
                                     <span class="input-group-text" id=""> <i class="fa fa-user" aria-hidden="true"></i> </span>
                                   </div>
                             <input type="text"
-                              class="form-control" name="nickname" id="nickname" aria-describedby="helpId" placeholder="在此处输入你的新昵称（不长于20字）..."
-                              maxlength="20" required pattern="[\S]+">
+                              class="form-control" name="nickname" id="nickname" aria-describedby="helpId" placeholder="在此处输入你的新昵称..."
+                              maxlength="20" required pattern="([\S]+[\s]*)*">
                         </div>
-                        <small id="nickname-helpId" class="form-text text-muted text-right"></small>
+                        <small id="nickname-helpId" class="form-text text-muted">昵称不长于20字符且开头不为空格</small>
                     </div>
                 </div>
                 <div class="modal-footer">

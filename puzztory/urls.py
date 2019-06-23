@@ -27,6 +27,7 @@ urlpatterns = [
     path('space/<id>', user.userpage, name="user_page"),
     path('getfragtitle', user.get_title_byid, name="get_frag_title"),
     path('resetnickname', user.reset_nickname, name="reset_nickname"),
+    path('checkpassword', user.check_password, name="check_password"),
     path('upload', view.upload_story_page, name="upload_story_page"),
     path('message', view.system_message, name="system_message"),
     path('uploading', view.upload_story, name="upload_story"),
