@@ -125,7 +125,7 @@
                     url: "{% url 'reset_password' %}",
                     data: {
                         'old_pwd': $('#password').val(),
-                        'new-pwd': $('#repeat-password').val(),
+                        'new_pwd': $('#repeat-password').val(),
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                     type: "POST",

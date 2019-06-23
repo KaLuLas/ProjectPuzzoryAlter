@@ -128,3 +128,18 @@ def check_password(request):
         else:
             ret_dict['authenticated'] = True
     return JsonResponse(data=ret_dict)
+
+
+def reset_password(request):
+    ret_dict = {}
+    if request.method == 'POST':
+        old_pwd = request.POST['old_pwd']
+        user = authenticate(username=request.user.email, password=old_pwd)
+        if user is None:
+            ret_dict['authenticated'] = False
+        else:
+            user = User.objects.get(username=request.user.email)
+            user.set_password(request.POST['new_pwd'])
+            user.save()
+            ret_dict['authenticated'] = True
+    return JsonResponse(data=ret_dict)
