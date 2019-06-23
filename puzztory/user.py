@@ -82,7 +82,8 @@ def userpage(request, id):
         'experience_upper': experience_upper,
         'message_count': message_count,
         'user_story_list': user_story_list,
-        'user_frag_list': user_frag_list
+        'user_frag_list': user_frag_list,
+        'storytitle_': 'storytitle_',
     }
     # 当时真的该设计外键的，哭了
     for frag in user_frag_list:
