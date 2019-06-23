@@ -99,8 +99,8 @@
             </p>
             {% if owner.email == user.email %}
             <div class="row">
-                <a href="#" class="card-link btn btn-light" style="margin-left:10px">更改昵称（还没做）</a>
-                <a href="#" class="card-link btn btn-light">修改密码（还没做）</a>
+                <a href="#" class="card-link btn btn-light" style="margin-left:10px" data-toggle="modal" data-target="#resetNickname">更改昵称</a>
+                <a href="#" class="card-link btn btn-light" data-toggle="modal" data-target="#resetPastword">修改密码</a>
             </div>
             {% endif %}
           </div>
@@ -277,5 +277,87 @@
         
     </div>
 </div>
+
+<div class="modal fade" id="resetNickname" tabindex="-1" role="dialog" aria-labelledby="resetNicknameLabel"
+        aria-hidden="true">
+        <form action="{% url 'reset_nickname' %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetNicknameLabel">更改你的昵称 ('/_ ') </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                    <span class="input-group-text" id=""> <i class="fa fa-user" aria-hidden="true"></i> </span>
+                                  </div>
+                            <input type="text"
+                              class="form-control" name="nickname" id="nickname" aria-describedby="helpId" placeholder="在此处输入你的新昵称（不长于20字）..."
+                              maxlength="20" required>
+                        </div>
+                        <small id="nickname-helpId" class="form-text text-muted text-right"></small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="resetPastword" tabindex="-1" role="dialog" aria-labelledby="resetPastwordLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetPastwordLabel">更改你的密码 ('/_ ') </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group" style="margin-top: 10px">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="">old</span>
+                              </div>
+                        <input type="text"
+                          class="form-control" name="p" id="password" aria-describedby="password-helpId" 
+                          type="password" placeholder="在此处输入你的旧密码...">
+                    </div>
+                    <small id="password-helpId" class="form-text text-muted text-right"></small>
+                    <div class="input-group" style="margin-top: 20px">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="">new</span>
+                              </div>
+                        <input type="text"
+                          class="form-control" name="p" id="new-password" aria-describedby="new-password-helpId" 
+                          type="password" placeholder="在此处输入你的新密码...">
+                    </div>
+                    <small id="new-password-helpId" class="form-text text-muted text-right"></small>
+                    <div class="input-group" style="margin-top: 20px">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="">new</span>
+                              </div>
+                        <input type="text"
+                          class="form-control" name="p" id="repeat-password" aria-describedby="repeat-password-helpId" 
+                          type="password" placeholder="在此处重复确认你的新密码...">
+                    </div>
+                    <small id="repeat-password-helpId" class="form-text text-muted text-right"></small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

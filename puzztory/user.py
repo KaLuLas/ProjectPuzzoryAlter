@@ -107,3 +107,12 @@ def get_title_byid(request):
         'title': story.title,
     }
     return JsonResponse(data=ret_dict)
+
+
+def reset_nickname(request):
+    if request.method == 'POST':
+        new_nickname = request.POST['nickname']
+        user = UserExtension.objects.get(email=request.user.email)
+        user.nickname = new_nickname
+        user.save()
+    return userpage(request, user.id)
