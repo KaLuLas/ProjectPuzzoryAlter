@@ -120,6 +120,8 @@
             //     window.name = "";
             // }
             // 清空通知的new标识
+            $('#site-announcement').load('/static/announcement.txt');
+
             $('.annoucement').click(function(){
                 $newTag = $(this).find('em');
                 if($newTag.html() == '(new!)'){
@@ -277,7 +279,7 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- 之后再用服务器文本文件吧 -->
-                            <small>在做了在做了.jpg</small>
+                            <small id="site-announcement" style="white-space: pre-wrap;">如果看到这条通知就是我的服务器加载失败了（泣</small>
                         </div>
                     </div>
                     <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
@@ -393,7 +395,7 @@
                         </div>
                         <div class="row align-items-end pr-2">
                             <div class="col-10">
-                                <small class="text-muted" >由 {{ story.nickname }} 发布于 {{ story.createtime }}</small>
+                                <small class="text-muted" >作者 {{ story.nickname }} 发布于 {{ story.createtime }}</small>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end">
