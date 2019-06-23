@@ -1,3 +1,4 @@
-ÔÚ×öÁËÔÚ×öÁË.jpg
-±à¼­·þÎñÆ÷ÉÏµÄannouncement.txt¾Í¿ÉÒÔÐÞ¸Ä¹«¸æÀ¸ÖÐµÄÄÚÈÝÀ²
-ÕâÑù»¹Âù·½±ãµÄ
+ï»¿åœ¨åšäº†åœ¨åšäº†.jpg
+ç¼–è¾‘æœåŠ¡å™¨ä¸Šçš„announcement.txtå°±å¯ä»¥ä¿®æ”¹å…¬å‘Šæ ä¸­çš„å†…å®¹å•¦
+æ”¹äº†UTF-8ç¼–ç å½¢å¼å°±è¡Œäº†
+è¿™æ ·è¿˜è›®æ–¹ä¾¿çš„
