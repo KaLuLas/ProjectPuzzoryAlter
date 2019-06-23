@@ -141,5 +141,6 @@ def reset_password(request):
             user = User.objects.get(username=request.user.email)
             user.set_password(request.POST['new_pwd'])
             user.save()
+            login(request, user)
             ret_dict['authenticated'] = True
     return JsonResponse(data=ret_dict)

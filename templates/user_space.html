@@ -136,6 +136,7 @@
                             window.location.replace('{% url 'user_page' user.id %}');
                         }
                         else{
+                            alert('密码修改失败:(');
                             $('#password-helpId').html('密码验证错误');
                             $('#password-helpId').attr('style', 'color: #bd2130');
                             $('#submit-newpwd-btn').addClass('disabled');
