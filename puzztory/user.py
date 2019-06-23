@@ -71,9 +71,14 @@ def userpage(request, id):
     message_count = len(Announcement.objects
                         .filter(touser=request.user.email, read=False)
                         .exclude(fromuser=request.user.email))
-    user_story_list = Story.objects.filter(email=owner.email).order_by('-createtime')
-    user_frag_list = Fragment.objects.filter(email=owner.email).order_by('-createtime')
-    user_like_list = Announcement.objects.filter(fromuser=owner.email).order_by('-createtime')
+    user_story_list = Story.objects.filter(
+        email=owner.email).order_by('-createtime')
+    user_frag_list = Fragment.objects.filter(
+        email=owner.email).order_by('-createtime')
+    user_like_list = Announcement.objects.filter(
+        optype__endswith='like', fromuser=owner.email).exclude(
+        fromuser=owner.email).order_by('-createtime')
+
     experience_upper = 5 * pow(owner.level+1, 2)
     index_dict = {
         'display': 'user_space',
