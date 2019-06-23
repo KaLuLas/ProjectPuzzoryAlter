@@ -131,7 +131,12 @@ def storypage(request, story_id):
     else:
         jump_page = True
 
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page', -1)
+    if page == -1:
+        page = 1
+        specific_page = False
+    else:
+        specific_page = True
     # scroll_to_type_id == -1 代表不需要片段滚动
     # 否则 scroll_to_type_id 代表滚动到的类型与对应的id号
     scroll_to_type_id = request.GET.get('scroll_to_type_id', -1)
@@ -141,7 +146,8 @@ def storypage(request, story_id):
         scroll_to_type_id = 'commentscount'
 
     # 有滚动但是没有指定页或者 无法指定页 的情况
-    if scroll_to_type_id.startswith('frag') and page == 1:
+    # 这一块的逻辑有点糟糕但是其实知识一种特例,也不太要紧
+    if scroll_to_type_id != -1 and scroll_to_type_id.startswith('frag') and not specific_page:
         object_full_list = list(Fragment.objects.filter(storyid=story_id).order_by('createtime').values('id'))
         location = object_full_list.index({'id': int(scroll_to_type_id[scroll_to_type_id.find('_') + 1:])})
         page = location // frag_each_page + 1
