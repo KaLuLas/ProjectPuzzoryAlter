@@ -370,7 +370,7 @@
                             {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
                             <div class="badge badge-light">F</div>
                             {% endif %}
-                            <small class="text-muted ml-auto" id="createTime">{{ story.createtime }}</small>
+                            <small class="text-muted ml-auto" id="createTime">最后更新 {{ story.updatetime }}</small>
                         </div>
                         <div class="row d-flex">
                             <div class="col-10">
@@ -393,8 +393,7 @@
                         </div>
                         <div class="row align-items-end pr-2">
                             <div class="col-10">
-                                <small class="text-muted">Published by </small>
-                                <span><small class="text-muted" id="author">{{ story.nickname }}</small></span>
+                                <small class="text-muted" >由 {{ story.nickname }} 发布于 {{ story.createtime }}</small>
                             </div>
                             <div class="col-2">
                                 <div class="row justify-content-end">
