@@ -73,6 +73,7 @@ def userpage(request, id):
                         .exclude(fromuser=request.user.email))
     user_story_list = Story.objects.filter(email=owner.email).order_by('-createtime')
     user_frag_list = Fragment.objects.filter(email=owner.email).order_by('-createtime')
+    user_like_list = Announcement.objects.filter(fromuser=owner.email).order_by('-createtime')
     experience_upper = 5 * pow(owner.level+1, 2)
     index_dict = {
         'display': 'user_space',
@@ -83,6 +84,7 @@ def userpage(request, id):
         'message_count': message_count,
         'user_story_list': user_story_list,
         'user_frag_list': user_frag_list,
+        'user_like_list': user_like_list,
         'storytitle_': 'storytitle_',
     }
     # 当时真的该设计外键的，哭了
@@ -90,9 +92,9 @@ def userpage(request, id):
     return render(request, "user_space.html", index_dict)
 
 
+# 超不理智实现（
 def get_title_byid(request):
     frag_id = request.POST.get('frag_id')
-    print(frag_id)
     frag = Fragment.objects.get(id=frag_id)
     story = Story.objects.get(id=frag.storyid)
     ret_dict = {

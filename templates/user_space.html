@@ -47,18 +47,21 @@
     $(document).ready(function(){
         $('.user-frag').on('mouseover', function(){
             var $obj = $(this).find('.frag-title');
-            $.ajax({
-                url: "{% url 'get_frag_title' %}",
-                data: {
-                    'frag_id': $obj.attr('id'),
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                type: "POST",
-                dataType: "JSON",
-                success: function(data){
-                    $obj.html(data['title']);
-                }
-            })
+            if(len($obj.html()) == 0){
+                console.log("ajax request sent" + String($obj.attr('id')))
+                $.ajax({
+                    url: "{% url 'get_frag_title' %}",
+                    data: {
+                        'frag_id': $obj.attr('id'),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(data){
+                        $obj.html(data['title']);
+                    }
+                });
+            }
         });
     });
 </script>
@@ -192,34 +195,64 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="frag" role="tabpanel" aria-labelledby="frag-tab">
-                            <div class="list-group story-list homepage" style="margin-bottom:30px">
-                                    {% if user_frag_list %}
-                                    {% for frag in user_frag_list %}
-                                    <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
-                                        class="card list-group-item list-group-item-action flex-column align-items-start user-frag">
-                                            <div class="card-body" style="padding:10px">
-                                                <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> <span class="frag-title" id="{{ frag.id }}"></span></h5>
-                                                <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
-                                                <div class="row" style="margin-bottom: 7px; margin-top: 20px">
-                                                    <div class="col-md-auto align-self-center">
-                                                        <i class="far fa-clock" style="font-size: 12px">发布于 {{ frag.createtime }}</i>
-                                                    </div>
-                                                    <div class="col-md-auto ml-auto align-self-center">
-                                                        <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
-                                                        <i type="number" class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
-                                                    </div>
-                                                </div>
+                        <div class="list-group story-list homepage" style="margin-bottom:30px">
+                            {% if user_frag_list %}
+                            {% for frag in user_frag_list %}
+                            <a href="{% url 'story_page' frag.storyid %}?scroll_to_type_id=frag_{{ frag.id }}" target="_Blank"
+                                class="card list-group-item list-group-item-action flex-column align-items-start user-frag">
+                                    <div class="card-body" style="padding:10px">
+                                        <h5 class="card-title"><i class="fas fa-puzzle-piece"></i> <span class="frag-title" id="{{ frag.id }}"></span></h5>
+                                        <p class="card-text" style="white-space: pre-wrap">{{ frag.content }}</p>
+                                        <div class="row" style="margin-bottom: 7px; margin-top: 20px">
+                                            <div class="col-md-auto align-self-center">
+                                                <i class="far fa-clock" style="font-size: 12px">发布于 {{ frag.createtime }}</i>
                                             </div>
-                                    </a>
-                                    {% endfor %}
-                                    {% else %}
-                                    <p>你还没有发表任何片段(￣、￣)</p>
-                                    {% endif %}
-                                </div>
+                                            <div class="col-md-auto ml-auto align-self-center">
+                                                <i type="number" class="far fa-thumbs-up" style="font-size: 12px; margin-right:10px">{{ frag.likescount }}</i>
+                                                <i type="number" class="far fa-comment" style="font-size: 12px"> {{ frag.commentscount }}</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </a>
+                            {% endfor %}
+                            {% else %}
+                            <p>你还没有发表任何片段(￣、￣)</p>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">...</div>
-                      </div>
-
+                    <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">
+                            {% if user_like_list %}
+                            {% for like in user_like_list %}
+                            <a style="margin-top: 10px" href="{% url 'messagejump' like.id %}" target="_Blank"
+                                class="list-group-item list-group-item-action flex-column align-items-start annoucement">
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <h5 class="mb-1"> 
+                                    {% if like.optype == 'storylike' %}
+                                    <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                    {% elif like.optype == 'fraglike' %}
+                                    <i style="color:rgb(211, 123, 152)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                    {% elif like.optype == 'commentlike' %}
+                                    <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
+                                    {% endif %}
+                                    {{ like.fromnickname }}
+                                    </h5>
+                                    <small style="margin-left: 10px">{{ like.createtime }}</small>
+                                </div>
+                                {% if like.optype == 'storylike' %}            
+                                <p class="mb-1 ml-4" style="font-size: 14px">在故事『{{ like.content }}』中点了赞</p>
+                                {% elif like.optype == 'fraglike' %}
+                                <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对片段：<br/>"{{ like.content }}"<br/>点了赞</p>
+                                {% elif like.optype == 'commentlike' %}
+                                <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对评论：<br/>"{{ like.content }}"<br/>点了赞</p>
+                                {% endif %}
+                            </a>
+                            {% endfor %}
+                            {% else %}
+                            <p>你还没有赞过任何人噢(￣、￣)</p>
+                            {% endif %}
+                    </div>
+                    
+                </div>
             </div>
         </div>
         
