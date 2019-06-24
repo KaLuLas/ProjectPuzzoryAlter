@@ -68,9 +68,12 @@ def userpage(request, id):
     生成用户个人空间页
     '''
     owner = UserExtension.objects.get(id=id)
-    message_count = len(Announcement.objects
-                        .filter(touser=request.user.email, read=False)
-                        .exclude(fromuser=request.user.email))
+    if request.user.is_authenticated:
+        message_count = len(Announcement.objects
+                            .filter(touser=request.user.email, read=False)
+                            .exclude(fromuser=request.user.email))
+    else:
+        message_count = 0
     user_story_list = Story.objects.filter(
         email=owner.email).order_by('-createtime')
     user_frag_list = Fragment.objects.filter(
@@ -93,12 +96,9 @@ def userpage(request, id):
         'user_like_list': user_like_list,
         'storytitle_': 'storytitle_',
     }
-    # 当时真的该设计外键的，哭了
-
     return render(request, "user_space.html", index_dict)
 
 
-# 超不理智实现（
 def get_title_byid(request):
     frag_id = request.POST.get('frag_id')
     frag = Fragment.objects.get(id=frag_id)
