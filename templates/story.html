@@ -613,11 +613,15 @@
         {% if rules %}
         <div class="row justify-content-center" style="margin-top:0px; padding-top: 0px">
             <div class="col-sm-8">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">规则</button>
+                <div class="row" style="color: rgb(175, 214, 170); height:17px">
+                    <a class="ml-auto fas fa-anchor" data-toggle="collapse" data-target="#rulescard" aria-expanded="false" aria-controls="collapseExample"></a>
+                </div>
                 <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
                     {% for rule in rules %}
                     <p style="font-size:14px; margin-bottom: 10px">规则{{ forloop.counter }}：{{ rule }}</p>
-                    {% endfor %}       
+                    {% endfor %}
+                    </div>       
                 </div>    
             </div>           
         </div>

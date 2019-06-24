@@ -257,11 +257,21 @@
                         <span><small class="text-muted">keyword2 </small></span>
                     </div>
                 </div>
-                <div style="padding-top: 20px; padding-left: 20px; padding-right: 20px">
-                    <p style="font-size:14px; margin-bottom: 10px">规则1：哈苏彼此相爱hi哦从v8ao</p>
-                    <p style="font-size:14px; margin-bottom: 10px">规则1：哈苏彼此相爱hi哦从v8a</p>
-                </div>
             </div>
+        </div>
+        <div class="row justify-content-center" style="margin-top:0px; padding-top: 0px">
+            <div class="col-sm-8">
+                <div class="row" style="background-color: rgb(175, 214, 170); height:17px">
+                    <a class="ml-auto fas fa-anchor" data-toggle="collapse" data-target="#rulescard" aria-expanded="false" aria-controls="collapseExample">规则</a>
+                </div>
+                <div class="collapse" id="rulescard">
+                    <div class="card card-body">
+                    
+                    <p style="font-size:14px; margin-bottom: 10px">规则{{ forloop.counter }}：{{ rule }}</p>
+                    
+                    </div>       
+                </div>    
+            </div>           
         </div>
 
         <div class="row justify-content-center" style="margin:20px;">
