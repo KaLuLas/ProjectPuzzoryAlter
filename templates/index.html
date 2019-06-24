@@ -158,7 +158,7 @@
                 $('.removeInput').on('click', function(){
                     var containerName = $(this).parent().parent().parent().attr('id');
                     var availIdx = $(this).parent().parent().find('input').attr('name');
-                    var availIdx = Number(availIdx.charAt(-1));
+                    var availIdx = Number(String(availIdx).slice(-1));
                     if (containerName == 'selfDefinedRules') {
                         rulesArr.push(availIdx);
                     }
@@ -167,29 +167,6 @@
                     };
                     $(this).parent().parent().remove();
                 });
-                // if ($(this).attr('id') == 'addNewRuleBTN' && ruleCount < ruleLimit) {
-                //     $rule =
-                //         '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
-                //         name="Rule' + ruleCount + '" id="selfDefinedRule' + ruleCount + '" placeholder="自定义规则..."><div class="input-group-append"> \
-                //         <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus" \
-                //         aria-hidden="true"></i></button></div></div>';
-                //     ruleCount++;
-                //     $(this).before($rule);
-                // } else if ($(this).attr('id') == 'addNewKeywordBTN' && keywordCount < keywordLimit) {
-                //     $keyword =
-                //         '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
-                //         name="Keyword' + keywordCount + '" id="selfDefinedKeyword' + keywordCount + '" placeholder="新关键词...">\
-                //         <div class="input-group-append"> <button class="btn btn-outline-danger removeInput" type="button">\
-                //         <i class="fa fa-minus" aria-hidden="true"></i></button></div> </div>';
-                //     keywordCount++;
-                //     $(this).before($keyword);
-                // }
-                // $('.removeInput').on('click', function () {
-                //     var containerName = $(this).parent().parent().parent().attr('id');
-                //     if (containerName == 'selfDefinedRules') ruleCount--;
-                //     else if (containerName == 'selfDefinedKeywordsContain') keywordCount--;
-                //     $(this).parent().parent().remove();
-                // });
             });
             $("#title").on('input property change', function (e) {
                 $("#titleWordCount").html(e.target.value.length);
