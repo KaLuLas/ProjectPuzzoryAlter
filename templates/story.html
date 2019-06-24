@@ -598,8 +598,11 @@
                     </div>
                 </div>
                 <div>
-                    <span><small class="text-muted">keyword1 </small></span>
-                    <span><small class="text-muted">keyword2 </small></span>
+                    {% if keywords %}
+                    {% for keyword in keywords %}
+                    <span><small class="text-muted">{{ keyword }}</small></span>
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
