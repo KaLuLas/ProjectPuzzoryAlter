@@ -552,17 +552,14 @@
                         <h4 style="margin-bottom: 0px; padding-left: 0px">{{ story.title }}</h4>
                     </div>
                     <div class="col-md-auto ml-auto align-self-center">
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">R</div>
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">K</div>
-
-
-                        <!-- TODO: add if statement after storytable has attribute 'rules' -->
-                        <!-- <div class="badge badge-light mr-1">R</div> -->
-                        <!-- TODO: add if statement after storytable has attribute 'keywords' -->
-                        <!-- <div class="badge badge-light mr-1">K</div> -->
-
+                        {% if keywords %}
+                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)" title="关键词限制">K</div>
+                        {% endif %}
+                        {% if rules %}
+                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)" title="软规则">R</div>
+                        {% endif %}
                         {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
-                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)">F</div>
+                        <div class="badge" style="font-size: 17px; color: rgb(153, 163, 146)" title="片段/字数限制">F</div>
                         {% endif %}
                     </div>
                 </div>
@@ -598,8 +595,12 @@
                     </div>
                 </div>
                 <div>
-                    <span><small class="text-muted">keyword1 </small></span>
-                    <span><small class="text-muted">keyword2 </small></span>
+                    {% if keywords %}
+                    <span><small class="text-muted">关键词：</small></span>
+                    {% for keyword in keywords %}
+                    <span><small class="text-muted">{{ keyword }}</small></span>
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
