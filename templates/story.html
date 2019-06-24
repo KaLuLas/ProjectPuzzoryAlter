@@ -617,7 +617,7 @@
                             <span><small class="text-muted" style="font-weight:bold">关键词：</small></span>
                             {% for keyword in keywords %}
                             {% if forloop.counter > 1 %}
-                            <span><small class="text-muted">| {{ keyword }}</small></span>
+                            <span><small class="text-muted">|{{ keyword }}</small></span>
                             {% else %}
                             <span><small class="text-muted">{{ keyword }}</small></span>
                             {% endif %}
@@ -631,7 +631,7 @@
         <div class="row justify-content-center" style="margin-top:10px; padding-top: 0px; margin-left: 20px; margin-right: 20px">
             <div class="col-sm-8">
                 <div class="row" style="background-color: rgb(175, 214, 170); height:17px">
-                    <a class="ml-auto fas fa-anchor" style="color:rgb(64, 100, 82); margin-right: 10px" data-toggle="collapse" data-target="#rulescard" aria-expanded="false" aria-controls="collapseExample"></a>
+                    <a class="ml-auto fas fa-anchor" style="color:rgb(64, 100, 82); margin-right: 10px; font-size:13px" data-toggle="collapse" data-target="#rulescard" aria-expanded="false" aria-controls="collapseExample"></a>
                 </div>
                 <div class="collapse row" id="rulescard">
                     <div class="card card-body">
