@@ -68,6 +68,7 @@
         }
     </style>
     <script type="text/javascript">
+        const keywordCount = 5;
         const htmlEscape = (str) => {
         if (!str) return;
         return str.replace(/[<>&"'`]/g, (match) => {
@@ -123,6 +124,22 @@
                 $("#fragWordCount").html(e.target.value.length);
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
+
+                for (var index = 0; index < keywordCount; index++) {
+                    // 循环检查可能存在的五个关键词
+                    $keyword = $('#keyword' + String(index));
+                    // 如果关键词元素存在，检查当前内容中是否存在该关键词
+                    if($keyword){
+                        if(String($(this).val()).indexOf($keyword.html()) >= 0){
+                            // 如果关键词存在，元素亮起
+                            $keyword.removeClass('disabled');
+                        }
+                        else{
+                            // 否则元素黯淡
+                            $keyword.addClass('disabled');
+                        }
+                    }
+                }
             });
 
             // Kal: jqeury for tooltip
@@ -761,7 +778,7 @@
                                 <p style="margin-bottom: 5px">
                                     <span><small class="text-muted" style="font-weight:bold"><i class="fa fa-key" aria-hidden="true"></i> 关键词：</small></span>
                                     {% for keyword in keywords %}
-                                    <span><small class="btn btn-sm btn-warning disabled" style="margin: 5px; color:azure">
+                                    <span><small class="btn btn-sm btn-warning disabled" id="keyword{{ forloop.counter }}" style="margin: 5px; color:azure">
                                         {{ keyword }}</small></span>
                                     {% endfor %}
                                 </p>
