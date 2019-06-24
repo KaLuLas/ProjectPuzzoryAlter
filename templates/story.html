@@ -145,8 +145,8 @@
                     }
                 }
                 if(keywordExisted){
-                    if(satisfied) $('#newFragSubmitBtn').removeClass('disabled');
-                    else $('#newFragSubmitBtn').addClass('disabled');
+                    if(satisfied) $('#newFragSubmitBtn').attr('disabled','');
+                    else $('#newFragSubmitBtn').attr('disabled','disabled');
                 }
             });
 
@@ -821,7 +821,7 @@
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
                                     {% if story.keywords %}
-                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
+                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary" disabled="disabled"
                                         style="margin-right:5px">提交片段</button>
                                     {% else %}
                                     <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
