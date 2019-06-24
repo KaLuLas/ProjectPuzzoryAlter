@@ -125,7 +125,7 @@
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
 
-                for (var index = 0; index < keywordCount; index++) {
+                for (var index = 1; index <= keywordCount; index++) {
                     // 循环检查可能存在的五个关键词
                     $keyword = $('#keyword' + String(index));
                     // 如果关键词元素存在，检查当前内容中是否存在该关键词
