@@ -469,9 +469,9 @@ def upload_story(request):
             email=request.user.email, storyid=0)
         frag_record.save()
 
-        keyword_list = ['keyword1', 'keyword2', 'keyword3', 'keyword4', 'keyword5']
+        keyword_list = ['Keyword1', 'Keyword2', 'Keyword3', 'Keyword4', 'Keyword5']
         keyword_str = ''
-        rule_list = ['rule1', 'rule2', 'rule3', 'rule4', 'rule5']
+        rule_list = ['Rule1', 'Rule2', 'Rule3', 'Rule4', 'Rule5']
         rule_str = ''
         for keyword in keyword_list:
             if keyword in request.POST:
