@@ -158,7 +158,8 @@ class Story(models.Model):
 
 
 class UserExtension(User):
-    nickname = models.CharField(max_length=20)  
+    nickname = models.CharField(max_length=20)
+    description = models.CharField(max_length=150, blank=True, null=True)
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     avator = models.ImageField(blank=True)
