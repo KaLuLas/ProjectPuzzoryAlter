@@ -759,9 +759,10 @@
                                 <p id="lfcontent"></p>
                                 {% if keywords %}
                                 <p style="margin-bottom: 5px">
-                                    <span><small class="text-muted" style="font-weight:bold">关键词：</small></span>
+                                    <span><small class="text-muted" style="font-weight:bold"><i class="fa fa-key" aria-hidden="true"></i> 关键词：</small></span>
                                     {% for keyword in keywords %}
-                                    <span><small class="btn btn-sm btn-warning disabled" style="margin: 5px">{{ keyword }}</small></span>
+                                    <span><small class="btn btn-sm btn-warning disabled" style="margin: 5px; color:azure">
+                                        {{ keyword }}</small></span>
                                     {% endfor %}
                                 </p>
                                 {% endif %}
@@ -769,7 +770,9 @@
                                 <p style="margin-bottom: 5px">
                                 {% for rule in rules %}
                                 <p style="margin-bottom: 5px">
-                                    <small class="text-muted" style="font-weight:bold">规则{{ forloop.counter }}：</small>
+                                    <small class="text-muted" style="font-weight:bold">
+                                        <i class="fa fa-flag" aria-hidden="true"></i> 规则{{ forloop.counter }}：
+                                    </small>
                                     <span><small>{{ rule }}</small></span>
                                 </p>
                                 {% endfor %}
