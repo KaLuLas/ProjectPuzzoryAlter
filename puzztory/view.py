@@ -206,6 +206,8 @@ def storypage(request, story_id):
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
+    keywords = ['中世纪', '赛博朋克', '水族馆', '霓虹灯']
+    rules = ['不能出现第一人称', '不能出现个人姓名', '不要太二次元']
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
@@ -225,6 +227,8 @@ def storypage(request, story_id):
         'story_like': story_like,
         'lastfrag_id': lastfrag_id,
         'message_count': message_count,
+        'keywords': keywords,
+        'rules': rules,
     }
     return render(request, 'story.html', story_dict)
 
@@ -464,9 +468,28 @@ def upload_story(request):
             content=first_frag_text, nickname=request.user.userextension.nickname,
             email=request.user.email, storyid=0)
         frag_record.save()
+
+        keyword_list = ['keyword1', 'keyword2', 'keyword3', 'keyword4', 'keyword5']
+        keyword_str = ''
+        rule_list = ['rule1', 'rule2', 'rule3', 'rule4', 'rule5']
+        rule_str = ''
+        for keyword in keyword_list:
+            if keyword in request.POST:
+                user_keyword = str(request.POST[keyword]).replace(';', ' ')
+                keyword_str += (user_keyword + ';')
+        for rule in rule_list:
+            if rule in request.POST:
+                user_rule = str(request.POST[rule]).replace(';', ' ')
+                rule_str += (user_rule + ';')
+        if keyword_str == '':
+            keyword_str = None
+        if rule_str == '':
+            rule_str = None
+
         story_record = Story(
             nickname=request.user.userextension.nickname, email=request.user.email,
-            editor=request.user.email, title=story_title, ffid=frag_record.id, ffcontent=first_frag_text)
+            editor=request.user.email, title=story_title, ffid=frag_record.id, ffcontent=first_frag_text,
+            keywords=keyword_str, rules=rule_str)
 
         if 'branch' in request.POST:
             story_record.branch = True

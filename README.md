@@ -207,6 +207,9 @@ ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NU
 | fragscount      | IntegerField  |      |       | 1            |            | 片段数                         |
 | fragscountlimit | IntergerField |      |       | -1           |            | 片段数量上限，-1代表无额外限制 |
 | fragwordslimit  | IntegerField  |      |       | -1           |            | 片段字数上限，-1代表无额外限制 |
+| tags            | CharField     | True | True  |              | 110        |                                |
+| keywords        | CharField     | True | True  |              | 110        |                                |
+| rules           | CharField     | True | True  |              | 310        |                                |
 
 
 **Fragment**
