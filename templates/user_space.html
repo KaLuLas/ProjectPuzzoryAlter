@@ -44,6 +44,8 @@
 </style>
 <script>
     var authenticated = false;
+    var newPassword = false;
+    var repeatPassword = false;
     // 绝望的实现方式
     $(document).ready(function(){
         $('.user-frag').on('mouseover', function(){
@@ -80,15 +82,14 @@
                         if(data['authenticated']){
                             $('#password-helpId').html('密码验证成功');
                             $('#password-helpId').attr('style', 'color: #28a745');
-                            $('#submit-newpwd-btn').attr('disabled', false);
                             authenticated = true;
                         }
                         else{
                             $('#password-helpId').html('密码验证错误');
                             $('#password-helpId').attr('style', 'color: #bd2130');
-                            $('#submit-newpwd-btn').attr('disabled', true);
                             authenticated = false;
                         }
+                        $('#submit-newpwd-btn').attr('disabled', !(authenticated && newPassword && repeatPassword));
                 }
             });
         });
@@ -96,38 +97,35 @@
             if($('#password').val() == $(this).val()){
                 $('#new-password-helpId').html('不能与旧密码相同');
                 $('#new-password-helpId').attr('style', 'color: #bd2130');
-                $('#submit-newpwd-btn').attr('disabled', true);
+                newPassword = false;
             }
             else{
                 $('#new-password-helpId').html('');
-                if(authenticated){
-                    $('#submit-newpwd-btn').attr('disabled', false);
-                }
+                newPassword = true;
             }
+
             if($('#repeat-password').val() != $(this).val()){
                 $('#repeat-password-helpId').html('请与新密码保持一致');
                 $('#repeat-password-helpId').attr('style', 'color: #bd2130');
-                $('#submit-newpwd-btn').attr('disabled', true);
+                repeatPassword = false;
             }
             else{
                 $('#repeat-password-helpId').html('');
-                if(authenticated){
-                    $('#submit-newpwd-btn').attr('disabled', false);
-                }
+                repeatPassword = true;
             }
+            $('#submit-newpwd-btn').attr('disabled', !(authenticated && newPassword && repeatPassword));
         });
         $('#repeat-password').on('input propertychange', function(){
             if($('#new-password').val() != $(this).val()){
                 $('#repeat-password-helpId').html('请与新密码保持一致');
                 $('#repeat-password-helpId').attr('style', 'color: #bd2130');
-                $('#submit-newpwd-btn').attr('disabled', true);
+                repeatPassword = false;
             }
             else{
                 $('#repeat-password-helpId').html('');
-                if(authenticated){
-                    $('#submit-newpwd-btn').attr('disabled', false);
-                }
+                repeatPassword = true;
             }
+            $('#submit-newpwd-btn').attr('disabled', !(authenticated && newPassword && repeatPassword));
         });
         $('#submit-newpwd-btn').on('click', function(){
             $.ajax({
