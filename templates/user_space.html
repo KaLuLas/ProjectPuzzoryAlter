@@ -185,7 +185,9 @@
                         </span>
                     </h4>
                     <h6 class="card-subtitle text-muted">
-                        {% if user.userextension.description %}
+                        {% if owner.id != user.id %}
+                        <p>{{ owner.description }}</p>
+                        {% elif user.userextension.description %}
                         <input id="submit-description" type="text" size="100" style="border:0px" maxlength="30" value="{{ owner.description }}" placeholder="自定义个性签名">
                         {% else %}
                         <input id="submit-description" type="text" size="100" style="border:0px" maxlength="30" placeholder="自定义个性签名">
