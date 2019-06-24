@@ -133,7 +133,7 @@
                             <h3 style="padding: 0px; border: 0px">Puzztory ('/_ ')</h3>
                         </a>
 
-                        <input id="email" type="text" name="e" class="form-control input-lg chat-input"
+                        <input pattern="^\w+@[a-z0-9]+\.[a-z]{2,4}$" id="email" type="text" name="e" class="form-control input-lg chat-input"
                             placeholder="邮箱" />
                         <br>
                         <p id="emailExistedAlert" class="alerttext">{{ emailExistedAlert }}</p>
