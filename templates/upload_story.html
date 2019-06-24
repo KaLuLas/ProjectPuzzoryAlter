@@ -1,87 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Puzztory</title>
+    <link rel="shortcut icon" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+    <link rel="bookmark" href="http://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
 {% extends "index.html" %}
 {% block upload_story_page %}
-<form id="uploadStoryForm" style="margin:30px" action="{% url 'upload_story' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row mb-3 align-items-end">
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text"
-                                        id="StoryTitlePrepend">#</span></div>
-                                <input type="text" class="form-control" id="title" placeholder="故事标题"
-                                    aria-describedby="StoryTitlePrepend" maxlength="30" name="title" required>
-                            </div>
-                        </div>
-                        <span id="titleWordCount">0</span><span id="titleWordLimit">/30</span>
+<div class="card">
+    <!-- <img class="card-img-top" src="../static/images/JIgsaw Puzzles.png" alt=""> -->
+    <div class="card-body">
+        <form id="uploadStoryForm" style="margin:30px" action="{% url 'upload_story' %}" method="POST">
+            {% csrf_token %}
+            <h4 class="card-title">上传你的故事</h4>
+            <div class="form-row mb-3 align-items-end">
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text"
+                                id="StoryTitlePrepend">#</span></div>
+                        <input type="text" class="form-control" id="title" placeholder="故事标题"
+                            aria-describedby="StoryTitlePrepend" maxlength="30" name="title" required>
                     </div>
-                    <div class="form-row mb-3 align-items-end">
-                        <div class="col-md-10">
-                            <textarea type="text" class="form-control" id="ffcontent" rows="10"
-                                placeholder="在此输入故事的第一节..." maxlength="500" name="ffcontent" required></textarea>
-                        </div>
-                        <span id="partOneWordCount">0</span><span id="partOneWordLimit">/500</span>
-                    </div>
-                    <!-- self defined rules & keywords -->
-                    <small id="addNewRuleHelp" class="form-text text-muted">设置续写片段必须遵守的规则（软规则）</small>
-                    <div class="form-row align-items-center" id="selfDefinedRules">
-                        <!-- button removeInput will remove the whole input-group -->
-                        <!-- set new rules here -->
-                        <div class="btn mb-2 btn-outline-primary" id="addNewRuleBTN"><i class="fa fa-plus"
-                                aria-hidden="true"></i></div>
-                    </div>
-                    <small id="addNewKeywordHelp" class="form-text text-muted">设置故事片段必须包含的关键词</small>
-                    <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
-                        <!-- button removeInput will remove the whole input-group -->
-                        <!-- add new keywords here -->
-                        <div class="btn btn-outline-primary" id="addNewKeywordBTN"><i class="fa fa-plus"
-                                aria-hidden="true"></i></div>
-                    </div>
+                </div>
+                <span id="titleWordCount">0</span><span id="titleWordLimit">/30</span>
+            </div>
+            <div class="form-row mb-3 align-items-end">
+                <div class="col-md-10">
+                    <textarea type="text" class="form-control" id="ffcontent" rows="10"
+                        placeholder="在此输入故事的第一节..." maxlength="500" name="ffcontent" required></textarea>
+                </div>
+                <span id="partOneWordCount">0</span><span id="partOneWordLimit">/500</span>
+            </div>
+            <!-- self defined rules & keywords -->
+            <small id="addNewRuleHelp" class="form-text text-muted">设置续写片段必须遵守的规则（30字以内）</small>
+            <div class="form-row align-items-center" id="selfDefinedRules">
+                <!-- button removeInput will remove the whole input-group -->
+                <!-- set new rules here -->
+                <div class="btn mb-2 btn-outline-primary" id="addNewRuleBTN"><i class="fa fa-plus"
+                        aria-hidden="true"></i></div>
+            </div>
+            <small id="addNewKeywordHelp" class="form-text text-muted">设置故事片段必须包含的关键词（5字以内）</small>
+            <div class="form-row mb-3 align-items-center" id="selfDefinedKeywordsContain">
+                <!-- button removeInput will remove the whole input-group -->
+                <!-- add new keywords here -->
+                <div class="btn btn-outline-primary" id="addNewKeywordBTN"><i class="fa fa-plus"
+                        aria-hidden="true"></i></div>
+            </div>
 
 
-                    <!-- decide frag count & words limit -->
-                    <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
-                    <div class="form-row mb-3  align-items-center">
-                        <div class="input-group col-md-3">
-                            <input type="number" class="form-control" disabled="disabled" name="fragsCountLimit"
-                                id="fragCountSetInput" required min="1">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
-                                    <label class="form-check-label" for="fragCountSet">
-                                        片段个数
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group col-md-3">
-                            <input type="number" class="form-control" disabled="disabled" name="fragWordsLimit"
-                                id="fragWordSetInput" required min="10">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
-                                    <label class="form-check-label" for="fragWordSet">
-                                        片段字数
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row mb-3 align-items-center">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="branchCheck" name="branch">
-                            <label class="custom-control-label" for="branchCheck" style="margin-right: 20px">
-                                允许分支
+            <!-- decide frag count & words limit -->
+            <small id="addRestrictHelp" class="form-text text-muted">设置片段的字数限制和个数限制</small>
+            <div class="form-row mb-3  align-items-center">
+                <div class="input-group col-md-3">
+                    <input type="number" class="form-control" disabled="disabled" name="fragsCountLimit"
+                        id="fragCountSetInput" required min="1">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" id="fragCountSet" onclick="switchInput('fragCountSetInput')">
+                            <label class="form-check-label" for="fragCountSet">
+                                片段个数
                             </label>
                         </div>
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="modifiedCheck" checked="checked"
-                                name="modified">
-                            <label class="custom-control-label" for="modifiedCheck" style="margin-right: 20px">
-                                允许修改
+                    </div>
+                </div>
+                <div class="input-group col-md-3">
+                    <input type="number" class="form-control" disabled="disabled" name="fragWordsLimit"
+                        id="fragWordSetInput" required min="10">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" id="fragWordSet" onclick="switchInput('fragWordSetInput')">
+                            <label class="form-check-label" for="fragWordSet">
+                                片段字数
                             </label>
                         </div>
-                        <button class="btn btn-outline-primary" type="submit" name="submit"
-                            id="uploadStorySubmit">提交故事</button>
                     </div>
-                </form>
+                </div>
+            </div>
+
+            <div class="form-row mb-3 align-items-center">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="branchCheck" name="branch">
+                    <label class="custom-control-label" for="branchCheck" style="margin-right: 20px">
+                        允许分支
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="modifiedCheck" checked="checked"
+                        name="modified">
+                    <label class="custom-control-label" for="modifiedCheck" style="margin-right: 20px">
+                        允许修改
+                    </label>
+                </div>
+                <button class="btn btn-outline-primary" type="submit" name="submit"
+                    id="uploadStorySubmit">提交故事</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

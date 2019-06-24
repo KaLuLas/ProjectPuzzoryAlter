@@ -99,6 +99,8 @@
     <script type="text/javascript">
         var rulesArr = new Array(1, 2, 3, 4, 5);
         var keywordsArr = new Array(1, 2, 3, 4, 5);
+        const ruleMaxLength = 30;
+        const keywordMaxLength = 5;
 
         function switchInput(id) {
             var input = document.getElementById(id);
@@ -133,7 +135,7 @@
                     ruleIdx = rulesArr.shift();
                     $rule =
                         '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
-                        name="Rule' + ruleIdx + '" id="selfDefinedRule' + ruleIdx + '" placeholder="自定义规则..."><div class="input-group-append"> \
+                        name="Rule' + ruleIdx + '" id="selfDefinedRule' + ruleIdx + '" maxlength=' + ruleMaxLength + ' placeholder="自定义规则..." required pattern="([\S]+[\s]*)*"><div class="input-group-append"> \
                         <button class="btn btn-outline-danger removeInput" type="button"><i class="fa fa-minus" \
                         aria-hidden="true"></i></button></div></div>';
                     $(this).before($rule);
@@ -141,7 +143,7 @@
                     keywordIdx = keywordsArr.shift();
                     $keyword =
                         '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
-                        name="Keyword' + keywordIdx + '" id="selfDefinedKeyword' + keywordIdx + '" placeholder="新关键词...">\
+                        name="Keyword' + keywordIdx + '" id="selfDefinedKeyword' + keywordIdx + '" maxlength=' + keywordMaxLength + 'placeholder="新关键词..." required pattern="([\S]+[\s]*)*">\
                         <div class="input-group-append"> <button class="btn btn-outline-danger removeInput" type="button">\
                         <i class="fa fa-minus" aria-hidden="true"></i></button></div> </div>';
                     $(this).before($keyword);
