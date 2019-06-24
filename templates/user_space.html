@@ -144,6 +144,25 @@
                     }
                 });
         });
+        $('#submit-description').keydown(function(event){
+            $obj = $(this);
+            if(event.keyCode==13){
+                $.ajax({
+                    url: "{% url 'change_description' %}",
+                    data: {
+                        'description': $obj.val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    type: "POST",
+                        dataType: "JSON",
+                        success: function(data){
+                            if(data['succeed']){
+                                console.log("change description succeed!");
+                            }
+                    }
+                });
+　　        }
+        });
     });
 </script>
 <div class="row justify-content-center">
@@ -164,7 +183,13 @@
                             </i>
                         </span>
                     </h4>
-                    <h6 class="card-subtitle text-muted">个人描述（如果有的话）</h6>
+                    <h6 class="card-subtitle text-muted">
+                        {% if user.userextension.description %}
+                        <input id="submit-description" type="text" size="100" style="border:0px" maxlength="30" value="{{ owner.description }}" placeholder="自定义个性签名">
+                        {% else %}
+                        <input id="submit-description" type="text" size="100" style="border:0px" maxlength="30" placeholder="自定义个性签名">
+                        {% endif %}
+                    </h6>
                 </div>
             </div>
           <div class="card-body" style="padding-top:0px">

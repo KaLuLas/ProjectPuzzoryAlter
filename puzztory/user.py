@@ -144,3 +144,14 @@ def reset_password(request):
             login(request, user)
             ret_dict['authenticated'] = True
     return JsonResponse(data=ret_dict)
+
+
+def change_description(request):
+    ret_dict = {}
+    if request.method == 'POST':
+        description = request.POST['description']
+        user = UserExtension.objects.get(id=request.user.id)
+        user.description = description
+        user.save()
+        ret_dict['succeed'] = True
+    return JsonResponse(data=ret_dict)

@@ -29,6 +29,7 @@ urlpatterns = [
     path('resetnickname', user.reset_nickname, name="reset_nickname"),
     path('checkpassword', user.check_password, name="check_password"),
     path('resetpassword', user.reset_password, name="reset_password"),
+    path('changedescription', user.change_description, name="change_description"),
     path('upload', view.upload_story_page, name="upload_story_page"),
     path('message', view.system_message, name="system_message"),
     path('uploading', view.upload_story, name="upload_story"),
