@@ -226,15 +226,13 @@ def storypage(request, story_id):
         'lastfrag_id': lastfrag_id,
         'message_count': message_count,
     }
-    
+
     story = Story.objects.get(id=story_id)
-    keywords = str(story.keywords).split(sep=';', maxsplit=5)
-    rules = str(story.rules).split(sep=';', maxsplit=5)
-    if len(keywords) > 0:
-        print(keywords)
+    if story.keywords:
+        keywords = str(story.keywords[:-1]).split(sep=';', maxsplit=5)
         story_dict['keywords'] = keywords
-    if len(rules) > 0:
-        print(rules)
+    if story.rules:
+        rules = str(story.rules[:-1]).split(sep=';', maxsplit=5)
         story_dict['rules'] = rules
 
     return render(request, 'story.html', story_dict)
