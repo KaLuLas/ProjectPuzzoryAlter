@@ -521,7 +521,12 @@ def system_message(request):
         optype__endswith='like', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
     paginator = Paginator(like_full_list, message_each_page)
-    likepage = request.GET.get('likepage', 1)
+    likepage = request.GET.get('likepage', -1)
+    if likepage != -1:
+        index_dict['show'] = "likepage"
+    else:
+        likepage = 1
+
     index_dict['like_page_bound'] = {
         'left': int(likepage) - paginator_view_range,
         'right': int(likepage) + paginator_view_range
@@ -532,11 +537,17 @@ def system_message(request):
 
     index_dict['unread_likes_count'] = len(like_full_list.exclude(read=True).values())
 
+
     fragnoti_full_list = Announcement.objects.filter(
         optype__endswith='frag', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
     paginator = Paginator(fragnoti_full_list, message_each_page)
-    fragpage = request.GET.get('fragpage', 1)
+    fragpage = request.GET.get('fragpage', -1)
+    if fragpage != -1:
+        index_dict['show'] = "fragpage"
+    else:
+        fragpage = 1
+
     index_dict['frag_page_bound'] = {
         'left': int(fragpage) - paginator_view_range,
         'right': int(fragpage) + paginator_view_range
@@ -548,8 +559,6 @@ def system_message(request):
     index_dict['unread_fragnoti_count'] = len(fragnoti_full_list.exclude(read=True).values())
 
 
-    # 注意optype的命名
-    # 或者使用optype__in=[?, ?, ?]
     commentnoti_full_list = Announcement.objects.filter(
         optype__endswith='comment', touser=request.user.email
     ).exclude(fromuser=request.user.email).order_by('-createtime')
@@ -558,7 +567,12 @@ def system_message(request):
                         .exclude(fromuser=request.user.email))
     index_dict['message_count'] = message_count
     paginator = Paginator(commentnoti_full_list, message_each_page)
-    commentpage = request.GET.get('commentpage', 1)
+    commentpage = request.GET.get('commentpage', -1)
+    if commentpage != -1:
+        index_dict['show'] = "commentpage"
+    else:
+        commentpage = 1
+
     index_dict['comment_page_bound'] = {
         'left': int(commentpage) - paginator_view_range,
         'right': int(commentpage) + paginator_view_range

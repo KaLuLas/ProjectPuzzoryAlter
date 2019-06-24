@@ -111,6 +111,17 @@
         }
 
         $(document).ready(function () {
+
+            {% if show == 'storypage' %}
+            $('#likemessage').addClass("show active")
+            {% elif show == 'fragpage' %}
+            $('#fragmessage').addClass("show active")
+            {% elif show == 'commentpage' %}
+            $('#commentmessage').addClass("show active")
+            {% else %}
+            $('#likemessage').addClass("show active")
+            {% endif %}
+            
             $('#site-announcement').load('/static/announcement.txt');
 
             $('.annoucement').click(function(){
@@ -546,7 +557,7 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <!-- 点赞通知展示 -->
-                            <div class="tab-pane fade show active" id="likemessage" role="tabpanel"
+                            <div class="tab-pane fade" id="likemessage" role="tabpanel"
                                 aria-labelledby="likemessage-tab">
                                 <div class="list-group">
                                     {% if like_page_obj %}
@@ -763,7 +774,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div>
+                </div>
                 
                 {% elif display == 'user_space' %}
                 <!-- DISPLAY USER SPACE PAGE -->
