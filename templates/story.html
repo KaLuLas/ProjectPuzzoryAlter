@@ -782,8 +782,7 @@
                                 <p style="margin-bottom: 5px">
                                     <span><small class="text-muted" style="font-weight:bold"><i class="fa fa-key" aria-hidden="true"></i> 关键词：</small></span>
                                     {% for keyword in keywords %}
-                                    <span><small class="btn btn-sm btn-warning disabled" id="keyword{{ forloop.counter }}" style="margin: 5px; color:azure">
-                                        {{ keyword }}</small></span>
+                                    <span><small class="btn btn-sm btn-warning disabled" id="keyword{{ forloop.counter }}" style="margin: 5px; color:azure">{{ keyword }}</small></span>
                                     {% endfor %}
                                 </p>
                                 {% endif %}
