@@ -99,12 +99,6 @@
     <script type="text/javascript">
         var rulesArr = new Array(1, 2, 3, 4, 5);
         var keywordsArr = new Array(1, 2, 3, 4, 5);
-        var rulesIdleArr = new Array(5);
-        var keywrodsIdleArr = new Array(5);
-        var ruleCount = 0;
-        var keywordCount = 0;
-        const ruleLimit = 5;
-        const keywordLimit = 5;
 
         function switchInput(id) {
             var input = document.getElementById(id);
@@ -146,7 +140,6 @@
             $('#addNewRuleBTN, #addNewKeywordBTN').on('click', function () {
                 if ($(this).attr('id') == 'addNewRuleBTN' && rulesArr.length > 0) {
                     ruleIdx = rulesArr.shift();
-                    rulesIdleArr.push(ruleIdx);
                     $rule =
                         '<div class="col-md-7 mb-2 input-group"><input type="text" class="form-control" \
                         name="Rule' + ruleIdx + '" id="selfDefinedRule' + ruleIdx + '" placeholder="自定义规则..."><div class="input-group-append"> \
@@ -155,7 +148,6 @@
                     $(this).before($rule);
                 } else if ($(this).attr('id') == 'addNewKeywordBTN' && keywordsArr.length > 0){
                     keywordIdx = keywordsArr.shift();
-                    keywrodsIdleArr.push(keywordIdx);
                     $keyword =
                         '<div class="col-md-2 input-group"> <input type="text" class="form-control" \
                         name="Keyword' + keywordIdx + '" id="selfDefinedKeyword' + keywordIdx + '" placeholder="新关键词...">\
@@ -165,13 +157,13 @@
                 }
                 $('.removeInput').on('click', function(){
                     var containerName = $(this).parent().parent().parent().attr('id');
+                    var availIdx = $(this).parent().parent().find('input').attr('name');
+                    var availIdx = availIdx.charAt(-1);
                     if (containerName == 'selfDefinedRules') {
-                        ruleAvailIdx = rulesIdleArr.pop();
-                        rulesArr.push(ruleAvailIdx);
+                        rulesArr.push(availIdx);
                     }
                     else if (containerName == 'selfDefinedKeywordsContain') {
-                        keywordAvailIdx = keywordsIdleArr.pop();
-                        keywordsArr.push(keywordAvailIdx);
+                        keywordsArr.push(availIdx);
                     };
                     $(this).parent().parent().remove();
                 });
