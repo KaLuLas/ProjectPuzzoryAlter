@@ -754,6 +754,23 @@
                             <form action="{% url 'upload_frag' story.id %}" method="POST">
                                 {% csrf_token %}
                                 <p id="lfcontent"></p>
+                                <p>
+                                    {% if keywords %}
+                                    <span><small class="text-muted" style="font-weight:bold">关键词：</small></span>
+                                    {% for keyword in keywords %}
+                                    {% if forloop.counter > 1 %}
+                                    <span><small class="text-muted">| {{ keyword }}</small></span>
+                                    {% else %}
+                                    <span><small class="text-muted">{{ keyword }}</small></span>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                </p>
+                                {% if keywords %}
+                                {% for rule in rules %}
+                                <p style="font-size:14px; margin-bottom: 5px">规则{{ forloop.counter }}：{{ rule }}</p>
+                                {% endfor %}
+                                {% endif %}   
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <textarea id="newfrag" class="form-control" placeholder="在此输入你想新增的片段内容"
                                         style="height: 265px"
