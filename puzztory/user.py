@@ -119,6 +119,9 @@ def reset_nickname(request):
 
 
 def check_password(request):
+    '''
+    检测用户旧密码是否正确
+    '''
     ret_dict = {}
     if request.method == 'POST':
         password = request.POST['password']
@@ -131,15 +134,20 @@ def check_password(request):
 
 
 def reset_password(request):
+    '''
+    重置用户密码
+    '''
     ret_dict = {}
     if request.method == 'POST':
         old_pwd = request.POST['old_pwd']
+        new_pwd = request.POST['new_pwd']
         user = authenticate(username=request.user.email, password=old_pwd)
-        if user is None:
+        # 密码错误 或者 旧密码 新密码相同
+        if user is None or old_pwd == new_pwd:
             ret_dict['authenticated'] = False
         else:
             user = User.objects.get(username=request.user.email)
-            user.set_password(request.POST['new_pwd'])
+            user.set_password(new_pwd)
             user.save()
             login(request, user)
             ret_dict['authenticated'] = True
@@ -147,6 +155,9 @@ def reset_password(request):
 
 
 def change_description(request):
+    '''
+    更改用户个人描述
+    '''
     ret_dict = {}
     if request.method == 'POST':
         description = request.POST['description']
