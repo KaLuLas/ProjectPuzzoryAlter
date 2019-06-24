@@ -238,10 +238,12 @@
                                     <div class="badge badge-success mr-1"><i class="fa fa-pen-alt" aria-hidden="true"></i></div>
                                     {% endif %}
                                     <h5 class="mb-1 pr-2 title">{{ story.title }}</h5>
-                                    <!-- TODO: add if statement after storytable has attribute 'rules' -->
-                                    <!-- <div class="badge badge-light mr-1">R</div> -->
-                                    <!-- TODO: add if statement after storytable has attribute 'keywords' -->
-                                    <!-- <div class="badge badge-light mr-1">K</div> -->
+                                    {% if story.rules %}
+                                    <div class="badge badge-light mr-1">R</div>
+                                    {% endif %}
+                                    {% if story.keywords %}
+                                    <div class="badge badge-light mr-1">K</div>
+                                    {% endif %}
                                     {% if story.fragscountlimit != -1 or story.fragwordslimit != -1 %}
                                     <div class="badge badge-light">F</div>
                                     {% endif %}
