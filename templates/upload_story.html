@@ -30,12 +30,12 @@
 
 {% extends "index.html" %}
 {% block upload_story_page %}
-<div class="card">
+<div class="card" style="margin-top:30px">
     <!-- <img class="card-img-top" src="../static/images/JIgsaw Puzzles.png" alt=""> -->
     <div class="card-body">
+        <h4 class="card-title">上传你的故事</h4>
         <form id="uploadStoryForm" style="margin:30px" action="{% url 'upload_story' %}" method="POST">
             {% csrf_token %}
-            <h4 class="card-title">上传你的故事</h4>
             <div class="form-row mb-3 align-items-end">
                 <div class="col-md-7">
                     <div class="input-group">
