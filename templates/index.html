@@ -187,12 +187,15 @@
 </head>
 
 <body style="background-color: rgb(248, 248, 248)">
-    <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
-        <div class="navbar-collapse collapse justify-content-between">
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <img title="PuzzTory首页" alt="Logo" src="http://www.puzztory.cn/static/images/PuzzWithTitle.png"
-                    style="height: 50px">
-            </a>
+    <nav class="navbar navbar-toggleable-md navbar-expand-lg bg-white navbar-light fixed-top">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img title="PuzzTory首页" alt="Logo" src="http://www.puzztory.cn/static/images/PuzzWithTitle.png"
+            style="height: 50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <button id="jumpTopBtn" class="btn btn-outline-warning" style="margin-right: 20px" title="回到顶部"><i
                         class="fa fa-rocket" aria-hidden="true"></i></button>

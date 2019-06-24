@@ -125,14 +125,13 @@
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
 
+                {% if keywords %}
                 var satisfied = false;
-                var keywordExisted = false;
                 for (var index = 1; index <= keywordCount; index++) {
                     // 循环检查可能存在的五个关键词
                     $keyword = $('#keyword' + String(index));
                     // 如果关键词元素存在，检查当前内容中是否存在该关键词
                     if($keyword){
-                        keywordExisted = true;
                         if(String($(this).val()).indexOf($keyword.html()) >= 0){
                             // 如果关键词存在，元素亮起
                             $keyword.removeClass('disabled');
@@ -144,10 +143,9 @@
                         }
                     }
                 }
-                if(keywordExisted){
-                    if(satisfied) $('#newFragSubmitBtn').attr('disabled','');
-                    else $('#newFragSubmitBtn').attr('disabled','disabled');
-                }
+                if(satisfied) $('#newFragSubmitBtn').attr('disabled', false);
+                else $('#newFragSubmitBtn').attr('disabled', true);
+                {% endif %}
             });
 
             // Kal: jqeury for tooltip
