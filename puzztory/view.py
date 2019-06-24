@@ -206,8 +206,6 @@ def storypage(request, story_id):
 
     is_paginated = paginator.num_pages > 1
     comment_is_paginated = comment_paginator.num_pages > 1
-    keywords = ['中世纪', '赛博朋克', '水族馆', '霓虹灯']
-    rules = ['不能出现第一人称', '不能出现个人姓名', '不要太二次元']
 
     story_dict = {
         'story': Story.objects.get(id=story_id),
@@ -227,9 +225,18 @@ def storypage(request, story_id):
         'story_like': story_like,
         'lastfrag_id': lastfrag_id,
         'message_count': message_count,
-        'keywords': keywords,
-        'rules': rules,
     }
+    
+    story = Story.objects.get(id=story_id)
+    keywords = str(story.keywords).split(sep=';', maxsplit=5)
+    rules = str(story.rules).split(sep=';', maxsplit=5)
+    if len(keywords) > 0:
+        print(keywords)
+        story_dict['keywords'] = keywords
+    if len(rules) > 0:
+        print(rules)
+        story_dict['rules'] = rules
+
     return render(request, 'story.html', story_dict)
 
 
