@@ -755,17 +755,17 @@
                                 {% csrf_token %}
                                 <p id="lfcontent"></p>
                                 {% if keywords %}
-                                <p>
+                                <p style="margin-bottom: 5px">
                                     <span><small class="text-muted" style="font-weight:bold">关键词：</small></span>
                                     {% for keyword in keywords %}
-                                    <span><small class="btn btn-sm btn-info disabled" style="margin: 5px">{{ keyword }}</small></span>
+                                    <span><small class="btn btn-sm btn-warning disabled" style="margin: 5px">{{ keyword }}</small></span>
                                     {% endfor %}
                                 </p>
                                 {% endif %}
                                 {% if rules %}
-                                <p>
+                                <p style="margin-bottom: 5px">
                                 {% for rule in rules %}
-                                <p style="font-size:14px; margin-bottom: 5px">
+                                <p style="margin-bottom: 5px">
                                     <small class="text-muted" style="font-weight:bold">规则{{ forloop.counter }}：</small>
                                     <span><small>{{ rule }}</small></span>
                                 </p>
