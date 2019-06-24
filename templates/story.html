@@ -125,20 +125,28 @@
                 var text = this.value.trim();
                 this.setCustomValidity(text.length == 0 ? "纯空格禁止" : "");
 
+                var satisfied = false;
+                var keywordExisted = false;
                 for (var index = 1; index <= keywordCount; index++) {
                     // 循环检查可能存在的五个关键词
                     $keyword = $('#keyword' + String(index));
                     // 如果关键词元素存在，检查当前内容中是否存在该关键词
                     if($keyword){
+                        keywordExisted = true;
                         if(String($(this).val()).indexOf($keyword.html()) >= 0){
                             // 如果关键词存在，元素亮起
                             $keyword.removeClass('disabled');
+                            satisfied = true;
                         }
                         else{
                             // 否则元素黯淡
                             $keyword.addClass('disabled');
                         }
                     }
+                }
+                if(keywordExisted){
+                    if(satisfied) $('#newfragSubmitBtn').removeClass('disabled');
+                    else $('#newfragSubmitBtn').addClass('disabled');
                 }
             });
 
@@ -812,8 +820,13 @@
                                 <div class="form-row justify-content-end" style="margin-top: 10px">
                                     <button type="button" class="btn btn-secondary" style="margin-right:5px"
                                         data-dismiss="modal">取消</button>
+                                    {% if story.keywords %}
                                     <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
                                         style="margin-right:5px">提交片段</button>
+                                    {% else %}
+                                    <button id="newFragSubmitBtn" type="submit" class="btn btn-primary"
+                                    style="margin-right:5px">提交片段</button>
+                                    {% endif %}
                                 </div>
                             </form>
 
