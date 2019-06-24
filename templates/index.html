@@ -109,15 +109,6 @@
         }
 
         $(document).ready(function () {
-            // 实现通过浏览器返回的时候刷新页面，这样未读标识就会消失（而且巧妙的有一段延迟时间
-            // 如果是开启新窗口形式就没用了
-            // if (window.name != "bencalie") {
-            //     location.reload();
-            //     window.name = "bencalie";
-            // } else {
-            //     window.name = "";
-            // }
-            // 清空通知的new标识
             $('#site-announcement').load('/static/announcement.txt');
 
             $('.annoucement').click(function(){
@@ -161,7 +152,7 @@
                     var availIdx = Number(String(availIdx).slice(-1));
                     if (containerName == 'selfDefinedRules') {
                         rulesArr.push(availIdx);
-                    }c
+                    }
                     else if (containerName == 'selfDefinedKeywordsContain') {
                         keywordsArr.push(availIdx);
                     };
