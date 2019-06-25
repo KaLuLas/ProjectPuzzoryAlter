@@ -674,7 +674,7 @@
                                 </div>
 
                                 <div class="col-md-auto ml-auto align-self-center">
-                                    {% if frag.id == lastfrag_id %}
+                                    {% if frag.id == lastfrag_id and story.finished == False %}
                                     {% if user.email == story.email or user.email == frag.email %}
                                     <a id="deleteFragBtn"
                                         class="fas fa-hammer" data-toggle="modal" data-target="#deleteMessage"
