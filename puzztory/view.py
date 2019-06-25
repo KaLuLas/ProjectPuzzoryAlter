@@ -577,7 +577,7 @@ def system_message(request):
         'left': int(commentpage) - paginator_view_range,
         'right': int(commentpage) + paginator_view_range
     }
-    index_dict['comment_page_obj'] = paginator.get_page(likepage)
+    index_dict['comment_page_obj'] = paginator.get_page(commentpage)
     index_dict['comment_paginator'] = paginator
     index_dict['comment_is_paginated'] = paginator.num_pages > 1
 
