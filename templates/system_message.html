@@ -1,8 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Puzztory</title>
+    <title>系统通知 - Puzztory</title>
     <link rel="shortcut icon" href="https://www.puzztory.cn/static/images/favicon-mainpage.ico" />
     <link rel="bookmark" href="https://www.puzztory.cn/static/images/favicon-mainpage.ico" />
 
@@ -101,222 +104,253 @@
     </script>
 </head>
 
-<body style="background-color: rgb(248, 248, 248)">
-    <nav class="navbar navbar-toggleable-md navbar-expand-sm bg-white navbar-light fixed-top">
-        <div class="navbar-collapse collapse justify-content-between">
-            <a class="navbar-brand" href="{% url 'index' %}">
-                <img title="PuzzTory首页" alt="Logo" src="https://www.puzztory.cn/static/images/PuzzWithTitle.png"
-                    style="height: 50px">
+{% extends "index.html" %}
+{% block system_message %}
+<div id="systemMessageContainer" class="custom-nav" style="margin-top:10px; margin-bottom: 30px">
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="likemessage-tab" data-toggle="tab" href="#likemessage"
+                role="tab" aria-controls="likemessage" aria-selected="true">收到的赞
+                {% if unread_likes_count > 0 %}
+                （{{ unread_likes_count }}）
+                {% endif %}
             </a>
-            <ul class="navbar-nav">
-                <button id="jumpTopBtn" class="btn btn-outline-warning" style="height:40px; margin-right: 20px"
-                    title="回到顶部"><i class="fa fa-rocket" aria-hidden="true"></i></button>
-                <form class="form-inline" action="search#TODO">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="welcome, Alexxx" style="width: 7cm">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
-                                    aria-hidden="true"></i></button>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="fragmessage-tab" data-toggle="tab" href="#fragmessage" role="tab"
+                aria-controls="fragmessage" aria-selected="false">得到的接续
+                {% if unread_fragnoti_count > 0 %}
+                （{{ unread_fragnoti_count }}）
+                {% endif %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="commentmessage-tab" data-toggle="tab" href="#commentmessage"
+                role="tab" aria-controls="commentmessage" aria-selected="false">收到的评论
+                {% if unread_commentnoti_count > 0 %}
+                （{{ unread_commentnoti_count }}）
+                {% endif %}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <!-- 点赞通知展示 -->
+        <div class="tab-pane fade" id="likemessage" role="tabpanel"
+            aria-labelledby="likemessage-tab">
+            <div class="list-group">
+                {% if like_page_obj %}
+                    {% for notification in like_page_obj %}
+                    <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
+                        class="list-group-item list-group-item-action flex-column align-items-start annoucement">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <h5 class="mb-1"> 
+                            {% if notification.optype == 'storylike' %}
+                            <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay" aria-hidden="true"></i>
+                            {% elif notification.optype == 'fraglike' %}
+                            <i style="color:rgb(211, 123, 152)" class="fab fa-gratipay" aria-hidden="true"></i>
+                            {% elif notification.optype == 'commentlike' %}
+                            <i style="color:rgb(167, 81, 109)" class="fab fa-gratipay" aria-hidden="true"></i>
+                            {% endif %}
+                            {{ notification.fromnickname }}
+                            {% if not notification.read %}
+                            <em>(new!)</em>
+                            {% endif %}
+                            </h5>
+                            <small style="margin-left: 10px">{{ notification.createtime }}</small>
                         </div>
-                    </div>
-                </form>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}
-                        href="{% url 'upload_story_page' %}" {% else %} data-toggle="modal" data-target="#loginRequest"
-                        {% endif %}><i title="发布故事" class="fas fa-plus"></i></a></li>
-                <li class="nav-item"><a class="nav-link" {% if user.is_authenticated %}href="{% url 'system_message' %}"
-                        {% else %} data-toggle="modal" data-target="#loginRequest" {% endif %}><i title="系统通知"
-                            class="fas fa-bell"></i></a></li>
-
-                <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}"><i title="登录/注册"
-                            class="fas fa-user"></i></a>
-                </li>
-
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_page' user.email %}"><i title="个人主页"
-                            class="fas fa-user"></i></a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i
-                            title="退出登录" class="fas fa-sign-in-alt"></i></a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-
-    <!-- LOGOUT WINDOW -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">通知 ('/_ ') </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    确定要退出吗？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">退出</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- LOGIN REQUEST -->
-
-    <div class="modal fade" id="loginRequest" tabindex="-1" role="dialog" aria-labelledby="loginRequestLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginRequestLabel">通知 ('/_ ') </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    请先登录
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container-fluid" style="margin-top: 70px">
-        <div class="row">
-            <div class="col-sm-2" style="background-color: rgb(235, 235, 235)">
-                <div class="dropdown-menu-left" style="margin-bottom: 30px; margin-top: 30px;">
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px;"><i class="fa fa-fire"
-                            aria-hidden="true"></i> 点赞飙升</h1>
-                    <a class="dropdown-item list-group disabled" href="#">
-
-
-                        <p>No storys are available.</p>
-
+                        {% if notification.optype == 'storylike' %}            
+                        <p class="mb-1 ml-4" style="font-size: 14px">在你的故事『{{ notification.content }}』中点了赞</p>
+                        {% elif notification.optype == 'fraglike' %}
+                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的片段：<br/>"{{ notification.content }}"<br/>点了赞</p>
+                        {% elif notification.optype == 'commentlike' %}
+                        <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">对你的评论：<br/>"{{ notification.content }}"<br/>点了赞</p>
+                        {% endif %}
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <h1 class="dropdown-header side-bar-title" style="padding: 0px; margin-top: 10px;"><i
-                            class="fa fa-trophy" aria-hidden="true"></i> 用户排行</h1>
-                    <a class="dropdown-item list-group disabled" href="#">
-
-                        <p>No users are available.</p>
-
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-10" id="load-content" style="background-color: rgb(248, 248, 248)">
-                <!-- {% extends "index.html" %}
-                {% block upload_story_page %} -->
-                <div id="systemMessageContainer" style="margin-top:10px">
-                    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="likemessage-tab" data-toggle="tab" href="#likemessage"
-                                role="tab" aria-controls="likemessage" aria-selected="true">收到的赞</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="fragmessage-tab" data-toggle="tab" href="#fragmessage" role="tab"
-                                aria-controls="fragmessage" aria-selected="false">得到的接续</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="commentmessage-tab" data-toggle="tab" href="#commentmessage"
-                                role="tab" aria-controls="commentmessage" aria-selected="false">收到的评论</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="likemessage" role="tabpanel"
-                            aria-labelledby="likemessage-tab">
-                            <div class="list-group">
-
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <h5 class="mb-1"> <i style="color:rgb(238, 155, 182)" class="fab fa-gratipay"
-                                                aria-hidden="true"></i>
-                                            Alexxx</h5>
-                                        <small style="margin-left: 10px" id="commentIdx">2019/07/07</small>
-                                    </div>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">在你的···中点了赞</p>
-                                </a>
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <h5 class="mb-1"> <i style="color:palevioletred" class="fab fa-gratipay"
-                                                aria-hidden="true"></i>
-                                            Alexxx</h5>
-                                        <small style="margin-left: 10px" id="commentIdx">2019/07/07</small>
-                                    </div>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">在你的···中点了赞</p>
-                                </a>
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <h5 class="mb-1"> <i style="color:rgb(184, 74, 111)" class="fab fa-gratipay"
-                                                aria-hidden="true"></i>
-                                            Alexxx</h5>
-                                        <small style="margin-left: 10px" id="commentIdx">2019/07/07</small>
-                                    </div>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">对你的片段：<br/><span style="color: gray">{{ fraglikem.content }}</span><br/>点了赞</p>
-                                </a>
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-md-center">
-                                        <h6 class="mb-1 text-muted lead">继续努力吧('/_ ')</h6>
-                                    </div>
-                                </a>
-
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
-                            <div class="list-group">
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start"
-                                    id="comment_{{ comment.id }}">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <h5 class="mb-1"> <i style="color:olivedrab" class="fas fa-puzzle-piece"
-                                                aria-hidden="true"></i>
-                                            Alexxx</h5>
-                                        <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
-                                    </div>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">故事标题</p>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">
-                                        接续内容
-                                    </p>
-
-                                </a>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="commentmessage" role="tabpanel"
-                            aria-labelledby="commentmessage-tab">
-                            <div class="list-group">
-                                <a style="margin-top: 10px"
-                                    class="list-group-item list-group-item-action flex-column align-items-start"
-                                    id="comment_{{ comment.id }}">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise"
-                                                aria-hidden="true"></i>
-                                            Alexxx</h5>
-                                        <small style="margin-left: 10px" id="commentIdx">2019/02/01</small>
-                                    </div>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">在你的···中评论：</p>
-                                    <p class="mb-1 ml-4" style="font-size: 14px">
-                                        评论内容
-                                    </p>
-
-                                </a>
-                            </div>
-                        </div>
+                    {% endfor %}
+                
+                {% else %}
+                <a style="margin-top: 10px"
+                    class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-md-center">
+                        <h6 class="mb-1 lead text-muted">还没有收到赞诶，继续努力(。・∀・)ノ</h6>
                     </div>
-
-                </div>
-                <!-- {% endblock %} -->
+                </a>
+                {% endif %}
             </div>
+            {% if like_is_paginated %}
+            <nav aria-label="Page navigation example" style="margin-top:40px">
+                <ul class="pagination justify-content-center">
+                    {% if like_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?likepage={{ like_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                
+                    {% for i in like_paginator.page_range %}
+                        {% if i == like_page_bound.left or i == like_page_bound.right %}
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        {% elif like_page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                        {% elif i > like_page_bound.left and i < like_page_bound.right %}
+                        <li class="page-item"><a class="page-link" href="?likepage={{ i }}">{{i}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                
+                    {% if like_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?likepage={{ like_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="fragmessage" role="tabpanel" aria-labelledby="fragmessage-tab">
+            <div class="list-group">
+                {% if frag_page_obj %}
+                {% for notification in frag_page_obj %}
+                <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
+                    class="list-group-item list-group-item-action flex-column align-items-start annoucement">
+                    
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <h5 class="mb-1">
+                        {% if notification.optype == 'addfrag' %}
+                        <i style="color:olivedrab" class="fas fa-feather-alt"
+                            aria-hidden="true"></i>
+                        {% elif notification.optype == 'deletefrag' %}
+                        <i style="color:rgb(75, 80, 66)" class="fas fa-cut" aria-hidden="true"></i>
+                        {% endif %}
+                        {{ notification.fromnickname }}
+                        {% if not notification.read %}
+                        <em>(new!)</em>
+                        {% endif %}
+                        </h5>
+                        <small style="margin-left: 10px">{{ notification.createtime }}</small>
+                    </div>
+                    <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>            
+                </a>
+                {% endfor %}
+                {% else %}
+                <a style="margin-top: 10px"
+                    class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-md-center">
+                        <h6 class="mb-1 lead text-muted">还没有得到接续，再等等吧 ('L_' )</h6>
+                    </div>
+                </a>
+                {% endif %}
+                
+            </div>
+            {% if frag_is_paginated %}
+            <nav aria-label="Page navigation example" style="margin-top:40px">
+                <ul class="pagination justify-content-center">
+                    {% if frag_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?fragpage={{ frag_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                
+                    {% for i in frag_paginator.page_range %}
+                        {% if i == frag_page_bound.left or i == frag_page_bound.right %}
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        {% elif frag_page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                        {% elif i > frag_page_bound.left and i < frag_page_bound.right %}
+                        <li class="page-item"><a class="page-link" href="?fragpage={{ i }}">{{i}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                
+                    {% if frag_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?fragpage={{ frag_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="commentmessage" role="tabpanel"
+            aria-labelledby="commentmessage-tab">
+            <div class="list-group">
+                {% if comment_page_obj %}
+                {% for notification in comment_page_obj %}
+                <a style="margin-top: 10px" href="{% url 'messagejump' notification.id %}" target="_Blank"
+                    class="list-group-item list-group-item-action flex-column align-items-start annoucement"
+                    id="comment_{{ comment.id }}">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <h5 class="mb-1"> <i style="color:dimgray" class="far fa-surprise" aria-hidden="true"></i>
+                            {{ notification.fromnickname }}
+                            {% if not notification.read %}
+                            <em>(new!)</em>
+                            {% endif %}
+                            </h5>
+                        <small style="margin-left: 10px" id="commentIdx">{{ notification.createtime }}</small>
+                    </div>
+                    <p class="mb-1 ml-4" style="font-size: 14px; white-space: pre-wrap">{{ notification.content }}</p>
+                </a>
+                {% endfor %}
+                {% else %}
+                <a style="margin-top: 10px"
+                    class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-md-center">
+                        <h6 class="mb-1 lead text-muted">然而并没有评论(。_°)☆＼(- – )</h6>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+            {% if comment_is_paginated %}
+            <nav aria-label="Page navigation example" style="margin-top:40px">
+                <ul class="pagination justify-content-center">
+                    {% if comment_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?commentpage={{ comment_page_obj.previous_page_number }}" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                
+                    {% for i in comment_paginator.page_range %}
+                        {% if i == comment_page_bound.left or i == comment_page_bound.right %}
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        {% elif comment_page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                        {% elif i > comment_page_bound.left and i < comment_page_bound.right %}
+                        <li class="page-item"><a class="page-link" href="?commentpage={{ i }}">{{i}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                
+                    {% if frag_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?coommentpage={{ comment_page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                            <a class="page-link" tabindex="-1"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
         </div>
     </div>
-</body>
+</div>
+{% endblock %}

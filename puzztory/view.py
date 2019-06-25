@@ -583,7 +583,7 @@ def system_message(request):
 
     index_dict['unread_commentnoti_count'] = len(commentnoti_full_list.exclude(read=True).values())
 
-    return render(request, 'index.html', index_dict)
+    return render(request, 'system_message.html', index_dict)
 
 
 def login_page(request):
