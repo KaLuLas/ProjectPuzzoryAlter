@@ -117,6 +117,20 @@
                 $(message_show[i]).removeClass("show active")
             }
             
+            {% if show == 'storypage' %}
+            $('#likemessage').addClass("show active");
+            $('#likemessage-tab').addClass("active");
+            {% elif show == 'fragpage' %}
+            $('#fragmessage').addClass("show active");
+            $('#fragmessage-tab').addClass("active");
+            {% elif show == 'commentpage' %}
+            $('#commentmessage').addClass("show active");
+            $('#commentmessage-tab').addClass("active");
+            {% else %}
+            $('#likemessage').addClass("show active");
+            $('#likemessage-tab').addClass("active");
+            {% endif %}
+
             $('#site-announcement').load('/static/announcement.txt');
 
             $('.annoucement').click(function(){
