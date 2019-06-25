@@ -13,7 +13,7 @@ ProjectPuzztoryNext
 ### 项目记录
 
 **05.23之后的记录将在Projects中更新，不再添加README记录**
-  
+
 
 **2019.05.23：**
 
@@ -164,17 +164,17 @@ ALTER TABLE storyTable MODIFY COLUMN title VARCHAR(50) CHARACTER SET utf8 NOT NU
 
 **UserExtension**（User）
 
-| attribute  | type         | null | blank | default | max_length | description           |
-| ---------- | ------------ | ---- | ----- | ------- | ---------- | --------------------- |
-| id         |              |      |       |         |            | [主键]增序            |
-| password   | CharField    |      |       |         | 128        |                       |
-| username   | CharField    |      |       |         |            | [Unique]把email存进去 |
-| email      | CharField    |      |       |         |            |                       |
-| nickname   | CharField    |      | False |         | 20         | 昵称                  |
-| level      | IntegerField |      | False | 1       |            | 等级                  |
-| experience | IntegerField |      | False | 0       |            | 经验                  |
-| avator     | ImageField   |      | True  |         |            | 头像                  |
-|            |              |      |       |         |            |                       |
+| attribute   | type         | null | blank | default | max_length | description           |
+| ----------- | ------------ | ---- | ----- | ------- | ---------- | --------------------- |
+| id          |              |      |       |         |            | [主键]增序            |
+| password    | CharField    |      |       |         | 128        |                       |
+| username    | CharField    |      |       |         |            | [Unique]把email存进去 |
+| email       | CharField    |      |       |         |            |                       |
+| nickname    | CharField    |      | False |         | 20         | 昵称                  |
+| level       | IntegerField |      | False | 1       |            | 等级                  |
+| experience  | IntegerField |      | False | 0       |            | 经验                  |
+| avator      | ImageField   |      | True  |         |            | 头像                  |
+| description | CharField    | True | True  |         | 150        | 用户个人签名          |
 
 
 **Story**
