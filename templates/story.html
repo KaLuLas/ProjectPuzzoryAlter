@@ -561,7 +561,7 @@
         
                         <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top:7px">
                             <div class="col-md-auto align-self-center" style="padding-left: 5px">
-                                {% if story.finished == True %}
+                                {% if story.finished == True or story.fragscount == story.fragscountlimit %}
                                 <i class="fa fa-hourglass-end" style="font-size: 17px" aria-hidden="true" title="finished"></i>
                                 <!-- if the story can be modified -->
                                 {% elif story.modified == False %}
