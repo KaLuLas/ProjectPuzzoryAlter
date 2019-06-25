@@ -100,6 +100,20 @@
                     scrollTop: $("#load-content").offset().top - 100
                 }, 500);
             });
+
+            {% if show == 'storypage' %}
+            $('#likemessage').addClass("show active");
+            $('#likemessage-tab').addClass("active");
+            {% elif show == 'fragpage' %}
+            $('#fragmessage').addClass("show active");
+            $('#fragmessage-tab').addClass("active");
+            {% elif show == 'commentpage' %}
+            $('#commentmessage').addClass("show active");
+            $('#commentmessage-tab').addClass("active");
+            {% else %}
+            $('#likemessage').addClass("show active");
+            $('#likemessage-tab').addClass("active");
+            {% endif %}
         });
     </script>
 </head>
