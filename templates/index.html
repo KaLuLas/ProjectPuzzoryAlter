@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Puzztory是国内一点名气都没有的故事接龙网站，这里有乱七八糟的故事，最恶趣味的用户，最废柴的站长。大家可以在这里找到许多欢乐。">
     <title>Puzztory</title>
-    <link rel="shortcut icon" href="https://www.puzztory.cn/static/images/favicon-mainpage.ico" />
-    <link rel="bookmark" href="https://www.puzztory.cn/static/images/favicon-mainpage.ico" />
+    <link rel="shortcut icon" href="{% static 'images/favicon-mainpage.ico' %}" />
+    <link rel="bookmark" href="{% static 'images/favicon-mainpage.ico' %}" />
 
     <!-- CSS -->
     <!-- <link rel="stylesheet/less" type="text/css" href="styles.less" /> -->
@@ -198,7 +199,7 @@
 <body style="background-color: rgb(248, 248, 248)">
     <nav class="navbar navbar-toggleable-md navbar-expand-lg bg-white navbar-light fixed-top">
         <a class="navbar-brand" href="{% url 'index' %}">
-            <img title="PuzzTory首页" alt="Logo" src="https://www.puzztory.cn/static/images/PuzzWithTitle.png"
+            <img title="PuzzTory首页" alt="Logo" src="{% static 'images/PuzzWithTitle.png' %}"
             style="height: 50px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
