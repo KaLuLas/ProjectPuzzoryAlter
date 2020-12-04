@@ -258,21 +258,27 @@
                 });
             }); 
 
-            $('#finishedSetBtn').on('click', function(){
-                $('#systemMessageContent').html('确认要完结吗？（完结后不可再开）');
-                $("#systemMessage").modal('show');
-                $("#systemMessageExitBtn").before('\
-                <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>\
-                ');
+            $('#finishedSetBtn').on('click', function(){                
+                $("#finishMessage").modal('show');                
                 $('#finishedConfirmBtn').on('click', function(){
-                    // console.log("bind confirm successful");
                     $.ajax({
                         url: "{% url 'finishedset' %}",
                         data: {
                             'story_id': {{ story.id }}
                         },
+                        success: function(data){
+                            if(data['finished']){
+                                $('#finishedSetBtn').attr('title', '故事已完结');
+                                $('#finishedSetBtn').attr('disabled', 'disabled');
+                                $('#finishedSetBtn').removeClass('btn btn-outline-secondary');
+                                $('#finishedSetBtn').addClass('btn btn-secondary');
+                                $('#modifiedset').hide();
+                            }
+                        }
                     });
+                    
                 });
+                return false;
             });
 
             $('#deleteConfirmBtn').on('click', function(){
@@ -438,7 +444,7 @@
                                  placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
                                  style="width: 7cm">
                              <div class="input-group-append">
-                                 <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
+                                 <button class="btn btn-outline-success" type="button"><i class="fa fa-search"
                                          aria-hidden="true"></i></button>
                              </div>
                          </div>
@@ -446,16 +452,16 @@
                             {% if story.finished == False %}
                                 <!-- modified button -->
                                 {% if story.lock == True %}
-                                <button class="btn btn-danger disabled" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
+                                <button id="modifiedset" class="btn btn-danger disabled" type="button" title="正在续写" style="margin-left:20px"><i class="fas fa-user-lock"></i></button>
                                 {% elif story.modified == True %}
-                                <button id="modifiedset" class="btn btn-outline-secondary" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                                <button id="modifiedset" class="btn btn-outline-secondary" type="button" title="续写禁止" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
                                 {% else %}
-                                <button id="modifiedset" class="btn btn-secondary" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
+                                <button id="modifiedset" class="btn btn-secondary" type="button" title="续写再开" style="margin-left:20px"><i class="fas fa-user-shield"></i></button>
                                 {% endif %}
-                                <!-- finished button -->
-                            <button id="finishedSetBtn" class="btn btn-outline-secondary" title="故事完结" style="margin-left:20px"><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
+                            <!-- finished button -->
+                            <button id="finishedSetBtn" class="btn btn-outline-secondary" type="button" title="故事完结" style="margin-left:20px"><i class="fa fa-hourglass-end"></i></button>
                             {% else %}
-                            <button id="finishedSign" class="btn btn-secondary" title="故事已完结" style="margin-left:20px" disabled><i class="fa fa-hourglass-end" aria-hidden="true"></i></button>
+                            <button id="finishedSign" class="btn btn-secondary" type="button" title="故事已完结" style="margin-left:20px" disabled><i class="fa fa-hourglass-end"></i></button>
                             {% endif %}
                         {% endif %}
                      </form>
@@ -774,6 +780,28 @@
                     </div>
                 </div>
             </div>
+            <!-- FINISH WINDOW -->
+            <div class="modal fade" id="finishMessage" tabindex="-1" role="dialog" aria-labelledby="finishMessageLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="finishMessageLabel">通知 ('/_ ') </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="finishMessageContent">
+                            确认要完结吗？（完结后不可再开）
+                        </div>
+                        <div class="modal-footer">
+                            <button id="finishedConfirmBtn" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                            <button id="finishMessageExitBtn" type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ADDFRAG WINDOW -->
             <div class="modal fade" id="addfrag" tabindex="-1" role="dialog" aria-labelledby="addfragLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">

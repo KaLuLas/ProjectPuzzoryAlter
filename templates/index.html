@@ -215,7 +215,7 @@
                             placeholder="{% if user.is_authenticated %}welcome, {{ user.userextension.nickname }}{% else %}Please login first.{% endif %}"
                             style="width: 7cm">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"
+                            <button class="btn btn-outline-success" type="button"><i class="fa fa-search"
                                     aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -299,7 +299,7 @@
                     <h1 class="dropdown-header side-bar-title" style="padding: 0px;margin-bottom:10px"><i class="fas fa-comment-alt"></i> 站点公告</h1>
                     <div class="card">
                         <div class="card-body">
-                            <!-- 之后再用服务器文本文件吧 -->
+                            <!-- 用服务器文本文件 -->
                             <small id="site-announcement" style="white-space: pre-wrap;">（*゜ー゜*）</small>
                         </div>
                     </div>

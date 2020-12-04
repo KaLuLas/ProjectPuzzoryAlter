@@ -252,6 +252,9 @@ def upload_story_page(request):
 
 def deletefrag(request, frag_id, story_id):
     try:
+        # frag_full_list = Fragment.objects.filter(storyid=story_id).order_by('createtime')   
+        # lastfrag_id = frag_full_list[len(frag_full_list)-1].id
+
         frag_record = Fragment.objects.get(id=frag_id) 
         targetfrag_id = Fragment.objects.filter(storyid=story_id).order_by('-createtime')[1].id  
         story_record = Story.objects.get(id=story_id)
@@ -675,6 +678,8 @@ def finishedset(request):
     story.modified = True
     story.lock = False
     story.save()
+
+    ret_dict['finished'] = True
 
     return JsonResponse(data=ret_dict)
 
