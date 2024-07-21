@@ -310,7 +310,7 @@
                         {% if story_list %}
                         {% for story in story_list %}
                         {% if forloop.counter > 1 %}
-                        <a href="{% url 'story_page' story.id %}" target="_Blank"
+                        <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-action d-flex align-items-center"
                             style="font-size:14px">
                             <span class="badge badge-secondary" style="margin-right: 10px">{{ forloop.counter }}</span>
@@ -319,7 +319,7 @@
                         </a>
 
                         {% else %}
-                        <a href="{% url 'story_page' story.id %}" target="_Blank"
+                        <a href="{% url 'story_page' story.id %}"
                             class="list-group-item list-group-item-warning d-flex align-items-center"
                             style="font-size:14px">
                             <span class="badge badge-warning" style="margin-right: 10px">{{ forloop.counter }}</span>
@@ -369,7 +369,7 @@
                 <div class="list-group story-list homepage" style="margin:30px">
                     {% if page_obj %}
                     {% for story in page_obj %}
-                    <a href="{% url 'story_page' story.id %}" target="_Blank"
+                    <a href="{% url 'story_page' story.id %}"
                         class=" list-group-item list-group-item-action flex-column align-items-start">
                         <!-- d-flex : made <small> stay at the end of row -->
                         <div class="d-flex align-items-center mb-2">

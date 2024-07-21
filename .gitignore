@@ -1,5 +1,6 @@
 # ignore vscode settings
 .vscode/
+node_modules/
 # ignore pyc files and swp files
 *.pyc
 *.swp
