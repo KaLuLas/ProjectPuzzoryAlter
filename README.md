@@ -1,4 +1,4 @@
-# ProjectPuzztoryNext
+# Puzztory
 
 ('/_ ')玩故事接龙的一个站点，承载了许多回忆的课程作业。
 
