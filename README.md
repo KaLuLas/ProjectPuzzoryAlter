@@ -43,7 +43,8 @@
   * django 3.2
   * pymysql 1.0.2
   * pillow 8.3.1
-* **mysql** Ver 8.0.32 for Linux on x86_64 (MySQL Community Server - GPL)(**Red Hat Enterprise Linux 7 / Oracle Linux 7 (Architecture Independent), RPM Package** -> mysql80-community-release-el6-7.noarch.rpm)
+  * (optional) uwsgi 2.0.26
+* **mysql** Ver 8.0.32 for Linux on x86_64
 
 ## Deployment
 
@@ -60,4 +61,5 @@
 	```
 
 
-3. You are good to go!
+3. 使用 nginx + uwsgi + django 的方式部署可[自行探索](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html#)
+4. You are good to go!
